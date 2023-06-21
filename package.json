@@ -1,0 +1,25 @@
+{
+  "name": "dfe-crmportal-designsystem-dynamics365",
+  "version": "1.0.0",
+  "description": "",
+  "main": "/script/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haynes-dev/dfe-crmportal-designsystem-dynamics365.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haynes-dev/dfe-crmportal-designsystem-dynamics365/issues"
+  },
+  "homepage": "https://github.com/haynes-dev/dfe-crmportal-designsystem-dynamics365#readme",
+  "dependencies": {
+    "govuk-frontend": "^4.6.0"
+  },
+  "devDependencies": {
+    "sass": "^1.63.5"
+  }
+}
