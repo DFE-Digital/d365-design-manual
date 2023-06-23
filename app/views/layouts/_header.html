@@ -1,0 +1,31 @@
+{% from 'header/macro.njk' import header %}
+
+{{ header({
+    "showNav": "true",
+    "showSearch": "false",
+    "showUserName": "false",
+    "userName": "",
+    "userNameURL": "",
+    "selectedNav": selectedNav,
+    "logoPath": "assets/images",
+    "searchInputName": "searchterm",
+    "service": {
+      "name": serviceName
+    },
+    "primaryLinks": [
+      {
+        "url"  : "/",
+        "label" : "Home"
+      },
+      {
+        "url"  : "/design-system",
+        "label" : "Portal standards"
+      },
+      {
+        "url"  : "/design-system",
+        "label" : "CRM standards"
+      }
+    ]
+  })
+}}
+
