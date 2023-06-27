@@ -1,0 +1,48 @@
+{% set pageName = "Download base portal files" %}
+{% set pageDescription = "These base files allow you to set up a basic portal configuration with DfE branding and GDS styles, components and patterns." %}
+{% set selectedNav = "Download base portal files" %}
+{% set dateUpdated = "July 2023" %}
+
+{% extends "layouts/content-with-sidenav.html" %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+<h2 class="govuk-heading-l" id="summary">Summary</h2>
+
+<p class="govuk-body">D365 portals are a DfE service <strong>not</strong> a GOV.UK service, however GOV.UK patterns and frontend 
+    code can be used. To work with the D365 portal functionality and out-of-the-box limitations you'll sometimes need to use slightly 
+    different patterns and tweak the recommended frontend code. This site includes examples of best practice use for working with GOV.UK and 
+    DfE design patterns and frontend code on D365 portals.</p>
+
+<p>The styles, patterns and components detailed on this site are based on the GOV.UK Design System and adapted for use with D365 portal services. 
+    There are additional styles, patterns and components on the GOV.UK Design System not included on this site. You can use these with D365 portal services 
+    without any D365 specific customisation* required e.g. HTML for tables.</p>
+
+<p class="govuk-body"><a class="govuk-link" href="https://design-system.service.gov.uk/" target="_blank">Access the GOV.UK Design System (opens in a new tab)</a></p>
+
+<p class="govuk-body govuk-!-font-size-16">*<i> The additional styles, patterns and components referred to on the GOV.UK Design System are static HTML snippets which do not 
+    require adapting for use with the D365 WebApi service to submit data to the CRM database. The examples provided on the GOV.UK Design System contain sample data which 
+    you will need to replace with your own content</i>.</p>
+
+<h2 class="govuk-heading-l" id="service-standards">Service standards</h2>
+
+<p class="govuk-body">Your site or service must <strong>not</strong>:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+    <li>identify itself as being part of GOV.UK</li>
+    <li>use the crown or GOV.UK logotype in the header</li>
+    <li>use the GDS Transport typeface</li>
+    <li>suggest that it's an official UK government website if it's not</li>
+</ul>
+
+<p class="govuk-body">These things are there to provide a consistent identity and navigation between GOV.UK and the sites and transactional 
+    services that hang off it. As D365 portal services are not on GOV.UK, there's no need to maintain that identity - in fact, you 
+    might confuse or mislead people if you do. </p>
+
+<p class="govuk-body">Appropriately styled page templates, header and footer are provided for your portal service on this site. See</p>
+    
+<p class="govuk-body">All D365 portal services within DfE should be provided on the 'education.gov.uk' domain.</p>
+
+{% endblock %}
