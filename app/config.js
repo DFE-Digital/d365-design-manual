@@ -1,7 +1,7 @@
 module.exports = {
 
     // Base URL
-    baseURL: process.env.BASE_URL || 'https://haynes-dev.github.io/dfe-crmportal-designsystem-dynamics365/',
+    baseURL: process.env.BASE_URL || 'd365-crm-standards.azurewebsites.net',
   
     // Environment
     env: process.env.NODE_ENV || 'development',

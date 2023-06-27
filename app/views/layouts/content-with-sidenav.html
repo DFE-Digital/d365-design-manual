@@ -23,10 +23,7 @@
 
 <body class="govuk-template__body ">
     <script>
-        document.body.className = (
-            (document.body.className)
-                ? document.body.className + ' js-enabled'
-                : 'js-enabled');
+        document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
 
     {% block header %}
@@ -38,21 +35,7 @@
         <div class="dfe-width-container ">
             <div class="govuk-grid-row ">
                 <div class="govuk-grid-column-three-quarters">
-                    {% block breadcrumb %}
-                    {% if isbeta === "true" %}
-                    <div class="govuk-phase-banner">
-                        <p class="govuk-phase-banner__content">
-                            <strong class="govuk-tag govuk-phase-banner__content__tag">
-                                beta
-                            </strong>
-                            <span class="govuk-phase-banner__text">
-                                This is something we're trying <a class="govuk-link" href="#feedback"
-                                    id="feedback-trigger">feedback</a> will help us to improve it.
-                            </span>
-                        </p>
-                    </div>
-                    {% endif %}
-                    {% endblock %}
+                    {% block breadcrumb %}{% endblock %}
                 </div>
             </div>
             <div class="govuk-grid-row govuk-!-padding-top-9 govuk-!-padding-bottom-0">
