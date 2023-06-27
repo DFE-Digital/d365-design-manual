@@ -12,7 +12,7 @@ const additionalIndices = {
   const alternativeSpelling = {
     '&': ['ampersand'],
     'dfe': ['Department for Education'],
-    'esfa': ['Education and Skills Funding Agency']
+    'D365': ['Dynamics 365']
   };
   
   const indexBlacklist = [
