@@ -77,8 +77,6 @@ class PageIndex {
         this.docs.forEach((doc) => builder.add(doc)); // eslint-disable-line arrow-parens
       });
 
-
-
       // Time to index logging
       const endTime = new Date().getTime();
       const indexTime = (endTime - startTime) / 1000;
