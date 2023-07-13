@@ -2,11 +2,11 @@
   "name": "dfe-d365-design-manual",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "/app/index.js",
   "scripts": {
     "gulp": "gulp",
     "watch": "gulp & nodemon index.js",
-    "start": "index.js",
+    "start": "/app/index.js",
     "dev": "npm run watch"
   },
   "nodemonConfig": {

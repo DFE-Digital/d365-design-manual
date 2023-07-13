@@ -15,7 +15,7 @@ app.use(compression());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(favicon(path.join(__dirname, 'public/assets/images', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, '../public/assets/images', 'favicon.ico')));
 
 app.set('view engine', 'html');
 
