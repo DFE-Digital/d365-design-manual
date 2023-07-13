@@ -1,12 +1,11 @@
 const express = require('express');
 const nunjucks = require('nunjucks');
 const axios = require('axios');
-const dateFilter = require('nunjucks-date-filter');
+var dateFilter = require('nunjucks-date-filter');
 const marked = require('marked');
 const bodyParser = require('body-parser');
 const path = require('path');
-const config = require('./config');
-const forceHttps = require('express-force-https');
+const config = require('./app/config');
 const compression = require('compression');
 const favicon = require('serve-favicon');
 
@@ -15,7 +14,7 @@ app.use(compression());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(favicon(path.join(__dirname, '../public/assets/images', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public/assets/images', 'favicon.ico')));
 
 app.set('view engine', 'html');
 
@@ -42,8 +41,6 @@ marked.setOptions({ gfm: true });
 nunjuckEnv.addFilter('markdown', function (content) {
   return marked(content);
 });
-
-app.use(forceHttps);
 
 // Set up static file serving for the app's assets
 app.use('/assets', express.static('public/assets'));
