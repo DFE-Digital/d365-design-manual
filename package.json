@@ -7,7 +7,7 @@
     "gulp": "gulp",
     "watch": "gulp & nodemon index.js",
     "start": "index.js",
-    "dev": "npm run watch"
+    "dev": "gulp & nodemon --exec heroku local web --port 5001 "
   },
   "nodemonConfig": {
     "ext": "html"
