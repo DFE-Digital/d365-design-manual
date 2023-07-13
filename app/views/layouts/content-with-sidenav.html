@@ -33,11 +33,6 @@
     {% block main %}
     <div class="dfe-content-page--header">
         <div class="dfe-width-container ">
-            <div class="govuk-grid-row ">
-                <div class="govuk-grid-column-three-quarters">
-                    {% block breadcrumb %}{% endblock %}
-                </div>
-            </div>
             <div class="govuk-grid-row govuk-!-padding-top-9 govuk-!-padding-bottom-0">
                 <div class="govuk-grid-column-three-quarters">
                     <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{pageName}}</h1>
@@ -45,7 +40,7 @@
                     {% if dateUpdated %}
                     <p class="govuk-body-s govuk-!-margin-bottom-0">
                         <span class="govuk-!-font-weight-bold">Last updated: </span>
-                        {{dateUpdated | date('D MMMM YYYY')}}
+                        {{ dateUpdated }}
                     </p>
                     {% endif %}
                 </div>
@@ -60,6 +55,11 @@
 
     <div class="govuk-width-container dfe-width-container">
         <main class="govuk-main-wrapper " id="main-content" role="main">
+            <div class="govuk-grid-row ">
+                <div class="govuk-grid-column-three-quarters">
+                    {% include 'includes/_breadcrumbs.html' %}
+                </div>
+            </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-one-quarter">
                     {% include "includes/_side-nav.html"%}

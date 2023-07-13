@@ -80,7 +80,7 @@ gulp.task('nunjucksRender', function () {
 // Set up a task to start the server and watch files for changes
 gulp.task('watch', function () {
   browserSync.init({
-    proxy: 'http://localhost:3000',
+    proxy: 'https://localhost:3000',
     files: ['app/views/**/*.*'],
     reloadDelay: 2000,
   })

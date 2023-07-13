@@ -1,0 +1,42 @@
+{%- if selectedNav == "Getting started" or selectedNav == "Branding standards" or selectedNav == "Create your portal" or selectedNav == "Download base portal files" %}
+<div class="govuk-breadcrumbs govuk-!-margin-top-0 govuk-!-margin-bottom-6">
+    <ol class="govuk-breadcrumbs__list govuk-!-font-size-16">
+        <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="/portals">Portals</a>
+        </li>
+        <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="/portals/getting-started">Getting started</a>
+        </li>
+    </ol>
+</div>
+{% endif %}
+
+{%- if selectedNav == "Set up your portal" or selectedNav == "Pre-requisites" or selectedNav == "Web files" or selectedNav == "Web templates" or selectedNav == "Content snippets" or selectedNav == "Web page content"%}
+<div class="govuk-breadcrumbs govuk-!-margin-top-0 govuk-!-margin-bottom-6">
+    <ol class="govuk-breadcrumbs__list govuk-!-font-size-16">
+        <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="/portals">Portals</a>
+        </li>
+        <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="/portals/getting-started">Getting started</a>
+        </li>
+        <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="/portals/getting-started/portal-setup">Set up your portal</a>
+        </li>
+    </ol>
+</div>
+{% endif %}
+
+{%- if selectedNav == "Components" or selectedNav == "Checkboxes" or selectedNav == "Date input" or selectedNav == "Email input" or selectedNav == "Number inputs" 
+    or selectedNav == "Radios" or selectedNav == "Select" or selectedNav == "Telephone input" or selectedNav == "Text area" or selectedNav == "Text input" %}
+<div class="govuk-breadcrumbs govuk-!-margin-top-0 govuk-!-margin-bottom-6">
+    <ol class="govuk-breadcrumbs__list govuk-!-font-size-16">
+        <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="/portals">Portals</a>
+        </li>
+        <li class="govuk-breadcrumbs__list-item">
+            <a class="govuk-breadcrumbs__link" href="/portals/components">Components</a>
+        </li>
+    </ol>
+</div>
+{% endif %}
