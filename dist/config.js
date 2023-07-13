@@ -11,4 +11,4 @@ module.exports = {
     githubrepo: 'https://github.com/haynes-dev/dfe-d365-design-manual',
     
     assetPath: process.env.assetPath
-  };
+};
