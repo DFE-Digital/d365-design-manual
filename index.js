@@ -19,7 +19,7 @@ app.use(favicon(path.join(__dirname, 'public/assets/images', 'favicon.ico')));
 
 app.set('view engine', 'html');
 
-app.locals.serviceName = 'Dynamics 365 Standards Manual';
+app.locals.serviceName = 'Dynamics 365 Design Manual';
 
 // Set up Nunjucks as the template engine
 const nunjuckEnv = nunjucks.configure(
