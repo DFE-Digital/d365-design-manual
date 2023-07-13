@@ -5,7 +5,7 @@ var dateFilter = require('nunjucks-date-filter');
 const marked = require('marked');
 const bodyParser = require('body-parser');
 const path = require('path');
-const config = require('./app/config');
+const config = require('./dist/config');
 const compression = require('compression');
 const favicon = require('serve-favicon');
 
@@ -23,7 +23,7 @@ app.locals.serviceName = 'Dynamics 365 Design Manual';
 // Set up Nunjucks as the template engine
 const nunjuckEnv = nunjucks.configure(
   [
-    'app/views',
+    'dist/views',
     'node_modules/govuk-frontend/',
     'node_modules/dfe-frontend-alpha/packages/components/',
   ],
