@@ -1,7 +1,7 @@
 const express = require('express');
 const nunjucks = require('nunjucks');
 const axios = require('axios');
-var dateFilter = require('nunjucks-date-filter');
+//var dateFilter = require('nunjucks-date-filter');
 const marked = require('marked');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -33,7 +33,7 @@ const nunjuckEnv = nunjucks.configure(
   }
 );
 
-nunjuckEnv.addFilter('date', dateFilter);
+//nunjuckEnv.addFilter('date', dateFilter);
 nunjuckEnv.addFilter('formatNumber', function (number) {
   return number.toLocaleString();
 });
