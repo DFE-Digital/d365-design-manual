@@ -22,17 +22,14 @@
 ] %}
 
 {% set getting_started = [
-    {
-        title: "Getting started",
-        url: "/portals/getting-started/" 
-    },
+
     {
         title: "Branding standards",
-        url: "/portals/getting-started/branding-standards/" 
+        url: "/portals/getting-started/branding-standards/"
     },
     {
-      title: "Create your portal",
-      url: "/portals/getting-started/create-your-portal"
+        title: "Create your portal",
+        url: "/portals/getting-started/create-your-portal"
     },
     {
         title: "Download base portal files",
@@ -44,37 +41,112 @@
     }
 ] %}
 
-{% set crm = [
+{% set portal_setup = [
     {
-        title: "Contact Design Ops",
-        url: "/design-ops/contact"
+        title: "Pre-requisites",
+        url: "/portals/getting-started/portal-setup/pre-requisites"
+    },
+    {
+        title: "Web files",
+        url: "/portals/getting-started/portal-setup/web-files"
+    },
+    {
+        title: "Web templates",
+        url: "/portals/getting-started/portal-setup/web-templates"
+    },
+    {
+        title: "Content snippets",
+        url: "/portals/getting-started/portal-setup/content-snippets"
+    },
+    {
+        title: "Web page content",
+        url: "/portals/getting-started/portal-setup/web-page-content"
     }
 ] %}
 
 {% set components = [
-
+    {
+        title: "Checkboxes",
+        url: "#"
+    },
+    {
+        title: "Date input",
+        url: "#"
+    },
+    {
+        title: "Email input",
+        url: "#"
+    },
+    {
+        title: "Number inputs",
+        url: "#"
+    },
+    {
+        title: "Radios",
+        url: "#"
+    },
+    {
+        title: "Select",
+        url: "#"
+    },
+    {
+        title: "Telephone input",
+        url: "#"
+    },
+    {
+        title: "Text area",
+        url: "#"
+    },
+    {
+        title: "Text input",
+        url: "#"
+    }
 ] %}
 
 
 <nav class="dfe-vertical-nav">
     {%- if selectedNav === "Portals" %}
-        <ul class="dfe-vertical-nav__section">
+    <ul class="dfe-vertical-nav__section">
         {% for item in portals %}
-            <li class="dfe-vertical-nav__section-item {% if item.title === pageName  or setSelectedSideNav === item.title %}dfe-vertical-nav__section-item--current{% endif %}">
-                <a class="dfe-vertical-nav__link" href="{{ item.url }}">{{ item.title }}</a>
-            </li>
+        <li
+            class="dfe-vertical-nav__section-item {% if item.title === pageName  or setSelectedSideNav === item.title %}dfe-vertical-nav__section-item--current{% endif %}">
+            <a class="dfe-vertical-nav__link" href="{{ item.url }}">{{ item.title }}</a>
+        </li>
         {% endfor %}
-        </ul>
+    </ul>
     {% endif %}
 
-    {%- if selectedNav == "Getting started" or selectedNav == "Branding standards" or selectedNav == "Create your portal" or selectedNav == "Download base portal files" or selectedNav == "Set up your portal"%}
-        <a class="govuk-back-link govuk-!-margin-top-0"href="/portals">Back</a>
-        <ul class="dfe-vertical-nav__section">
+    {%- if selectedNav == "Getting started" or selectedNav == "Branding standards" or selectedNav == "Create your portal" or selectedNav == "Download base portal files" %}
+    <ul class="dfe-vertical-nav__section">
         {% for item in getting_started %}
-            <li class="dfe-vertical-nav__section-item {% if item.title === pageName  or setSelectedSideNav === item.title %}dfe-vertical-nav__section-item--current{% endif %}">
-                <a class="dfe-vertical-nav__link" href="{{ item.url }}">{{ item.title }}</a>
-            </li>
+        <li
+            class="dfe-vertical-nav__section-item {% if item.title === pageName  or setSelectedSideNav === item.title %}dfe-vertical-nav__section-item--current{% endif %}">
+            <a class="dfe-vertical-nav__link" href="{{ item.url }}">{{ item.title }}</a>
+        </li>
         {% endfor %}
-        </ul>
-      {% endif %}
+    </ul>
+    {% endif %}
+
+    {%- if selectedNav == "Set up your portal" or selectedNav == "Pre-requisites" or selectedNav == "Web files" or selectedNav == "Web templates" or selectedNav == "Content snippets" or selectedNav == "Web page content"%}
+    <ul class="dfe-vertical-nav__section">
+        {% for item in portal_setup %}
+        <li
+            class="dfe-vertical-nav__section-item {% if item.title === pageName  or setSelectedSideNav === item.title %}dfe-vertical-nav__section-item--current{% endif %}">
+            <a class="dfe-vertical-nav__link" href="{{ item.url }}">{{ item.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {%- if selectedNav == "Components" or selectedNav == "Checkboxes" or selectedNav == "Date input" or selectedNav == "Email input" or selectedNav == "Number inputs" 
+    or selectedNav == "Radios" or selectedNav == "Select" or selectedNav == "Telephone input" or selectedNav == "Text area" or selectedNav == "Text input" %}
+    <ul class="dfe-vertical-nav__section">
+        {% for item in components %}
+        <li
+            class="dfe-vertical-nav__section-item {% if item.title === pageName  or setSelectedSideNav === item.title %}dfe-vertical-nav__section-item--current{% endif %}">
+            <a class="dfe-vertical-nav__link" href="{{ item.url }}">{{ item.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 </nav>

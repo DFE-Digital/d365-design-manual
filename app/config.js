@@ -1,7 +1,7 @@
 module.exports = {
 
     // Base URL
-    baseURL: process.env.BASE_URL || 'd365-crm-standards.azurewebsites.net',
+    baseURL: process.env.BASE_URL || 'https://localhost:3000',
   
     // Environment
     env: process.env.NODE_ENV || 'development',

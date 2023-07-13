@@ -1,0 +1,41 @@
+{% set pageName = "Web files" %}
+{% set pageDescription = "Set up web files" %}
+{% set selectedNav = "Web files" %}
+{% set dateUpdated = "July 2023" %}
+
+{% extends "layouts/content-with-sidenav.html" %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+<h2 class="govuk-heading-l">Create new web file records</h2>
+<p class="govuk-body">Before continuing, make sure you have <a class="govuk-link" href="/portals/getting-started/download-portal-files">downloaded the portal files</a>.</p>
+<p class="govuk-body">For each of the downloaded web files you need to create a new web file record, with the exception of <i>theme.css</i> (<a class="govuk-link" href="#update-your-theme-file">go to updating your theme file</a>).</p>
+<ol class="govuk-list govuk-list--number">
+    <li>Navigate to the <strong>Portal management</strong> model-driven app in your D365 environment</li>
+    <li>Select <strong>Web files</strong> from the left-hand page navigation</li>
+    <li>Create a new web file record for each of the downloaded files filling out the following properties:<br><br>
+        <strong>Name</strong>: Enter the file name as it was downloaded, including extension <i>e.g. dfe-crm-portal-helper.js</i><br>
+        <strong>Website</strong>: Select your portal website record<br>
+        <strong>Parent Page</strong>: Select your home page<br>
+        <strong>Partial Url</strong>: Enter the file name as it was downloaded, including extension <i>e.g. dfe-crm-portal-helper.js</i><br>
+        <strong>Publishing state</strong>: Select <strong>Published</strong><br><br>
+    </li>
+    <li>In the <strong>Notes</strong> tab, attached the respective downloaded file as a note file attachment</li>
+</ol>
+
+<picture>
+    <source srcset="/assets/images/portal-webfiles.webp" type="image/webp">
+    <img src="/assets/images/portal-webfiles.png" alt="">
+</picture>
+
+<picture>
+    <source srcset="/assets/images/portal-webfiles2.webp" type="image/webp">
+    <img src="/assets/images/portal-webfiles2.png" alt="">
+</picture>
+
+<h2 class="govuk-heading-l" id="update-your-theme-file">Update your theme file</h2>
+<p class="govuk-body">Follow steps 1 and 2 above, then find the web file record called <strong>theme.css</strong> and open it.</p>
+<p class="govuk-bdoy">In the <strong>Notes</strong> tab, replace the attached file with your downloaded <i>theme.css</i> file and save the record</p>
+
+{% endblock %}
