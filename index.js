@@ -5,7 +5,7 @@ const axios = require('axios');
 const marked = require('marked');
 const bodyParser = require('body-parser');
 const path = require('path');
-const config = require('./dist/config');
+const config = require('./app/config');
 const compression = require('compression');
 const favicon = require('serve-favicon');
 
@@ -23,7 +23,7 @@ app.locals.serviceName = 'Dynamics 365 Design Manual';
 // Set up Nunjucks as the template engine
 const nunjuckEnv = nunjucks.configure(
   [
-    'dist/views',
+    'app/views',
     'node_modules/govuk-frontend/',
     'node_modules/dfe-frontend-alpha/packages/components/',
   ],

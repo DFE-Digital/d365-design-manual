@@ -11,7 +11,7 @@ const browserSync = require('browser-sync').create()
 // Set up a task to process SCSS files
 gulp.task('process-scss', function () {
   return gulp
-    .src('dist/assets/scss/**/*.scss')
+    .src('app/assets/scss/**/*.scss')
     .pipe(sass({ quiet: true }))
     .pipe(sass().on('error', sass.logError))
     .pipe(cleanCSS())
@@ -23,13 +23,13 @@ gulp.task('process-scss', function () {
 gulp.task('copy-govuk-js', function () {
   return gulp
     .src('node_modules/govuk-frontend/govuk/all.js')
-    .pipe(copy('dist/assets/js', { prefix: 3 }))
+    .pipe(copy('app/assets/js', { prefix: 3 }))
 })
 
 gulp.task('copy-dfefrontend-js', function () {
   return gulp
     .src('node_modules/dfe-frontend-alpha/dist/dfefrontend.js')
-    .pipe(copy('dist/assets/js', { prefix: 3 }))
+    .pipe(copy('app/assets/js', { prefix: 3 }))
 })
 
 // Set up a task to process JavaScript files
@@ -37,7 +37,7 @@ gulp.task(
   'process-js',
   gulp.series('copy-govuk-js', 'copy-dfefrontend-js', function () {
     return gulp
-      .src('dist/assets/js/**/*.js')
+      .src('app/assets/js/**/*.js')
       .pipe(uglify())
       .pipe(rename({ suffix: '.min' }))
       .pipe(gulp.dest('public/assets/js'))
@@ -50,27 +50,27 @@ gulp.task('copy-assets', function () {
     .src(
       'node_modules/dfe-frontend-alpha/packages/assets/**/*.{jpg,jpeg,png,gif,svg}',
     )
-    .pipe(copy('dist/assets/images', { prefix: 6 }))
+    .pipe(copy('app/assets/images', { prefix: 6 }))
 })
 
 gulp.task('process-images-copy', async function () {
   return gulp
-    .src('dist/assets/images/**/*')
+    .src('app/assets/images/**/*')
     .pipe(gulp.dest('public/assets/images'))
 })
 gulp.task('process-images', async function () {
   return gulp
-    .src('dist/assets/images/**/*.png')
+    .src('app/assets/images/**/*.png')
     .pipe(webp())
     .pipe(gulp.dest('public/assets/images'))
 })
 
 gulp.task('nunjucksRender', function () {
   return gulp
-    .src('dist/views/**/*.html')
+    .src('app/views/**/*.html')
     .pipe(
       nunjucksRender({
-        path: ['dist/views/'], // set the path to your templates here
+        path: ['app/views/'], // set the path to your templates here
       }),
     )
     .pipe(gulp.dest('public/'))
@@ -81,23 +81,23 @@ gulp.task('nunjucksRender', function () {
 //gulp.task('watch', function () {
 //  browserSync.init({
 //    proxy: 'https://localhost:3000',
-//    files: ['dist/views/**/*.*'],
+//    files: ['app/views/**/*.*'],
 //    reloadDelay: 2000,
 //  })
 
-//  gulp.watch('dist/assets/scss/**/*.scss', gulp.series('process-scss'))
- // gulp.watch('dist/assets/js/**/*.js', gulp.series('process-js'))
-//  gulp.watch('dist/assets/images/**/*.png', gulp.series('process-images'))
-//  gulp.watch('dist/assets/images/**/*', gulp.series('process-images-copy'))
+//  gulp.watch('app/assets/scss/**/*.scss', gulp.series('process-scss'))
+ // gulp.watch('app/assets/js/**/*.js', gulp.series('process-js'))
+//  gulp.watch('app/assets/images/**/*.png', gulp.series('process-images'))
+//  gulp.watch('app/assets/images/**/*', gulp.series('process-images-copy'))
 //  gulp.watch(
 //    'node_modules/dfe-frontend-alpha/packages/assets/**/*.{jpg,jpeg,png,gif,svg}',
 //    gulp.series('copy-assets'),
 //  )
 //  gulp.watch(
-//    'node_modules/dfe-frontend-alpha/dist/dfefrontend.js',
+//    'node_modules/dfe-frontend-alpha/app/dfefrontend.js',
 //    gulp.series('process-js'),
 //  )
-//  gulp.watch('dist/**/*.*').on('change', browserSync.reload)
+//  gulp.watch('app/**/*.*').on('change', browserSync.reload)
 //})
 
 
