@@ -66,40 +66,56 @@
 
 {% set components = [
     {
+        title: "Components",
+        url: "/portals/components"
+    },
+    {
+        title: "Card",
+        url: "/portals/components/card"
+    },
+    {
         title: "Checkboxes",
-        url: "#"
+        url: "/portals/components/checkboxes"
     },
     {
         title: "Date input",
-        url: "#"
+        url: "/portals/components/date-input"
     },
     {
         title: "Email input",
-        url: "#"
+        url: "/portals/components/email-input"
     },
     {
         title: "Number inputs",
-        url: "#"
+        url: "/portals/components/number-inputs"
     },
     {
         title: "Radios",
-        url: "#"
+        url: "/portals/components/radios"
+    },
+    {
+        title: "Search",
+        url: "/portals/components/search"
     },
     {
         title: "Select",
-        url: "#"
+        url: "/portals/components/select"
     },
     {
         title: "Telephone input",
-        url: "#"
+        url: "/portals/components/telephone-input"
     },
     {
-        title: "Text area",
-        url: "#"
+        title: "Textarea",
+        url: "/portals/components/textarea"
     },
     {
         title: "Text input",
-        url: "#"
+        url: "/portals/components/text-input"
+    },
+    {
+        title: "Timeline",
+        url: "/portals/components/timeline"
     }
 ] %}
 
@@ -138,8 +154,9 @@
     </ul>
     {% endif %}
 
-    {%- if selectedNav == "Components" or selectedNav == "Checkboxes" or selectedNav == "Date input" or selectedNav == "Email input" or selectedNav == "Number inputs" 
-    or selectedNav == "Radios" or selectedNav == "Select" or selectedNav == "Telephone input" or selectedNav == "Text area" or selectedNav == "Text input" %}
+    {%- if selectedNav == "Components" or selectedNav == "Card" or selectedNav == "Checkboxes" or selectedNav == "Date input" or selectedNav == "Email input" or 
+    selectedNav == "Number inputs" or selectedNav == "Radios" or selectedNav == "Search" or selectedNav == "Select" or selectedNav == "Telephone input" or 
+    selectedNav == "Textarea" or selectedNav == "Text input" or selectedNav == "Timeline"  %}
     <ul class="dfe-vertical-nav__section">
         {% for item in components %}
         <li

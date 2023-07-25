@@ -8,6 +8,7 @@ const path = require('path');
 const config = require('./app/config');
 const compression = require('compression');
 const favicon = require('serve-favicon');
+const cheerio = require('cheerio');
 
 const app = express();
 app.use(compression());
@@ -41,6 +42,25 @@ marked.setOptions({ gfm: true });
 nunjuckEnv.addFilter('markdown', function (content) {
   return marked(content);
 });
+
+
+nunjuckEnv.addFilter('getPageDescription', (url) => {
+  let importPath = path.join(process.cwd(), 'app', 'views', url, 'index.html');
+
+  try {
+    const template = nunjucks.render(importPath);
+    const $ = cheerio.load(template);
+    const metaDescription = $('meta[name="description"]').attr('content');
+    const pageDescription = metaDescription || '';
+    return pageDescription;
+  } catch (error) {
+    console.error(`Error importing template from "${importPath}": ${error}`);
+    return '';
+  }
+});
+
+
+
 
 // Set up static file serving for the app's assets
 app.use('/assets', express.static('public/assets'));
