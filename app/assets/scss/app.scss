@@ -1405,39 +1405,8 @@ tr {
   border-top: 5px solid $color_dfe-blue;
   padding-top: 15px;
 }
-
-.code-example {
-    > .govuk-tabs__panel{
-    overflow: hidden;
-    > pre{
-    background: $color_dfe-grey-4;
-    padding: 10px; overflow: hidden;
-    }
-  }
-}
-
-
-code {
-    
-    padding: .1rem .3rem .2rem;
-    border-radius: .2rem;
-  }
-
-
-.custom-dfe-panel {
-    border: 1px solid #b1b4b6;
-    max-width: 44em;
-    margin-bottom: 40px;
-
-    code {
-        background: #ffffff;
-        padding: .1rem .3rem .2rem;
-        border-radius: .2rem;
-      }
-    
-  }
   
-  .app-reading-width{  max-width: 44em !important;}
+  .dfe-reading-width{  max-width: 44em !important;}
   
   .custom-dfe-panel.custom-dfe-panel_example {
     max-width: 80em;
@@ -1457,9 +1426,6 @@ code {
   .custom-dfe-section {
     margin-bottom: 60px;
   }
-  
-  
-  
   
   .monospace {
     font-family: monospace;
@@ -1496,28 +1462,6 @@ code {
     .govuk-summary-list__key{width: 13%}
   }
 
-
-  .app-swatch {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 40px;
-    height: 40px;
-    border: 1px solid rgba(0, 0, 0, 0);
-    border-radius: 4px;
-  }
-  
-  @include mq($from: desktop) {
-    .app-swatch {
-      display: inline-block;
-      position: static;
-      margin-top: 6px;
-      margin-right: 10px;
-      margin-bottom: 7px;
-      vertical-align: middle;
-    }
-  }
 
   .dfe-section-break{
     border-bottom: 3px solid #003a69;
@@ -1637,118 +1581,423 @@ code {
     }
   }
 
-
-
+  /* Custom DfE Dynamic 365 Portal timeline component*/
 .dfe-timeline {
-    padding: calc(2 * 5px);
+  border-left: 5px solid #347ca9;
+  margin: 0 0 30px;
+  padding: 0
+}
+
+.dfe-timeline__event {
+  list-style: none;
+  padding-bottom: 20px;
+  padding-left: 15px;
+  position: relative;
+}
+
+@media (min-width: 40.0625em) {
+  .dfe-timeline__event {
+      padding-bottom:30px
   }
-  
-  .dfe-timeline .action_needed {
-    border: 5px solid #354973;
-    padding: 5px 20px 5px 15px;
-    box-shadow: none;
-    margin-bottom: 30px;
-    display: block;
-    background: #fff;
+}
+
+.dfe-timeline__event:last-child {
+  padding-bottom: 0
+}
+
+.dfe-timeline__event-title {
+  margin-bottom: 5px;
+}
+
+.dfe-timeline__event-title:before {
+  background-color: #347ca9;
+  content: "";
+  height: 5px;
+  left: 0;
+  position: absolute;
+  top: .5em;
+  width: 7px
+}
+
+.dfe-timeline__event-meta {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #0b0b0b;
+  display: block;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+@media print {
+  .dfe-timeline__event-meta {
+      font-family: sans-serif
   }
-  
-  .dfe-timeline .action_needed h2 {
-    margin-top: 10px;
-    margin-bottom: 10px;
+}
+
+@media (min-width: 40.0625em) {
+  .dfe-timeline__event-meta {
+      font-size:19px;
+      line-height: 1.31579
   }
-  
-  .dfe-timeline .action_needed:before {
-    display: block;
-    width: calc(2 * 10px);
-    height: calc(2 * 10px);
-    border-radius: 50%;
-    background-color: #ffffff;
-    border: 4px solid #354973;
-    position: absolute;
-    z-index: 2;
-    left: -37px;
-    top: 5px;
+}
+
+@media print {
+  .dfe-timeline__event-meta {
+      color: #000;
+      font-size: 14pt;
+      line-height: 1.15
   }
-  
-  .dfe-timeline h2 {
-    margin-top: 0px;
-    margin-bottom: 10px;
+}
+
+.dfe-timeline__event-content {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #0b0b0b;
+  display: block;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  margin-bottom: 5px
+}
+
+@media print {
+  .dfe-timeline__event-content {
+      font-family: sans-serif
   }
-  
-  .dfe-timeline ol {
-    list-style-type: none;
-    position: relative;
-    padding: 0 0 0 10px;
-    margin: 0 0 20px 0;
+}
+
+@media (min-width: 40.0625em) {
+  .dfe-timeline__event-content {
+      font-size:19px;
+      line-height: 1.31579
   }
-  
-  .dfe-timeline ol:after {
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: -4.5px;
-    bottom: 0;
-    border-left: 4px solid #b1b4b6;
-    height: 102%;
+}
+
+@media print {
+  .dfe-timeline__event-content {
+      color: #000;
+      font-size: 14pt;
+      line-height: 1.15
   }
-  
-  .dfe-timeline ol>li {
-    margin: 4px 0 20px 10px;
-    padding-left: 15px;
-    position: relative;
-    display: block;
-    border-bottom: 1px solid #DEE0E2;
+}
+
+/* Custom DfE Dynamics 365 Panel card component */
+.dfe-panel {
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  padding: 15px;
+  border: 5px solid rgba(0, 0, 0, 0);
+  text-align: left;
+}
+
+@media print {
+  .dfe-panel {
+      font-family: sans-serif;
   }
-  
-  .dfe-timeline ol>li:last-child {
-    margin-bottom: 0px;
-    border-bottom: 0px;
+}
+@media (min-width: 40.0625em) {
+  .dfe-panel {
+      font-size: 19px;
+      line-height: 1.31579;
   }
-  
-  .dfe-timeline ol>li .dfe-timeline-reference {
-    display: table;
-    position: relative;
+}
+@media print {
+  .dfe-panel {
+      font-size: 14pt;
+      line-height: 1.15;
   }
-  
-  .dfe-timeline ol>li .dfe-timeline-reference:before {
-    content: "";
-    position: absolute;
-    left: -20px;
-    width: 20px;
-    top: 9px;
-    z-index: -1;
+}
+@media (max-width: 40.0525em) {
+  .dfe-panel {
+      padding: 10px;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
   }
-  
-  .dfe-timeline ol>li:before {
-    content: "";
-    display: block;
-    width: calc(2 * 10px);
-    height: calc(2 * 10px);
-    border-radius: 50%;
-    background-color: #ffffff;
-    border: 4px solid #b1b4b6;
-    position: absolute;
-    z-index: 2;
-    left: -37px;
-    top: 5px;
+}
+
+.dfe-panel__card {
+  color: #0b0c0c;
+  background: #f3f2f1;
+}
+
+@media print {
+  .dfe-panel__card {
+      border-color: currentcolor;
+      color: #000;
+      background: none;
   }
-  
-  .dfe-timeline ol ul li a {
-    text-decoration: underline;
+}
+
+.dfe-panel__title {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.09375;
+}
+
+@media print {
+  .dfe-panel__title{
+      font-family: sans-serif;
   }
-  
-  .dfe-timeline-details {
-    margin: 10px 0;
+}
+@media (min-width: 40.0625em) {
+  .dfe-panel__title {
+      font-size: 24px;
+      line-height: 1.25;
   }
-  
-  .dfe-timeline-details summary {
-    font-size: 0.9em;
+}
+@media print {
+  .dfe-panel__title {
+      font-size: 18pt;
+      line-height: 1.15;
   }
-  
-  .dfe-timeline-details span {
-    display: block;
-    font-size: 0.8em;
-    padding-bottom: 5px;
-    padding-left: 10px;
-    border-left: 4px solid #005EA5;
+}
+
+.dfe-panel__title:last-child {
+  margin-bottom: 0;
+}
+
+.dfe-panel__body {
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+@media print {
+  .dfe-panel__body  {
+      font-family: sans-serif;
   }
+}
+@media (min-width: 40.0625em) {
+  .dfe-panel__body  {
+      font-size: 19px;
+      line-height: 1.31579;
+  }
+}
+@media print {
+  .dfe-panel__body {
+      font-size: 14pt;
+      line-height: 1.15;
+  }
+}
+
+.dfe-panel__link {
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-decoration: underline;
+}
+
+@media print {
+  .dfe-panel__link {
+      font-family: sans-serif;
+  }
+}
+
+.dfe-panel__link:focus {
+  outline: 3px solid rgba(0, 0, 0, 0);
+  background-color: #fd0;
+  box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+  text-decoration: none;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.dfe-panel__link:link {
+  color: #347ca9;
+}
+.dfe-panel__link:visited {
+  color: #4c2c92;
+}
+.dfe-panel__link:hover {
+  color: #003a69;
+}
+.dfe-panel__link:active,
+.dfe-panel__link:focus {
+  color: #0b0c0c;
+}
+
+@media print {
+  .dfe-panel__link[href^="/"]:after,.dfe-panel__link[href^="http://"]:after,.dfe-panel__link[href^="https://"]:after
+  {
+      content: " (" attr(href) ")";
+      font-size: 90%;
+      word-wrap: break-word;
+  }
+}
+
+/* Custom DfE Dynamics 365 sidebar component*/
+.dfe-sidebar {
+  color: #0b0c0c;
+  border-top: 2px solid #347ca9;
+  margin-bottom: 60px;
+}
+
+.dfe-sidebar-section__main-heading {
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.25;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 40.0625em) {
+  .dfe-sidebar-section__main-heading {
+      font-size: 19px;
+      line-height: 1.3157894737;
+  }
+}
+
+.dfe-sidebar-section__content {
+  display: block;
+  margin-bottom: 30px;
+}
+
+.dfe-sidebar-section ul {
+  padding: 0;
+  margin: 0;
+}
+
+.dfe-sidebar-section__link {
+  margin-left: 0 !important;
+}
+
+.dfe-sidebar-section__list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  margin-bottom: 1.25em;
+}
+
+.dfe-sidebar-section__list-item {
+  list-style-type: none;
+  margin-top: 15px;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+@media (min-width: 40.0625em) {
+  .dfe-sidebar-section__list-item {
+      line-height: 1.28;
+      font-size: 16px;
+  }
+}
+
+/* Custom DfE arrow component*/
+.dfe-arrow-left {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  transform: scale(var(--ggs,1));
+  width: 22px;
+  height: 22px;
+  top: 5px;
+  color: #347ca9;
+}
+.dfe-arrow-left::after,
+.dfe-arrow-left::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  left: 3px
+}
+.dfe-arrow-left::after {
+  width: 8px;
+  height: 8px;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+  transform: rotate(45deg);
+  bottom: 7px
+}
+.dfe-arrow-left::before {
+  width: 16px;
+  height: 2px;
+  bottom: 10px;
+  background: currentColor
+}
+.dfe-arrow-right {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  transform: scale(var(--ggs,1));
+  width: 22px;
+  height: 22px;
+  top: 5px;
+  color: #347ca9;
+}
+.dfe-arrow-right::after,
+.dfe-arrow-right::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  right: 3px
+}
+.dfe-arrow-right::after {
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid;
+  border-right: 2px solid;
+  transform: rotate(45deg);
+  bottom: 7px
+}
+.dfe-arrow-right::before {
+  width: 16px;
+  height: 2px;
+  bottom: 10px;
+  background: currentColor
+}
+
+.code-block {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  padding-left: 1em;
+  font-family: monospace;
+  overflow: auto; /* Enable scrolling if the content overflows */
+}
+
+code {
+  color: red;
+  background-color: #f5f5f5;
+}
+
+.code-block code {
+  white-space: pre; /* Preserve white spaces and line breaks */
+  color: #003a69;
+}
+
+.code-block span {
+  color:red;
+  font-family: monospace !important;
+}
+
+
+
+
+
+
+

@@ -32,6 +32,13 @@ gulp.task('copy-dfefrontend-js', function () {
     .pipe(copy('app/assets/js', { prefix: 3 }))
 })
 
+gulp.task('process-code-js', function () {
+  return gulp
+    .src('app/assets/js/code.js')
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest('public/assets/js'))
+})
+
 // Set up a task to process JavaScript files
 gulp.task(
   'process-js',
@@ -108,6 +115,7 @@ gulp.task(
     'process-scss',
     'copy-assets',
     'process-js',
+    'process-code-js',
     'process-images-copy',
     'process-images',
    // 'watch',

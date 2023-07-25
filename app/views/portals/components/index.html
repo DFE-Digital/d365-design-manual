@@ -1,5 +1,5 @@
 {% set pageName = "Components" %}
-{% set pageDescription = "Components are reusable parts of the portal user interface that have been made to specifically support your build." %}
+{% set pageDescription = "Components are reusable parts of the portal user interface that have been designed to specifically support your build." %}
 {% set selectedNav = "Components" %}
 {% set dateUpdated = "July 2023" %}
 
@@ -12,13 +12,21 @@
 {% block content %}
 
 <h2 class="govuk-heading-l">Summary</h2>
+
+<p class="govuk-body">Dynamics 365 Design Manual components are:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+    <li>based on <a class="govuk-link" href="https://design-system.service.gov.uk/components/" target="_blank">GOV.UK Design System (opens in a new tab)</a> components</li>
+    <li>suitable for use with Dynamics 365 portal services</li>   
+</ul>
+
 <p class="govuk-body">You can use these individual components in many different patterns and contexts. For example, you can use the text input component to ask for an 
-    email address, a National Insurance number or someone's name. These component types have been broken down for specific use cases on D365 portals.</p>
-<p class="govuk-body">Each component has coded examples which will render in the portal the same as they appear in the GOV.UK Design System, however they have been adapted 
-    specifically for use with D365 portals.</p>
+    email address, a National Insurance number or someone's name. These component types have been broken down for specific use cases on Dynamics 365 portals.</p>
+
 <p class="govuk-body">If you require a component which is not included in the list below, <a class="govuk-link" href="/portals/patterns">refer to the patterns included in 
     this manual</a> in the first instance. Some of the general use components, for example, breadcrumbs and error summary, are already embedded in within the liquid template layouts. The 
     patterns section will advise how to work with these components.</p>
+
 <p class="govuk-body">For all other components, please refer to the <a class="govuk-link" href="https://design-system.service.gov.uk/components/" target="_blank">GOV.UK 
     Design System (opens in a new tab)</a>. These will not require any customisation to work with D365 portals other than changing the content in the example HTML to meet your 
     specific requirements.</p>
@@ -35,24 +43,7 @@
         {% if section.title != 'Components' %}
         <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header"><a class="govuk-link" href="{{section.url}}">{{section.title}}</a></th>
-            <td class="govuk-table__cell">
-            {% if section.title == 'Checkboxes' %}
-                {% from 'portals/components/checkboxes/index.html' import pageDescription as relatedPageDescription %}
-                {{ relatedPageDescription }}
-            {% endif %}
-            {% if section.title == 'Date input' %}
-                {% from 'portals/components/date-input/index.html' import pageDescription as relatedPageDescription %}
-                {{ relatedPageDescription }}
-            {% endif %}
-            {% if section.title == 'Email input' %}
-                {% from 'portals/components/email-input/index.html' import pageDescription as relatedPageDescription %}
-                {{ relatedPageDescription }}
-            {% endif %}
-            {% if section.title == 'Number inputs' %}
-                {% from 'portals/components/number-inputs/index.html' import pageDescription as relatedPageDescription %}
-                {{ relatedPageDescription }}
-            {% endif %}      
-            </td>
+            <td class="govuk-table__cell">{{ section.url | getPageDescription }}</td>
         </tr>
         {% endif %}
     {% endfor %}
