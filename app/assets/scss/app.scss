@@ -1990,14 +1990,13 @@ code {
   color: #003a69;
 }
 
-.code-block span {
+.code-block span.code-highlight {
   color:red;
   font-family: monospace !important;
 }
 
-
-
-
-
-
+.code-block span.code-highlight-green {
+  color:green;
+  font-family: monospace !important;
+}
 
