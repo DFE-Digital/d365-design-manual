@@ -2000,3 +2000,118 @@ code {
   font-family: monospace !important;
 }
 
+/**
+* Search input to be embedded on a form within a text component
+**/
+
+.dfe-form-search__item-wrapper {
+  display: inline-flex;
+  width: 100%;
+  background: #fff
+}
+
+.dfe-form-search__item {
+    position: relative;
+    display: table;
+    vertical-align: top
+}
+
+.dfe-form-search__input[type="search"]:focus {
+    outline: 3px solid #fd0;
+    outline-offset: 0;
+    box-shadow: inset 0 0 0 2px
+}
+
+.dfe-form-search__input[type="search"] {
+    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.4736842105;
+    margin: 0;
+    width:100%;
+    height: 2.5em;
+    padding: .375em;
+    border: 2px solid #0b0c0c;
+    background: #fff;
+    border-radius: 0;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none
+}
+
+@media print {
+    .dfe-form-search__input[type="search"] {
+        font-family: sans-serif
+    }
+}
+
+@media (min-width: 40.0625em) {
+    .dfe-form-search__input[type="search"] {
+        font-size:19px;
+        line-height: 1.4736842105
+    }
+}
+
+@media print {
+    .dfe-form-search__input[type="search"] {
+        font-size: 14pt;
+        line-height: 1.4736842105
+    }
+}
+
+@media (min-width: 40.0625em) {
+    .dfe-form-search__input[type="search"] {
+        height:2.1052631579em;
+        padding: .3157894737em
+    }
+}
+
+.dfe-form-search__input[type="search"]:focus,.dfe-search__input.focus[type="search"] {
+    z-index: 2
+}
+
+.dfe-form-search__submit-wrapper {
+    width: 1%
+}
+
+.dfe-form-search__submit {
+    border: 0;
+    cursor: pointer;
+    border-radius: 0;
+    position: relative;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    text-indent: -5000px;
+    overflow: hidden;
+    background-color: #347ca9;
+}
+
+.dfe-form-search__submit .dfe-form-search__icon {
+    display: block;
+    pointer-events: none;
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    top: 10px;
+    left: 10px;
+    color: #ffffff;
+}
+
+.dfe-form-search__submit:focus {
+    z-index: 2;
+    outline: 3px solid #fd0;
+    outline-offset: 0;
+    box-shadow: inset 0 0 0 4px #0b0c0c
+}
+
+.dfe-form-search__submit:hover {
+  background-color: #003a69;
+  }
+
+.dfe-form-search__submit::-moz-focus-inner {
+    border: 0
+}  
