@@ -1,0 +1,971 @@
+{% macro radioHeaderExample () %}
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">
+    Radio component
+  </h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#example">
+        Example
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#html">
+        HTML
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#liquid">
+        Web Template
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel" id="example">
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset" aria-describedby="schema-name-hint schema-name-error">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">
+            Where do you live?
+          </h1>
+        </legend>
+        <div id="schema-name-hint" class="govuk-hint">
+          Select one option
+        </div>
+        <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
+          <span class="govuk-visually-hidden">Error:</span>
+        </p>
+        <div class="govuk-radios" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name" name="schema-name" type="radio" value="england">
+            <label class="govuk-label govuk-radios__label" for="where-do-you-live">
+              England
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name-2" name="schema-name" type="radio" value="scotland">
+            <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
+              Scotland
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name-3" name="schema-name" type="radio" value="wales">
+            <label class="govuk-label govuk-radios__label" for="schema-name-3">
+              Wales
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name-4" name="schema-name" type="radio" value="northern-ireland">
+            <label class="govuk-label govuk-radios__label" for="schema-name-4">
+              Northern Ireland
+            </label>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html">
+    <pre class="code-block">
+      <code class="html code-snippet">
+&lt;div class="govuk-form-group"&gt;
+  &lt;fieldset class="govuk-fieldset" aria-describedby="<span class="code-highlight">schema-name</span>-hint <span class="code-highlight">schema-name</span>-error"&gt;
+    &lt;legend class="govuk-fieldset__legend govuk-fieldset__legend--l"&gt;
+      &lt;h1 class="govuk-fieldset__heading"&gt;
+        Where do you live?
+      &lt;/h1&gt;
+    &lt;/legend&gt;
+    &lt;div id="<span class="code-highlight">schema-name</span>-hint" class="govuk-hint"&gt;
+      Select one option
+    &lt;/div&gt;
+    &lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
+      &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
+    &lt;/p&gt;
+    &lt;div class="govuk-radios" data-module="govuk-radios"&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="radio" value="england"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>"&gt;
+          England
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>-2" name="<span class="code-highlight">schema-name</span>" type="radio" value="scotland"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>-2"&gt;
+          Scotland
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>-3" name="<span class="code-highlight">schema-name</span>" type="radio" value="wales"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>-3"&gt;
+          Wales
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>-4" name="<span class="code-highlight">schema-name</span>" type="radio" value="northern-ireland"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>-4"&gt;
+          Northern Ireland
+        &lt;/label&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/fieldset&gt;
+&lt;/div&gt;
+      </code>
+    </pre>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="liquid">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        This is a basic web template layout and does not include additional liquid items which are common place on a CRM Portal, for example, authenticated user, 
+        web role, or parameter checks
+      </strong>
+    </div>
+    <pre class="code-block">
+      <code class="html code-snippet">
+&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
+
+&#123;% block title %&#125;&#123;% endblock %&#125;   
+
+&#123;% block main %&#125;
+
+  <span class="code-highlight">## HTML content goes here ##</span>
+
+&#123;% endblock %&#125;
+      </code>
+    </pre>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro radioStandardExample () %}
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">
+    Radio component
+  </h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#example1">
+        Example
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#html1">
+        HTML
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#liquid1">
+        Web Template
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel" id="example1">
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset" aria-describedby="schema-name-hint schema-name-error">
+        <legend class="govuk-fieldset__legend">
+          Where do you live?
+        </legend>
+        <div id="schema-name-hint" class="govuk-hint">
+          Select one option
+        </div>
+        <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
+          <span class="govuk-visually-hidden">Error:</span>
+        </p>
+        <div class="govuk-radios" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name" name="schema-name" type="radio" value="england">
+            <label class="govuk-label govuk-radios__label" for="where-do-you-live">
+              England
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name-2" name="schema-name" type="radio" value="scotland">
+            <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
+              Scotland
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name-3" name="schema-name" type="radio" value="wales">
+            <label class="govuk-label govuk-radios__label" for="schema-name-3">
+              Wales
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name-4" name="schema-name" type="radio" value="northern-ireland">
+            <label class="govuk-label govuk-radios__label" for="schema-name-4">
+              Northern Ireland
+            </label>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html1">
+    <pre class="code-block">
+      <code class="html code-snippet">
+&lt;div class="govuk-form-group"&gt;
+  &lt;fieldset class="govuk-fieldset" aria-describedby="<span class="code-highlight">schema-name</span>-hint <span class="code-highlight">schema-name</span>-error"&gt;
+    &lt;legend class="govuk-fieldset__legend"&gt;
+      Where do you live?
+    &lt;/legend&gt;
+    &lt;div id="<span class="code-highlight">schema-name</span>-hint" class="govuk-hint"&gt;
+      Select one option
+    &lt;/div&gt;
+    &lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
+      &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
+    &lt;/p&gt;
+    &lt;div class="govuk-radios" data-module="govuk-radios"&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="radio" value="england"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>"&gt;
+          England
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>-2" name="<span class="code-highlight">schema-name</span>" type="radio" value="scotland"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>-2"&gt;
+          Scotland
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>-3" name="<span class="code-highlight">schema-name</span>" type="radio" value="wales"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>-3"&gt;
+          Wales
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>-4" name="<span class="code-highlight">schema-name</span>" type="radio" value="northern-ireland"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>-4"&gt;
+          Northern Ireland
+        &lt;/label&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/fieldset&gt;
+&lt;/div&gt;
+      </code>
+    </pre>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="liquid1">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        This is a basic web template layout and does not include additional liquid items which are commonly used on a CRM Portal, for example, authenticated user, 
+        web role, or parameter checks.
+      </strong>
+    </div>
+    <pre class="code-block">
+      <code class="html code-snippet">
+
+&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
+
+&#123;% block main %&#125;
+
+  <span class="code-highlight">## HTML content goes here ##</span>
+
+&#123;% endblock %&#125;
+      </code>
+    </pre>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro radioNoHintExample () %}
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">
+    Radio component
+  </h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#example2">
+        Example
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#html2">
+        HTML
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#liquid2">
+        Web Template
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel" id="example2">
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset" aria-describedby="schema-name-error">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">
+            Where do you live?
+          </h1>
+        </legend>
+        <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
+          <span class="govuk-visually-hidden">Error:</span>
+        </p>
+        <div class="govuk-radios" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name" name="schema-name" type="radio" value="england">
+            <label class="govuk-label govuk-radios__label" for="where-do-you-live">
+              England
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name-2" name="schema-name" type="radio" value="scotland">
+            <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
+              Scotland
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name-3" name="schema-name" type="radio" value="wales">
+            <label class="govuk-label govuk-radios__label" for="schema-name-3">
+              Wales
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name-4" name="schema-name" type="radio" value="northern-ireland">
+            <label class="govuk-label govuk-radios__label" for="schema-name-4">
+              Northern Ireland
+            </label>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html2">
+    <pre class="code-block">
+      <code class="html code-snippet">
+&lt;div class="govuk-form-group"&gt;
+  &lt;fieldset class="govuk-fieldset" aria-describedby="<span class="code-highlight">schema-name</span>-error"&gt;
+    &lt;legend class="govuk-fieldset__legend govuk-fieldset__legend--l"&gt;
+      &lt;h1 class="govuk-fieldset__heading"&gt;
+        Where do you live?
+      &lt;/h1&gt;
+    &lt;/legend&gt;
+    &lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
+      &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
+    &lt;/p&gt;
+    &lt;div class="govuk-radios" data-module="govuk-radios"&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="radio" value="england"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>"&gt;
+          England
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>-2" name="<span class="code-highlight">schema-name</span>" type="radio" value="scotland"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>-2"&gt;
+          Scotland
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>-3" name="<span class="code-highlight">schema-name</span>" type="radio" value="wales"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>-3"&gt;
+          Wales
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>-4" name="<span class="code-highlight">schema-name</span>" type="radio" value="northern-ireland"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>-4"&gt;
+          Northern Ireland
+        &lt;/label&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/fieldset&gt;
+&lt;/div&gt;
+      </code>
+    </pre>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="liquid2">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        This is a basic web template layout and does not include additional liquid items which are commonly used on a CRM Portal, for example, authenticated user, 
+        web role, or parameter checks.
+      </strong>
+    </div>
+    <pre class="code-block">
+      <code class="html code-snippet">
+
+&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
+
+&#123;% block title %&#125;&#123;% endblock %&#125;
+
+&#123;% block main %&#125;
+
+  <span class="code-highlight">## HTML content goes here ##</span>
+
+&#123;% endblock %&#125;
+      </code>
+    </pre>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro radioInlineExample () %}
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">
+    Radio component
+  </h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#example3">
+        Example
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#html3">
+        HTML
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#liquid3">
+        Web Template
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel" id="example3">
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset" aria-describedby="schema-name-hint schema-name-error">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">
+            Have you changed your name?
+          </h1>
+        </legend>
+        <div id="schema-name-hint" class="govuk-hint">
+          This includes changing your last name or spelling your name differently.
+        </div>
+        <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
+          <span class="govuk-visually-hidden">Error:</span>
+        </p>
+        <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name" name="schema-name" type="radio" value="yes">
+            <label class="govuk-label govuk-radios__label" for="schema-name">
+              Yes
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name-2" name="schema-name" type="radio" value="no">
+            <label class="govuk-label govuk-radios__label" for="schema-name-2">
+              No
+            </label>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html3">
+    <pre class="code-block">
+      <code class="html code-snippet">
+&lt;div class="govuk-form-group"&gt;
+  &lt;fieldset class="govuk-fieldset" aria-describedby="<span class="code-highlight">schema-name</span>-hint <span class="code-highlight">schema-name</span>-error"&gt;
+    &lt;legend class="govuk-fieldset__legend govuk-fieldset__legend--l"&gt;
+      &lt;h1 class="govuk-fieldset__heading"&gt;
+        Have you changed your name?
+      &lt;/h1&gt;
+    &lt;/legend&gt;
+    &lt;div id="<span class="code-highlight">schema-name</span>-hint" class="govuk-hint"&gt;
+      This includes changing your last name or spelling your name differently.
+    &lt;/div&gt;
+    &lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
+      &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
+    &lt;/p&gt;
+    &lt;div class="govuk-radios govuk-radios--inline" data-module="govuk-radios"&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="radio" value="yes"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>"&gt;
+          Yes
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>-2" name="<span class="code-highlight">schema-name</span>" type="radio" value="no"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>-2"&gt;
+          No
+        &lt;/label&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/fieldset&gt;
+&lt;/div&gt;
+      </code>
+    </pre>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="liquid3">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        This is a basic web template layout and does not include additional liquid items which are commonly used on a CRM Portal, for example, authenticated user, 
+        web role, or parameter checks.
+      </strong>
+    </div>
+    <pre class="code-block">
+      <code class="html code-snippet">
+
+&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
+
+&#123;% block title %&#125;&#123;% endblock %&#125;
+
+&#123;% block main %&#125;
+
+  <span class="code-highlight">## HTML content goes here ##</span>
+
+&#123;% endblock %&#125;
+      </code>
+    </pre>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro radioItemHintExample () %}
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">
+    Radio component
+  </h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#example4">
+        Example
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#html4">
+        HTML
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#liquid4">
+        Web Template
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel" id="example4">
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset" aria-describedby="schema-name-hint schema-name-error">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">
+            How do you want to sign in?
+          </h1>
+        </legend>
+        <div id="schema-name-hint" class="govuk-hint">
+          You'll need an account to prove your identity and complete your assessment.
+        </div>
+        <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
+          <span class="govuk-visually-hidden">Error:</span>
+        </p>
+        <div class="govuk-radios" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name" name="schema-name" type="radio" value="government-gateway" aria-describedby="schema-name-item-hint">
+            <label class="govuk-label govuk-radios__label" for="schema-name">
+              Sign in with Government Gateway
+            </label>
+            <div id="schema-name-item-hint" class="govuk-hint govuk-radios__hint">
+              You'll have a user ID if you've registered for Self Assessment or filed a tax return online before.
+            </div>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name-2" name="schema-name" type="radio" value="govuk-verify" aria-describedby="schema-name-2-item-hint">
+            <label class="govuk-label govuk-radios__label" for="schema-name-2">
+              Sign in with GOV.UK Verify
+            </label>
+            <div id="schema-name-2-item-hint" class="govuk-hint govuk-radios__hint">
+              You'll have an account if you've already proved your identity with either Barclays, CitizenSafe, Digidentity, Experian, Post Office, Royal Mail or SecureIdentity.
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html4">
+    <pre class="code-block">
+      <code class="html code-snippet">
+&lt;div class="govuk-form-group"&gt;
+  &lt;fieldset class="govuk-fieldset" aria-describedby="<span class="code-highlight">schema-name</span>-hint <span class="code-highlight">schema-name</span>-error"&gt;
+    &lt;legend class="govuk-fieldset__legend govuk-fieldset__legend--l"&gt;
+      &lt;h1 class="govuk-fieldset__heading"&gt;
+        How do you want to sign in?
+      &lt;/h1&gt;
+    &lt;/legend&gt;
+    &lt;div id="<span class="code-highlight">schema-name</span>-hint" class="govuk-hint"&gt;
+      You'll need an account to prove your identity and complete your assessment.
+    &lt;/div&gt;
+    &lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
+      &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
+    &lt;/p&gt;
+    &lt;div class="govuk-radios" data-module="govuk-radios"&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="radio" value="government-gateway" aria-describedby="<span class="code-highlight">schema-name</span>-item-hint"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>"&gt;
+          Sign in with Government Gateway
+        &lt;/label&gt;
+        &lt;div id="<span class="code-highlight">schema-name</span>-item-hint" class="govuk-hint govuk-radios__hint"&gt;
+          You'll have a user ID if you've registered for Self Assessment or filed a tax return online before.
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>-2" name="<span class="code-highlight">schema-name</span>" type="radio" value="govuk-verify" aria-describedby="<span class="code-highlight">schema-name</span>-2-item-hint"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>-2"&gt;
+          Sign in with GOV.UK Verify
+        &lt;/label&gt;
+        &lt;div id="<span class="code-highlight">schema-name</span>-2-item-hint" class="govuk-hint govuk-radios__hint"&gt;
+          You'll have an account if you've already proved your identity with either Barclays, CitizenSafe, Digidentity, Experian, Post Office, Royal Mail or SecureIdentity.
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/fieldset&gt;
+&lt;/div&gt;
+      </code>
+    </pre>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="liquid4">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        This is a basic web template layout and does not include additional liquid items which are commonly used on a CRM Portal, for example, authenticated user, 
+        web role, or parameter checks.
+      </strong>
+    </div>
+    <pre class="code-block">
+      <code class="html code-snippet">
+
+&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
+
+&#123;% block title %&#125;&#123;% endblock %&#125;
+
+&#123;% block main %&#125;
+
+  <span class="code-highlight">## HTML content goes here ##</span>
+
+&#123;% endblock %&#125;
+      </code>
+    </pre>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro radioTextDividerExample () %}
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">
+    Radio component
+  </h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#example5">
+        Example
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#html5">
+        HTML
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#liquid5">
+        Web Template
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel" id="example5">
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset" aria-describedby="schema-name-hint schema-name-error">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">
+            Where do you live?
+          </h1>
+        </legend>
+        <div id="schema-name-hint" class="govuk-hint">
+          Select one option
+        </div>
+        <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
+          <span class="govuk-visually-hidden">Error:</span>
+        </p>
+        <div class="govuk-radios" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name" name="schema-name" type="radio" value="england">
+            <label class="govuk-label govuk-radios__label" for="where-do-you-live">
+              England
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name-2" name="schema-name" type="radio" value="scotland">
+            <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
+              Scotland
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name-3" name="schema-name" type="radio" value="wales">
+            <label class="govuk-label govuk-radios__label" for="schema-name-3">
+              Wales
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name-4" name="schema-name" type="radio" value="northern-ireland">
+            <label class="govuk-label govuk-radios__label" for="schema-name-4">
+              Northern Ireland
+            </label>
+          </div>
+          <div class="govuk-radios__divider">or</div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name-6" name="schema-name" type="radio" value="abroad">
+            <label class="govuk-label govuk-radios__label" for="schema-name-6">
+              I am a British citizen living abroad
+            </label>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html5">
+    <pre class="code-block">
+      <code class="html code-snippet">
+&lt;div class="govuk-form-group"&gt;
+  &lt;fieldset class="govuk-fieldset" aria-describedby="<span class="code-highlight">schema-name</span>-hint <span class="code-highlight">schema-name</span>-error"&gt;
+    &lt;legend class="govuk-fieldset__legend govuk-fieldset__legend--l"&gt;
+      &lt;h1 class="govuk-fieldset__heading"&gt;
+        Where do you live?
+      &lt;/h1&gt;
+    &lt;/legend&gt;
+    &lt;div id="<span class="code-highlight">schema-name</span>-hint" class="govuk-hint"&gt;
+      Select one option
+    &lt;/div&gt;
+    &lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
+      &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
+    &lt;/p&gt;
+    &lt;div class="govuk-radios" data-module="govuk-radios"&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="radio" value="england"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>"&gt;
+          England
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>-2" name="<span class="code-highlight">schema-name</span>" type="radio" value="scotland"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>-2"&gt;
+          Scotland
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>-3" name="<span class="code-highlight">schema-name</span>" type="radio" value="wales"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>-3"&gt;
+          Wales
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>-4" name="<span class="code-highlight">schema-name</span>" type="radio" value="northern-ireland"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>-4"&gt;
+          Northern Ireland
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__divider"&gt;or&lt;/div&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>-6" name="<span class="code-highlight">schema-name</span>" type="radio" value="abroad"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>-6"&gt;
+          I am a British citizen living abroad
+        &lt;/label&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/fieldset&gt;
+&lt;/div&gt;
+      </code>
+    </pre>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="liquid5">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        This is a basic web template layout and does not include additional liquid items which are common place on a CRM Portal, for example, authenticated user, 
+        web role, or parameter checks
+      </strong>
+    </div>
+    <pre class="code-block">
+      <code class="html code-snippet">
+&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
+
+&#123;% block title %&#125;&#123;% endblock %&#125;   
+
+&#123;% block main %&#125;
+
+  <span class="code-highlight">## HTML content goes here ##</span>
+
+&#123;% endblock %&#125;
+      </code>
+    </pre>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro radioConditionalQuestionExample () %}
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">
+    Radio component
+  </h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#example6">
+        Example
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#html6">
+        HTML
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#liquid6">
+        Web Template
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel" id="example6">
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset" aria-describedby="schema-name-hint schema-name-error">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">
+            How would you prefer to be contacted?
+          </h1>
+        </legend>
+        <div id="schema-name-hint" class="govuk-hint">
+          Select one option.
+        </div>
+        <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
+          <span class="govuk-visually-hidden">Error:</span>
+        </p>
+        <div class="govuk-radios" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name" name="schema-name" type="radio" value="email" data-aria-controls="conditional-schema-name">
+            <label class="govuk-label govuk-radios__label" for="schema-name">
+              Email
+            </label>
+          </div>
+          <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-schema-name">
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="schema-name">
+                Email address
+              </label>
+              <input class="govuk-input govuk-!-width-one-third" id="schema-name" name="schema-name" type="email" spellcheck="false" autocomplete="email">
+            </div>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name-2" name="schema-name" type="radio" value="phone" data-aria-controls="conditional-schema-name-2">
+            <label class="govuk-label govuk-radios__label" for="schema-name-2">
+              Phone
+            </label>
+          </div>
+          <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-schema-name-2">
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="schema-name">
+                Phone number
+              </label>
+              <input class="govuk-input govuk-!-width-one-third" id="schema-name" name="schema-name" type="tel" autocomplete="tel">
+            </div>
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="schema-name-3" name="schema-name" type="radio" value="text" data-aria-controls="conditional-schema-name-3">
+            <label class="govuk-label govuk-radios__label" for="schema-name-3">
+              Text message
+            </label>
+          </div>
+          <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-schema-name-3">
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="schema-name">
+                Mobile phone number
+              </label>
+              <input class="govuk-input govuk-!-width-one-third" id="schema-name" name="schema-name" type="tel" autocomplete="tel">
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html6">
+    <pre class="code-block">
+      <code class="html code-snippet">
+&lt;div class="govuk-form-group"&gt;
+  &lt;fieldset class="govuk-fieldset" aria-describedby="<span class="code-highlight">schema-name</span>-hint <span class="code-highlight">schema-name-error</span>"&gt;
+    &lt;legend class="govuk-fieldset__legend govuk-fieldset__legend--l"&gt;
+      &lt;h1 class="govuk-fieldset__heading"&gt;
+        How would you prefer to be contacted?
+      &lt;/h1&gt;
+    &lt;/legend&gt;
+    &lt;div id="<span class="code-highlight">schema-name</span>-hint" class="govuk-hint"&gt;
+      Select one option.
+    &lt;/div&gt;
+    &lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
+      &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
+    &lt;/p&gt;
+    &lt;div class="govuk-radios" data-module="govuk-radios"&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="radio" value="email" data-aria-controls="conditional-<span class="code-highlight">schema-name</span>"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>"&gt;
+          Email
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-<span class="code-highlight">schema-name</span>"&gt;
+        &lt;div class="govuk-form-group"&gt;
+          &lt;label class="govuk-label" for="<span class="code-highlight">schema-name</span>"&gt;
+            Email address
+          &lt;/label&gt;
+          &lt;input class="govuk-input govuk-!-width-one-third" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="email" spellcheck="false" autocomplete="email"&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>-2" name="<span class="code-highlight">schema-name</span>" type="radio" value="phone" data-aria-controls="conditional-<span class="code-highlight">schema-name</span>-2"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>-2"&gt;
+          Phone
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-<span class="code-highlight">schema-name</span>-2"&gt;
+        &lt;div class="govuk-form-group"&gt;
+          &lt;label class="govuk-label" for="<span class="code-highlight">schema-name</span>"&gt;
+            Phone number
+          &lt;/label&gt;
+          &lt;input class="govuk-input govuk-!-width-one-third" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="tel" autocomplete="tel"&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__item"&gt;
+        &lt;input class="govuk-radios__input" id="<span class="code-highlight">schema-name</span>-3" name="<span class="code-highlight">schema-name</span>" type="radio" value="text" data-aria-controls="conditional-<span class="code-highlight">schema-name</span>-3"&gt;
+        &lt;label class="govuk-label govuk-radios__label" for="<span class="code-highlight">schema-name</span>-3"&gt;
+          Text message
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-<span class="code-highlight">schema-name</span>-3"&gt;
+        &lt;div class="govuk-form-group"&gt;
+          &lt;label class="govuk-label" for="<span class="code-highlight">schema-name</span>"&gt;
+            Mobile phone number
+          &lt;/label&gt;
+          &lt;input class="govuk-input govuk-!-width-one-third" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="tel" autocomplete="tel"&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/fieldset&gt;
+&lt;/div&gt;
+      </code>
+    </pre>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="liquid6">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        This is a basic web template layout and does not include additional liquid items which are common place on a CRM Portal, for example, authenticated user, 
+        web role, or parameter checks
+      </strong>
+    </div>
+    <pre class="code-block">
+      <code class="html code-snippet">
+&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
+
+&#123;% block title %&#125;&#123;% endblock %&#125;   
+
+&#123;% block main %&#125;
+
+  <span class="code-highlight">## HTML content goes here ##</span>
+
+&#123;% endblock %&#125;
+      </code>
+    </pre>
+  </div>
+</div>
+{% endmacro %}

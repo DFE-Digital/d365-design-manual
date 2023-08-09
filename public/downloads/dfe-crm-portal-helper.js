@@ -65,12 +65,12 @@ DfEPortal = {
             if (!isNumberObj.value) {
               reject(isNumberObj);
             } else {
-              const minMaxObj = this.ValidationHelper.MinMaxChecks(inputObj.identifier, inputObj.type, inputObj.friendlyName)
-              if (!minMaxObj.value) {
-                reject(minMaxObj);
+              const minMaxValueObj = this.ValidationHelper.MinMaxValueChecks(inputObj.identifier, inputObj.friendlyName)
+              if (!minMaxValueObj.value) {
+                reject(minMaxValueObj);
               } else {
                 resolve(inputObj.identifier);
-              }
+              }  
             }
           }
         });
@@ -95,11 +95,16 @@ DfEPortal = {
               if (!isWholeNumberObj.value) {
                 reject(isWholeNumberObj);
               } else {
-                const minMaxObj = this.ValidationHelper.MinMaxChecks(inputObj.identifier, inputObj.type, inputObj.friendlyName)
-                if (!minMaxObj.value) {
-                  reject(minMaxObj);
+                const minMaxCharacterObj = this.ValidationHelper.MinMaxCharacterChecks(inputObj.identifier, inputObj.friendlyName)
+                if (!minMaxCharacterObj.value) {
+                  reject(minMaxCharacterObj);
                 } else {
-                  resolve(inputObj.identifier);
+                  const minMaxValueObj = this.ValidationHelper.MinMaxValueChecks(inputObj.identifier, inputObj.friendlyName)
+                  if (!minMaxValueObj.value) {
+                    reject(minMaxValueObj);
+                  } else {
+                    resolve(inputObj.identifier);
+                  }
                 }
               }
             }
@@ -126,9 +131,9 @@ DfEPortal = {
               if (!isDecimalNumberObj.value) {
                 reject(isDecimalNumberObj);
               } else {
-                const minMaxObj = this.ValidationHelper.MinMaxChecks(inputObj.identifier, inputObj.type, inputObj.friendlyName)
-                if (!minMaxObj.value) {
-                  reject(minMaxObj);
+                const minMaxValueObj = this.ValidationHelper.MinMaxValueChecks(inputObj.identifier, inputObj.type, inputObj.friendlyName)
+                if (!minMaxValueObj.value) {
+                  reject(minMaxValueObj);
                 } else {
                   resolve(inputObj.identifier);
                 }
@@ -670,16 +675,16 @@ DfEPortal.ValidationHelper = {
     }
   },
 
-  MinMaxChecks: function (input, type, friendlyName) {
-    const maxValue = $(`#${input}`).attr('max');
-    const minValue = $(`#${input}`).attr('min');
-    if (minValue || maxValue) {
-      if (maxValue && !minValue) {
-        return this.InputMaxCheck(input, type, friendlyName, maxValue);
-      } else if (!maxValue && minValue) {
-        return this.InputMinCheck(input, type, friendlyName, minValue);
-      } else if (maxValue && minValue) {
-        return this.InputBetweenCheck(input, type, friendlyName, minValue, maxValue);
+  MinMaxCharacterChecks: function (input, friendlyName) {
+    const maxLength = $(`#${input}`).attr('maxchar');
+    const minLength = $(`#${input}`).attr('minchar');
+    if (minLength || maxLength) {
+      if (maxLength && !minLength) {
+        return this.InputMaxCharacterCheck(input, friendlyName, minLength);
+      } else if (!maxLength && minLength) {
+        return this.InputMinCharacterCheck(input, friendlyName, minLength);
+      } else if (maxLength && minLength) {
+        return this.InputBetweenCharacterCheck(input, friendlyName, minLength, maxLength);
       }
     } else {
       return {
@@ -690,51 +695,34 @@ DfEPortal.ValidationHelper = {
     }
   },
 
-  InputMaxCheck: function (input, type, friendlyName, max) {
-    if (type == "text" || type == "text-area") {
-      const inputLength = $(`#${input}`).val().length;
-      if (inputLength > 0) {
-        const maxLength = parseInt(max);
-        return {
-          input: input,
-          value: inputLength > maxLength ? false : true,
-          errorMessage: inputLength > maxLength ? `${this.ToProperCase(friendlyName)} must be ${maxLength} characters or less` : null
-        }
-      } else {
-        return {
-          input: input,
-          value: true,
-          errorMessage: null
-        }
+  MinMaxValueChecks: function (input, friendlyName) {
+    const maxValue = $(`#${input}`).attr('maxvalue');
+    const minValue = $(`#${input}`).attr('minvalue');
+    if (minValue || maxValue) {
+      if (maxValue && !minValue) {
+        return this.InputMaxValueCheck(input, friendlyName, maxValue);
+      } else if (!maxValue && minValue) {
+        return this.InputMinValueCheck(input, friendlyName, minValue);
+      } else if (maxValue && minValue) {
+        return this.InputBetweenValueCheck(input, friendlyName, minValue, maxValue);
       }
-    } else if (type == "whole-number" || type == "decimal-number" || type == "number") {
-      const inputValue = $(`#${input}`).val();
-      if (inputValue.length > 0) {
-        const maxValue = parseInt(max);
-        return {
-          input: input,
-          value: inputValue > maxValue ? false : true,
-          errorMessage: inputValue > maxValue ? `${this.ToProperCase(friendlyName)} must be less than ${maxValue}` : null
-        }
-      } else {
-        return {
-          input: input,
-          value: true,
-          errorMessage: null
-        }
+    } else {
+      return {
+        input: input,
+        value: true,
+        errorMessage: null
       }
     }
   },
 
-  InputMinCheck: function (input, type, friendlyName, min) {
-    if (type == "text" || type == "text-area") {
+  InputMaxCharacterCheck: function (input, friendlyName, maxLength) {
       const inputLength = $(`#${input}`).val().length;
       if (inputLength > 0) {
-        const minLength = parseInt(min);
+        const maxLengthFormatted = parseInt(maxLength);
         return {
           input: input,
-          value: inputLength < minLength ? false : true,
-          errorMessage: inputLength < minLength ? `${this.ToProperCase(friendlyName)} must be ${minLength} characters or more` : null
+          value: inputLength > maxLengthFormatted ? false : true,
+          errorMessage: inputLength > maxLengthFormatted ? `${this.ToProperCase(friendlyName)} must be ${maxLengthFormatted} characters or less` : null
         }
       } else {
         return {
@@ -743,32 +731,32 @@ DfEPortal.ValidationHelper = {
           errorMessage: null
         }
       }
-    } else if (type == "whole-number" || type == "decimal-number" || type == "number") {
-      const inputValue = $(`#${input}`).val();
-      if (inputValue.length > 0) {
-        const minValue = parseInt(min);
-        return {
-          input: input,
-          value: inputValue < minValue ? false : true,
-          errorMessage: inputValue < minValue ? `${this.ToProperCase(friendlyName)} must be ${minValue} or fewer` : null
-        }
-      } else {
-        return {
-          input: input,
-          value: true,
-          errorMessage: null
-        }
+  },
+
+  InputMinCharacterCheck: function (input, friendlyName, minLength) {
+    const inputLength = $(`#${input}`).val().length;
+    if (inputLength > 0) {
+      const minLengthFormatted = parseInt(minLength);
+      return {
+        input: input,
+        value: inputLength < minLengthFormatted ? false : true,
+        errorMessage: inputLength < minLengthFormatted ? `${this.ToProperCase(friendlyName)} must be ${minLengthFormatted} characters or more` : null
+      }
+    } else {
+      return {
+        input: input,
+        value: true,
+        errorMessage: null
       }
     }
   },
 
-  InputBetweenCheck: function (input, type, friendlyName, min, max) {
-    if (type == "text" || type == "text-area") {
+  InputBetweenCharacterCheck: function (input, friendlyName, minLength, maxLength) {
       const inputLength = $(`#${input}`).val().length;
       if (inputLength > 0) {
-        const minLength = parseInt(min);
-        const maxLength = parseInt(max);
-        if (minLength == maxLength) {
+        const minLengthFormatted = parseInt(minLength);
+        const maxLengthFormatted = parseInt(maxLength);
+        if (minLengthFormatted == maxLengthFormatted) {
           return {
             input: input,
             value: inputLength == minLength ? true : false,
@@ -777,8 +765,8 @@ DfEPortal.ValidationHelper = {
         }
         return {
           input: input,
-          value: inputLength >= minLength && inputLength <= maxLength ? true : false,
-          errorMessage: inputLength >= minLength && inputLength <= maxLength ? null : `${this.ToProperCase(friendlyName)} must be equal to or between ${minLength} and ${maxLength} characters`
+          value: inputLength >= minLengthFormatted && inputLength <= maxLengthFormatted ? true : false,
+          errorMessage: inputLength >= minLengthFormatted && inputLength <= maxLengthFormatted ? null : `${this.ToProperCase(friendlyName)} must be between ${minLengthFormatted} and ${maxLengthFormatted} characters`
         }
       } else {
         return {
@@ -787,29 +775,66 @@ DfEPortal.ValidationHelper = {
           errorMessage: null
         }
       }
-    } else if (type == "whole-number" || type == "decimal-number" || type == "number") {
-      const inputValue = $(`#${input}`).val();
-      if (inputValue.length > 0) {
-        const minValue = parseInt(min);
-        const maxValue = parseInt(max);
-        if (minValue == maxValue) {
-          return {
-            input: input,
-            value: inputValue == minValue ? true : false,
-            errorMessage: inputValue == minValue ? null : `${this.ToProperCase(friendlyName)} must be ${minValue}`
-          }
-        }
+  },
+
+  InputMaxValueCheck: function (input, friendlyName, maxValue) {
+    const inputValue = $(`#${input}`).val();
+    if (inputValue > 0) {
+      const maxValueFormatted = parseInt(maxValue);
+      return {
+        input: input,
+        value: inputValue > maxValueFormatted ? false : true,
+        errorMessage: inputValue > maxValueFormatted ? `${this.ToProperCase(friendlyName)} must be ${maxValueFormatted} or fewer` : null
+      }
+    } else {
+      return {
+        input: input,
+        value: true,
+        errorMessage: null
+      }
+    }
+  },
+
+  InputMinValueCheck: function (input, friendlyName, minValue) {
+    const inputValue = $(`#${input}`).val();
+    if (inputValue > 0) {
+      const minValueFormatted = parseInt(minValue);
+      return {
+        input: input,
+        value: inputValue < minValueFormatted ? false : true,
+        errorMessage: inputValue < minValueFormatted ? `${this.ToProperCase(friendlyName)} must be ${minValueFormatted} or more` : null
+      }
+    } else {
+      return {
+        input: input,
+        value: true,
+        errorMessage: null
+      }
+    }
+  },
+
+  InputBetweenValueCheck: function (input, friendlyName, minValue, maxValue) {
+    const inputValue = $(`#${input}`).val();
+    if (inputValue > 0) {
+      const minValueFormatted = parseInt(minValue);
+      const maxValueFormatted = parseInt(maxValue);
+      if (minValueFormatted == maxValueFormatted) {
         return {
           input: input,
-          value: inputValue >= minValue && inputValue <= maxValue ? true : false,
-          errorMessage: inputValue >= minValue && inputValue <= maxValue ? null : `${this.ToProperCase(friendlyName)} must be equal to or between ${minValue} and ${maxValue}`
+          value: inputValue == minValueFormatted ? true : false,
+          errorMessage: inputValue == minValueFormatted ? null : `${this.ToProperCase(friendlyName)} must be ${minValueFormatted}`
         }
-      } else {
-        return {
-          input: input,
-          value: true,
-          errorMessage: null
-        }
+      }
+      return {
+        input: input,
+        value: inputValue >= minValueFormatted && inputValue <= maxValueFormatted ? true : false,
+        errorMessage: inputValue >= minValueFormatted && inputValue <= maxValueFormatted ? null : `${this.ToProperCase(friendlyName)} must be between ${minValueFormatted} and ${maxValueFormatted}`
+      }
+    } else {
+      return {
+        input: input,
+        value: true,
+        errorMessage: null
       }
     }
   },
