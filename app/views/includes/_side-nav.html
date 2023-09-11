@@ -70,12 +70,12 @@
         url: "/portals/components"
     },
     {
-        title: "Card",
-        url: "/portals/components/card"
-    },
-    {
         title: "Checkboxes",
         url: "/portals/components/checkboxes"
+    },
+    {
+      title: "Contents list",
+      url: "/portals/components/contents-list"
     },
     {
         title: "Date input",
@@ -90,6 +90,10 @@
         url: "/portals/components/number-inputs"
     },
     {
+      title: "Panel card",
+      url: "/portals/components/panel-card"
+    },
+    {
         title: "Radios",
         url: "/portals/components/radios"
     },
@@ -100,6 +104,10 @@
     {
         title: "Select",
         url: "/portals/components/select"
+    },
+    {
+      title: "Table (sortable)",
+      url: "/portals/components/table-sortable"
     },
     {
         title: "Telephone input",
@@ -154,8 +162,8 @@
     </ul>
     {% endif %}
 
-    {%- if selectedNav == "Components" or selectedNav == "Card" or selectedNav == "Checkboxes" or selectedNav == "Date input" or selectedNav == "Email input" or 
-    selectedNav == "Number inputs" or selectedNav == "Radios" or selectedNav == "Search" or selectedNav == "Select" or selectedNav == "Telephone input" or 
+    {%- if selectedNav == "Components" or selectedNav == "Panel card" or selectedNav == "Checkboxes" or selectedNav == "Contents list" or selectedNav == "Date input" or selectedNav == "Email input" or 
+    selectedNav == "Number inputs" or selectedNav == "Radios" or selectedNav == "Search" or selectedNav == "Select" or selectedNav == "Table (sortable)" or selectedNav == "Telephone input" or 
     selectedNav == "Textarea" or selectedNav == "Text input" or selectedNav == "Timeline"  %}
     <ul class="dfe-vertical-nav__section">
         {% for item in components %}

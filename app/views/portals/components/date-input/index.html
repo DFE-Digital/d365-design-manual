@@ -10,18 +10,51 @@
 {% block beforeContent %}{% endblock %}
 
 {% block content %}
+<div class="dfe-contents-container">
+  <nav class="dfe-contents-list">
+    <h2 class="dfe-contents-list__title">Contents</h2>
+    <ol class="dfe-contents-list__list">
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#when-to-use-this-component">When to use this component</a>
+      </li>          
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#when-to-not-use-this-component">When to not use this component</a>
+      </li>
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#how-it-works">How it works</a>
+        <ol class="dfe-contents-list__nested-list">
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#html-copy">Copy and amend the HTML examples</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#one-question">If you are asking one question on the page</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#more-than-one-question">If you are asking more than one question on the page</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#autocomplete">Use the autocomplete attribute for a date of birth</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#error-messages">Error messages</a>
+          </li>
+        </ol>  
+      </li>  
+    </ol>
+  </nav>
+</div>
 
-<h2 class="govuk-heading-l">When to use this component</h2>
+<h2 class="govuk-heading-l" id="when-to-use-this-component">When to use this component</h2>
 <p class="govuk-body">{{ pageDescription }}</p>
 
-<h2 class="govuk-heading-l">When to not use this component</h2>
+<h2 class="govuk-heading-l" id="when-to-not-use-this-component">When to not use this component</h2>
 <p class="govuk-body">Do not use the date input component if users are unlikely to know the exact date of the event you're asking about.</p>
 
-<h2 class="govuk-heading-l">How it works</h2>
+<h2 class="govuk-heading-l" id="how-it-works">How it works</h2>
 <p class="govuk-body">The date input component consists of 3 fields to let users enter a day, month and year.</p>
 <p class="govuk-body">Make sure that any example dates you use in hint text are valid for the question being asked.</p>
 
-<h3 class="govuk-heading-s">Copy and amend the HTML examples</h3>
+<h3 class="govuk-heading-m" id="html-copy">Copy and amend the HTML examples</h3>
 <p class="govuk-body">Choose the appropriate example from this page and copy the HTML directly into your web template. <a class="govuk-link" href="../layouts">Read about layouts</a>
   for more information about how to structure your web template.</p>
 <p class="govuk-body">If the component needs to submit to a field in CRM, replace the highlighted <code>schema-name</code> text in the example 
@@ -29,26 +62,26 @@
   displayed as <code>schema-name-day</code> in the example, the value should still contain <code>-day</code> after the schema name has been replaced (<code>dfe_field-day</code>).</p>
 <p class="govuk-body">This step is essential for the custom portal helper framework to validate and submit data to CRM. <a class="govuk-link" href="">Read about data validation and submitting data to CRM</a>.</p>
 
-<h3 class="govuk-heading-m">If you are asking one question on the page</h3>
+<h3 class="govuk-heading-m" id="one-question">If you are asking one question on the page</h3>
 <p class="govuk-body">If you are asking just one question on the page, set the contents of the <code>&lt;legend&gt;</code> as the page heading. This is good practice as it 
   means that users of screen readers will only hear the contents once.</p>
 <p class="govuk-body">You will need to include an empty <code>&#123;% title %&#125;</code> block in your web template to override the default page header.</p>
 
 {{ dateHeaderExample() }}
 
-<h3 class="govuk-heading-m">If you are asking more than one question on the page</h3>
+<h3 class="govuk-heading-m" id="more-than-one-question">If you are asking more than one question on the page</h3>
 <p class="govuk-body">If you're asking more than one question on the page, do not set the contents of the <code>&lt;legend&gt;</code> as the page heading.</p>
 
 {{ dateStandardExample() }}
 
-<h3 class="govuk-heading-m">Use the autocomplete attribute for a date of birth</h3>
+<h3 class="govuk-heading-m" id="autocomplete">Use the autocomplete attribute for a date of birth</h3>
 <p class="govuk-body">Use the autocomplete attribute on the date input component when you're asking for a date of birth. This lets browsers autofill the information on a 
   user's behalf if they've entered it previously.</p>
 <p class="govuk-body">To do this, set the <code>autocomplete</code> attribute on the 3 inputs to <code>bday-day</code>, <code>bday-month</code> and <code>bday-year</code>.</p>
 
 {{ dateAutocompleteExample() }}
 
-<h3 class="govuk-heading-m">Error messages</h3>
+<h3 class="govuk-heading-m" id="error-messages">Error messages</h3>
 <p class="govuk-body">An error message is shown next to the field and in the error summary when there is a validation error. The HTML content for these errors is already 
   included in the component examples and in the base portal web template set up, therefore you do not need to add any additional error containers to your page.</p>
 <p class="govuk-body">The <a class="govuk-link" href="#">portal helper framework</a> validation process automatically handles error messages for specific error states.</p>

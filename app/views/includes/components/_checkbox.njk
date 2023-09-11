@@ -244,3 +244,123 @@
   </div>
 </div>
 {% endmacro %}
+
+{% macro checkboxNoHintExample () %}
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">
+    Checkbox component
+  </h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#example2">
+        Example
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#html2">
+        HTML
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#liquid2">
+        Web Template
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel" id="example2">
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset" aria-describedby="schema-name">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">
+            Which types of waste do you transport?
+          </h1>
+        </legend>
+        <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
+          <span class="govuk-visually-hidden">Error:</span>
+        </p>
+        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="schema-name-1" name="schema-name" type="checkbox" value="carcasses">
+            <label class="govuk-label govuk-checkboxes__label" for="schema-name">
+              Waste from animal carcasses
+            </label>
+          </div>
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="schema-name-2" name="schema-name" type="checkbox" value="mines">
+            <label class="govuk-label govuk-checkboxes__label" for="schema-name-2">
+              Waste from mines or quarries
+            </label>
+          </div>
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="schema-name-3" name="schema-name" type="checkbox" value="farm">
+            <label class="govuk-label govuk-checkboxes__label" for="schema-name-3">
+              Farm or agricultural waste
+            </label>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html2">
+    <pre class="code-block">
+      <code class="html code-snippet">
+&lt;div class="govuk-form-group"&gt;
+  &lt;fieldset class="govuk-fieldset" aria-describedby="<span class="code-highlight">schema-name</span>"&gt;
+    &lt;legend class="govuk-fieldset__legend govuk-fieldset__legend--l"&gt;
+      &lt;h1 class="govuk-fieldset__heading"&gt;
+        Which types of waste do you transport?
+      &lt;/h1&gt;
+    &lt;/legend&gt;
+    &lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
+      &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
+    &lt;/p&gt;
+    &lt;div class="govuk-checkboxes" data-module="govuk-checkboxes"&gt;
+      &lt;div class="govuk-checkboxes__item"&gt;
+        &lt;input class="govuk-checkboxes__input" id="<span class="code-highlight">schema-name</span>-1" name="<span class="code-highlight">schema-name</span>" type="checkbox" value="carcasses"&gt;
+        &lt;label class="govuk-label govuk-checkboxes__label" for="<span class="code-highlight">schema-name</span>-1"&gt;
+          Waste from animal carcasses
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-checkboxes__item"&gt;
+        &lt;input class="govuk-checkboxes__input" id="<span class="code-highlight">schema-name</span>-2" name="<span class="code-highlight">schema-name</span>" type="checkbox" value="mines"&gt;
+        &lt;label class="govuk-label govuk-checkboxes__label" for="<span class="code-highlight">schema-name</span>-2"&gt;
+          Waste from mines or quarries
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="govuk-checkboxes__item"&gt;
+        &lt;input class="govuk-checkboxes__input" id="<span class="code-highlight">schema-name</span>-3" name="<span class="code-highlight">schema-name</span>" type="checkbox" value="farm"&gt;
+        &lt;label class="govuk-label govuk-checkboxes__label" for="<span class="code-highlight">schema-name</span>-3"&gt;
+          Farm or agricultural waste
+        &lt;/label&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/fieldset&gt;
+&lt;/div&gt;
+      </code>
+    </pre>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="liquid2">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        This is a basic web template layout and does not include additional liquid items which are common place on a CRM Portal, for example, authenticated user, 
+        web role, or parameter checks
+      </strong>
+    </div>
+    <pre class="code-block">
+      <code class="html code-snippet">
+&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
+
+&#123;% block title %&#125;&#123;% endblock %&#125;   
+
+&#123;% block main %&#125;
+
+  <span class="code-highlight">## HTML content goes here ##</span>
+
+&#123;% endblock %&#125;
+      </code>
+    </pre>
+  </div>
+</div>
+{% endmacro %}

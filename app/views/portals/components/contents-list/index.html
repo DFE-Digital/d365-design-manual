@@ -1,0 +1,72 @@
+{% set pageName = "Contents list" %}
+{% set pageDescription = "Use a contents list at the top of the page to allow users to navigate around a small group of related pages or page sections." %}
+{% set selectedNav = "Contents list" %}
+{% set dateUpdated = "July 2023" %}
+
+{% from 'includes/components/_contents.njk' import contentsStandardExample, nestedChildExample, noDashExample %}
+
+{% extends "layouts/content-with-sidenav.html" %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+<div class="dfe-contents-container">
+  <nav class="dfe-contents-list">
+    <h2 class="dfe-contents-list__title">Contents</h2>
+    <ol class="dfe-contents-list__list">
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#when-to-use-this-component">When to use this component</a>
+      </li>          
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#when-to-not-use-this-component">When to not use this component</a>
+      </li>
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#how-it-works">How it works</a>
+        <ol class="dfe-contents-list__nested-list">
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#html-copy">Copy and amend the HTML examples</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#no-dash">Without dashes</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#nested-child-links">Nested child links</a>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<h2 class="govuk-heading-l" id="when-to-use-this-component">When to use this component</h2>
+<p class="govuk-body">{{ pageDescription }}</p>
+
+<h2 class="govuk-heading-l" id="when-to-not-use-this-component">When to not use this component</h2>
+<p class="govuk-body">Do not use a contents list on pages which aren't grouped together or related as this is likely confuse users.</p>
+<p class="govuk-body">Do not use a contents list in a transactional service or a form. Use other components instead, such as buttons to move forward and back links to navigate back.</p>
+
+<h2 class="govuk-heading-l" id="how-it-works">How it works</h2>
+
+<p class="govuk-body">Keep links short and descriptive. Links that are too long (more than 2 lines) make it difficult for users to scan the list.</p>
+<p class="govuk-body">Page titles or header titles must reflect the subject of the page or the header text on the page. This is so users are clear where they have navigated to.</p>
+
+<h3 class="govuk-heading-m" id="html-copy">Copy the HTML example</h3>
+<p class="govuk-body">Choose the appropriate example from this page and copy the HTML directly into your web template. <a class="govuk-link" href="../layouts">Read about layouts</a>
+  for more information about how to structure your web template.</p>
+
+{{ contentsStandardExample() }}
+
+<h3 class="govuk-heading-m" id="no-dash">Without dashes</h3>
+<p class="govuk-body">You can display the contents list without showing dashes before each link.</p>
+
+{{ noDashExample() }}
+
+<h3 class="govuk-heading-m" id="nested-child-links">Nested child links</h3>
+<p class="govuk-body">You may wish to use nested child links to reflect the structural relationship between child pages or page headers.</p>
+
+{{ nestedChildExample() }}
+
+<p class="govuk-body">If you would like any additional advice or guidance with using these examples on Dynamics 365 Portals, please contact the Solutions Delivery Team.</p>
+
+{% endblock %}

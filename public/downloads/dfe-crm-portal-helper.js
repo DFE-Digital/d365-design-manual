@@ -154,7 +154,7 @@ DfEPortal = {
           if (!nullCheckObj.value) {
             reject(nullCheckObj);
           } else {
-            const minMaxObj = this.ValidationHelper.MinMaxChecks(inputObj.identifier, inputObj.type, inputObj.friendlyName)
+            const minMaxObj = this.ValidationHelper.MinMaxCharacterChecks(inputObj.identifier, inputObj.type, inputObj.friendlyName)
             if (!minMaxObj.value) {
               reject(minMaxObj);
             } else {
@@ -179,7 +179,7 @@ DfEPortal = {
             if (!characterCountObj.value) {
               reject(characterCountObj);
             } else {
-              const minMaxObj = this.ValidationHelper.MinMaxChecks(inputObj.identifier, inputObj.type, inputObj.friendlyName);
+              const minMaxObj = this.ValidationHelper.MinMaxCharacterChecks(inputObj.identifier, inputObj.type, inputObj.friendlyName);
               if (!minMaxObj.value) {
                 reject(minMaxObj);
               } else {
@@ -337,8 +337,8 @@ DfEPortal.ValidationHelper = {
       } else if (type == "select") {
         return {
           input: input,
-          value: $(`#${input}`).val() == "" ? false : true,
-          errorMessage: $(`#${input}`).val() == "" ? `Select ${friendlyName.toLowerCase()}` : null
+          value: $(`#${input} option:selected` ).val() == "" ? false : true,
+          errorMessage: $(`#${input} option:selected`).val() == "" ? `Select ${friendlyName.toLowerCase()}` : null
         }
       } else if (type == "date") {
         let dateObj = {};
@@ -872,6 +872,11 @@ DfEPortal.Errors = {
       $(`input[name='${input}']`).closest('.govuk-form-group').addClass('govuk-form-group--error');
       $(`#${input}-error`).removeClass('govuk-visually-hidden');
       $(`#${input}-error`).find('span').after(message);
+    } else if (type == "select" ) {
+      $(`#${input}`).closest('.govuk-form-group').addClass('govuk-form-group--error');
+      $(`#${input}`).addClass('govuk-select--error');
+      $(`#${input}-error`).removeClass('govuk-visually-hidden');
+      $(`#${input}-error`).find('span').after(message);
     } else if (type == "date") {
       $(`#${input}`).closest('.govuk-form-group').addClass('govuk-form-group--error');
       $(`#${input}`).find('input').addClass('govuk-input--error');
@@ -893,6 +898,11 @@ DfEPortal.Errors = {
   ClearInputError: function (input, type) {
     if (type == "radio" || type == "checkbox") {
       $(`input[name='${input}']`).closest('.govuk-form-group').removeClass('govuk-form-group--error');
+      $(`#${input}-error`).addClass('govuk-visually-hidden');
+      $(`#${input}-error`).find('span').get(0).nextSibling.textContent = "";
+    } else if (type == "select" ) {
+      $(`#${input}`).closest('.govuk-form-group').removeClass('govuk-form-group--error');
+      $(`#${input}`).removeClass('govuk-select--error');
       $(`#${input}-error`).addClass('govuk-visually-hidden');
       $(`#${input}-error`).find('span').get(0).nextSibling.textContent = "";
     } else if (type == "date") {
@@ -1076,9 +1086,15 @@ DfEPortal.WebApi = {
               }
             });
 
-            $.extend(data, {
-              [obj[i].identifier]: new Date(`${formattedDateObj.year}-${formattedDateObj.month}-${formattedDateObj.day}`).toISOString().split('T')[0]
-            });
+            if (obj[i].targetType == "text") {
+              $.extend(data, {
+                [obj[i].identifier]: `${formattedDateObj.day}/${formattedDateObj.month}/${formattedDateObj.year}`
+              });
+            } else {
+              $.extend(data, {
+                [obj[i].identifier]: new Date(`${formattedDateObj.year}-${formattedDateObj.month}-${formattedDateObj.day}`).toISOString().split('T')[0]
+              });
+            }
           } else {
             $.extend(data, {
               [obj[i].identifier]: null
@@ -1113,8 +1129,9 @@ DfEPortal.WebApi = {
                 [obj[i].identifier]: parseInt($(`input[name='${obj[i].identifier}']:checked`).val())
               });
             } else if (obj[i].targetType == "text") {
+              const checkedId = $(`input[name='${obj[i].identifier}']:checked`).attr('id');
               $.extend(data, {
-                [obj[i].identifier]: $(`input[name='${obj[i].identifier}']:checked`).val()
+                [obj[i].identifier]: $.trim($(`label[for='${checkedId}']`).text())
               });
             } else {
               console.error(`'${obj[i].targetType}' is not a valid targetType for type '${obj[i].type}'`);
@@ -1134,7 +1151,7 @@ DfEPortal.WebApi = {
               if (obj[i].targetEntity != null) {
                 if ($(`#${obj[i].identifier}`).val() != null) {
                   $.extend(data, {
-                    [`${obj[i].identifier}@odata.bind`]: `/${obj[i].targetEntity}(${$(`#${obj[i].identifier}`).val()})`
+                    [`${obj[i].identifier}@odata.bind`]: `/${obj[i].targetEntity}(${$(`#${obj[i].identifier} option:selected` ).val()})`
                   });
                 } else {
                   $.extend(data, {
@@ -1149,11 +1166,11 @@ DfEPortal.WebApi = {
               }
             } else if (obj[i].targetType == "select") {
               $.extend(data, {
-                [obj[i].identifier]: parseInt($(`#${obj[i].identifier}`).val())
+                [obj[i].identifier]: parseInt($(`#${obj[i].identifier} option:selected`).val())
               });
             } else if (obj[i].targetType == "text") {
               $.extend(data, {
-                [obj[i].identifier]: $(`#${obj[i].identifier}`).val()
+                [obj[i].identifier]: $(`#${obj[i].identifier} option:selected`).text()
               });
             } else {
               console.error(`'${obj[i].targetType}' is not a valid targetType for type '${obj[i].type}'`);

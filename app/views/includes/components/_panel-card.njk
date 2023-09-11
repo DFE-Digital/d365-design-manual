@@ -168,7 +168,7 @@
             <a class="dfe-panel__link" href="#">Panel card 1</a>
           </h2>
           <div class="dfe-panel__body">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </div>
         </div>
       </div>
@@ -255,3 +255,122 @@
   </div>
 </div>
 {% endmacro %}
+
+{% macro panelCardGridFlexExample () %}
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">
+    Panel card grid system example
+  </h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#example3">
+        Example
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#html3">
+        HTML
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#liquid3">
+        Web Template
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel" id="example3">
+    <div class="govuk-grid-row dfe-panel__flex-row">
+      <div class="govuk-grid-column-one-third dfe-panel__flex-column">
+        <div class="dfe-panel dfe-panel__card dfe-panel__flex-component">
+          <h2 class="dfe-panel__title">
+            <a class="dfe-panel__link" href="#">Panel card 1</a>
+          </h2>
+          <div class="dfe-panel__body">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </div>
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-third dfe-panel__flex-column">
+        <div class="dfe-panel dfe-panel__card dfe-panel__flex-component">
+          <h2 class="dfe-panel__title">
+            <a class="dfe-panel__link" href="#">Panel card 2</a>
+          </h2>
+          <div class="dfe-panel__body">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </div>
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-third dfe-panel__flex-column">
+        <div class="dfe-panel dfe-panel__card dfe-panel__flex-component">
+          <h2 class="dfe-panel__title">
+            <a class="dfe-panel__link" href="#">Panel card 3</a>
+          </h2>
+          <div class="dfe-panel__body">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html3">
+    <pre class="code-block">
+      <code class="html code-snippet">
+&lt;div class="govuk-grid-row dfe-panel__flex-row"&gt;
+  &lt;div class="govuk-grid-column-one-third dfe-panel__flex-column"&gt;
+    &lt;div class="dfe-panel dfe-panel__card dfe-panel__flex-component"&gt;
+      &lt;h2 class="dfe-panel__title"&gt;
+        &lt;a class="dfe-panel__link" href="#"&gt;Panel card 1&lt;/a&gt;
+      &lt;/h2&gt;
+      &lt;div class="dfe-panel__body"&gt;
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="govuk-grid-column-one-third dfe-panel__flex-column"&gt;
+    &lt;div class="dfe-panel dfe-panel__card dfe-panel__flex-component"&gt;
+      &lt;h2 class="dfe-panel__title"&gt;
+        &lt;a class="dfe-panel__link" href="#"&gt;Panel card 2&lt;/a&gt;
+      &lt;/h2&gt;
+      &lt;div class="dfe-panel__body"&gt;
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="govuk-grid-column-one-third dfe-panel__flex-column"&gt;
+    &lt;div class="dfe-panel dfe-panel__card dfe-panel__flex-component"&gt;
+      &lt;h2 class="dfe-panel__title"&gt;
+        &lt;a class="dfe-panel__link" href="#"&gt;Panel card 3&lt;/a&gt;
+      &lt;/h2&gt;
+      &lt;div class="dfe-panel__body"&gt;
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+      </code>
+    </pre>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="liquid3">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        This is a basic web template layout and does not include additional liquid items which are common place on a CRM Portal, for example, authenticated user, 
+        web role, or parameter checks
+      </strong>
+    </div>
+    <pre class="code-block">
+      <code class="html code-snippet">
+&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
+
+&#123;% block main %&#125;
+
+  <span class="code-highlight">## HTML content goes here ##</span>
+
+&#123;% endblock %&#125;
+      </code>
+    </pre>
+  </div>
+</div>
+{% endmacro %}
+
