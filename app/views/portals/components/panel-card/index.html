@@ -1,0 +1,73 @@
+{% set pageName = "Panel card" %}
+{% set pageDescription = "Use the panel card component to chunk up related content, data and links. It can also be used to highlight content on a page." %}
+{% set selectedNav = "Panel card" %}
+{% set dateUpdated = "July 2023" %}
+
+{% from 'includes/components/_panel-card.njk' import panelCardExample, panelCardLinkExample, panelCardGridExample, panelCardGridFlexExample %}
+
+{% extends "layouts/content-with-sidenav.html" %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+<div class="dfe-contents-container">
+  <nav class="dfe-contents-list">
+    <h2 class="dfe-contents-list__title">Contents</h2>
+    <ol class="dfe-contents-list__list">
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#when-to-use-this-component">When to use this component</a>
+      </li>          
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#how-it-works">How it works</a>
+        <ol class="dfe-contents-list__nested-list">
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#html-copy">Copy and amend the HTML examples</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#including-hyperlinks">Including hyperlinks</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#grid-layout">Grid layout</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#flex-grid">Panel card flex height</a>
+          </li>
+        </ol>  
+      </li>  
+    </ol>
+  </nav>
+</div>
+
+<h2 class="govuk-heading-l" id="when-to-use-this-component">When to use this component</h2>
+<p class="govuk-body">{{ pageDescription }}</p>
+
+<h2 class="govuk-heading-l" id="how-it-works">How it works</h2>
+<p class="govuk-body">A panel card and be positioned anywhere on a page.</p>
+<p class="govuk-body">The panel card by default will be the same width as the page's other content. For example, if the other content takes up two-thirds of the screen on 
+  desktop devices, then the panel card component will also take up two-thirds. 
+
+{{ panelCardExample() }}
+
+<h3 class="govuk-heading-m" id="html-copy">Copy and amend the HTML examples</h3>
+<p class="govuk-body">Choose the appropriate example from this page and copy the HTML directly into your web template. <a class="govuk-link" href="../layouts">Read about layouts</a>
+
+<h3 class="govuk-heading-m" id="including-hyperlinks">Including hyperlinks</h3>
+<p class="govuk-body">If you are including a hyperlink in your panel card component use the <code>dfe-panel__link</code> class within your <code>&lt;a&gt;</code> tag.</p>
+
+{{ panelCardLinkExample() }}
+
+<h3 class="govuk-heading-m" id="grid-layout">Grid layout</h3>
+<p class="govuk-body">If you wish to make the panel cards smaller, confine the component within a grid system. <a class="govuk-link" href="#" target="_blank">Read about grid systems (opens in a new tab)</a>.</p>
+<p class="govuk-body">The example below shows 3 panel card components in a 3 column grid row. By default, the panel card for each column will match the height of the content.</p>
+
+{{ panelCardGridExample() }}
+
+<h3 class="govuk-heading-m" id="flex-grid">Panel card flex height</h3>
+<p class="govuk-body">There may be occasions where you need to make all the panel cards in a grid system row the same height.</p>
+<p class="govuk-body">you can add additional classes to the component so all the panel cards in the same row equal the height of the card with the most content.</p>
+
+{{ panelCardGridFlexExample() }}
+
+<p class="govuk-body">If you would like any additional advice or guidance with using these examples on Dynamics 365 Portals, please contact the Solutions Delivery Team.</p>
+
+{% endblock %}

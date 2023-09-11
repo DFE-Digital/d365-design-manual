@@ -9,6 +9,7 @@ const config = require('./app/config');
 const compression = require('compression');
 const favicon = require('serve-favicon');
 const cheerio = require('cheerio');
+const $ = require('jquery')
 
 const app = express();
 app.use(compression());
@@ -58,8 +59,6 @@ nunjuckEnv.addFilter('getPageDescription', (url) => {
     return '';
   }
 });
-
-
 
 
 // Set up static file serving for the app's assets

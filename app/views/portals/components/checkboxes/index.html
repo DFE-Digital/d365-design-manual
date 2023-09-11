@@ -3,29 +3,65 @@
 {% set selectedNav = "Checkboxes" %}
 {% set dateUpdated = "July 2023" %}
 
-{% from 'includes/components/_checkbox.njk' import checkboxHeaderExample, checkboxStandardExample %}
+{% from 'includes/components/_checkbox.njk' import checkboxHeaderExample, checkboxStandardExample, checkboxNoHintExample %}
 
 {% extends "layouts/content-with-sidenav.html" %}
 
 {% block beforeContent %}{% endblock %}
 
 {% block content %}
+<div class="dfe-contents-container">
+  <nav class="dfe-contents-list">
+    <h2 class="dfe-contents-list__title">Contents</h2>
+    <ol class="dfe-contents-list__list">
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#when-to-use-this-component">When to use this component</a>
+      </li>          
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#when-to-not-use-this-component">When to not use this component</a>
+      </li>
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#how-it-works">How it works</a>
+        <ol class="dfe-contents-list__nested-list">
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#html-copy">Copy and amend the HTML examples</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#one-question">If you are asking one question on the page</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#more-than-one-question">If you are asking more than one question on the page</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#using-hint-text">Using hint text</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#additional-examples">Additional examples</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#error-messages">Error messages</a>
+          </li>
+        </ol>  
+      </li>  
+    </ol>
+  </nav>
+</div>
 
-<h2 class="govuk-heading-l">When to use this component</h2>
+<h2 class="govuk-heading-l" id="when-to-use-this-component">When to use this component</h2>
 <p class="govuk-body">{{ pageDescription }}</p>
 
-<h2 class="govuk-heading-l">When to not use this component</h2>
+<h2 class="govuk-heading-l" id="when-to-not-use-this-component">When to not use this component</h2>
 <p class="govuk-body">Do not use the checkboxes component if users can only choose one option from a selection. In this case, use the radios component.</p>
 
-<h2 class="govuk-heading-l">How it works</h2>
-<p class="govuk-body">Always position checkboxes to the left of their labels. This makes them easier to find, especially for users of screen magnifiers.</p>
+<h2 class="govuk-heading-l" id="how-it-works">How it works</h2>
+<p class="govuk-body">Checkboxes are positioned to the left of their labels. This makes them easier to find, especially for users of screen magnifiers.</p>
 <p class="govuk-body">Unlike with radios, users can select multiple options from a list of checkboxes. Do not assume that users will know how many options they can select 
   based on the visual difference between radios and checkboxes alone.</p>
 <p class="govuk-body">If needed, add a hint explaining this, for example, 'Select all that apply'.</p>
 <p class="govuk-body">Do not pre-select checkbox options as this makes it more likely that users will not realise they've missed a question or submitted the wrong answer.</p>
 <p class="govuk-body">Order checkbox options alphabetically by default.</p>  
 
-<h3 class="govuk-heading-m">Copy and amend the HTML examples</h3>
+<h3 class="govuk-heading-m" id="html-copy">Copy and amend the HTML examples</h3>
 <p class="govuk-body">Choose the appropriate example from this page and copy the HTML directly into your web template. <a class="govuk-link" href="../layouts">Read about layouts</a>
   for more information about how to structure your web template.</p>
 <p class="govuk-body">If the component needs to submit to a field in CRM, replace the highlighted <code>schema-name</code> text in the example 
@@ -33,22 +69,35 @@
   displayed as <code>schema-name-error</code> in the example, the value should still contain <code>-error</code> after the schema name has been replaced (<code>dfe_field-error</code>).</p>
 <p class="govuk-body">This step is essential for the custom portal helper framework to validate and submit data to CRM. <a class="govuk-link" href="">Read about data validation and submitting data to CRM</a>.</p>
 
-<h3 class="govuk-heading-m">If you are asking one question on the page</h3>
+<h3 class="govuk-heading-m" id="one-question">If you are asking one question on the page</h3>
 <p class="govuk-body">If you are asking just one question on the page, set the contents of the <code>&lt;legend&gt;</code> as the page heading. This is good practice as it 
   means that users of screen readers will only hear the contents once.</p>
 <p class="govuk-body">You will need to include an empty <code>&#123;% title %&#125;</code> block in your web template to override the default page header.</p>
 
 {{ checkboxHeaderExample() }}
 
-<h3 class="govuk-heading-m">If you are asking more than one question on the page</h3>
+<h3 class="govuk-heading-m" id="more-than-one-question">If you are asking more than one question on the page</h3>
 <p class="govuk-body">If you're asking more than one question on the page, do not set the contents of the <code>&lt;legend&gt;</code> as the page heading.</p>
 
 {{ checkboxStandardExample() }}
 
-<h3 class="govuk-heading-m">Additional examples</h3>
+<h3 class="govuk-heading-m" id="using-hint-text">Using hint text</h3>
+<p class="govuk-body">Use hint text for help that's relevant to the majority of users, like how their information will be used, or where to find it. The hint text block is included in the previous examples on this page.</p>
+<p class="govuk-body">Hint text is not mandatory, and can be removed if it is not required.</p>
+
+{{ checkboxNoHintExample() }}
+
+<h4 class="govuk-heading-s">When not to use hint text</h4>
+<p class="govuk-body">Do not use long paragraphs and lists in hint text. Screen readers read out the entire text when users interact with the form element. 
+  This could frustrate users if the text is long.</p>
+
+<h4 class="govuk-heading-s">Avoid links in hint text</h4>
+<p class="govuk-body">Do not include links within hint text. While screen readers will read out the link text when describing the field, they will not tell users that 
+  the text is a link.</p>
+
+<h3 class="govuk-heading-m" id="additional-examples">Additional examples</h3>
 <p class="govuk-body">Additional examples can be found on the GOV.UK Design System:</p>
 <ul class="govuk-list">
-  <li><a class="govuk-link" href="https://design-system.service.gov.uk/components/checkboxes#checkbox-items-with-hints">Checkbox items with hints</a></li>
   <li><a class="govuk-link" href="https://design-system.service.gov.uk/components/checkboxes#add-an-option-for-none">Add an option for 'none'</a></li>
   <li><a class="govuk-link" href="https://design-system.service.gov.uk/components/checkboxes#conditionally-revealing-a-related-question">Conditionally revealing a related question</a></li>
   <li><a class="govuk-link" href="https://design-system.service.gov.uk/components/checkboxes#smaller-checkboxes">Smaller checkboxes</a></li>

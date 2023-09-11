@@ -32,10 +32,16 @@ gulp.task('copy-dfefrontend-js', function () {
     .pipe(copy('app/assets/js', { prefix: 3 }))
 })
 
+gulp.task('copy-jquery', function () {
+  return gulp
+    .src('node_modules/jquery/dist/jquery.js')
+    .pipe(copy('app/assets/js', { prefix: 3 }))
+})
+
 // Set up a task to process JavaScript files
 gulp.task(
   'process-js',
-  gulp.series('copy-govuk-js', 'copy-dfefrontend-js', function () {
+  gulp.series('copy-govuk-js', 'copy-dfefrontend-js', 'copy-jquery', function () {
     return gulp
       .src('app/assets/js/**/*.js')
       .pipe(uglify())
@@ -99,7 +105,6 @@ gulp.task('nunjucksRender', function () {
 //  )
 //  gulp.watch('app/**/*.*').on('change', browserSync.reload)
 //})
-
 
 // Set up a default task to process assets and start the watch task
 gulp.task(
