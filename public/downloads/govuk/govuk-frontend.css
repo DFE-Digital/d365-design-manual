@@ -1,5 +1,21 @@
+/*! Copyright (c) 2011 by Margaret Calvert & Henrik Kubel. All rights reserved. The font has been customised for exclusive use on gov.uk. This cut is not commercially available. */
+@font-face {
+  font-family: GDS Transport;
+  font-style: normal;
+  font-weight: 400;
+  src: url(light-94a07e06a1-v2.woff2) format("woff2"), url(light-f591b13f7d-v2.woff) format("woff");
+  font-display: fallback;
+}
+@font-face {
+  font-family: GDS Transport;
+  font-style: normal;
+  font-weight: 700;
+  src: url(bold-b542beb274-v2.woff2) format("woff2"), url(bold-affa96571d-v2.woff) format("woff");
+  font-display: fallback;
+}
+
 .govuk-link {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-decoration: underline;
@@ -18,13 +34,13 @@
     box-decoration-break: clone;
 }
 .govuk-link:link {
-    color: #347ca9;
+    color: #1d70b8;
 }
 .govuk-link:visited {
     color: #4c2c92;
 }
 .govuk-link:hover {
-    color: #003a69;
+    color: #003078;
 }
 .govuk-link:active,
 .govuk-link:focus {
@@ -84,10 +100,10 @@
 }
 .govuk-link--no-visited-state:link,
 .govuk-link--no-visited-state:visited {
-    color: #347ca9;
+    color: #1d70b8;
 }
 .govuk-link--no-visited-state:hover {
-    color: #003a69;
+    color: #003078;
 }
 .govuk-link--no-visited-state:active,
 .govuk-link--no-visited-state:focus,
@@ -95,7 +111,7 @@
     color: #0b0c0c;
 }
 .govuk-list {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -163,7 +179,7 @@
 }
 .govuk-heading-xl {
     color: #0b0c0c;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -199,7 +215,7 @@
 }
 .govuk-heading-l {
     color: #0b0c0c;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -232,9 +248,9 @@
         margin-bottom: 30px;
     }
 }
-.govuk-heading-m, .dfe-timeline__event-title {
+.govuk-heading-m {
     color: #0b0c0c;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -245,31 +261,31 @@
     margin-bottom: 15px;
 }
 @media print {
-    .govuk-heading-m, .dfe-timeline__event-title {
+    .govuk-heading-m {
         color: #000;
         font-family: sans-serif;
     }
 }
 @media (min-width: 40.0625em) {
-    .govuk-heading-m, .dfe-timeline__event-title {
+    .govuk-heading-m {
         font-size: 24px;
         line-height: 1.25;
     }
 }
 @media print {
-    .govuk-heading-m, .dfe-timeline__event-title {
+    .govuk-heading-m {
         font-size: 18pt;
         line-height: 1.15;
     }
 }
 @media (min-width: 40.0625em) {
-    .govuk-heading-m, .dfe-timeline__event-title {
+    .govuk-heading-m {
         margin-bottom: 20px;
     }
 }
 .govuk-heading-s {
     color: #0b0c0c;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -303,7 +319,7 @@
     }
 }
 .govuk-caption-xl {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -331,7 +347,7 @@
     }
 }
 .govuk-caption-l {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -364,7 +380,7 @@
     }
 }
 .govuk-caption-m {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -393,7 +409,7 @@
 .govuk-body-l,
 .govuk-body-lead {
     color: #0b0c0c;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -432,7 +448,7 @@
 .govuk-body,
 .govuk-body-m {
     color: #0b0c0c;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -470,7 +486,7 @@
 }
 .govuk-body-s {
     color: #0b0c0c;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -504,7 +520,7 @@
 }
 .govuk-body-xs {
     color: #0b0c0c;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -561,13 +577,10 @@
     }
 }
 .govuk-body + .govuk-heading-m,
-.govuk-body + .dfe-timeline__event-title,
 .govuk-body + .govuk-heading-s,
 .govuk-body-m + .govuk-heading-m,
-.govuk-body-m + .dfe-timeline__event-title,
 .govuk-body-m + .govuk-heading-s,
 .govuk-body-s + .govuk-heading-m,
-.govuk-body-s + .dfe-timeline__event-title,
 .govuk-body-s + .govuk-heading-s,
 .govuk-list + .govuk-heading-m,
 .govuk-list + .govuk-heading-s {
@@ -575,13 +588,10 @@
 }
 @media (min-width: 40.0625em) {
     .govuk-body + .govuk-heading-m,
-    .govuk-body + .dfe-timeline__event-title,
     .govuk-body + .govuk-heading-s,
     .govuk-body-m + .govuk-heading-m,
-    .govuk-body-m + .dfe-timeline__event-title,
     .govuk-body-m + .govuk-heading-s,
     .govuk-body-s + .govuk-heading-m,
-    .govuk-body-s + .dfe-timeline__event-title,
     .govuk-body-s + .govuk-heading-s,
     .govuk-list + .govuk-heading-m,
     .govuk-list + .govuk-heading-s {
@@ -640,7 +650,7 @@
     }
 }
 .govuk-button-group .govuk-link {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -938,7 +948,7 @@
     padding-bottom: 15px;
 }
 .govuk-accordion__section-button {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -990,7 +1000,7 @@
     display: block;
 }
 .js-enabled .govuk-accordion__show-all {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -1001,7 +1011,7 @@
     margin-bottom: 9px;
     padding: 5px 2px 5px 0;
     border-width: 0;
-    color: #347ca9;
+    color: #1d70b8;
     background: none;
     cursor: pointer;
     -webkit-appearance: none;
@@ -1190,7 +1200,7 @@
     font-size: 16px;
     line-height: 1.25;
     font-weight: 400;
-    color: #347ca9;
+    color: #1d70b8;
 }
 @media (min-width: 40.0625em) {
     .js-enabled .govuk-accordion__section-toggle {
@@ -1229,7 +1239,7 @@
 @media (hover: none) {
     .js-enabled .govuk-accordion__section-header:hover {
         border-top-color: #b1b4b6;
-        box-shadow: inset 0 3px 0 0 #347ca9;
+        box-shadow: inset 0 3px 0 0 #1d70b8;
     }
     .js-enabled .govuk-accordion__section-header:hover .govuk-accordion__section-button {
         border-top-color: #b1b4b6;
@@ -1238,7 +1248,7 @@
 .govuk-back-link {
     font-size: 14px;
     line-height: 1.14286;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-decoration: underline;
@@ -1322,7 +1332,7 @@
     left: 0;
 }
 .govuk-breadcrumbs {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -1394,7 +1404,7 @@
     display: none;
 }
 .govuk-breadcrumbs__link {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-decoration: underline;
@@ -1455,7 +1465,7 @@
     }
 }
 .govuk-button {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -1630,7 +1640,7 @@
     }
 }
 .govuk-error-message {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -1677,7 +1687,7 @@
     }
 }
 .govuk-fieldset__legend {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -1710,7 +1720,7 @@
     }
 }
 .govuk-fieldset__legend--xl {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -1736,7 +1746,7 @@
     }
 }
 .govuk-fieldset__legend--l {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -1762,7 +1772,7 @@
     }
 }
 .govuk-fieldset__legend--m {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -1788,7 +1798,7 @@
     }
 }
 .govuk-fieldset__legend--s {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -1818,7 +1828,7 @@
     font-weight: inherit;
 }
 .govuk-hint {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -1852,7 +1862,7 @@
     margin-top: -5px;
 }
 .govuk-label {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -1881,7 +1891,7 @@
     }
 }
 .govuk-label--xl {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -1907,7 +1917,7 @@
     }
 }
 .govuk-label--l {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -1933,7 +1943,7 @@
     }
 }
 .govuk-label--m {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -1959,7 +1969,7 @@
     }
 }
 .govuk-label--s {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -1987,7 +1997,7 @@
     margin: 0;
 }
 .govuk-checkboxes__item {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -2095,7 +2105,7 @@
     opacity: 0.5;
 }
 .govuk-checkboxes__divider {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -2201,7 +2211,7 @@
     }
 }
 .govuk-textarea {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -2265,7 +2275,7 @@
     margin-bottom: 5px;
 }
 .govuk-character-count__message {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-feature-settings: "tnum" 1;
@@ -2310,7 +2320,7 @@
     outline: none;
 }
 .govuk-summary-list {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -2498,7 +2508,7 @@
     }
 }
 .govuk-summary-card__title {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -2518,7 +2528,7 @@
     }
 }
 .govuk-summary-card__actions {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -2563,7 +2573,7 @@
     }
 }
 .govuk-input {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -2658,7 +2668,7 @@
 }
 .govuk-input__prefix,
 .govuk-input__suffix {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -2751,7 +2761,7 @@
     margin-bottom: 0;
 }
 .govuk-details {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -2789,11 +2799,11 @@
     position: relative;
     margin-bottom: 5px;
     padding-left: 25px;
-    color: #347ca9;
+    color: #1d70b8;
     cursor: pointer;
 }
 .govuk-details__summary:hover {
-    color: #003a69;
+    color: #003078;
 }
 .govuk-details__summary:focus {
     outline: 3px solid rgba(0, 0, 0, 0);
@@ -2875,7 +2885,7 @@
     outline: 3px solid #fd0;
 }
 .govuk-error-summary__title {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -2907,7 +2917,7 @@
     }
 }
 .govuk-error-summary__body {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -2946,7 +2956,7 @@
 }
 .govuk-error-summary__list a {
     font-weight: 700;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-decoration: underline;
@@ -2978,7 +2988,7 @@
     color: #0b0c0c;
 }
 .govuk-file-upload {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -3021,7 +3031,7 @@
     box-shadow: inset 0 0 0 4px #0b0c0c;
 }
 .govuk-footer {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -3057,7 +3067,7 @@
     }
 }
 .govuk-footer__link {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-decoration: underline;
@@ -3235,7 +3245,7 @@
     margin-bottom: 0;
 }
 .govuk-header {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -3243,7 +3253,7 @@
     line-height: 1.14286;
     border-bottom: 10px solid #fff;
     color: #fff;
-    background: #003a69;
+    background: #0b0c0c;
 }
 @media print {
     .govuk-header {
@@ -3264,7 +3274,7 @@
 }
 .govuk-header__container--full-width {
     padding: 0 15px;
-    border-color: #347ca9;
+    border-color: #1d70b8;
 }
 .govuk-header__container--full-width .govuk-header__menu-button {
     right: 15px;
@@ -3272,9 +3282,8 @@
 .govuk-header__container {
     position: relative;
     margin-bottom: -10px;
-    padding-top: 25px;
-    padding-bottom: 15px;
-    border-bottom: 10px solid #347ca9;
+    padding-top: 10px;
+    border-bottom: 10px solid #1d70b8;
 }
 .govuk-header__container:after {
     content: "";
@@ -3282,7 +3291,8 @@
     clear: both;
 }
 .govuk-header__logotype {
-    margin-right: 0;
+  display: inline-block;
+  margin-right: 5px;
 }
 @media (forced-colors: active) {
     .govuk-header__logotype {
@@ -3301,7 +3311,7 @@
     vertical-align: top;
 }
 .govuk-header__logotype-text {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -3327,15 +3337,17 @@
     }
 }
 .govuk-header__logotype-crown-fallback-image {
-    width: 45px;
-    height: 45px;
+  width: 36px;
+  height: 32px;
+  border: 0;
+  vertical-align: bottom;
 }
 .govuk-header__product-name {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1;
     display: inline-table;
 }
@@ -3346,7 +3358,7 @@
 }
 @media (min-width: 40.0625em) {
     .govuk-header__product-name {
-        font-size: 19px;
+        font-size: 24px;
         line-height: 1;
     }
 }
@@ -3357,7 +3369,7 @@
     }
 }
 .govuk-header__link {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-decoration: none;
@@ -3378,10 +3390,10 @@
 .govuk-header__link:hover {
     text-decoration: underline;
     text-decoration-thickness: 3px;
-    text-underline-offset: 0.1em;
+    text-underline-offset: 0.1578em;
 }
 .govuk-header__link:focus {
-    outline: 3px solid rgba(0, 0, 0, 0);
+    outline: 3px solid transparent;
     color: #0b0c0c;
     background-color: #fd0;
     box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
@@ -3390,7 +3402,7 @@
     box-decoration-break: clone;
 }
 .govuk-header__link--homepage {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -3429,12 +3441,12 @@
 .govuk-header__service-name {
     display: inline-block;
     margin-bottom: 10px;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-weight: 400;
+    font-weight: 700;
     font-size: 18px;
-    line-height: 1.11111;
+    line-height: 1.1111111111;
 }
 @media print {
     .govuk-header__link--service-name,
@@ -3466,7 +3478,7 @@
 }
 @media (min-width: 48.0625em) {
     .govuk-header__logo {
-        width: 70%;
+        width: 33.33%;
         padding-right: 15px;
         float: left;
         vertical-align: top;
@@ -3474,18 +3486,18 @@
 }
 @media (min-width: 48.0625em) {
     .govuk-header__content {
-        width: 30%;
+        width: 60.66%;
         padding-left: 15px;
         float: left;
     }
 }
 .govuk-header__menu-button {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
     font-size: 14px;
-    line-height: 1.14286;
+    line-height: 1.1428571429;
     display: none;
     position: absolute;
     top: 20px;
@@ -3517,10 +3529,10 @@
 .govuk-header__menu-button:hover {
     -webkit-text-decoration: solid underline 3px;
     text-decoration: solid underline 3px;
-    text-underline-offset: 0.1em;
+    text-underline-offset: 0.1578em;
 }
 .govuk-header__menu-button:focus {
-    outline: 3px solid rgba(0, 0, 0, 0);
+    outline: 3px solid transparent;
     color: #0b0c0c;
     background-color: #fd0;
     box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
@@ -3534,7 +3546,7 @@
     height: 0;
     -webkit-clip-path: polygon(0 0, 50% 100%, 100% 0);
     clip-path: polygon(0 0, 50% 100%, 100% 0);
-    border-color: rgba(0, 0, 0, 0);
+    border-color: transparent;
     border-style: solid;
     border-width: 8.66px 5px 0;
     border-top-color: inherit;
@@ -3547,7 +3559,7 @@
     height: 0;
     -webkit-clip-path: polygon(50% 0, 0 100%, 100% 100%);
     clip-path: polygon(50% 0, 0 100%, 100% 100%);
-    border-color: rgba(0, 0, 0, 0);
+    border-color: transparent;
     border-style: solid;
     border-width: 0 5px 8.66px;
     border-bottom-color: inherit;
@@ -3574,6 +3586,7 @@
     padding: 0;
     list-style: none;
 }
+
 @media (min-width: 48.0625em) {
     .govuk-header__navigation-list {
         margin: 7px 0 0 0;
@@ -3605,14 +3618,13 @@
     }
 }
 .govuk-header__navigation-item a {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
     font-size: 14px;
-    line-height: 1.14286;
+    line-height: 1.1428571429;
     white-space: nowrap;
-    /* margin-left: 0 !important; */
 }
 @media print {
     .govuk-header__navigation-item a {
@@ -3647,7 +3659,7 @@
     .govuk-header {
         border-bottom-width: 0;
         color: #0b0c0c;
-        background: rgba(0, 0, 0, 0);
+        background: transparent;
     }
     .govuk-header__logotype-crown-fallback-image {
         display: none;
@@ -3661,7 +3673,7 @@
     }
 }
 .govuk-inset-text {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -3682,7 +3694,7 @@
 @media (min-width: 40.0625em) {
     .govuk-inset-text {
         font-size: 19px;
-        line-height: 1.31579;
+        line-height: 1.3157894737;
     }
 }
 @media print {
@@ -3706,15 +3718,15 @@
     margin-bottom: 0;
 }
 .govuk-notification-banner {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
     font-size: 16px;
     line-height: 1.25;
     margin-bottom: 30px;
-    border: 5px solid #347ca9;
-    background-color: #347ca9;
+    border: 5px solid #1d70b8;
+    background-color: #1d70b8;
 }
 @media print {
     .govuk-notification-banner {
@@ -3751,7 +3763,7 @@
     }
 }
 .govuk-notification-banner__title {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -3801,7 +3813,7 @@
     margin-bottom: 0;
 }
 .govuk-notification-banner__heading {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -3828,7 +3840,7 @@
     }
 }
 .govuk-notification-banner__link {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-decoration: underline;
@@ -3848,10 +3860,10 @@
 }
 .govuk-notification-banner__link:link,
 .govuk-notification-banner__link:visited {
-    color: #347ca9;
+    color: #1d70b8;
 }
 .govuk-notification-banner__link:hover {
-    color: #003a69;
+    color: #003078;
 }
 .govuk-notification-banner__link:active,
 .govuk-notification-banner__link:focus {
@@ -3902,7 +3914,7 @@
 .govuk-pagination__item,
 .govuk-pagination__next,
 .govuk-pagination__prev {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -3978,10 +3990,10 @@
 .govuk-pagination__item--current {
     font-weight: 700;
     outline: 1px solid rgba(0, 0, 0, 0);
-    background-color: #347ca9;
+    background-color: #1d70b8;
 }
 .govuk-pagination__item--current:hover {
-    background-color: #347ca9;
+    background-color: #1d70b8;
 }
 .govuk-pagination__item--current .govuk-pagination__link:link,
 .govuk-pagination__item--current .govuk-pagination__link:visited {
@@ -4027,7 +4039,7 @@
     text-decoration: none;
 }
 .govuk-pagination__link-label {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -4115,7 +4127,7 @@
     margin-right: 10px;
 }
 .govuk-panel {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -4166,7 +4178,7 @@
     color: #fff;
     margin-top: 0;
     margin-bottom: 30px;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -4194,7 +4206,7 @@
     margin-bottom: 0;
 }
 .govuk-panel__body {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -4223,11 +4235,11 @@
     outline: 2px solid rgba(0, 0, 0, 0);
     outline-offset: -2px;
     color: #fff;
-    background-color: #347ca9;
+    background-color: #1d70b8;
     letter-spacing: 1px;
     text-decoration: none;
     text-transform: uppercase;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -4294,7 +4306,7 @@
     border-bottom: 1px solid #b1b4b6;
 }
 .govuk-phase-banner__content {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -4339,7 +4351,7 @@
     }
 }
 .govuk-tabs__title {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -4385,7 +4397,7 @@
     }
 }
 .govuk-tabs__list-item {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -4425,7 +4437,7 @@
     }
 }
 .govuk-tabs__tab {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-decoration: underline;
@@ -4456,7 +4468,7 @@
     box-decoration-break: clone;
 }
 .govuk-tabs__tab:link {
-    color: #347ca9;
+    color: #1d70b8;
 }
 
 .govuk-tabs__tab:visited {
@@ -4571,7 +4583,7 @@
     }
 }
 .govuk-radios__item {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -4688,7 +4700,7 @@
     }
 }
 .govuk-radios__divider {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -4797,7 +4809,7 @@
     }
 }
 .govuk-select {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -4838,7 +4850,7 @@
 .govuk-select option:active,
 .govuk-select option:checked {
     color: #fff;
-    background-color: #347ca9;
+    background-color: #1d70b8;
 }
 .govuk-select--error {
     border-color: #d4351c;
@@ -4856,7 +4868,7 @@
     -webkit-clip-path: inset(50%) !important;
     clip-path: inset(50%) !important;
     white-space: nowrap !important;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-decoration: underline;
@@ -4932,7 +4944,7 @@
     outline: none;
 }
 .govuk-table {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -4978,7 +4990,7 @@
     vertical-align: top;
 }
 .govuk-table__cell--numeric {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-feature-settings: "tnum" 1;
@@ -5012,7 +5024,7 @@
     color: #0b0b0b;
 }
 .govuk-table__caption--xl {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -5038,7 +5050,7 @@
     }
 }
 .govuk-table__caption--l {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -5064,7 +5076,7 @@
     }
 }
 .govuk-table__caption--m {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -5090,7 +5102,7 @@
     }
 }
 .govuk-table__caption--s {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -5138,7 +5150,7 @@
     white-space: nowrap !important;
 }
 .govuk-warning-text__icon {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -5179,7 +5191,7 @@
     }
 }
 .govuk-warning-text__text {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+    font-family: GDS Transport, arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 700;
@@ -6441,1973 +6453,3 @@
         width: 25% !important;
     }
 }
-
-/* Custom DfE timeline component*/
-.dfe-timeline {
-    border-left: 5px solid #347ca9;
-    margin: 0 0 30px;
-    padding: 0
-}
-
-.dfe-timeline__event {
-    list-style: none;
-    padding-bottom: 20px;
-    padding-left: 15px;
-    position: relative;
-}
-
-@media (min-width: 40.0625em) {
-    .dfe-timeline__event {
-        padding-bottom:30px
-    }
-}
-
-.dfe-timeline__event:last-child {
-    padding-bottom: 0
-}
-
-.dfe-timeline__event-title {
-    margin-bottom: 5px;
-}
-
-.dfe-timeline__event-title:before {
-    background-color: #347ca9;
-    content: "";
-    height: 5px;
-    left: 0;
-    position: absolute;
-    top: .5em;
-    width: 7px
-}
-
-.dfe-timeline__event-meta {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #0b0b0b;
-    display: block;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1.25;
-    margin-bottom: 8px;
-}
-
-@media print {
-    .dfe-timeline__event-meta {
-        font-family: sans-serif
-    }
-}
-
-@media (min-width: 40.0625em) {
-    .dfe-timeline__event-meta {
-        font-size:19px;
-        line-height: 1.31579
-    }
-}
-
-@media print {
-    .dfe-timeline__event-meta {
-        color: #000;
-        font-size: 14pt;
-        line-height: 1.15
-    }
-}
-
-.dfe-timeline__event-content {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #0b0b0b;
-    display: block;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.25;
-    margin-bottom: 5px
-}
-
-@media print {
-    .dfe-timeline__event-content {
-        font-family: sans-serif
-    }
-}
-
-@media (min-width: 40.0625em) {
-    .dfe-timeline__event-content {
-        font-size:19px;
-        line-height: 1.31579
-    }
-}
-
-@media print {
-    .dfe-timeline__event-content {
-        color: #000;
-        font-size: 14pt;
-        line-height: 1.15
-    }
-}
-
-/* Custom DfE Dynamics 365 Panel card component */
-
-.dfe-panel__flex-row {
-  display: flex;
-  align-items: stretch; /* Stretch child to match parent's height */
-}
-
-.dfe-panel__flex-column {
-  display: flex;
-  align-items: stretch; /* Stretch child to match parent's height */
-}
-
-.dfe-panel__flex-component {
-  flex: 1; /* Expand to take remaining vertical space */
-  /* Additional styles for your specific panel component */
-}
-
-.dfe-panel {
-  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.25;
-  box-sizing: border-box;
-  margin-bottom: 15px;
-  padding: 15px;
-  border: 5px solid rgba(0, 0, 0, 0);
-  text-align: left;
-}
-
-@media print {
-  .dfe-panel {
-      font-family: sans-serif;
-  }
-}
-@media (min-width: 40.0625em) {
-  .dfe-panel {
-      font-size: 19px;
-      line-height: 1.31579;
-  }
-}
-@media print {
-  .dfe-panel {
-      font-size: 14pt;
-      line-height: 1.15;
-  }
-}
-@media (max-width: 40.0525em) {
-  .dfe-panel {
-      padding: 10px;
-      overflow-wrap: break-word;
-      word-wrap: break-word;
-  }
-}
-
-.dfe-panel__card {
-  color: #0b0c0c;
-  background: #f3f2f1;
-}
-
-@media print {
-  .dfe-panel__card {
-      border-color: currentcolor;
-      color: #000;
-      background: none;
-  }
-}
-
-.dfe-panel__title {
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 1.09375;
-}
-
-@media print {
-  .dfe-panel__title{
-      font-family: sans-serif;
-  }
-}
-@media (min-width: 40.0625em) {
-  .dfe-panel__title {
-      font-size: 24px;
-      line-height: 1.25;
-  }
-}
-@media print {
-  .dfe-panel__title {
-      font-size: 18pt;
-      line-height: 1.15;
-  }
-}
-
-.dfe-panel__title:last-child {
-  margin-bottom: 0;
-}
-
-.dfe-panel__body {
-  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.25;
-}
-
-@media print {
-  .dfe-panel__body  {
-      font-family: sans-serif;
-  }
-}
-@media (min-width: 40.0625em) {
-  .dfe-panel__body  {
-      font-size: 19px;
-      line-height: 1.31579;
-  }
-}
-@media print {
-  .dfe-panel__body {
-      font-size: 14pt;
-      line-height: 1.15;
-  }
-}
-
-.dfe-panel__link {
-  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-decoration: underline;
-}
-
-@media print {
-  .dfe-panel__link {
-      font-family: sans-serif;
-  }
-}
-
-.dfe-panel__link:focus {
-  outline: 3px solid rgba(0, 0, 0, 0);
-  background-color: #fd0;
-  box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
-  text-decoration: none;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
-.dfe-panel__link:link {
-  color: #347ca9;
-}
-.dfe-panel__link:visited {
-  color: #4c2c92;
-}
-.dfe-panel__link:hover {
-  color: #003a69;
-}
-.dfe-panel__link:active,
-.dfe-panel__link:focus {
-  color: #0b0c0c;
-}
-
-@media print {
-  .dfe-panel__link[href^="/"]:after,.dfe-panel__link[href^="http://"]:after,.dfe-panel__link[href^="https://"]:after
-  {
-      content: " (" attr(href) ")";
-      font-size: 90%;
-      word-wrap: break-word;
-  }
-}
-
-/* Custom DfE sidebar component*/
-.dfe-sidebar {
-    color: #0b0c0c;
-    border-top: 2px solid #347ca9;
-    margin-bottom: 60px;
-}
-
-.dfe-sidebar-section__main-heading {
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 1.25;
-    margin-top: 15px;
-    margin-bottom: 10px;
-}
-
-@media (min-width: 40.0625em) {
-    .dfe-sidebar-section__main-heading {
-        font-size: 19px;
-        line-height: 1.3157894737;
-    }
-}
-
-.dfe-sidebar-section__content {
-    display: block;
-    margin-bottom: 30px;
-}
-
-.dfe-sidebar-section ul {
-    padding: 0;
-    margin: 0;
-}
-
-.dfe-sidebar-section__link {
-    margin-left: 0 !important;
-}
-
-.dfe-sidebar-section__list {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    margin-bottom: 1.25em;
-}
-
-.dfe-sidebar-section__list-item {
-    list-style-type: none;
-    margin-top: 5px;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 1.45;
-}
-
-@media (min-width: 40.0625em) {
-    .dfe-sidebar-section__list-item {
-        line-height: 1.28;
-        font-size: 16px;
-    }
-}
-
-/* Custom DfE arrow component*/
-.dfe-arrow-left {
-    box-sizing: border-box;
-    position: relative;
-    display: inline-block;
-    transform: scale(var(--ggs,1));
-    width: 22px;
-    height: 22px;
-    top: 5px;
-    color: #347ca9;
-}
-.dfe-arrow-left::after,
-.dfe-arrow-left::before {
-    content: "";
-    display: block;
-    box-sizing: border-box;
-    position: absolute;
-    left: 3px
-}
-.dfe-arrow-left::after {
-    width: 8px;
-    height: 8px;
-    border-bottom: 2px solid;
-    border-left: 2px solid;
-    transform: rotate(45deg);
-    bottom: 7px
-}
-.dfe-arrow-left::before {
-    width: 16px;
-    height: 2px;
-    bottom: 10px;
-    background: currentColor
-}
-.dfe-arrow-right {
-    box-sizing: border-box;
-    position: relative;
-    display: inline-block;
-    transform: scale(var(--ggs,1));
-    width: 22px;
-    height: 22px;
-    top: 5px;
-    color: #347ca9;
-}
-.dfe-arrow-right::after,
-.dfe-arrow-right::before {
-    content: "";
-    display: block;
-    box-sizing: border-box;
-    position: absolute;
-    right: 3px
-}
-.dfe-arrow-right::after {
-    width: 8px;
-    height: 8px;
-    border-top: 2px solid;
-    border-right: 2px solid;
-    transform: rotate(45deg);
-    bottom: 7px
-}
-.dfe-arrow-right::before {
-    width: 16px;
-    height: 2px;
-    bottom: 10px;
-    background: currentColor
-}
-
-/* ==========================================================================
-   COMPONENTS / #HEADER
-   ========================================================================== */
-/**
- * The behaviour with regards to responsiveness is as follow:
- *
- * - Mobile to tablet view
- *   Menu toggle button visible and navigation links hidden, search toggle
-     button visible and search form hidden
- *
- * - Tablet to desktop view
- *   Menu toggle button visible and navigation links hidden, search toggle
- *   button hidden and search form visible
- *
- * - Desktop+ view
- *   Menu toggle button hidden and navigation links visible, search toggle
- *   button hidden and search form visible
- *
- * 1. Custom height and width of the logo
- * 2. Custom height and width of form items
- * 3. Custom height and width of svg icons
- * 4. Remove inner border on buttons for Firefox, see
- *    https://github.com/necolas/normalize.css/issues/393
- * 5. Proprietary extension so form field looks the same in Safari
- * 6. Custom margin to move menu toggle past the search toggle button
- * 7. Custom border value between expanded search and expanded menu if both open at the same time
- * 8. Don't display the link address for the logo anchor, see
- *     core/elements/_links.scss
- * 9. Remove random top margin in Safari
- * 10. Align close icon with nav item arrow icons
- * 11. Add dfe-spacing(9) to align right and left main nav with header
- */
- .dfe-header {
-    background-color: #003a69;
-    border-bottom: 10px solid #347ca9;
-  }
-  .dfe-header:after {
-    clear: both;
-    content: "";
-    display: block;
-  }
-  
-  .dfe-header__container {
-    padding: 20px 0;
-  }
-  .dfe-header__container:after {
-    clear: both;
-    content: "";
-    display: block;
-  }
-  @media (max-width: 40.0525em) {
-    .dfe-header__container {
-      margin: 0;
-      padding: 16px;
-    }
-  }
-  
-  .dfe-header__logo {
-    float: left;
-  }
-  @media (max-width: 40.0525em) {
-    .dfe-header__logo {
-      position: relative;
-      z-index: 1;
-    }
-  }
-  .dfe-header__logo .dfe-logo__background {
-    fill: #ffffff;
-  }
-  @media print {
-    .dfe-header__logo .dfe-logo__background {
-      fill: #003a69;
-    }
-  }
-  .dfe-header__logo .dfe-logo__text {
-    fill: #003a69;
-  }
-  @media print {
-    .dfe-header__logo .dfe-logo__text {
-      fill: #ffffff;
-    }
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-header__logo {
-      padding-left: 0;
-    }
-  }
-  .dfe-header__logo .dfe-logo {
-    height: 90px;
-    width: 153px;
-    /* [1] */
-    border: 0;
-  }
-  @media (max-width: 48.0525em) {
-    .dfe-header__logo {
-      max-width: 60%;
-    }
-  }
-  @media (max-width: 450px) {
-    .dfe-header__logo {
-      max-width: 50%;
-    }
-  }
-  
-  .dfe-header__link {
-    height: 90px;
-    width: 153px;
-    /* [1] */
-    display: block;
-  }
-  .dfe-header__link .dfe-logo-hover {
-    display: none;
-  }
-  .dfe-header__link .dfe-logo {
-    width: 136px !important;
-    height: 80px !important;
-  }
-  .dfe-header__link:focus .dfe-logo-hover {
-    display: none;
-  }
-  .dfe-header__link:focus .dfe-logo {
-    display: none;
-  }
-  .dfe-header__link:focus .dfe-logo + .dfe-logo-hover {
-    display: inline-block;
-    width: 136px !important;
-    height: 80px !important;
-  }
-  .dfe-header__link:focus {
-    box-shadow: none;
-  }
-  .dfe-header__link:focus .dfe-logo {
-    box-shadow: 0 0 0 4px #ffdd00, 0 4px 0 4px #0b0c0c;
-  }
-  @media print {
-    .dfe-header__link:after {
-      content: "";
-      /* [8] */
-    }
-  }
-  .dfe-header__link:hover, .dfe-header__link:active, .dfe-header__link:focus {
-    background-color: transparent;
-  }
-  
-  .dfe-header__content {
-    position: relative;
-  }
-  .dfe-header__content:after {
-    clear: both;
-    content: "";
-    display: block;
-  }
-  @media print {
-    .dfe-header__content {
-      display: none;
-    }
-  }
-  .dfe-header__content.js-show {
-    border-bottom: 4px solid #f0f4f5;
-    /* [7] */
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-header__content {
-      float: right;
-    }
-    .dfe-header__content.js-show {
-      border-bottom: 0;
-    }
-  }
-  
-  .dfe-header__search {
-    position: relative;
-    text-align: right;
-  }
-  .dfe-header__search:after {
-    clear: both;
-    content: "";
-    display: block;
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-header__search {
-      float: left;
-      margin-left: 8px;
-    }
-  }
-  
-  .dfe-header__search-toggle {
-    background-color: transparent;
-    border: 1px solid #ffffff;
-    border-radius: 4px;
-    color: #ffffff;
-    cursor: pointer;
-    min-height: 40px;
-    /* [2] */
-    padding: 4px 8px 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  .dfe-header__search-toggle::-moz-focus-inner {
-    border: 0;
-  }
-  .dfe-header__search-toggle:hover {
-    background-color: #002644;
-    border-color: #f0f4f5;
-    box-shadow: none;
-  }
-  .dfe-header__search-toggle:focus {
-    border: 1px solid #ffdd00 !important; /* stylelint-disable-line declaration-no-important */ /* [2] */
-  }
-  .dfe-header__search-toggle:active, .dfe-header__search-toggle.is-active {
-    background-color: #001d35;
-    border-color: #f0f4f5;
-    color: #f0f4f5;
-  }
-  .dfe-header__search-toggle .dfe-icon__search {
-    fill: #ffffff;
-    height: 21px;
-    /* [3] */
-    width: 21px;
-    /* [3] */
-  }
-  .dfe-header__search-toggle:focus {
-    background-color: #ffdd00;
-    border: 0;
-    box-shadow: 0 4px 0 0 #0b0c0c;
-    color: #0b0c0c;
-    outline: 4px solid transparent; /* 1 */
-    outline-offset: 4px;
-    box-shadow: 0 0 0 2px #ffdd00, 0 4px 0 2px #0b0c0c;
-  }
-  .dfe-header__search-toggle:focus .dfe-icon {
-    fill: #0b0c0c;
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-header__search-toggle {
-      display: none;
-    }
-  }
-  
-  .dfe-header__search-form {
-    height: 100%;
-    overflow: visible;
-  }
-  @media (max-width: 40.0525em) {
-    .dfe-header__search-form {
-      background-color: #ffffff;
-      display: flex;
-      padding: 16px;
-      width: 100%;
-    }
-  }
-  
-  @media (max-width: 40.0525em) {
-    .dfe-header__search-wrap {
-      display: none;
-    }
-    .dfe-header__search-wrap.js-show {
-      clear: both;
-      display: flex;
-      margin-bottom: -20px;
-      margin-left: -16px;
-      margin-right: -16px;
-      padding-top: 16px;
-      text-align: left;
-    }
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-header__search-wrap {
-      display: block;
-      line-height: 0;
-    }
-  }
-  
-  .dfe-search__input {
-    -webkit-appearance: listbox;
-    /* [5] */
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 0;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 0;
-    padding: 0 16px;
-  }
-  .dfe-search__input:focus {
-    border: 4px solid #0b0c0c;
-    box-shadow: 0 0 0 4px #ffdd00;
-    outline: 4px solid transparent;
-    outline-offset: 4px;
-    padding: 0 9px;
-  }
-  .dfe-search__input::placeholder {
-    color: #505a5f;
-    font-size: 16px;
-  }
-  .dfe-search__input:-ms-input-placeholder {
-    color: #505a5f;
-    font-size: 16px;
-  }
-  .dfe-search__input::-webkit-input-placeholder {
-    color: #505a5f;
-    font-size: 16px;
-  }
-  @media (max-width: 40.0525em) {
-    .dfe-search__input {
-      border-bottom: 1px solid #aeb7bd;
-      border-left: 1px solid #aeb7bd;
-      border-right: 0;
-      border-top: 1px solid #aeb7bd;
-      flex-grow: 2;
-      -ms-flex-positive: 2;
-      font-size: inherit;
-      height: 52px;
-      /* [4] */
-      margin: 0;
-      outline: none;
-      width: 100%;
-      /* [4] */
-      z-index: 1;
-    }
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-search__input {
-      border: 1px solid #ffffff;
-      font-size: 16px;
-      height: 40px;
-      /* [2] */
-      width: 200px;
-      /* [2] */
-    }
-  }
-  @media (min-width: 48.0625em) {
-    .dfe-search__input {
-      width: 235px;
-    }
-  }
-  
-  .dfe-search__submit {
-    border: 0;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 4px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 4px;
-    float: right;
-    font-size: inherit;
-    line-height: inherit;
-    outline: none;
-    padding: 0;
-  }
-  .dfe-search__submit::-moz-focus-inner {
-    border: 0;
-    /* [4] */
-  }
-  .dfe-search__submit:hover {
-    cursor: pointer;
-  }
-  @media (max-width: 40.0525em) {
-    .dfe-search__submit {
-      background-color: #003a69;
-      height: 52px;
-      /* [2] */
-      margin: 0;
-      padding: 8px 8px 0;
-    }
-    .dfe-search__submit .dfe-icon__search {
-      fill: #ffffff;
-      height: 38px;
-      /* [3] */
-      width: 38px;
-      /* [3] */
-    }
-    .dfe-search__submit:hover {
-      background-color: #002644;
-    }
-    .dfe-search__submit:focus {
-      background-color: #ffdd00;
-      box-shadow: 0 -4px #ffdd00, 0 4px #0b0c0c;
-      outline: 4px solid transparent;
-      outline-offset: 4px;
-    }
-    .dfe-search__submit:focus:hover {
-      background-color: #ffdd00;
-    }
-    .dfe-search__submit:focus:hover .dfe-icon {
-      fill: #0b0c0c;
-    }
-    .dfe-search__submit:focus .dfe-icon {
-      fill: #0b0c0c;
-    }
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-search__submit {
-      background-color: #f0f4f5;
-      display: block;
-      height: 40px;
-      /* [2] */
-      width: 44px;
-      /* [2] */
-    }
-    .dfe-search__submit .dfe-icon__search {
-      height: 27px;
-      /* [3] */
-      width: 27px;
-      /* [3] */
-    }
-    .dfe-search__submit:hover {
-      background-color: #002644;
-      border: 1px solid #ffffff;
-    }
-    .dfe-search__submit:hover .dfe-icon__search {
-      fill: #ffffff;
-    }
-    .dfe-search__submit:focus {
-      background-color: #ffdd00;
-      border: 0;
-      box-shadow: 0 4px 0 0 #0b0c0c;
-      color: #0b0c0c;
-      outline: 4px solid transparent; /* 1 */
-      outline-offset: 4px;
-      box-shadow: 0 -2px #ffdd00, 0 4px #0b0c0c;
-    }
-    .dfe-search__submit:focus .dfe-icon {
-      fill: #0b0c0c;
-    }
-    .dfe-search__submit:active {
-      background-color: #001d35;
-      border: 0;
-    }
-    .dfe-search__submit:active .dfe-icon__search {
-      fill: #ffffff;
-    }
-  }
-  
-  @media (max-width: 40.0525em) {
-    .dfe-search__close {
-      background-color: transparent;
-      border: 0;
-      cursor: pointer;
-      height: 40px;
-      padding: 0;
-      width: 40px;
-      margin-left: 8px;
-      margin-right: -8px;
-      /* [10] */
-      margin-top: 8px;
-    }
-    .dfe-search__close .dfe-icon__close {
-      fill: #003a69;
-      height: 40px;
-      width: 40px;
-    }
-    .dfe-search__close::-moz-focus-inner {
-      border: 0;
-    }
-    .dfe-search__close:hover .dfe-icon__close {
-      fill: #40484c;
-    }
-    .dfe-search__close:focus {
-      background-color: #ffdd00;
-      box-shadow: 0 -2px #ffdd00, 0 4px #0b0c0c;
-      color: #0b0c0c;
-      outline: 4px solid transparent;
-      text-decoration: none;
-    }
-    .dfe-search__close:focus .dfe-icon__close {
-      fill: #0b0c0c;
-    }
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-search__close {
-      display: none;
-    }
-  }
-  
-  .dfe-search__input--withdropdown {
-    border-bottom-left-radius: 0;
-  }
-  
-  .dfe-search__submit--withdropdown {
-    border-bottom-right-radius: 0;
-  }
-  
-  /* Main navigation
-   *
-   * Appears below the header strip
-     ====================================================================== */
-  .dfe-header__menu {
-    float: right;
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-header__menu {
-      float: left;
-    }
-  }
-  
-  .dfe-header__menu-toggle {
-    background-color: transparent;
-    border: 1px solid #ffffff;
-    border-radius: 4px;
-    color: #ffffff;
-    cursor: pointer;
-    display: block;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    margin-right: 0;
-    /* [6] */
-    padding: 7px 16px;
-    position: relative;
-    text-decoration: none;
-    z-index: 1;
-  }
-  .dfe-header__menu-toggle::-moz-focus-inner {
-    border: 0;
-  }
-  .dfe-header__menu-toggle:hover {
-    background-color: #002644;
-    border-color: #f0f4f5;
-    box-shadow: none;
-  }
-  .dfe-header__menu-toggle:focus {
-    border: 1px solid #ffdd00 !important; /* stylelint-disable-line declaration-no-important */ /* [2] */
-  }
-  .dfe-header__menu-toggle:active, .dfe-header__menu-toggle.is-active {
-    background-color: #001d35;
-    border-color: #f0f4f5;
-    color: #f0f4f5;
-  }
-  @media (max-width: 40.0525em) {
-    .dfe-header__menu-toggle {
-      right: 48px;
-    }
-  }
-  @media (min-width: 40.0625em) and (max-width: 61.865em) {
-    .dfe-header__menu-toggle {
-      margin-top: 0;
-      /* [9] */
-    }
-  }
-  @media (min-width: 61.875em) {
-    .dfe-header__menu-toggle {
-      display: none;
-    }
-  }
-  .dfe-header__menu-toggle:focus {
-    background-color: #ffdd00;
-    border: 0;
-    box-shadow: 0 4px 0 0 #0b0c0c;
-    color: #0b0c0c;
-    outline: 4px solid transparent; /* 1 */
-    outline-offset: 4px;
-    box-shadow: 0 0 0 2px #ffdd00, 0 4px 0 2px #0b0c0c;
-  }
-  .dfe-header__menu-toggle:focus .dfe-icon {
-    fill: #0b0c0c;
-  }
-  
-  /* 'only' modifier for when there is only the menu in the header, no search
-     ====================================================================== */
-  @media (max-width: 40.0525em) {
-    .dfe-header__menu--only .dfe-header__menu-toggle {
-      position: relative;
-      right: auto;
-      top: auto;
-    }
-  }
-  
-  .dfe-header__navigation {
-    background-color: #ffffff;
-    clear: both;
-    display: none;
-    overflow: hidden;
-  }
-  @media print {
-    .dfe-header__navigation {
-      display: none;
-    }
-  }
-  .dfe-header__navigation.js-show {
-    display: block;
-  }
-  @media (max-width: 61.865em) {
-    .dfe-header__navigation.js-show {
-      border-bottom: 4px solid #f0f4f5;
-      /* [7] */
-      border-top: 4px solid #f0f4f5;
-      /* [7] */
-    }
-    .dfe-header__navigation.js-show .dfe-width-container {
-      margin: 0 16px;
-    }
-  }
-  @media (max-width: 48.0525em) {
-    .dfe-header__navigation.js-show .dfe-width-container {
-      margin: 0;
-    }
-  }
-  @media (min-width: 61.875em) {
-    .dfe-header__navigation {
-      background-color: #003a69;
-      display: block;
-      margin: 0 auto;
-      max-width: 1264px;
-      /* [11] */
-    }
-  }
-  
-  .dfe-header__navigation-title {
-    font-weight: 700;
-    margin-bottom: 0;
-    padding: 16px;
-    position: relative;
-  }
-  @media (min-width: 61.875em) {
-    .dfe-header__navigation-title {
-      display: none;
-    }
-  }
-  
-  .dfe-header__navigation-close {
-    background-color: transparent;
-    border: 0;
-    cursor: pointer;
-    height: 40px;
-    padding: 0;
-    width: 40px;
-    overflow: hidden;
-    position: absolute;
-    right: 8px;
-    top: 8px;
-    white-space: nowrap;
-  }
-  .dfe-header__navigation-close .dfe-icon__close {
-    fill: #003a69;
-    height: 40px;
-    width: 40px;
-  }
-  .dfe-header__navigation-close::-moz-focus-inner {
-    border: 0;
-  }
-  .dfe-header__navigation-close:hover .dfe-icon__close {
-    fill: #40484c;
-  }
-  .dfe-header__navigation-close:focus {
-    background-color: #ffdd00;
-    box-shadow: 0 -2px #ffdd00, 0 4px #0b0c0c;
-    color: #0b0c0c;
-    outline: 4px solid transparent;
-    text-decoration: none;
-  }
-  .dfe-header__navigation-close:focus .dfe-icon__close {
-    fill: #0b0c0c;
-  }
-  
-  .dfe-header__navigation-list {
-    list-style: none;
-    margin: 0;
-    padding-left: 0;
-  }
-  @media (min-width: 61.875em) {
-    .dfe-header__navigation-list {
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
-      display: flex;
-      justify-content: flex-start;
-      padding: 0;
-      width: 100%;
-    }
-  }
-  
-  .dfe-header__navigation-item {
-    border-top: 1px solid #f0f4f5;
-    margin-bottom: 0;
-    position: relative;
-  }
-  .dfe-header__navigation-item.dfe-header__navigation-item--current {
-    box-shadow: inset 0 52px 0 #347ca9 !important;
-  }
-  .dfe-header__navigation-item.dfe-header__navigation-item--current a {
-    font-weight: 700;
-    color: #ffffff;
-  }
-  @media (min-width: 61.875em) {
-    .dfe-header__navigation-item {
-      border-top: 0;
-      margin: 0;
-      text-align: center;
-    }
-    .dfe-header__navigation-item a {
-      color: #ffffff;
-    }
-    .dfe-header__navigation-item .dfe-icon__chevron-right {
-      display: none;
-    }
-  }
-  
-  .dfe-header__navigation-link {
-    font-weight: 400;
-    font-size: 14px;
-    font-size: 0.875;
-    line-height: 1.33333;
-    border-bottom: 4px solid transparent;
-    border-top: 4px solid transparent;
-    color: #003a69;
-    display: block;
-    padding: 12px 15px;
-    text-decoration: none;
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-header__navigation-link {
-      font-size: 16px;
-      font-size: 1;
-      line-height: 1.33333;
-    }
-  }
-  @media print {
-    .dfe-header__navigation-link {
-      font-size: 14pt;
-      line-height: 1.2;
-    }
-  }
-  @media (min-width: 61.875em) {
-    .dfe-header__navigation-link {
-      color: #ffffff;
-      line-height: normal;
-    }
-  }
-  .dfe-header__navigation-link .dfe-icon__chevron-right {
-    fill: #aeb7bd;
-    position: absolute;
-    right: 4px;
-    top: 11px;
-  }
-  .dfe-header__navigation-link:visited {
-    color: #003a69;
-  }
-  @media (min-width: 61.875em) {
-    .dfe-header__navigation-link:visited {
-      color: #ffffff;
-    }
-  }
-  .dfe-header__navigation-link:hover {
-    box-shadow: none;
-    color: #003a69;
-    text-decoration: underline;
-  }
-  @media (min-width: 61.875em) {
-    .dfe-header__navigation-link:hover {
-      color: #ffffff;
-    }
-  }
-  .dfe-header__navigation-link:hover .dfe-icon__chevron-right {
-    fill: #003a69;
-  }
-  .dfe-header__navigation-link:active, .dfe-header__navigation-link:focus {
-    background-color: #ffdd00;
-    border-bottom: 4px solid #0b0c0c;
-    box-shadow: none;
-    color: #0b0c0c;
-    outline: 4px solid transparent;
-    outline-offset: 4px;
-    text-decoration: none;
-  }
-  .dfe-header__navigation-link:active:hover, .dfe-header__navigation-link:focus:hover {
-    background-color: #ffdd00;
-    color: #0b0c0c;
-  }
-  .dfe-header__navigation-link:active:hover .dfe-icon__chevron-right, .dfe-header__navigation-link:focus:hover .dfe-icon__chevron-right {
-    fill: #0b0c0c;
-  }
-  .dfe-header__navigation-link:active:visited, .dfe-header__navigation-link:focus:visited {
-    background-color: #ffdd00;
-    color: #0b0c0c;
-  }
-  
-  @media (min-width: 61.875em) {
-    .dfe-header__navigation-item--for-mobile {
-      display: none;
-    }
-  }
-  
-  @media (min-width: 61.875em) {
-    .dfe-header__navigation-list--small {
-      justify-content: flex-start;
-    }
-  }
-  
-  /**
-   * Transactional Header with service name
-  **/
-  .dfe-header__transactional-service-name {
-    float: left;
-    padding-left: 16px;
-    padding-top: 3px;
-  }
-  @media (max-width: 61.865em) {
-    .dfe-header__transactional-service-name {
-      padding-left: 0;
-      padding-top: 8px;
-      width: 100%;
-    }
-  }
-  
-  .dfe-header__transactional-service-name--link {
-    color: #ffffff;
-    font-weight: 400;
-    font-size: 16px;
-    font-size: 1;
-    line-height: 1.33333;
-    text-decoration: none;
-  }
-  .dfe-header__transactional-service-name--link:visited {
-    color: #ffffff;
-  }
-  .dfe-header__transactional-service-name--link:hover {
-    color: #ffffff;
-    text-decoration: none;
-  }
-  .dfe-header__transactional-service-name--link:focus {
-    color: #0b0c0c;
-    outline: 4px solid transparent;
-    outline-offset: 4px;
-    text-decoration: none;
-  }
-  .dfe-header__transactional-service-name--link:active {
-    color: #001d35;
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-header__transactional-service-name--link {
-      font-size: 19px;
-      font-size: 1.1875;
-      line-height: 1.33333;
-    }
-  }
-  @media print {
-    .dfe-header__transactional-service-name--link {
-      font-size: 14pt;
-      line-height: 1.15;
-    }
-  }
-  .dfe-header__transactional-service-name--link:hover {
-    text-decoration: underline;
-  }
-  
-  .dfe-header--transactional .dfe-header__link {
-    height: 60px;
-    width: 100px;
-    display: block;
-  }
-  .dfe-header--transactional .dfe-logo {
-    height: 60px;
-    width: 100px;
-  }
-  .dfe-header--transactional .dfe-header__transactional-service-name {
-    float: left;
-  }
-  
-  .dfe-header__link--service {
-    height: auto;
-    margin-top: -4px;
-    text-decoration: none;
-    width: auto;
-  }
-  @media (min-width: 61.875em) {
-    .dfe-header__link--service {
-      align-items: center;
-      display: flex;
-      -ms-flex-align: center;
-      margin-bottom: 0;
-      width: auto;
-    }
-    .dfe-header__link--service .dfe-header__service-name {
-      margin-top: 61px;
-      font-weight: 400;
-      font-size: 18px;
-      font-size: 1.125;
-      line-height: 1.33333;
-      display: block;
-      font-weight: 500;
-      letter-spacing: -0.2px;
-      line-height: 23px;
-      margin-left: 12px;
-    }
-  }
-  @media (min-width: 61.875em) and (min-width: 40.0625em) {
-    .dfe-header__link--service .dfe-header__service-name {
-      font-size: 22px;
-      font-size: 1.375;
-      line-height: 1.33333;
-    }
-  }
-  @media print and (min-width: 61.875em) {
-    .dfe-header__link--service .dfe-header__service-name {
-      font-size: 18pt;
-      line-height: 1.15;
-    }
-  }
-  .dfe-header__link--service:hover {
-    background: none;
-  }
-  .dfe-header__link--service:hover .dfe-header__service-name {
-    text-decoration: underline;
-  }
-  .dfe-header__link--service:focus {
-    background: #ffdd00;
-    box-shadow: 0 0 0 4px #ffdd00, 0 4px 0 4px #0b0c0c;
-  }
-  .dfe-header__link--service:focus .dfe-header__service-name {
-    color: #0b0c0c;
-    text-decoration: none;
-  }
-  .dfe-header__link--service:focus .dfe-logo {
-    box-shadow: none;
-  }
-  
-  .dfe-header__service-name {
-    font-weight: 400;
-    font-size: 18px;
-    font-size: 1.125;
-    line-height: 1.33333;
-    color: #ffffff;
-    display: block;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 8px;
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-header__service-name {
-      font-size: 22px;
-      font-size: 1.375;
-      line-height: 1.33333;
-    }
-  }
-  @media print {
-    .dfe-header__service-name {
-      font-size: 18pt;
-      line-height: 1.15;
-    }
-  }
-  @media (min-width: 61.875em) {
-    .dfe-header__service-name {
-      padding-left: 16px;
-      padding-top: 0;
-    }
-  }
-  @media (max-width: 61.865em) {
-    .dfe-header__service-name {
-      max-width: 440px;
-    }
-  }
-  
-  .dfe-header__logo--only {
-    max-width: 100%;
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-header__logo--only .dfe-header__link--service {
-      align-items: center;
-      display: flex;
-      -ms-flex-align: center;
-      margin-bottom: 0;
-      width: auto;
-    }
-    .dfe-header__logo--only .dfe-header__service-name {
-      padding-left: 16px;
-    }
-  }
-  
-  /**
-   * Top right username or other action if link
-  **/
-  .dfeuk-header__username {
-    padding-bottom: 20px;
-    margin: 0px;
-    text-align: right;
-    color: #ffffff;
-  }
-  .dfeuk-header__username a {
-    color: #ffffff;
-    text-decoration: none;
-  }
-  .dfeuk-header__username a:hover {
-    text-decoration: underline;
-  }
-
-  /* ==========================================================================
-   OBJECTS / #MAIN-WRAPPER
-   ========================================================================== */
-/**
- * Page wrapper for the grid system
- *
- * Usage:
- * <div class="dfe-width-container">
- *   <div class="dfe-main-wrapper">
- *    <!-- Wrapper for the main content of your page which applies padding
- *         to the top / bottom -->
- *   </div>
- * </div>
- *
- * Original code taken from GDS (Government Digital Service)
- * https://github.com/alphagov/govuk-frontend
- *
- * 1. In IE11 the `main` element can be used, but is not recognized  –
- *    meaning it's not defined in IE's default style sheet,
- *    so it uses CSS initial value, which is inline.
- */
-.dfe-main-wrapper {
-    padding-top: 40px;
-    padding-bottom: 40px;
-    display: block; /* [1] */
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-main-wrapper {
-      padding-top: 48px;
-    }
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-main-wrapper {
-      padding-bottom: 48px;
-    }
-  }
-  .dfe-main-wrapper > *:first-child {
-    margin-top: 0;
-  }
-  .dfe-main-wrapper > *:last-child {
-    margin-bottom: 0;
-  }
-  
-  .dfe-main-wrapper--l {
-    padding-top: 48px;
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-main-wrapper--l {
-      padding-top: 56px;
-    }
-  }
-  
-  .dfe-main-wrapper--s {
-    padding-bottom: 24px;
-    padding-top: 24px;
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-main-wrapper--s {
-      padding-bottom: 32px;
-    }
-  }
-  @media (min-width: 40.0625em) {
-    .dfe-main-wrapper--s {
-      padding-top: 32px;
-    }
-  }
-  
-  /* ==========================================================================
-     OBJECTS / #WIDTH-CONTAINER
-     ========================================================================== */
-  /**
-   * Page width for the grid system
-   *
-   * Original code taken from GDS (Government Digital Service)
-   * https://github.com/alphagov/govuk-frontend
-   *
-   * 1. On mobile, add half width gutters
-   * 2. Limit the width of the container to the page width
-   * 3. From desktop, add full width gutters
-   * 4. As soon as the viewport is greater than the width of the page plus the
-   *    gutters, just centre the content instead of adding gutters.
-   * 5. Full width container, spanning the entire width of the viewport
-   */
-  .dfe-width-container {
-    margin: 0 16px; /* [1] */
-    max-width: 1200px; /* [2] */
-    /* [4] */
-  }
-  @media (min-width: 48.0625em) {
-    .dfe-width-container {
-      margin: 0 32px; /* [3] */
-    }
-  }
-  @media (min-width: 1264px) {
-    .dfe-width-container {
-      margin: 0 auto;
-    }
-  }
-  
-  .dfe-width-container-fluid {
-    margin: 0 16px;
-    max-width: 100%; /* [5] */
-  }
-  @media (min-width: 48.0625em) {
-    .dfe-width-container-fluid {
-      margin: 0 32px; /* [3] */
-    }
-  }
-
-  /* ==========================================================================
-   STYLES / #ICONS
-   ========================================================================== */
-.dfe-icon {
-    height: 34px;
-    width: 34px;
-  }
-  
-  .dfe-icon__search {
-    fill: #003a69;
-  }
-  
-  .dfe-icon__chevron-left {
-    fill: #003a69;
-  }
-  
-  .dfe-icon__chevron-right {
-    fill: #003a69;
-  }
-  
-  .dfe-icon__close {
-    fill: #003a69;
-  }
-  
-  .dfe-icon__cross {
-    fill: #d4351c;
-  }
-  
-  .dfe-icon__tick {
-    stroke: #00703c;
-  }
-  
-  .dfe-icon__arrow-right {
-    fill: #003a69;
-  }
-  
-  .dfe-icon__arrow-left {
-    fill: #003a69;
-  }
-  
-  .dfe-icon__arrow-right-circle {
-    fill: #00703c;
-  }
-  
-  .dfe-icon__chevron-down {
-    fill: #003a69;
-    -moz-transform: rotate(180deg);
-    -ms-transform: rotate(180deg);
-    -o-transform: rotate(180deg);
-    -webkit-transform: rotate(180deg);
-    transform: rotate(180deg);
-  }
-  .dfe-icon__chevron-down path {
-    fill: #ffffff;
-  }
-  
-  .dfe-icon__chevron-up {
-    fill: #003a69;
-  }
-  .dfe-icon__chevron-up path {
-    fill: #ffffff;
-  }
-  
-  .dfe-icon__emdash path {
-    fill: #aeb7bd;
-  }
-  
-  .dfe-icon__plus {
-    fill: #003a69;
-  }
-  
-  .dfe-icon__minus {
-    fill: #003a69;
-  }
-  
-  .dfe-icon--size-25 {
-    height: 42.5px;
-    width: 42.5px;
-  }
-  
-  .dfe-icon--size-50 {
-    height: 51px;
-    width: 51px;
-  }
-  
-  .dfe-icon--size-75 {
-    height: 59.5px;
-    width: 59.5px;
-  }
-  
-  .dfe-icon--size-100 {
-    height: 68px;
-    width: 68px;
-  }
-  
-/**
-* Search input to be embedded on a form within a text component
-**/
-
-.dfe-form-search__item-wrapper {
-    display: table;
-    width: 100%;
-    background: #fff
-  }
-  
-  .dfe-form-search__item {
-      position: relative;
-      display: table-cell;
-      vertical-align: top
-  }
-  
-  .dfe-form-search__input[type="search"]:focus {
-      outline: 3px solid #fd0;
-      outline-offset: 0;
-      box-shadow: inset 0 0 0 2px
-  }
-  
-  .dfe-form-search__input[type="search"] {
-      font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 1.4736842105;
-      margin: 0;
-      width: 100%;
-      height: 2.5em;
-      padding: .375em;
-      border: 2px solid #0b0c0c;
-      background: #fff;
-      border-radius: 0;
-      box-sizing: border-box;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none
-  }
-  
-  @media print {
-      .dfe-form-search__input[type="search"] {
-          font-family: sans-serif
-      }
-  }
-  
-  @media (min-width: 40.0625em) {
-      .dfe-form-search__input[type="search"] {
-          font-size:19px;
-          line-height: 1.4736842105
-      }
-  }
-  
-  @media print {
-      .dfe-form-search__input[type="search"] {
-          font-size: 14pt;
-          line-height: 1.4736842105
-      }
-  }
-  
-  @media (min-width: 40.0625em) {
-      .dfe-form-search__input[type="search"] {
-          height:2.1052631579em;
-          padding: .3157894737em
-      }
-  }
-  
-  .dfe-form-search__input[type="search"]:focus,.dfe-search__input.focus[type="search"] {
-      z-index: 2
-  }
-  
-  .dfe-form-search__submit-wrapper {
-      width: 1%
-  }
-  
-  .dfe-form-search__submit {
-      border: 0;
-      cursor: pointer;
-      border-radius: 0;
-      position: relative;
-      padding: 0;
-      width: 40px;
-      height: 40px;
-      text-indent: -5000px;
-      overflow: hidden;
-      background-color: #347ca9;
-  }
-  
-  .dfe-form-search__submit .dfe-form-search__icon {
-      display: block;
-      pointer-events: none;
-      position: absolute;
-      height: 20px;
-      width: 20px;
-      top: 10px;
-      left: 10px;
-      color: #ffffff;
-  }
-  
-  .dfe-form-search__submit:focus {
-      z-index: 2;
-      outline: 3px solid #fd0;
-      outline-offset: 0;
-      box-shadow: inset 0 0 0 4px #0b0c0c
-  }
-
-  .dfe-form-search__submit:hover {
-    background-color: #003a69;
-    }
-  
-  .dfe-form-search__submit::-moz-focus-inner {
-      border: 0
-  }  
-
-/* Contents block */
-.dfe-contents-container {
-  margin-top: 30px;
-  margin-bottom: 30px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #b1b4b6;
-}
-
-@media (min-width: 40.0625em) {
-  .dfe-contents-container {
-      margin-top: 0;
-      padding-bottom: 15px;
-  }
-}
-
-.dfe-contents-list__list-item--numbered .dfe-contents-list__link {
-  display: table
-}
-
-.dfe-contents-list__number,.dfe-contents-list__numbered-text {
-  display: table-cell
-}
-
-.dfe-contents-list__number {
-  min-width: 1.5em
-}
-
-.dfe-contents-list__numbered-text {
-  padding-left: .3em
-}
-
-.direction-rtl .dfe-contents-list__numbered-text {
-  padding-left: 0;
-  padding-right: .3em
-}
-
-.dfe-contents-list {
-  position: relative;
-  margin: 0 0 20px 0;
-  z-index: 1;
-  background: #fff;
-  box-shadow: 0 20px 15px -10px #fff
-}
-
-.dfe-contents-list__title {
-  color: #0b0c0c;
-  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.5;
-  margin: 0
-}
-
-@media print {
-  .dfe-contents-list__title {
-      color: #000
-  }
-}
-
-@media print {
-  .dfe-contents-list__title {
-      font-family: sans-serif
-  }
-}
-
-@media (min-width: 40.0625em) {
-  .dfe-contents-list__title {
-      font-size:16px;
-      line-height: 1.5
-  }
-}
-
-@media print {
-  .dfe-contents-list__title {
-      font-size: 14pt;
-      line-height: 1.5
-  }
-}
-
-.dfe-contents-list__list, .dfe-contents-list__nested-list {
-  color: #0b0c0c;
-  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.1428571429;
-  margin: 0;
-  padding: 0;
-  list-style-type: none
-}
-
-@media print {
-  .dfe-contents-list__list,.dfe-contents-list__nested-list {
-      color: #000
-  }
-}
-
-@media print {
-  .dfe-contents-list__list,.dfe-contents-list__nested-list {
-      font-family: sans-serif
-  }
-}
-
-@media (min-width: 40.0625em) {
-  .dfe-contents-list__list,.dfe-contents-list__nested-list {
-      font-size:16px;
-      line-height: 1.25
-  }
-}
-
-@media print {
-  .dfe-contents-list__list,.dfe-contents-list__nested-list {
-      font-size: 14pt;
-      line-height: 1.2
-  }
-}
-
-.dfe-contents-list__list-item--parent>.dfe-contents-list__link {
-  font-weight: bold
-}
-
-.dfe-contents-list__link:focus,.dfe-contents-list__link:active:focus,.dfe-contents-list__link:link:focus,.dfe-contents-list__link:visited:focus {
-  outline: 3px solid transparent;
-  color: #0b0c0c;
-  background-color: #fd0;
-  box-shadow: 0 -2px #fd0,0 4px #0b0c0c;
-  text-decoration: none;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  color: #0b0c0c !important
-}
-
-.dfe-contents-list__list-item {
-  padding-top: 10px;
-  line-height: 1.3;
-  list-style-type: none
-}
-
-@media (min-width: 40.0625em) {
-  .dfe-contents-list__list-item {
-      padding-top:7.5px
-  }
-}
-
-.dfe-contents-list__list-item--dashed {
-  position: relative;
-  padding-left: 25px;
-  padding-right: 25px
-}
-
-.dfe-contents-list__list-item--dashed:before {
-  content: "—";
-  position: absolute;
-  left: 0;
-  width: 20px;
-  overflow: hidden
-}
-
-.direction-rtl .dfe-contents-list__list-item--dashed:before {
-  left: auto;
-  right: 0
-}
-
-.lte-ie8 .dfe-contents-list__list-item--dashed .dfe-contents-list__link {
-  display: inline-block;
-  vertical-align: top
-}
-
-@media print {
-  .dfe-contents-list__list,.dfe-contents-list__nested-list {
-      padding-left: 0;
-      margin-left: 0
-  }
-
-  .dfe-contents-list__list-item--dashed {
-      margin-left: 15px;
-      list-style-type: disc
-  }
-
-  .dfe-contents-list__list-item--numbered,.dfe-contents-list__list-item--parent {
-      list-style-type: none
-  }
-}
-
-.dfe-contents-list__list>li, .dfe-contents-list__nested-list>li {
-  margin-bottom: 0;
-}
-
-/* Sortable table extra components */
-
-[aria-sort] button,
-[aria-sort] button:hover {
-  background-color: transparent;
-  border-width: 0;
-  -webkit-box-shadow: 0 0 0 0;
-  -moz-box-shadow: 0 0 0 0;
-  box-shadow: 0 0 0 0;
-  color: #347ca9;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  padding: 0 10px 0 0;
-  position: relative;
-  text-align: inherit;
-  font-size: 1em;
-  margin: 0;
-}
-
-[aria-sort] button:focus {
-  background-color: #ffdd00;
-  color: #0b0c0c;
-  box-shadow: 0 -2px #ffdd00, 0 4px #0b0c0c;
-  outline: none;
-}
-
-[aria-sort]:first-child button {
-  right: auto;
-}
-
-[aria-sort] button:before {
-  content: " \25bc";
-  position: absolute;
-  right: -2px;
-  top: 12px;
-  font-size: 0.5em;
-}
-
-[aria-sort] button:after {
-  content: " \25b2";
-  position: absolute;
-  right: -2px;
-  top: 3px;
-  font-size: 0.5em;
-}
-
-[aria-sort="ascending"] button:before,
-[aria-sort="descending"] button:before {
-  content: none;
-}
-
-[aria-sort="ascending"] button:after {
-  content: " \25b2";
-  font-size: .8em;
-  position: absolute;
-  right: -6px;
-  top: 4px;
-}
-
-[aria-sort="descending"] button:after {
-  content: " \25bc";
-  font-size: .8em;
-  position: absolute;
-  right: -6px;
-  top: 4px;
-}
-

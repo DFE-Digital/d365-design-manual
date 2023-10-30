@@ -6,7 +6,7 @@ html body {
 
 /* Custom loader */
 .loader {
-    border:7px solid #1d70b8;
+    border:7px solid #347ca9;
     border-radius: 50%;
     border-top: 7px solid #0b0c0c; 
     width: 50px;
@@ -140,7 +140,7 @@ html body {
 }
 
 .dropdown-menu>li>a:link {
-    color: #1d70b8;
+    color: #347ca9;
 }
 
 .dropdown-menu>li>a:visited {
@@ -203,8 +203,12 @@ a:focus {
     text-decoration: none;
 }
 
+header a:link {
+  color: #ffffff;
+}
+
 a:link {
-    color: #1d70b8;
+    color: #347ca9;
 }
 
 a:visited {
@@ -1003,7 +1007,7 @@ select:focus::-ms-value,
 select option:active,
 select option:checked {
     color: #fff;
-    background-color: #1d70b8;
+    background-color: #347ca9;
 }
 
 div.info label {
