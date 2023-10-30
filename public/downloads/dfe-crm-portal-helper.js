@@ -2,282 +2,259 @@ var DfEPortal = DfEPortal || {};  // if variable is not defined then set it to a
 
 DfEPortal = {
 
-  ValidateData: function (inputsToValidate) {
-
-    return new Promise((resolve, reject) => {
-      $.when(DfEPortal.CheckEachInput(inputsToValidate)).then(() => {
-        if (inputsToValidate.filter(e => e.resolve === false).length == 0) {
-          DfEPortal.Errors.HideErrorSummary();
-          resolve();
-        } else {
-          DfEPortal.Errors.ShowErrorSummary();
-          reject();
-        }
-      })
-    })
+  ValidateData: async function (inputsToValidate) {
+    try {
+      DfEPortal.Errors.HideErrorSummary();
+      const results = await Promise.all(inputsToValidate.map(inputObj => this.CheckInput(inputObj)));
+      if (results.every(result => result.resolve === true)) {
+        DfEPortal.Errors.HideErrorSummary();
+        return Promise.resolve();
+      } else {
+        DfEPortal.Errors.ShowErrorSummary();
+        return Promise.reject();
+      }
+    } catch (error) {
+      console.error(error);
+      DfEPortal.Errors.AddErrorSummaryDetail(inputObj.identifier, "Internal error. Please contact the DfE.");
+      DfEPortal.Errors.ShowErrorSummary();
+      return Promise.reject();
+    }
   },
 
-  CheckEachInput: function (inputsObj) {
-    $.each(inputsObj, function (i) {
-      DfEPortal.RunValidation(inputsObj[i])
-        .then((identifier) => {
-          const inputErrorContainer = $(`#${identifier}-error`);
-          if (inputErrorContainer.length > 0) {
-            inputsObj[i].resolve = true;
-            DfEPortal.Errors.ClearInputError(identifier, inputsObj[i].type);
-            DfEPortal.Errors.RemoveErrorSummaryDetail(identifier);
-          } else {
-            console.error(`Cannot find error container for ${identifier}`);
-            inputsObj[i].resolve = false;
-            DfEPortal.Errors.AddErrorSummaryDetail(identifier, "Internal error. Please contact the DfE.");
-          }
-        })
-        .catch((error) => {
-          inputsObj[i].resolve = false;
-          const inputErrorContainer = $(`#${error.input}-error`);
-          if (inputErrorContainer.length > 0) {
-            DfEPortal.Errors.ClearInputError(error.input, inputsObj[i].type);
-            DfEPortal.Errors.ShowInputError(error.input, inputsObj[i].type, error.errorMessage);
-            DfEPortal.Errors.AddErrorSummaryDetail(error.input, error.errorMessage);
-          } else {
-            console.error(`Cannot find error container for ${error.input}`);
-            inputsObj[i].resolve = false;
-            DfEPortal.Errors.AddErrorSummaryDetail(error.input, "Internal error. Please contact the DfE.");
-          }
-        })
-    })
+  CheckInput: async function (inputObj) {
+    try {
+      const successObj = await this.RunValidation(inputObj);
+      inputObj.resolve = true;
+      DfEPortal.Errors.ClearInputError(successObj.identifier, inputObj.type);
+      DfEPortal.Errors.RemoveErrorSummaryDetail(successObj.identifier);
+      return inputObj;
+    } catch (errorObj) {
+      inputObj.resolve = false;
+      DfEPortal.Errors.ShowInputError(errorObj.identifier, inputObj.type, errorObj.errorMessage);
+      DfEPortal.Errors.AddErrorSummaryDetail(errorObj.identifier, errorObj.errorMessage);
+      return inputObj;
+    }
   },
 
-  RunValidation: function (inputObj) {
-    if (inputObj.type == 'number') {
-      const identifierValidObj = this.ValidationHelper.IsIdentifierValid(inputObj.identifier, inputObj.type);
-      if (!identifierValidObj.value) {
-        console.error(identifierValidObj.errorMessage);
-        DfEPortal.Errors.ShowErrorSummary();
-        DfEPortal.Errors.AddErrorSummaryDetail(inputObj.identifier, "Internal error. Please contact the DfE.");
-      } else {
-        return new Promise((resolve, reject) => {
-          const nullCheckObj = this.ValidationHelper.NullCheck(inputObj.identifier, inputObj.type, inputObj.friendlyName, inputObj.required);
-          if (!nullCheckObj.value) {
-            reject(nullCheckObj);
-          } else {
-            const isNumberObj = this.ValidationHelper.IsNumber(inputObj.identifier, inputObj.friendlyName);
-            if (!isNumberObj.value) {
-              reject(isNumberObj);
-            } else {
-              const minMaxValueObj = this.ValidationHelper.MinMaxValueChecks(inputObj.identifier, inputObj.friendlyName)
-              if (!minMaxValueObj.value) {
-                reject(minMaxValueObj);
-              } else {
-                resolve(inputObj.identifier);
-              }  
-            }
-          }
-        });
-      }
-    } else if (inputObj.type == 'whole-number') {
-      const identifierValidObj = this.ValidationHelper.IsIdentifierValid(inputObj.identifier, inputObj.type);
-      if (!identifierValidObj.value) {
-        console.error(identifierValidObj.errorMessage);
-        DfEPortal.Errors.ShowErrorSummary();
-        DfEPortal.Errors.AddErrorSummaryDetail(inputObj.identifier, "Internal error. Please contact the DfE.");
-      } else {
-        return new Promise((resolve, reject) => {
-          const nullCheckObj = this.ValidationHelper.NullCheck(inputObj.identifier, inputObj.type, inputObj.friendlyName, inputObj.required);
-          if (!nullCheckObj.value) {
-            reject(nullCheckObj);
-          } else {
-            const isNumberObj = this.ValidationHelper.IsNumber(inputObj.identifier, inputObj.friendlyName);
-            if (!isNumberObj.value) {
-              reject(isNumberObj);
-            } else {
-              const isWholeNumberObj = this.ValidationHelper.IsWholeNumber(inputObj.identifier, inputObj.friendlyName);
-              if (!isWholeNumberObj.value) {
-                reject(isWholeNumberObj);
-              } else {
-                const minMaxCharacterObj = this.ValidationHelper.MinMaxCharacterChecks(inputObj.identifier, inputObj.friendlyName)
-                if (!minMaxCharacterObj.value) {
-                  reject(minMaxCharacterObj);
-                } else {
-                  const minMaxValueObj = this.ValidationHelper.MinMaxValueChecks(inputObj.identifier, inputObj.friendlyName)
-                  if (!minMaxValueObj.value) {
-                    reject(minMaxValueObj);
-                  } else {
-                    resolve(inputObj.identifier);
-                  }
-                }
-              }
-            }
-          }
-        });
-      }
-    } else if (inputObj.type == 'decimal-number') {
-      const identifierValidObj = this.ValidationHelper.IsIdentifierValid(inputObj.identifier, inputObj.type);
-      if (!identifierValidObj.value) {
-        console.error(identifierValidObj.errorMessage);
-        DfEPortal.Errors.ShowErrorSummary();
-        DfEPortal.Errors.AddErrorSummaryDetail(inputObj.identifier, "Internal error. Please contact the DfE.");
-      } else {
-        return new Promise((resolve, reject) => {
-          const nullCheckObj = this.ValidationHelper.NullCheck(inputObj.identifier, inputObj.type, inputObj.friendlyName, inputObj.required);
-          if (!nullCheckObj.value) {
-            reject(nullCheckObj);
-          } else {
-            const isNumberObj = this.ValidationHelper.IsNumber(inputObj.identifier, inputObj.friendlyName);
-            if (!isNumberObj.value) {
-              reject(isNumberObj);
-            } else {
-              const isDecimalNumberObj = this.ValidationHelper.IsDecimalNumber(inputObj.identifier, inputObj.friendlyName);
-              if (!isDecimalNumberObj.value) {
-                reject(isDecimalNumberObj);
-              } else {
-                const minMaxValueObj = this.ValidationHelper.MinMaxValueChecks(inputObj.identifier, inputObj.type, inputObj.friendlyName)
-                if (!minMaxValueObj.value) {
-                  reject(minMaxValueObj);
-                } else {
-                  resolve(inputObj.identifier);
-                }
-              }
-            }
-          }
-        });
-      }
-    } else if (inputObj.type == 'text') {
-      const identifierValidObj = this.ValidationHelper.IsIdentifierValid(inputObj.identifier, inputObj.type);
-      if (!identifierValidObj.value) {
-        console.error(identifierValidObj.errorMessage);
-        DfEPortal.Errors.ShowErrorSummary();
-        DfEPortal.Errors.AddErrorSummaryDetail(inputObj.identifier, "Internal error. Please contact the DfE.");
-      } else {
-        return new Promise((resolve, reject) => {
-          const nullCheckObj = this.ValidationHelper.NullCheck(inputObj.identifier, inputObj.type, inputObj.friendlyName, inputObj.required);
-          if (!nullCheckObj.value) {
-            reject(nullCheckObj);
-          } else {
-            const minMaxObj = this.ValidationHelper.MinMaxCharacterChecks(inputObj.identifier, inputObj.type, inputObj.friendlyName)
-            if (!minMaxObj.value) {
-              reject(minMaxObj);
-            } else {
-              resolve(inputObj.identifier);
-            }
-          }
-        });
-      }
-    } else if (inputObj.type == 'text-area') {
-      const identifierValidObj = this.ValidationHelper.IsIdentifierValid(inputObj.identifier, inputObj.type);
-      if (!identifierValidObj.value) {
-        console.error(identifierValidObj.errorMessage);
-        DfEPortal.Errors.ShowErrorSummary();
-        DfEPortal.Errors.AddErrorSummaryDetail(inputObj.identifier, "Internal error. Please contact the DfE.");
-      } else {
-        return new Promise((resolve, reject) => {
-          const nullCheckObj = this.ValidationHelper.NullCheck(inputObj.identifier, inputObj.type, inputObj.friendlyName, inputObj.required);
-          if (!nullCheckObj.value) {
-            reject(nullCheckObj);
-          } else {
-            const characterCountObj = this.ValidationHelper.CharacterCountContainerCheck(inputObj.identifier, inputObj.friendlyName);
-            if (!characterCountObj.value) {
-              reject(characterCountObj);
-            } else {
-              const minMaxObj = this.ValidationHelper.MinMaxCharacterChecks(inputObj.identifier, inputObj.type, inputObj.friendlyName);
-              if (!minMaxObj.value) {
-                reject(minMaxObj);
-              } else {
-                resolve(inputObj.identifier);
-              }
-            }
-          }
-        });
-      }
-    } else if (inputObj.type == 'email') {
-      const identifierValidObj = this.ValidationHelper.IsIdentifierValid(inputObj.identifier, inputObj.type);
-      if (!identifierValidObj.value) {
-        console.error(identifierValidObj.errorMessage);
-        DfEPortal.Errors.ShowErrorSummary();
-        DfEPortal.Errors.AddErrorSummaryDetail(inputObj.identifier, "Internal error. Please contact the DfE.");
-      } else {
-        return new Promise((resolve, reject) => {
-          const nullCheckObj = this.ValidationHelper.NullCheck(inputObj.identifier, inputObj.type, inputObj.friendlyName, inputObj.required);
-          if (!nullCheckObj.value) {
-            reject(nullCheckObj);
-          } else {
-            const isEmailObj = this.ValidationHelper.IsEmail(inputObj.identifier);
-            if (!isEmailObj.value) {
-              reject(isEmailObj);
-            } else {
-              resolve(inputObj.identifier);
-            }
-          }
-        });
-      }
-    } else if (inputObj.type == 'tel') {
-      const identifierValidObj = this.ValidationHelper.IsIdentifierValid(inputObj.identifier, inputObj.type);
-      if (!identifierValidObj.value) {
-        console.error(identifierValidObj.errorMessage);
-        DfEPortal.Errors.ShowErrorSummary();
-        DfEPortal.Errors.AddErrorSummaryDetail(inputObj.identifier, "Internal error. Please contact the DfE.");
-      } else {
-        return new Promise((resolve, reject) => {
-          const nullCheckObj = this.ValidationHelper.NullCheck(inputObj.identifier, inputObj.type, inputObj.friendlyName, inputObj.required);
-          if (!nullCheckObj.value) {
-            reject(nullCheckObj);
-          } else {
-            const isTelephoneObj = this.ValidationHelper.IsTelephone(inputObj.identifier);
-            if (!isTelephoneObj.value) {
-              reject(isTelephoneObj);
-            } else {
-              resolve(inputObj.identifier);
-            }
-          }
-        });
-      }
-    } else if (inputObj.type == 'radio' || inputObj.type == 'checkbox' || inputObj.type == 'select') {
-      const identifierValidObj = this.ValidationHelper.IsIdentifierValid(inputObj.identifier, inputObj.type);
-      if (!identifierValidObj.value) {
-        console.error(identifierValidObj.errorMessage);
-        DfEPortal.Errors.ShowErrorSummary();
-        DfEPortal.Errors.AddErrorSummaryDetail(inputObj.identifier, "Internal error. Please contact the DfE.");
-      } else {
-        return new Promise((resolve, reject) => {
-          const nullCheckObj = this.ValidationHelper.NullCheck(inputObj.identifier, inputObj.type, inputObj.friendlyName, inputObj.required);
-          if (!nullCheckObj.value) {
-            reject(nullCheckObj);
-          } else {
-            resolve(inputObj.identifier);
-          }
-        });
-      }
-    } else if (inputObj.type == "date") {
-      const identifierValidObj = this.ValidationHelper.IsIdentifierValid(inputObj.identifier, inputObj.type);
-      if (!identifierValidObj.value) {
-        console.error(identifierValidObj.errorMessage);
-        DfEPortal.Errors.ShowErrorSummary();
-        DfEPortal.Errors.AddErrorSummaryDetail(inputObj.identifier, "Internal error. Please contact the DfE.");
-      } else {
-        return new Promise((resolve, reject) => {
-          const nullCheckObj = this.ValidationHelper.NullCheck(inputObj.identifier, inputObj.type, inputObj.friendlyName, inputObj.required);
-          if (!nullCheckObj.value) {
-            reject(nullCheckObj);
-          } else {
-            const validDateInputsObj = this.ValidationHelper.ValidateDateInputs(inputObj.identifier, inputObj.friendlyName);
-            if (!validDateInputsObj.value) {
-              reject(validDateInputsObj);
-            } else {
-              const validDateObj = this.ValidationHelper.IsDateValid(inputObj.identifier, inputObj.friendlyName);
-              if (!validDateObj.value) {
-                reject(validDateObj);
-              } else {
-                resolve(inputObj.identifier);
-              }
-            }
-          }
-        });
-      }
-    } else {
-      console.error(`'${inputObj.type}' is not a valid data validation type`);
+  RunValidation: async function (inputObj) {
+    const identifierValidObj = this.ValidationHelper.IsIdentifierValid(inputObj.identifier, inputObj.type);
+    
+    if (!identifierValidObj.value) {
       DfEPortal.Errors.ShowErrorSummary();
       DfEPortal.Errors.AddErrorSummaryDetail(inputObj.identifier, "Internal error. Please contact the DfE.");
+      return Promise.reject(identifierValidObj);
     }
+    
+    const nullCheckObj = this.ValidationHelper.NullCheck(inputObj.identifier, inputObj.type, inputObj.friendlyName, inputObj.required);
+    if (!nullCheckObj.value) {
+      return Promise.reject(nullCheckObj);
+    }
+    
+    if (inputObj.type === 'number') {
+      return this.ValidateNumber(inputObj);
+    }
+    if (inputObj.type === 'whole-number') {
+      return this.ValidateWholeNumber(inputObj);
+    }
+    if (inputObj.type === 'decimal-number') {
+      return this.ValidateDecimalNumber(inputObj);
+    }
+    if (inputObj.type === 'text') {
+      return this.ValidateText(inputObj);
+    }
+    if (inputObj.type === 'text-area') {
+      return this.ValidateTextArea(inputObj);
+    }
+    if (inputObj.type === 'email') {
+      return this.ValidateEmail(inputObj);
+    }
+    if (inputObj.type === 'tel') {
+      return this.ValidateTelephone(inputObj);
+    }
+    if (inputObj.type === 'radio' || inputObj.type === 'checkbox' || inputObj.type === 'select') {
+      return Promise.resolve(inputObj);
+    }
+    if (inputObj.type === "date") {
+      return this.ValidateDate(inputObj);
+    }
+  },
+
+  ValidateNumber: async function (inputObj) {
+    const identifier = inputObj.identifier;
+    const friendlyName = inputObj.friendlyName;
+
+    // Validate if it's a number
+    const isNumberObj = DfEPortal.ValidationHelper.IsNumber(identifier, friendlyName);
+    if (!isNumberObj.value) {
+        return Promise.reject(isNumberObj);
+    }
+
+    // Perform MinMaxValueChecks
+    const minMaxValueCheckObj = DfEPortal.ValidationHelper.MinMaxValueChecks(identifier, friendlyName);
+    if (!minMaxValueCheckObj.value) {
+        return Promise.reject(minMaxValueCheckObj);
+    }
+
+    // If it reaches this point, the number input is valid
+    return Promise.resolve(inputObj);
+  },
+
+  ValidateWholeNumber: async function (inputObj) {
+    const identifier = inputObj.identifier;
+    const friendlyName = inputObj.friendlyName;
+
+    // Validate if it's a number
+    const isNumberObj = DfEPortal.ValidationHelper.IsNumber(identifier, friendlyName);
+    if (!isNumberObj.value) {
+        return Promise.reject(isNumberObj);
+    }
+
+    // Validate if it's a whole number
+    const isWholeNumberObj = DfEPortal.ValidationHelper.IsWholeNumber(identifier, friendlyName);
+    if (!isWholeNumberObj.value) {
+        return Promise.reject(isWholeNumberObj);
+    }
+
+    // Perform MinMaxCharacterChecks
+    const minMaxCharacterCheckObj = DfEPortal.ValidationHelper.MinMaxCharacterChecks(identifier, friendlyName);
+    if (!minMaxCharacterCheckObj.value) {
+        return Promise.reject(minMaxCharacterCheckObj);
+    }
+
+    // Perform MinMaxValueChecks
+    const minMaxValueCheckObj = DfEPortal.ValidationHelper.MinMaxValueChecks(identifier, friendlyName);
+    if (!minMaxValueCheckObj.value) {
+        return Promise.reject(minMaxValueCheckObj);
+    }
+
+    // If it reaches this point, the whole number input is valid
+    return Promise.resolve(inputObj);
+  },
+
+  ValidateDecimalNumber: async function (inputObj) {
+    const identifier = inputObj.identifier;
+    const friendlyName = inputObj.friendlyName;
+
+    // Validate if it's a number
+    const isNumberObj = DfEPortal.ValidationHelper.IsNumber(identifier, friendlyName);
+    if (!isNumberObj.value) {
+        return Promise.reject(isNumberObj);
+    }
+
+    // Validate if it's a decimal number
+    const isDecimalNumberObj = DfEPortal.ValidationHelper.IsDecimalNumber(identifier, friendlyName);
+    if (!isDecimalNumberObj.value) {
+        return Promise.reject(isDecimalNumberObj);
+    }
+
+    // Perform MinMaxValueChecks
+    const minMaxValueCheckObj = DfEPortal.ValidationHelper.MinMaxValueChecks(identifier, friendlyName);
+    if (!minMaxValueCheckObj.value) {
+        return Promise.reject(minMaxValueCheckObj);
+    }
+
+    // If it reaches this point, the decimal number input is valid
+    return Promise.resolve(inputObj);
+  },
+
+  ValidateText: async function (inputObj) {
+    const identifier = inputObj.identifier;
+    const targetType = inputObj.targetType;
+    const friendlyName = inputObj.friendlyName;
+    const targetEntity = inputObj.targetEntity;
+    const targetEntitySearchField = inputObj.targetEntitySearchField;
+    const targetEntityPrimaryKey = inputObj.targetEntityPrimaryKey;
+
+    // If it's a lookup text input, perform TextInputSearchValidation
+    if (targetType === 'lookup') {
+        const searchValidationObj = await DfEPortal.ValidationHelper.TextInputSearchValidation(identifier, targetEntity, targetEntitySearchField, targetEntityPrimaryKey, friendlyName);
+        if (!searchValidationObj.value) {
+            return Promise.reject(searchValidationObj);
+        }
+        // Assign the target entity ID to the inputObj
+        inputObj.targetEntityId = searchValidationObj.targetEntityId;
+    }
+
+    // Perform MinMaxCharacterChecks
+    const minMaxCharacterCheckObj = DfEPortal.ValidationHelper.MinMaxCharacterChecks(identifier, friendlyName);
+    if (!minMaxCharacterCheckObj.value) {
+        return Promise.reject(minMaxCharacterCheckObj);
+    }
+
+    // If it reaches this point, the text input is valid
+    return Promise.resolve(inputObj);
+  },
+
+  ValidateTextArea: async function (inputObj) {
+    const identifier = inputObj.identifier;
+    const friendlyName = inputObj.friendlyName;
+
+    // Validate character count container
+    const characterCountCheckObj = DfEPortal.ValidationHelper.CharacterCountContainerCheck(identifier, friendlyName);
+    if (!characterCountCheckObj.value) {
+        return Promise.reject(characterCountCheckObj);
+    }
+
+    // Perform MinMaxCharacterChecks
+    const minMaxCharacterCheckObj = DfEPortal.ValidationHelper.MinMaxCharacterChecks(identifier, inputObj.type, friendlyName);
+    if (!minMaxCharacterCheckObj.value) {
+        return Promise.reject(minMaxCharacterCheckObj);
+    }
+
+    // If it reaches this point, the text area input is valid
+    return Promise.resolve(inputObj);
+  },
+
+  ValidateEmail: async function (inputObj) {
+    const identifier = inputObj.identifier;
+
+    // Validate email format
+    const isEmailObj = DfEPortal.ValidationHelper.IsEmail(identifier);
+    if (!isEmailObj.value) {
+        return Promise.reject(isEmailObj);
+    }
+
+    // If it reaches this point, the email input is valid
+    return Promise.resolve(inputObj);
+  },
+
+  ValidateTelephone: async function (inputObj) {
+    const identifier = inputObj.identifier;
+
+    // Validate telephone format
+    const isTelephoneObj = DfEPortal.ValidationHelper.IsTelephone(identifier);
+    if (!isTelephoneObj.value) {
+        return Promise.reject(isTelephoneObj);
+    }
+
+    // If it reaches this point, the telephone input is valid
+    return Promise.resolve(inputObj);
+  },
+
+  ValidateOption: async function (inputObj) {
+    // No addition functions other than NullCheck at this stage
+    // The option input is valid
+    //return Promise.resolve(inputObj);
+  },
+
+  ValidateDate: async function (inputObj) {
+    const identifier = inputObj.identifier;
+    const friendlyName = inputObj.friendlyName;
+
+    // Validate date format
+    const dateInputsObj = DfEPortal.ValidationHelper.ValidateDateInputs(identifier, friendlyName);
+    if (!dateInputsObj.value) {
+        return Promise.reject(dateInputsObj);
+    }
+
+    // Validate if the date is valid
+    const isDateValidObj = DfEPortal.ValidationHelper.IsDateValid(identifier, friendlyName);
+    if (!isDateValidObj.value) {
+        return Promise.reject(isDateValidObj);
+    }
+
+    // If it reaches this point, the date input is valid
+    return Promise.resolve(inputObj);
   },
 
   DisableButton: function (btnId) {
@@ -301,328 +278,267 @@ DfEPortal = {
 
 DfEPortal.ValidationHelper = {
 
+  InputTypes: {
+    Radio: "radio",
+    Checkbox: "checkbox",
+    Date: "date",
+    Select: "select",
+    Text: "text"
+  },
+
   IsIdentifierValid: function (input, type) {
-    if (type == "radio" || type == "checkbox") {
-      return {
-        value: $(`input[name='${input}']`).length == 0 ? false : true,
-        errorMessage: $(`input[name='${input}']`).length == 0 ? `'${input}' identifier cannot be found` : null
-      }
-    } else if (type == "date") {
-      return {
-        value: $(`input[name='${input}']`).length < 3 ? false : true,
-        errorMessage: $(`input[name='${input}']`).length < 3 ? `'${input}' cannot be found for 1 or more date identifiers` : null
-      }
-    } else {
-      return {
-        value: $(`#${input}`).length == 0 ? false : true,
-        errorMessage: $(`#${input}`).length == 0 ? `'${input}' identifier cannot be found` : null
-      }
-    }
+      const selector = type === this.InputTypes.Radio || type === this.InputTypes.Checkbox
+          ? `input[name='${input}']`
+          : `#${input}`;
+
+      const elements = $(selector);
+      const exists = elements.length > 0;
+      const errorMessage = exists ? null : `'${input}' identifier cannot be found`;
+
+      return { identifier: input, value: exists, errorMessage };
   },
 
   NullCheck: function (input, type, friendlyName, required) {
-    if (required) {
-      if (type == "radio") {
+    if (!required) {
+        return { identifier: input, value: true, errorMessage: null };
+    }
+
+    const $input = $(`#${input}`);
+    const inputName = `input[name='${input}']`;
+
+    if (type === this.InputTypes.Radio || type === this.InputTypes.Checkbox) {
+        const checked = $(inputName).is(':checked');
         return {
-          input: input,
-          value: $(`input[name='${input}']:checked`).val() ? true : false,
-          errorMessage: $(`input[name='${input}']`).is(':checked') ? null : `Choose ${friendlyName.toLowerCase()}`
+            identifier: input,
+            value: checked,
+            errorMessage: checked ? null : `Select ${friendlyName.toLowerCase()}`
         };
-      } else if (type == "checkbox") {
+    } else if (type === this.InputTypes.Select) {
+        const selectedValue = $input.find('option:selected').val();
         return {
-          input: input,
-          value: $(`input[name='${input}']:checked`).val() ? true : false,
-          errorMessage: $(`input[name='${input}']`).is(':checked') ? null : `Select ${friendlyName.toLowerCase()}`
+            identifier: input,
+            value: selectedValue !== "",
+            errorMessage: selectedValue !== "" ? null : `Choose ${friendlyName.toLowerCase()}`
         };
-      } else if (type == "select") {
-        return {
-          input: input,
-          value: $(`#${input} option:selected` ).val() == "" ? false : true,
-          errorMessage: $(`#${input} option:selected`).val() == "" ? `Select ${friendlyName.toLowerCase()}` : null
-        }
-      } else if (type == "date") {
-        let dateObj = {};
+    } else if (type === this.InputTypes.Date) {
+        const dateObj = { day: null, month: null, year: null };
         const inputs = $(`input[name="${input}"]`);
         inputs.each(function () {
-          if ($(this).attr('id').contains('day')) {
-            $.extend(dateObj, { day: $(this).val() });
-          } else if ($(this).attr('id').contains('month')) {
-            $.extend(dateObj, { month: $(this).val() });
-          } else if ($(this).attr('id').contains('year')) {
-            $.extend(dateObj, { year: $(this).val() });
-          }
-        });
-        const nullDateValues = Object.keys(dateObj).filter(key => {
-          return !dateObj[key];
-        });
-        const dateObjCount = Object.keys(dateObj).length;
-        const nullCount = nullDateValues.length;
-        if (nullCount > 0 && dateObjCount == nullCount) {
-          return {
-            input: input,
-            value: false,
-            errorMessage: `Enter ${friendlyName.toLowerCase()}`
-          }
-        } else if (nullCount > 0 && dateObjCount != nullCount) {
-          var messageStr = `${this.ToProperCase(friendlyName)} must contain a `;
-          $.each(nullDateValues, function (index, value) {
-            if (index === nullCount - 1) {
-              messageStr += `${value}`;
-            } else {
-              messageStr += `${value} and `;
+            const id = $(this).attr('id');
+            if (id.includes('-day')) {
+                dateObj.day = $(this).val();
+            } else if (id.includes('-month')) {
+                dateObj.month = $(this).val();
+            } else if (id.includes('-year')) {
+                dateObj.year = $(this).val();
             }
-          });
-          return {
-            input: input,
-            value: false,
-            errorMessage: messageStr
-          }
-        } else {
-          return {
-            input: input,
-            value: true,
-            errorMessage: null
-          }
+        });
+
+        const hasNullValues = Object.values(dateObj).some(val => val === null);
+        if (hasNullValues) {
+            const nullFields = Object.keys(dateObj).filter(key => dateObj[key] === null);
+            const messageStr = `${this.ToProperCase(friendlyName)} must contain a ${nullFields.join(' and ')}`;
+            return {
+                identifier: input,
+                value: false,
+                errorMessage: messageStr
+            };
         }
-      } else {
-        return {
-          input: input,
-          value: $(`#${input}`).val() ? true : false,
-          errorMessage: !$(`#${input}`).val() ? `Enter ${friendlyName.toLowerCase()}` : null
-        }
-      }
+
+        return { identifier: input, value: true, errorMessage: null };
     } else {
-      return {
-        input: input,
-        value: true,
-        errorMessage: null
-      }
+        const inputValue = $input.val();
+        return {
+            identifier: input,
+            value: inputValue ? true : false,
+            errorMessage: inputValue ? null : `Enter ${friendlyName.toLowerCase()}`
+        };
     }
   },
 
+
   ValidateDateInputs: function (input, friendlyName) {
-
-    let dateObj = {};
+    const dateObj = { day: null, month: null, year: null };
     const inputs = $(`input[name="${input}"]`);
+
     inputs.each(function () {
-      if ($(this).attr('id').contains('day')) {
-        $.extend(dateObj, { day: $(this).val() });
-      } else if ($(this).attr('id').contains('month')) {
-        $.extend(dateObj, { month: $(this).val() });
-      } else if ($(this).attr('id').contains('year')) {
-        $.extend(dateObj, { year: $(this).val() });
-      }
+        const id = $(this).attr('id');
+        if (id.includes('-day')) {
+            dateObj.day = $(this).val();
+        } else if (id.includes('-month')) {
+            dateObj.month = $(this).val();
+        } else if (id.includes('-year')) {
+            dateObj.year = $(this).val();
+        }
     });
 
-    const dateValues = Object.keys(dateObj).filter(key => {
-      return dateObj[key];
-    });
-    const dateValueCount = dateValues.length;
-    if (dateValueCount > 0) {
-      let invalidDates = [];
-      $.each(dateObj, function (index, value) {
+    const invalidDates = [];
+
+    for (const [key, value] of Object.entries(dateObj)) {
         const int = parseInt(value);
         const isNumber = !isNaN(int);
-        if (index == "day") {
-          (!isNumber || int < 1 || int > 31) && invalidDates.push(index);
-        } else if (index == "month") {
-          (!isNumber || int < 1 || int > 12) && invalidDates.push(index);
-        } else if (index == "year") {
-          (!isNumber || value.length < 4 || value.length > 4) && invalidDates.push(index);
-        }
-      });
 
-      if (invalidDates.length > 0) {
-        var messageStr = `${this.ToProperCase(friendlyName)} must contain a valid `;
-        $.each(invalidDates, function (index, value) {
-          if (index === invalidDates.length - 1) {
-            messageStr += `${value}`;
-          } else {
-            messageStr += `${value} and `;
-          }
-        });
-        return {
-          input: input,
-          value: false,
-          errorMessage: messageStr
+        if (key === "day") {
+            if (!isNumber || int < 1 || int > 31) {
+                invalidDates.push(key);
+            }
+        } else if (key === "month") {
+            if (!isNumber || int < 1 || int > 12) {
+                invalidDates.push(key);
+            }
+        } else if (key === "year") {
+            if (!isNumber || value.length !== 4) {
+                invalidDates.push(key);
+            }
         }
-      } else {
+    }
+
+    if (invalidDates.length > 0) {
+        const invalidDateStr = invalidDates.map(key => `${key}`).join(' and ');
+        const messageStr = `${this.ToProperCase(friendlyName)} must contain a valid ${invalidDateStr}`;
+
         return {
-          input: input,
-          value: true,
-          errorMessage: null
-        }
-      }
+            identifier: input,
+            value: false,
+            errorMessage: messageStr
+        };
     } else {
-      return {
-        input: input,
-        value: true,
-        errorMessage: null
-      }
+        return {
+            identifier: input,
+            value: true,
+            errorMessage: null
+        };
     }
   },
 
   IsDateValid: function (input, friendlyName) {
-    let dateObj = {};
+    const dateObj = { day: null, month: null, year: null };
     const inputs = $(`input[name="${input}"]`);
+
     inputs.each(function () {
-      if ($(this).attr('id').contains('day')) {
-        $.extend(dateObj, { day: $(this).val() });
-      } else if ($(this).attr('id').contains('month')) {
-        $.extend(dateObj, { month: $(this).val() });
-      } else if ($(this).attr('id').contains('year')) {
-        $.extend(dateObj, { year: $(this).val() });
-      }
+        const id = $(this).attr('id');
+        if (id.includes('-day')) {
+            dateObj.day = $(this).val();
+        } else if (id.includes('-month')) {
+            dateObj.month = $(this).val();
+        } else if (id.includes('-year')) {
+            dateObj.year = $(this).val();
+        }
     });
 
-    const dateValues = Object.keys(dateObj).filter(key => {
-      return dateObj[key];
-    });
-    const dateValueCount = dateValues.length;
-    if (dateValueCount > 0) {
+    const dateValues = Object.values(dateObj).filter(value => value !== null);
 
-      let dateObjCount = Object.keys(dateObj).length;
+    if (dateValues.length > 0) {
+        const dateObjCount = Object.keys(dateObj).length;
 
-      if (dateObjCount == 3) {
+        if (dateObjCount === 3) {
+            const year = parseInt(dateObj.year);
+            const month = parseInt(dateObj.month);
+            const day = parseInt(dateObj.day);
 
-        const padNumber = (num, places) => String(num).padStart(places, '0');
+            const isLeapYear = (year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0));
+            const daysInMonth = [31, isLeapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-        let formattedDateObj = {};
+            if (month < 1 || month > 12 || day < 1 || day > daysInMonth[month - 1]) {
+                return {
+                    identifier: input,
+                    value: false,
+                    errorMessage: `${this.ToProperCase(friendlyName)} must be a real date`
+                };
+            }
 
-        $.each(dateObj, function (index, value) {
-          if (index == "day" || index == "month" && value.length < 2) {
-            $.extend(formattedDateObj, { [index]: padNumber(value, 2) });
-          } else {
-            $.extend(formattedDateObj, { [index]: value });
-          }
-        });
+            // Construct a standardized date string
+            const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
-        const date = `${formattedDateObj.year}-${formattedDateObj.month}-${formattedDateObj.day}`;
-
-        // Date format: YYYY-MM-DD
-        const datePattern = /^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/;
-
-        // Check if the date string format is a match
-        const matchArray = date.match(datePattern);
-        if (!matchArray) {
-          return {
-            input: input,
-            value: false,
-            errorMessage: `${this.ToProperCase(friendlyName)} must be a real date`
-          }
-        }
-
-        // Remove any non digit characters
-        var dateString = date.replace(/\D/g, '');
-
-        // Parse integer values from the date string
-        var year = parseInt(dateString.substring(0, 4));
-        var month = parseInt(dateString.substring(4, 6));
-        var day = parseInt(dateString.substring(6, 8));
-
-        // Define the number of days per month
-        var daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-        // Leap years
-        if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)) {
-          daysInMonth[1] = 29;
-        }
-
-        if (month < 1 || month > 12 || day < 1 || day > daysInMonth[month - 1]) {
-          return {
-            input: input,
-            value: false,
-            errorMessage: `${this.ToProperCase(friendlyName)} must be a real date`
-          }
+            // Validate the date string format
+            const datePattern = /^(\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/;
+            if (!datePattern.test(dateStr)) {
+                return {
+                    identifier: input,
+                    value: false,
+                    errorMessage: `${this.ToProperCase(friendlyName)} must be a real date`
+                };
+            }
         } else {
-          return {
-            input: input,
-            value: true,
-            errorMessage: null
-          }
+            // Need to add validation here for cases with just Day and Month
         }
-      } else {
-        //Note: Need to add validation here where there are just two date inputs for just Day and Month
-        return {
-          input: input,
-          value: true,
-          errorMessage: null
-        }
-      }
-    } else {
-      return {
-        input: input,
+    }
+
+    return {
+        identifier: input,
         value: true,
         errorMessage: null
-      }
-    }
+    };
   },
 
   IsNumber: function (input, friendlyName) {
     const value = $(`#${input}`).val();
-    if (value.length > 0) {
-      return {
-        input: input,
-        value: isNaN($(`#${input}`).val()) ? false : true,
-        errorMessage: isNaN($(`#${input}`).val()) ? `${this.ToProperCase(friendlyName)} must be a number` : null
-      };
+
+    if (value.length > 0 && !isNaN(value)) {
+        return {
+            identifier: input,
+            value: true,
+            errorMessage: null
+        };
     } else {
-      return {
-        input: input,
-        value: true,
-        errorMessage: null
-      }
+        return {
+            identifier: input,
+            value: false,
+            errorMessage: `${this.ToProperCase(friendlyName)} must be a number`
+        };
     }
   },
 
+
   IsWholeNumber: function (input, friendlyName) {
     const value = $(`#${input}`).val();
-    if (value.length > 0) {
-      var result = (value - Math.floor(value)) !== 0;
-      return {
-        input: input,
-        value: !result ? true : false,
-        errorMessage: !result ? null : `${this.ToProperCase(friendlyName)} must be a whole number`
-      }
+
+    if (value.length > 0 && Number.isInteger(Number(value))) {
+        return {
+            identifier: input,
+            value: true,
+            errorMessage: null
+        };
     } else {
-      return {
-        input: input,
-        value: true,
-        errorMessage: null
-      }
+        return {
+            identifier: input,
+            value: false,
+            errorMessage: `${this.ToProperCase(friendlyName)} must be a whole number`
+        };
     }
   },
 
   IsDecimalNumber: function (input, friendlyName) {
-    const value = $(`#${input}`).val()
-    if (value.length > 0) {
-      var result = (value - Math.floor(value)) !== 0;
-      return {
-        input: input,
-        value: result ? true : false,
-        errorMessage: result ? null : `${this.ToProperCase(friendlyName)} must be a decimal number`
-      };
+    const value = $(`#${input}`).val();
+
+    if (value.length > 0 && !isNaN(value) && value.includes('.')) {
+        return {
+            identifier: input,
+            value: true,
+            errorMessage: null
+        };
     } else {
-      return {
-        input: input,
-        value: true,
-        errorMessage: null
-      }
+        return {
+            identifier: input,
+            value: false,
+            errorMessage: `${this.ToProperCase(friendlyName)} must be a decimal number`
+        };
     }
   },
+
 
   IsEmail: function (input) {
     const inputLength = $(`#${input}`).val().length;
     if (inputLength > 0) {
       const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       return {
-        input: input,
+        identifier: input,
         value: $(`#${input}`).val().match(mailformat) ? true : false,
         errorMessage: $(`#${input}`).val().match(mailformat) ? null : 'Enter a valid email address'
       }
     } else {
       return {
-        input: input,
+        identifier: input,
         value: true,
         errorMessage: null
       }
@@ -635,13 +551,13 @@ DfEPortal.ValidationHelper = {
       const telephoneFormat = /^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$/;
       const mobileFormat = /^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/;
       return {
-        input: input,
+        identifier: input,
         value: inputVal.match(telephoneFormat) || inputVal.match(mobileFormat) ? true : false,
         errorMessage: inputVal.match(telephoneFormat) || inputVal.match(mobileFormat) ? null : "Enter a telephone number in the correct format, like 01632 960 001, 07700 900 982 or +44 808 157 0192"
       }
     } else {
       return {
-        input: input,
+        identifier: input,
         value: true,
         errorMessage: null
       }
@@ -649,26 +565,26 @@ DfEPortal.ValidationHelper = {
   },
 
   CharacterCountContainerCheck: function (input, friendlyName) {
-    const characterCountContainer = $(`#${input}`).closest('govuk-character.count');
+    const characterCountContainer = $(`#${input}`).closest('govuk-character-count');
     if (characterCountContainer) {
       const inputLength = $(`#${input}`).val().length;
       if (inputLength > 0) {
         const maxLength = $(`#${input}`).closest('.govuk-character-count').attr("data-maxlength");
         return {
-          input: input,
+          identifier: input,
           value: inputLength > maxLength ? false : true,
           errorMessage: inputLength > maxLength ? `${this.ToProperCase(friendlyName)} must be ${maxLength} characters or less` : null
         }
       } else {
         return {
-          input: input,
+          identifier: input,
           value: true,
           errorMessage: null
         }
       }
     } else {
       return {
-        input: input,
+        identifier: input,
         value: true,
         errorMessage: null
       }
@@ -688,7 +604,7 @@ DfEPortal.ValidationHelper = {
       }
     } else {
       return {
-        input: input,
+        identifier: input,
         value: true,
         errorMessage: null
       }
@@ -708,7 +624,7 @@ DfEPortal.ValidationHelper = {
       }
     } else {
       return {
-        input: input,
+        identifier: input,
         value: true,
         errorMessage: null
       }
@@ -720,13 +636,13 @@ DfEPortal.ValidationHelper = {
       if (inputLength > 0) {
         const maxLengthFormatted = parseInt(maxLength);
         return {
-          input: input,
+          identifier: input,
           value: inputLength > maxLengthFormatted ? false : true,
           errorMessage: inputLength > maxLengthFormatted ? `${this.ToProperCase(friendlyName)} must be ${maxLengthFormatted} characters or less` : null
         }
       } else {
         return {
-          input: input,
+          identifier: input,
           value: true,
           errorMessage: null
         }
@@ -738,13 +654,13 @@ DfEPortal.ValidationHelper = {
     if (inputLength > 0) {
       const minLengthFormatted = parseInt(minLength);
       return {
-        input: input,
+        identifier: input,
         value: inputLength < minLengthFormatted ? false : true,
         errorMessage: inputLength < minLengthFormatted ? `${this.ToProperCase(friendlyName)} must be ${minLengthFormatted} characters or more` : null
       }
     } else {
       return {
-        input: input,
+        identifier: input,
         value: true,
         errorMessage: null
       }
@@ -753,96 +669,126 @@ DfEPortal.ValidationHelper = {
 
   InputBetweenCharacterCheck: function (input, friendlyName, minLength, maxLength) {
       const inputLength = $(`#${input}`).val().length;
-      if (inputLength > 0) {
-        const minLengthFormatted = parseInt(minLength);
-        const maxLengthFormatted = parseInt(maxLength);
-        if (minLengthFormatted == maxLengthFormatted) {
-          return {
-            input: input,
-            value: inputLength == minLength ? true : false,
-            errorMessage: inputLength == minLength ? null : `${this.ToProperCase(friendlyName)} must be ${minLength} characters`
-          }
-        }
+      const minLengthFormatted = parseInt(minLength);
+      const maxLengthFormatted = parseInt(maxLength);
+
+      if (!inputLength > 0) {
         return {
-          input: input,
-          value: inputLength >= minLengthFormatted && inputLength <= maxLengthFormatted ? true : false,
-          errorMessage: inputLength >= minLengthFormatted && inputLength <= maxLengthFormatted ? null : `${this.ToProperCase(friendlyName)} must be between ${minLengthFormatted} and ${maxLengthFormatted} characters`
-        }
-      } else {
-        return {
-          input: input,
+          identifier: input,
           value: true,
           errorMessage: null
         }
+      }
+      
+      if (minLengthFormatted == maxLengthFormatted) {
+        return {
+          identifier: input,
+          value: inputLength == minLength ? true : false,
+          errorMessage: inputLength == minLength ? null : `${this.ToProperCase(friendlyName)} must be ${minLength} characters`
+        }
+      }
+
+      return {
+        identifier: input,
+        value: inputLength >= minLengthFormatted && inputLength <= maxLengthFormatted ? true : false,
+        errorMessage: inputLength >= minLengthFormatted && inputLength <= maxLengthFormatted ? null : `${this.ToProperCase(friendlyName)} must be between ${minLengthFormatted} and ${maxLengthFormatted} characters`
       }
   },
 
   InputMaxValueCheck: function (input, friendlyName, maxValue) {
     const inputValue = $(`#${input}`).val();
-    if (inputValue > 0) {
-      const maxValueFormatted = parseInt(maxValue);
-      return {
-        input: input,
-        value: inputValue > maxValueFormatted ? false : true,
-        errorMessage: inputValue > maxValueFormatted ? `${this.ToProperCase(friendlyName)} must be ${maxValueFormatted} or fewer` : null
-      }
-    } else {
-      return {
-        input: input,
-        value: true,
-        errorMessage: null
-      }
+    const maxValueFormatted = parseInt(maxValue);
+
+    if (!inputValue > 0) {
+      return { identifier: input, value: true, errorMessage: null }
+    }
+
+    return { 
+      identifier: input, 
+      value: inputValue > maxValueFormatted ? false : true, 
+      errorMessage: inputValue > maxValueFormatted ? `${this.ToProperCase(friendlyName)} must be ${maxValueFormatted} or fewer` : null 
     }
   },
 
   InputMinValueCheck: function (input, friendlyName, minValue) {
     const inputValue = $(`#${input}`).val();
-    if (inputValue > 0) {
-      const minValueFormatted = parseInt(minValue);
-      return {
-        input: input,
-        value: inputValue < minValueFormatted ? false : true,
-        errorMessage: inputValue < minValueFormatted ? `${this.ToProperCase(friendlyName)} must be ${minValueFormatted} or more` : null
-      }
+    const minValueFormatted = parseInt(minValue);
+
+    if (!inputValue > 0) {
+      return { identifier: input, value: true, errorMessage: null }
+    }
+    
+    if (inputValue < minValueFormatted) {
+      return { identifier: input, value: false, errorMessage: `${this.ToProperCase(friendlyName)} must be ${minValueFormatted} or more` }
     } else {
-      return {
-        input: input,
-        value: true,
-        errorMessage: null
-      }
+      return { identifier: input, value: true, errorMessage: null }
     }
   },
 
   InputBetweenValueCheck: function (input, friendlyName, minValue, maxValue) {
     const inputValue = $(`#${input}`).val();
-    if (inputValue > 0) {
-      const minValueFormatted = parseInt(minValue);
-      const maxValueFormatted = parseInt(maxValue);
-      if (minValueFormatted == maxValueFormatted) {
-        return {
-          input: input,
-          value: inputValue == minValueFormatted ? true : false,
-          errorMessage: inputValue == minValueFormatted ? null : `${this.ToProperCase(friendlyName)} must be ${minValueFormatted}`
-        }
+    const minValueFormatted = parseInt(minValue);
+    const maxValueFormatted = parseInt(maxValue);
+
+    if (!inputValue > 0) {
+      return { identifier: input, value: true, errorMessage: null }
+    }
+
+    if (minValueFormatted == maxValueFormatted) {
+      return { 
+        identifier: input,
+        value: inputValue == minValueFormatted ? true : false,
+        errorMessage: inputValue == minValueFormatted ? null : `${this.ToProperCase(friendlyName)} must be ${minValueFormatted}`
       }
+    }
+
+    return {
+      identifier: input,
+      value: inputValue >= minValueFormatted && inputValue <= maxValueFormatted ? true : false,
+      errorMessage: inputValue >= minValueFormatted && inputValue <= maxValueFormatted ? null : `${this.ToProperCase(friendlyName)} must be between ${minValueFormatted} and ${maxValueFormatted}`
+    }
+  },
+
+  TextInputSearchValidation: async function(input, targetEntity, targetEntitySearchField, targetEntityPrimaryKey, friendlyName) {
+    const inputVal = $(`#${input}`).val();
+  
+    if (!inputVal) {
       return {
-        input: input,
-        value: inputValue >= minValueFormatted && inputValue <= maxValueFormatted ? true : false,
-        errorMessage: inputValue >= minValueFormatted && inputValue <= maxValueFormatted ? null : `${this.ToProperCase(friendlyName)} must be between ${minValueFormatted} and ${maxValueFormatted}`
-      }
-    } else {
-      return {
-        input: input,
+        identifier: input,
         value: true,
-        errorMessage: null
+        errorMessage: null 
       }
+    }
+  
+    const searchQuery = `?$select=${targetEntityPrimaryKey}&$filter=(${targetEntitySearchField} eq '${inputVal}')`;
+    
+    try {
+      const res = await webapi.safeAjax({
+        type: "GET",
+        url: `/_api/${targetEntity}${searchQuery}`,
+        contentType: "application/json"
+      });
+  
+      return {
+        identifier: input,
+        value: res.value.length > 0,
+        errorMessage: res.value.length > 0 ? null : this.ToProperCase(`${friendlyName} cannot be found`),
+        targetEntityId: res.value.length > 0 ? res.value[0][targetEntityPrimaryKey] : null
+      };
+    } catch (error) {
+      console.error(error);
+      return {
+        identifier: input,
+        value: false,
+        errorMessage: "Error performing search. Please contact the DfE."
+      };
     }
   },
 
   FileUploadNullCheck: function (input, friendlyName) {
     const fileLength = document.getElementById(`${input}`).files.length;
     return {
-      input: input,
+      identifier: input,
       valid: fileLength > 0 ? true : false,
       errorMessage: fileLength > 0 ? null : `Select a file for ${friendlyName.toLowerCase()}`
     }
@@ -853,7 +799,7 @@ DfEPortal.ValidationHelper = {
     const fileSize = file.size;
     const fileSizeLimit = maxFileSize;
     return {
-      input: input,
+      identifier: input,
       valid: fileSize > fileSizeLimit ? false : true,
       errorMessage: fileSize > fileSizeLimit ? `${friendlyName} must be smaller than 32MB` : null
     }
@@ -866,108 +812,135 @@ DfEPortal.ValidationHelper = {
 
 DfEPortal.Errors = {
 
-  // Inputs
   ShowInputError: function (input, type, message) {
-    if (type == "radio" || type == "checkbox") {
-      $(`input[name='${input}']`).closest('.govuk-form-group').addClass('govuk-form-group--error');
-      $(`#${input}-error`).removeClass('govuk-visually-hidden');
-      $(`#${input}-error`).find('span').after(message);
-    } else if (type == "select" ) {
-      $(`#${input}`).closest('.govuk-form-group').addClass('govuk-form-group--error');
+    const formGroup = type === "radio" || type === "checkbox"
+      ? $(`input[name='${input}']`).closest('.govuk-form-group')
+      : $(`#${input}`).closest('.govuk-form-group');
+  
+    const errorContainerId = `${input}-error`;
+    let errorContainer = $(`#${errorContainerId}`);
+  
+    if (errorContainer.length === 0) {
+      errorContainer = $('<p/>', {
+        id: errorContainerId,
+        class: 'govuk-error-message',
+      });
+  
+      const errorSpan = $('<span/>', {
+        class: 'govuk-visually-hidden',
+        text: 'Error:',
+      });
+  
+      errorContainer.append(errorSpan);
+  
+      if (type === "radio") {
+        formGroup.find('.govuk-radios').before(errorContainer);
+      } else if (type === "checkbox") {
+        formGroup.find('.govuk-checkboxes').before(errorContainer);  
+      } else if (type === "date") {
+        formGroup.find('.govuk-date-input').before(errorContainer)
+      } else if (type === "select") {
+        formGroup.find('.govuk-select').before(errorContainer)
+      } else if (type === "text-area") {
+        formGroup.find('textarea').before(errorContainer);
+      } else if (type === "text" || type === "tel" || type === "email" || type === "number" || type === "whole-number" || type === "decimal-number" || type === "search") {
+        formGroup.find('input').before(errorContainer);
+      }
+    }
+
+    errorContainer.text('');
+    errorContainer.append(message);
+    formGroup.addClass('govuk-form-group--error');
+  
+    if (type === "select") {
       $(`#${input}`).addClass('govuk-select--error');
-      $(`#${input}-error`).removeClass('govuk-visually-hidden');
-      $(`#${input}-error`).find('span').after(message);
-    } else if (type == "date") {
-      $(`#${input}`).closest('.govuk-form-group').addClass('govuk-form-group--error');
-      $(`#${input}`).find('input').addClass('govuk-input--error');
-      $(`#${input}-error`).removeClass('govuk-visually-hidden');
-      $(`#${input}-error`).find('span').after(message);
-    } else if (type == "text-area") {
-      $(`#${input}`).closest('.govuk-form-group').addClass('govuk-form-group--error');
+    } else if (type === "date") {
+      $(`#${input} input`).addClass('govuk-input--error');
+    } else if (type === "text-area") {
       $(`#${input}`).addClass('govuk-textarea--error');
-      $(`#${input}-error`).removeClass('govuk-visually-hidden');
-      $(`#${input}-error`).find('span').after(message);
-    } else {
-      $(`#${input}`).closest('.govuk-form-group').addClass('govuk-form-group--error');
+    } else if (type ==="text" || type ==="tel" || type ==="email" || type ==="number" || type ==="whole-number" || type ==="decimal-number" || type ==="search") {
       $(`#${input}`).addClass('govuk-input--error');
-      $(`#${input}-error`).removeClass('govuk-visually-hidden');
-      $(`#${input}-error`).find('span').after(message);
     }
   },
+  
 
   ClearInputError: function (input, type) {
-    if (type == "radio" || type == "checkbox") {
-      $(`input[name='${input}']`).closest('.govuk-form-group').removeClass('govuk-form-group--error');
-      $(`#${input}-error`).addClass('govuk-visually-hidden');
-      $(`#${input}-error`).find('span').get(0).nextSibling.textContent = "";
-    } else if (type == "select" ) {
-      $(`#${input}`).closest('.govuk-form-group').removeClass('govuk-form-group--error');
-      $(`#${input}`).removeClass('govuk-select--error');
-      $(`#${input}-error`).addClass('govuk-visually-hidden');
-      $(`#${input}-error`).find('span').get(0).nextSibling.textContent = "";
-    } else if (type == "date") {
-      $(`#${input}`).closest('.govuk-form-group').removeClass('govuk-form-group--error');
-      $(`#${input}`).find('input').removeClass('govuk-input--error');
-      $(`#${input}-error`).addClass('govuk-visually-hidden');
-      $(`#${input}-error`).find('span').get(0).nextSibling.textContent = "";
-    } else if (type == "text-area") {
-      $(`#${input}`).closest('.govuk-form-group').removeClass('govuk-form-group--error');
-      $(`#${input}`).removeClass('govuk-textarea--error');
-      $(`#${input}-error`).addClass('govuk-visually-hidden');
-      $(`#${input}-error`).find('span').get(0).nextSibling.textContent = "";
-    } else {
-      $(`#${input}`).closest('.govuk-form-group').removeClass('govuk-form-group--error');
-      $(`#${input}`).removeClass('govuk-input--error');
-      $(`#${input}-error`).addClass('govuk-visually-hidden');
-      $(`#${input}-error`).find('span').get(0).nextSibling.textContent = "";
+    const formGroup = type === "radio" || type === "checkbox"
+        ? $(`input[name='${input}']`).closest('.govuk-form-group')
+        : $(`#${input}`).closest('.govuk-form-group');
+  
+    const errorContainerId = `${input}-error`;
+    const errorContainer = $(`#${errorContainerId}`);
+  
+    if (errorContainer.length > 0) {
+        errorContainer.remove();
+    }
+  
+    formGroup.removeClass('govuk-form-group--error');
+  
+    if (type === "select") {
+        $(`#${input}`).removeClass('govuk-select--error');
+    } else if (type === "date") {
+        $(`#${input} input`).removeClass('govuk-input--error');
+    } else if (type === "text-area") {
+        $(`#${input}`).removeClass('govuk-textarea--error');
+    } else if (type === "text" || type === "tel" || type === "email" || type === "number" || type === "whole-number" || type === "decimal-number" || type === "search") {
+        $(`#${input}`).removeClass('govuk-input--error');
     }
   },
 
-  //Error Summary
+
   HideErrorSummary: function () {
     $('.govuk-error-summary').addClass('govuk-visually-hidden');
   },
 
-  ShowErrorSummary: function () {
+  ShowErrorSummary: function (scrollOptions) {
     $('.govuk-error-summary').removeClass('govuk-visually-hidden');
-    $('html, body').animate({
-      scrollTop: $('.govuk-error-summary').offset().top
-    }, 1000);
-    $('.govuk-error-summary').focus();
+    
+    if (scrollOptions && typeof scrollOptions === 'object') {
+      const { offset = 0, duration = 1000 } = scrollOptions;
+      
+      $('html, body').animate(
+        {
+          scrollTop: $('.govuk-error-summary').offset().top + offset
+        },
+        duration
+      );
+    } else {
+      $('html, body').animate({
+        scrollTop: $('.govuk-error-summary').offset().top
+      }, 1000);
+    }
+
+    $('.govuk-error-summary').trigger('focus');
   },
 
   AddErrorSummaryDetail: function (input, message) {
+    const errorSummaryList = $('.govuk-error-summary__list');
+    const errorSummaryLink = errorSummaryList.find(`a[href='#${input}-error']`);
+    
     if (input === "") {
-      const listElem = $(document.createElement('li'));
-      const linkElem = $(document.createElement('a'));
-      const errorMessage = $(document.createTextNode(message));
-      linkElem.append(errorMessage);
-      linkElem.attr('href', `#`);
-      listElem.append(linkElem);
-      $('.govuk-error-summary__list').append(listElem);
+      const listElem = $('<li><a href="#">' + message + '</a></li>');
+      errorSummaryList.append(listElem);
+    } else if (errorSummaryLink.length) {
+      errorSummaryLink.text(message);
     } else {
-      if ($(`a[href='#${input}-error']`).attr('href') == `#${input}-error`) {
-        $(`a[href='#${input}-error']`).text(message);
-      } else {
-        const listElem = $(document.createElement('li'));
-        const linkElem = $(document.createElement('a'));
-        const errorMessage = $(document.createTextNode(message));
-        linkElem.append(errorMessage);
-        linkElem.attr('href', `#${input}-error`);
-        listElem.append(linkElem);
-        $('.govuk-error-summary__list').append(listElem);
-      }
+      const listElem = $('<li><a href="#' + input + '-error">' + message + '</a></li>');
+      errorSummaryList.append(listElem);
     }
   },
 
   RemoveErrorSummaryDetail: function (input) {
-    $(`a[href='#${input}-error']`).closest('li').remove();
+    const errorSummaryLink = $(`a[href='#${input}-error']`);
+    if (errorSummaryLink.length) {
+      errorSummaryLink.closest('li').remove();
+    }
   },
 
   ShowWebApiError: function () {
     this.AddErrorSummaryDetail("submit-btn", "There has been a problem submitting your information. Please contact the DfE.");
     this.ShowErrorSummary();
-  }
+  }  
 }
 
 DfEPortal.WebApi = {
@@ -1029,177 +1002,280 @@ DfEPortal.WebApi = {
     })();
   },
 
-  ConstructData: function (obj) {
-    return new Promise((resolve, reject) => {
+  ConstructData: async function (obj) {
+    return new Promise(async (resolve, reject) => {
       let data = {};
-      $.each(obj, function (i) {
-        if (obj[i].type == "text" || obj[i].type == "text-area" || obj[i].type == "email" || obj[i].type == "tel") {
-          $.extend(data, {
-            [obj[i].identifier]: `${$(`#${obj[i].identifier}`).val()}`
-          });
-        } else if (obj[i].type == "whole-number") {
-          const inputMode = $(`#${obj[i].identifier}`).attr("inputmode");
-          if (inputMode == "numeric") {
-            $.extend(data, {
-              [obj[i].identifier]: parseInt($(`#${obj[i].identifier}`).val())
-            })
-          } else {
-            $.extend(data, {
-              [obj[i].identifier]: $(`#${obj[i].identifier}`).val()
-            })
-          }
-        } else if (obj[i].type == "decimal-number" || obj[i].type == "number") {
-          const inputMode = $(`#${obj[i].identifier}`).attr("inputmode");
-          if (inputMode == "numeric") {
-            $.extend(data, {
-              [obj[i].identifier]: parseFloat($(`#${obj[i].identifier}`).val())
-            })
-          } else {
-            $.extend(data, {
-              [obj[i].identifier]: $(`#${obj[i].identifier}`).val()
-            })
-          }
-        } else if (obj[i].type == "date") {
-          let dateObj = {};
-          const inputs = $(`input[name="${obj[i].identifier}"]`);
-          inputs.each(function () {
-            if ($(this).attr('id').contains('day')) {
-              $.extend(dateObj, { day: $(this).val() });
-            } else if ($(this).attr('id').contains('month')) {
-              $.extend(dateObj, { month: $(this).val() });
-            } else if ($(this).attr('id').contains('year')) {
-              $.extend(dateObj, { year: $(this).val() });
-            }
-          });
-          const dateValues = Object.keys(dateObj).filter(key => {
-            return dateObj[key];
-          });
-          const dateValueCount = dateValues.length;
-          if (dateValueCount > 0) {
-            const padNumber = (num, places) => String(num).padStart(places, '0');
-            let formattedDateObj = {};
-            $.each(dateObj, function (index, value) {
-              if (index == "day" || index == "month" && value.length < 2) {
-                $.extend(formattedDateObj, { [index]: padNumber(value, 2) });
-              } else {
-                $.extend(formattedDateObj, { [index]: value });
-              }
-            });
 
-            if (obj[i].targetType == "text") {
-              $.extend(data, {
-                [obj[i].identifier]: `${formattedDateObj.day}/${formattedDateObj.month}/${formattedDateObj.year}`
-              });
-            } else {
-              $.extend(data, {
-                [obj[i].identifier]: new Date(`${formattedDateObj.year}-${formattedDateObj.month}-${formattedDateObj.day}`).toISOString().split('T')[0]
-              });
-            }
-          } else {
-            $.extend(data, {
-              [obj[i].identifier]: null
-            });
-          }
-        } else if (obj[i].type == "radio" || obj[i].type == "checkbox") {
-          if (obj[i].targetType != null) {
-            if (obj[i].targetType == "lookup") {
-              if (obj[i].targetEntity != null) {
-                if ($(`input[name='${obj[i].identifier}']`).is(':checked')) {
-                  $.extend(data, {
-                    [`${obj[i].identifier}@odata.bind`]: `/${obj[i].targetEntity}(${$(`input[name='${obj[i].identifier}']:checked`).val()})`
-                  });
-                } else {
-                  $.extend(data, {
-                    [`${obj[i].identifier}@odata.bind`]: null
-                  });
-                }
-              } else {
-                console.error("targetEntity is missing from the data object");
-                DfEPortal.Errors.ShowErrorSummary();
-                DfEPortal.Errors.AddErrorSummaryDetail(obj[i].identifier, "Internal error. Please contact the DfE.");
-                reject();
-              }
-            } else if (obj[i].targetType == "bool") {
-              const value = $(`input[name='${obj[i].identifier}']:checked`).val()
-              $.extend(data, {
-                [obj[i].identifier]: value == "1" ? true : false
-              });
-            } else if (obj[i].targetType == "select") {
-              $.extend(data, {
-                [obj[i].identifier]: parseInt($(`input[name='${obj[i].identifier}']:checked`).val())
-              });
-            } else if (obj[i].targetType == "text") {
-              const checkedId = $(`input[name='${obj[i].identifier}']:checked`).attr('id');
-              $.extend(data, {
-                [obj[i].identifier]: $.trim($(`label[for='${checkedId}']`).text())
-              });
-            } else {
-              console.error(`'${obj[i].targetType}' is not a valid targetType for type '${obj[i].type}'`);
-              DfEPortal.Errors.ShowErrorSummary();
-              DfEPortal.Errors.AddErrorSummaryDetail(obj[i].identifier, "Internal error. Please contact the DfE.");
-              reject();
-            }
-          } else {
-            console.error("targetType is missing from the data object");
-            DfEPortal.Errors.ShowErrorSummary();
-            DfEPortal.Errors.AddErrorSummaryDetail(obj[i].identifier, "Internal error. Please contact the DfE.");
-            reject();
-          }
-        } else if (obj[i].type == "select") {
-          if (obj[i].targetType != null) {
-            if (obj[i].targetType == "lookup") {
-              if (obj[i].targetEntity != null) {
-                if ($(`#${obj[i].identifier}`).val() != null) {
-                  $.extend(data, {
-                    [`${obj[i].identifier}@odata.bind`]: `/${obj[i].targetEntity}(${$(`#${obj[i].identifier} option:selected` ).val()})`
-                  });
-                } else {
-                  $.extend(data, {
-                    [`${obj[i].identifier}@odata.bind`]: null
-                  });
-                }
-              } else {
-                console.error("targetEntity is missing from the data object");
-                DfEPortal.Errors.ShowErrorSummary();
-                DfEPortal.Errors.AddErrorSummaryDetail(obj[i].identifier, "Internal error. Please contact the DfE.");
-                reject();
-              }
-            } else if (obj[i].targetType == "select") {
-              $.extend(data, {
-                [obj[i].identifier]: parseInt($(`#${obj[i].identifier} option:selected`).val())
-              });
-            } else if (obj[i].targetType == "text") {
-              $.extend(data, {
-                [obj[i].identifier]: $(`#${obj[i].identifier} option:selected`).text()
-              });
-            } else {
-              console.error(`'${obj[i].targetType}' is not a valid targetType for type '${obj[i].type}'`);
-              DfEPortal.Errors.ShowErrorSummary();
-              DfEPortal.Errors.AddErrorSummaryDetail(obj[i].identifier, "Internal error. Please contact the DfE.");
-              reject();
-            }
-          } else {
-            console.error("targetType is missing from the data object");
-            DfEPortal.Errors.ShowErrorSummary();
-            DfEPortal.Errors.AddErrorSummaryDetail(obj[i].identifier, "Internal error. Please contact the DfE.");
-            reject();
-          }
+      function handleInternalError(errorMessage) {
+        console.error(errorMessage);
+        DfEPortal.Errors.ShowWebApiError();
+        reject();
+      }
+  
+      function handleText(objItem) {
+        if (objItem.targetType === "lookup") {
+          const { identifier, targetEntity, targetEntityId } = objItem;
+          const isTargetEntityIdDefined = targetEntityId !== undefined;
+      
+          const dataKey = isTargetEntityIdDefined ? `${identifier}@odata.bind` : identifier;
+          const dataValue = isTargetEntityIdDefined
+            ? `/${targetEntity}(${targetEntityId})`
+            : null;
+      
+          $.extend(data, { [dataKey]: dataValue });
+        } else {
+          $.extend(data, { [objItem.identifier]: $(`#${objItem.identifier}`).val() });
         }
-      })
-
-      function waitForData() {
-        setTimeout(() => {
-          if (Object.keys(data).length > 0) {
-            resolve(data);
-          } else {
-            waitForData();
-          }
-        }, 1000);
       }
 
+      
+      function handleNumber(objItem) {
+        const inputMode = $(`#${objItem.identifier}`).attr("inputmode");
+        const isNumericInput = inputMode === "numeric";
+      
+        const dataValue = isNumericInput
+          ? parseInt($(`#${objItem.identifier}`).val())
+          : $(`#${objItem.identifier}`).val();
+      
+        $.extend(data, { [objItem.identifier]: dataValue });
+      }
+  
+      function handleDecimalNumber(objItem) {
+        const inputMode = $(`#${objItem.identifier}`).attr("inputmode");
+        const isNumericInput = inputMode === "numeric";
+      
+        const dataValue = isNumericInput
+          ? parseFloat($(`#${objItem.identifier}`).val())
+          : $(`#${objItem.identifier}`).val();
+      
+        $.extend(data, { [objItem.identifier]: dataValue });
+      }
+  
+      function handleDate(objItem) {
+        let dateObj = {};
+        const inputs = $(`input[name="${objItem.identifier}"]`);
+        
+        inputs.each(function () {
+          const id = $(this).attr('id');
+          if (id.includes('-day')) {
+            dateObj.day = $(this).val();
+          } else if (id.includes('-month')) {
+            dateObj.month = $(this).val();
+          } else if (id.includes('-year')) {
+            dateObj.year = $(this).val();
+          }
+        });
+      
+        const dateValues = Object.values(dateObj).filter(Boolean);
+        const dateValueCount = dateValues.length;
+      
+        if (dateValueCount > 0) {
+          const padNumber = (num, places) => String(num).padStart(places, '0');
+          
+          const formattedDateObj = Object.keys(dateObj).reduce((formatted, index) => {
+            if ((index === "day" || index === "month") && dateObj[index].length < 2) {
+              formatted[index] = padNumber(dateObj[index], 2);
+            } else {
+              formatted[index] = dateObj[index];
+            }
+            return formatted;
+          }, {});
+      
+          const dateString = `${formattedDateObj.day}/${formattedDateObj.month}/${formattedDateObj.year}`;
+          
+          if (objItem.targetType === "text") {
+            $.extend(data, { [objItem.identifier]: dateString });
+          } else {
+            const isoDate = new Date(`${formattedDateObj.year}-${formattedDateObj.month}-${formattedDateObj.day}`).toISOString().split('T')[0];
+            $.extend(data, { [objItem.identifier]: isoDate });
+          }
+        } else {
+          $.extend(data, { [objItem.identifier]: null });
+        }
+      }
+  
+      function handleRadio(objItem) {
+        if (objItem.targetType !== null) {
+          switch (objItem.targetType) {
+            case "lookup":
+              if (objItem.targetEntity !== null) {
+                const inputName = `input[name='${objItem.identifier}']`;
+                const isChecked = $(inputName).is(':checked');
+                const checkedValue = isChecked ? $(inputName + ':checked').val() : null;
+      
+                const odataBindValue = isChecked
+                  ? `/${objItem.targetEntity}(${checkedValue})`
+                  : null;
+      
+                $.extend(data, {
+                  [`${objItem.identifier}@odata.bind`]: odataBindValue,
+                });
+              } else {
+                handleInternalError(`'targetEntity' is missing from the data object`);
+              }
+              break;
+              
+            case "bool":
+              const value = $(`input[name='${objItem.identifier}']:checked`).val();
+              $.extend(data, {
+                [objItem.identifier]: value === "1" ? true : false,
+              });
+              break;
+      
+            case "select":
+              $.extend(data, {
+                [objItem.identifier]: parseInt($(`input[name='${objItem.identifier}']:checked`).val()),
+              });
+              break;
+      
+            case "text":
+              const checkedId = $(`input[name='${objItem.identifier}']:checked`).attr('id');
+              $.extend(data, {
+                [objItem.identifier]: $(`label[for='${checkedId}']`).text().trim(),
+              });
+              break;
+      
+            default:
+              handleInternalError(`'${objItem.targetType}' is not a valid targetType for type '${objItem.type}'`);
+              break;
+          }
+        } else {
+          handleInternalError(`'targetType' is missing from the data object`);
+        }
+      }
+  
+      function handleCheckbox(objItem) {
+        if (objItem.targetType !== null) {
+          const length = $(`input[name='${objItem.identifier}']:checked`).length;
+          switch (objItem.targetType) {
+            case "bool":
+              if (length === 1) {
+                const value = $(`input[name='${objItem.identifier}']:checked`).val();
+                $.extend(data, {
+                  [objItem.identifier]: value === "1" ? true : false,
+                });
+              } else {
+                handleInternalError(`${objItem.targetType} targetType can only contain one selection`);
+              }
+              break;
+      
+            case "select": 
+              if (length === 1) {
+                $.extend(data, {
+                  [objItem.identifier]: parseInt($(`input[name='${objItem.identifier}']:checked`).val()),
+                });
+              } else {
+                let options = [];
+                $.each($(`input[name='${objItem.identifier}']:checked`), (index, input) => {
+                  options.push(parseInt($(input).val()));
+                });
+                $.extend(data, {
+                  [objItem.identifier]: options,
+                });
+              }
+              break;
+      
+            case "text": 
+              if (length === 1) {
+                const checkedId = $(`input[name='${objItem.identifier}']:checked`).attr('id');
+                const labelText = $(`label[for='${checkedId}']`).text().trim();
+                $.extend(data, {
+                  [objItem.identifier]: labelText,
+                });
+              } else {
+                let options = [];
+                $.each($(`input[name='${objItem.identifier}']:checked`), (index, input) => {
+                  const checkedId = $(input).attr('id');
+                  const labelText = $(`label[for='${checkedId}']`).text().trim();
+                  options.push(labelText);
+                });
+                $.extend(data, {
+                  [objItem.identifier]: options,
+                });
+              }
+              break;
+      
+            default:
+              handleInternalError(`'${objItem.targetType}' is not a valid targetType for type '${objItem.type}'`);
+              break;
+          }
+        } else {
+          handleInternalError(`'targetType' is missing from the data object`);
+        }
+      }
+  
+      function handleSelect(objItem) {
+        if (objItem.targetType !== null) {
+          switch (objItem.targetType) {
+            case "lookup":
+              if (objItem.targetEntity !== null) {
+                const selectedValue = $(`#${objItem.identifier} option:selected`).val();
+                const odataBindValue = selectedValue
+                  ? `/${objItem.targetEntity}(${selectedValue})`
+                  : null;
+                $.extend(data, {
+                  [`${objItem.identifier}@odata.bind`]: odataBindValue,
+                });
+              } else {
+                handleInternalError(`'targetEntity' is missing from the data object`);
+              }
+              break;
+      
+            case "select":
+              $.extend(data, {
+                [objItem.identifier]: parseInt($(`#${objItem.identifier} option:selected`).val()),
+              });
+              break;
+      
+            case "text":
+              $.extend(data, {
+                [objItem.identifier]: $(`#${objItem.identifier} option:selected`).text(),
+              });
+              break;
+      
+            default:
+              handleInternalError(`'${objItem.targetType}' is not a valid targetType for type '${objItem.type}'`);
+              break;
+          }
+        } else {
+          handleInternalError(`'targetType' is missing from the data object`);
+        }
+      }
+  
+      $.each(obj, function (i, objItem) {
+        if (objItem.type === "text") {
+          handleText(objItem);
+        } else if (objItem.type === "text-area" || objItem.type === "email" || objItem.type === "tel") {
+          $.extend(data, {
+            [objItem.identifier]: $(`#${objItem.identifier}`).val(),
+          });
+        } else if (objItem.type === "whole-number") {
+          handleNumber(objItem);
+        } else if (objItem.type === "decimal-number" || objItem.type === "number") {
+          handleDecimalNumber(objItem);
+        } else if (objItem.type === "date") {
+          handleDate(objItem);
+        } else if (objItem.type === "radio") {
+          handleRadio(objItem);
+        } else if (objItem.type === "checkbox") {
+          handleCheckbox(objItem);
+        } else if (objItem.type === "select") {
+          handleSelect(objItem);
+        }
+      });
+  
+      async function waitForData() {
+        while (Object.keys(data).length === 0) {
+          // Wait for the data object to be populated
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+        resolve(data);
+      }
+  
       waitForData();
-    })
+    });
   },
+  
 
   Update: function (id, entityName, dataObj) {
     return new Promise((resolve, reject) => {
@@ -1208,14 +1284,15 @@ DfEPortal.WebApi = {
         url: `/_api/${entityName}(${id})`,
         contentType: "application/json",
         data: JSON.stringify(dataObj),
-        success: function (res, status, xhr) {
+        success: function () {
           resolve();
         },
         error: function (res, status, error) {
+          DfEPortal.Errors.ShowWebApiError();
           reject(error);
-        }
+        },
       });
-    })
+    });
   },
 
   Create: function (entityName, dataObj) {
@@ -1229,10 +1306,11 @@ DfEPortal.WebApi = {
           resolve(xhr.getResponseHeader("entityid"));
         },
         error: function (res, status, error) {
+          DfEPortal.Errors.ShowWebApiError();
           reject(error);
-        }
+        },
       });
-    })
+    });
   },
 
   Retrieve: function (entityName, searchQuery) {
@@ -1245,10 +1323,11 @@ DfEPortal.WebApi = {
           resolve(res);
         },
         error: function (res, status, error) {
+          DfEPortal.Errors.ShowWebApiError();
           reject(error);
-        }
+        },
       });
-    })
+    });
   },
 
   Delete: function (id, entityName) {
@@ -1261,10 +1340,11 @@ DfEPortal.WebApi = {
           resolve();
         },
         error: function (res, status, error) {
+          DfEPortal.Errors.ShowWebApiError();
           reject(error);
-        }
+        },
       });
-    })
+    });
   },
 
   FileUploadValidation: function (input, friendlyName, maxFileSize) {
@@ -1283,7 +1363,7 @@ DfEPortal.WebApi = {
     });
   },
 
-  ProcessFileAndUpload(inputName, entityName, entityId) {
+  ProcessFileAndUploadToColumn(inputName, entityName, entityId) {
 
     return new Promise((resolve, reject) => {
       // Get the name of the selected file
@@ -1303,7 +1383,7 @@ DfEPortal.WebApi = {
           var fileContent = e.target.result;
 
           // Run the function to upload to the Portal Web API, passing the GUID of the newly created record and the file's contents and name as inputs 
-          DfEPortal.WebApi.UploadFile(fileContent, fileName, entityId, entityName, inputName)
+          DfEPortal.WebApi.UploadColumnFile(fileContent, fileName, entityId, entityName, inputName)
             .then((fileObj) => {
               resolve(fileObj);
             })
@@ -1320,7 +1400,7 @@ DfEPortal.WebApi = {
     });
   },
 
-  UploadFile(fileContent, fileName, entityID, entityName, inputName) {
+  UploadColumnFile(fileContent, fileName, entityID, entityName, inputName) {
     return new Promise((resolve, reject) => {
       webapi.safeAjax({
         type: "PUT",
@@ -1346,7 +1426,7 @@ DfEPortal.WebApi = {
     });
   },
 
-  DeleteFile: function (inputName, entityID, entityName) {
+  DeleteColumnFile: function (inputName, entityID, entityName) {
     return new Promise((resolve, reject) => {
       webapi.safeAjax({
         type: "DELETE",
@@ -1363,5 +1443,79 @@ DfEPortal.WebApi = {
         }
       });
     })
+  },
+
+  ProcessFileAndUploadToNotes(inputName, entityName, entityId) {
+
+    return new Promise((resolve, reject) => {
+      // Get the name of the selected file
+      var fileName = encodeURIComponent(document.getElementById(inputName).files[0].name);
+
+      // Get the mimetype of the selected file
+      var mimeType = $(`#${inputName}`).files[0].type;
+
+      // Get the content of the selected file
+      var file = $(`#${inputName}`).files[0];
+
+      // If the user has selected a file
+      if (file) {
+        // Read the file as a byte array
+        var reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+        // The browser has finished reading the file, we can now do something with it...
+        reader.onload = function (e) {
+          // The browser has finished reading the file, we can now do something with it...
+          var fileContent = e.target.result;
+
+          // Run the function to upload to the Portal Web API, passing the GUID of the newly created record and the file's contents and name as inputs 
+          DfEPortal.WebApi.UploadNotesFile(fileContent, fileName, mimeType, entityId, entityName, inputName)
+            .then((fileObj) => {
+              resolve(fileObj);
+            })
+            .catch(errorObj => {
+              reject(errorObj);
+            });
+        }
+      } else {
+        reject({
+          input: inputName,
+          errormessage: "File content not found"
+        })
+      }
+    });
+  },
+
+  UploadNotesFile(fileContent, fileName, mimeType, entityID, entityName, inputName) {
+    return new Promise((resolve, reject) => {
+      const dataObj = {
+        "notetext": "*WEB*",
+        "filename": fileName,
+        "mimetype": mimeType,
+        "documentbody": fileContent,
+        "objecttypecode": entityName,
+        [`objectid_${entityName}@odata.bind`]: `/${entityName}s("${entityID}")`
+
+      }
+      webapi.safeAjax({
+        type: "POST",
+        url: "/_api/annotations",
+        contentType: "application/json",
+        data: JSON.stringify(dataObj),
+        success: function (data, textStatus, xhr) {
+          // Provide some visual feedback re successful upload
+          console.log("File uploaded!");
+          resolve({
+            input: inputName,
+            fileName: fileName
+          });
+        },
+        error: function (xhr, textStatus, errorThrown) {
+          reject({
+            input: inputName,
+            errorMessage: "Error uploading file"
+          })
+        }
+      });
+    });
   },
 }
