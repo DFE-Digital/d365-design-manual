@@ -1,6 +1,8 @@
 # Department for Education - Dynamics 365 Design Manual
 Principles, guidance, and standards to support people delivering joined-up, effective, user-centred outcomes for people who use Department for Education Dynamics 365 services.
 
+[Access the Dynamics 365 Design Manual](https://d365-design-manual-8523de7fad90.herokuapp.com/) 
+
 ## Portals
 Use this guidance on this site to make your Dynamics 365 (D365) portal service as consistent as possible with Government Design Service (GDS) styles, components and patterns.
 
