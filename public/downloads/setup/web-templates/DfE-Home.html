@@ -1,0 +1,34 @@
+<!-- 
+
+  - This template renders the home page with a two column layout. The left column is wider than the right
+    Breadcrumbs are not required on the home page, so they have been hidden using an empty breadcrumbs block
+    It contains an updated title block with a placeholder for the service title
+    The main content is located in the left column
+    A user check has been added. The home page should contain content variations for a logged out service landing page and a signed in user landing page.
+
+  - Replace the content of the 'Home' web template with the code below
+
+  - Rename the template to 'DfE/Home'
+
+ -->
+
+{% extends 'DfE/Layouts/2ColumnWideLeft' %}
+
+{% block breadcrumbs %}
+{% endblock %}
+
+{% block title %}
+  <h1 class='govuk-heading-xl'>Service name goes here</h1>
+{% endblock %}
+
+{% block main %}
+  {% if user %}
+    <!-- Signed in user content goes here -->
+  {% else %}
+    <!-- Signed out user content goes here -->
+  {% endif %}
+{% endblock %}
+
+{% block rightColumn %}
+  <!-- Side banner content goes in here. If side banner content is not required this block can be removed from the template -->
+{% endblock %}

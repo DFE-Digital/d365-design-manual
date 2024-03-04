@@ -4,6 +4,10 @@ html body {
     font-family: GDS Transport;
 }
 
+html[dir=ltr] li a {
+  margin-left: 0;
+}
+
 /* Custom loader */
 .loader {
     border:7px solid #1d70b8;

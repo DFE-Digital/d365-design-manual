@@ -1,0 +1,17 @@
+<!-- 
+  - This template renders the page breadcrumbs
+  - Replace the content of the 'Breadcrumbs' web template with the code below
+  - Rename the template to: DfE/Content/Breadcrumbs
+ -->
+
+{% assign title = title | default: page.title %}
+
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    {% for crumb in page.breadcrumbs %}
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="{{ crumb.url | h }}" title="{{ crumb.title | h }}">{{ crumb.title | truncate: 33 | h }}</a>
+      </li>
+    {% endfor %}
+  </ol>
+</div>

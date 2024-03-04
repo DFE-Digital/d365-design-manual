@@ -1,10 +1,32 @@
-{% set pageName = "Download base portal files" %}
-{% set pageDescription = "These base files allow you to set up a basic portal configuration with DfE branding and GDS
-styles, components and patterns." %}
-{% set selectedNav = "Download base portal files" %}
+{% set pageName = "Download core portal files" %}
+{% set pageDescription = "These base files allow you to set up a basic portal configuration with DfE or GOV.UK branding styles, components and patterns." %}
+{% set selectedNav = "download-portal-files" %}
 {% set dateUpdated = "July 2023" %}
 
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% from 'includes/_side-nav.html' import getting_started %}
+
 {% extends "layouts/content-with-sidenav.html" %}
+
+{% set dfeSetupFiles = [
+  {
+      name: "Web templates",
+      url: "/downloads/web-templates/dfe-web-templates",
+      linkName: "dfe-web-templates.zip"
+  },
+  {
+      name: "Web files",
+      url: "/downloads/web-files/dfe-web-files",
+      linkName: "dfe-web-files.zip"
+  },
+  {
+    name: "Content snippets",
+    url: "/downloads/content-snippets/dfe-content-snippets",
+    linkName: "dfe-content-snippets.zip"
+  }
+] %}
 
 {% block beforeContent %}{% endblock %}
 
@@ -12,6 +34,32 @@ styles, components and patterns." %}
 
 <h2 class="govuk-heading-l" id="summary">Available downloads</h2>
 
-{% include "includes/_downloads.html" %}
+{% set tableRows = [] %}
+{% for dfeFile in dfeSetupFiles %}
+  {% set row = [
+    {
+      text: dfeFile.name
+    },
+    {
+      html: '<a class="govuk-link" href="' + dfeFile.url + '">' + dfeFile.linkName + '</a>'
+    }
+  ] %}
+  {% set _ = tableRows.push(row) %}
+{% endfor %}
+
+{{ govukTable({
+caption: "PowerPages core files",
+captionClasses: "govuk-table__caption--m",
+firstCellIsHeader: true,
+head: [
+  {
+    text: "File group"
+  },
+  {
+    text: "Download"
+  }
+],
+rows: tableRows
+}) }}
 
 {% endblock %}

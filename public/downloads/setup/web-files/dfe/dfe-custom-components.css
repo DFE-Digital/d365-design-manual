@@ -1,5 +1,4 @@
 /** CUSTOM DFE TIMELINE COMPONENT */
-
 .dfe-timeline {
   border-left: 5px solid #347ca9;
   margin: 0 0 30px;
@@ -25,7 +24,7 @@
 
 .dfe-timeline__event-title {
   color: #0b0c0c;
-  font-family: GDS Transport, arial, sans-serif;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 700;
@@ -100,7 +99,7 @@
   -moz-osx-font-smoothing: grayscale;
   color: #0b0b0b;
   display: block;
-  font-family: GDS Transport, arial, sans-serif;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
   font-size: 16px;
   font-weight: 700;
   line-height: 1.25;
@@ -133,7 +132,7 @@
   -moz-osx-font-smoothing: grayscale;
   color: #0b0b0b;
   display: block;
-  font-family: GDS Transport, arial, sans-serif;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.25;
@@ -174,11 +173,9 @@
       padding-top: 10px;
   }
 }
-
-/* END CUSTOM DFE TIMELINE COMPONENT */
+/** END CUSTOM DFE TIMELINE COMPONENT **/
 
 /** CUSTOM DFE CARD COMPONENT **/
-
 .dfe-cards__heading {
     margin: 0 0 30px 0
 }
@@ -218,6 +215,12 @@
     }
 }
 
+@media (min-width: 48.0625em) {
+  .dfe-cards__list--one-column-desktop {
+      grid-template-columns:1fr
+  }
+}
+
 .dfe-cards__list-item {
     border-top: 1px solid #b1b4b6;
     margin: 0 15px;
@@ -243,17 +246,17 @@
 }
 
 .dfe-cards__link::before {
-    border-right: 3px solid #347ca9;
-    border-top: 3px solid #347ca9;
+    border-right: 4px solid #347ca9;
+    border-top: 4px solid #347ca9;
     content: "";
-    height: 7px;
+    height: 12px;
     position: absolute;
     right: 5px;
     top: 15px;
     -webkit-transform: translateY(0) rotate(45deg) scale(1);
     -ms-transform: translateY(0) rotate(45deg) scale(1);
     transform: translateY(0) rotate(45deg) scale(1);
-    width: 7px
+    width: 12px
 }
 
 .dfe-cards__link:hover::before {
@@ -286,11 +289,81 @@
         display: none
     }
 }
-
 /** END CUSTOM DFE CARD COMPONENT **/
 
-/** CUSTOM DFE SIDEBAR COMPONENT **/
+/** CUSTOM DFE FULL PAGE CHEVRON CARD COMPONENT **/
+.dfe-homepage-services__list {
+  list-style: none;
+  margin: 0 -15px;
+  padding: 0
+}
 
+.dfe-chevron-card {
+  border-top: 1px solid #b1b4b6;
+  margin: 0 15px;
+  padding: 5px 0 20px 0
+}
+
+.dfe-chevron-card:first-child {
+  border-top: none;
+  padding-top: 0
+}
+
+.dfe-chevron-card:first-child .chevron-card__wrapper {
+  padding-top: 0
+}
+
+.dfe-chevron-card__wrapper {
+  padding: 19px 0 4px;
+  position: relative
+}
+
+@media (max-width: 40.0525em) {
+  .dfe-chevron-card__wrapper .govuk-heading-s,.dfe-chevron-card__wrapper .dfe-chevron-card__description {
+      font-size:19px;
+  }
+}
+
+.dfe-chevron-card__description {
+  margin: 0 30px 0 0
+}
+
+.dfe-chevron-card__link::after {
+  bottom: 0;
+  content: "";
+  display: block;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0
+}
+
+.dfe-chevron-card__link::before {
+  border-right: 4px solid #347ca9;
+  border-top: 4px solid #347ca9;
+  content: "";
+  display: block;
+  height: 12px;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  margin-top: 5px;
+  -webkit-transform: translateY(0) rotate(45deg) scale(1);
+  -ms-transform: translateY(0) rotate(45deg) scale(1);
+  transform: translateY(0) rotate(45deg) scale(1);
+  width: 12px
+}
+
+.dfe-chevron-card__link:hover::before {
+  border-color: #003078
+}
+
+.dfe-chevron-card__link:focus::before {
+  border-color: #0b0c0c
+}
+/** END CUSTOM DFE FULL PAGE CHEVRON CARD COMPONENT **/
+
+/** CUSTOM DFE SIDEBAR COMPONENT **/
 .dfe-sidebar {
   color: #0b0c0c;
   border-top: 2px solid #347ca9;
@@ -298,7 +371,7 @@
 }
 
 .dfe-sidebar-section__main-heading {
-  font-family: GDS Transport, arial, sans-serif;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 700;
@@ -338,8 +411,8 @@
 
 .dfe-sidebar-section__list-item {
   list-style-type: none;
-  margin-top: 5px;
-  font-family: GDS Transport, arial, sans-serif;
+  margin-top: 10px;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
@@ -353,11 +426,9 @@
       font-size: 16px;
   }
 }
-
 /** END CUSTOM DFE SIDEBAR COMPONENT **/
 
 /** CUSTOM DFE ARROW COMPONENT **/
-
 .dfe-arrow-left {
   box-sizing: border-box;
   position: relative;
@@ -422,11 +493,9 @@
   bottom: 10px;
   background: currentColor
 }
-
 /** END CUSTOM DFE ARROW COMPONENT **/
 
 /** CUSTOM DFE FORM SEARCH COMPONENT **/
-
 .dfe-form-search__item-wrapper {
   display: table;
   width: 100%;
@@ -446,7 +515,7 @@
 }
 
 .dfe-form-search__input[type="search"] {
-    font-family: GDS Transport, arial, sans-serif;
+    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -553,7 +622,7 @@
 @media (min-width: 40.0625em) {
   .dfe-contents-container {
       margin-top: 0;
-      padding-bottom: 15px;
+      margin-bottom: 0;
   }
 }
 
@@ -588,7 +657,7 @@
 
 .dfe-contents-list__title {
   color: #0b0c0c;
-  font-family: GDS Transport, arial, sans-serif;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
@@ -625,7 +694,7 @@
 
 .dfe-contents-list__list, .dfe-contents-list__nested-list {
   color: #0b0c0c;
-  font-family: GDS Transport, arial, sans-serif;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
@@ -732,11 +801,9 @@
 .dfe-contents-list__list>li, .dfe-contents-list__nested-list>li {
   margin-bottom: 0;
 }
-
 /** END CUSTOM DFE CONTENT LIST COMPONENT **/
 
 /** CUSTOM DFE SORTABLE TABLE - EXTRA STYLING TO EXTEND DEFAULT GOVUK TABLE STYLING **/
-
 [aria-sort] button,
 [aria-sort] button:hover {
   background-color: transparent;
@@ -803,5 +870,4 @@
   right: -6px;
   top: 4px;
 }
-
 /** END CUSTOM DFE SORTABLE TABLE **/

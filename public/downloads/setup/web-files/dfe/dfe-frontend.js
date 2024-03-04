@@ -141,13 +141,8 @@ if (!NodeList.prototype.forEach) {
     }
   };
   
-  const Header = () => {
-    MenuToggle();
-    SearchToggle();
-  };
-  
   // Initialize components
   document.addEventListener('DOMContentLoaded', () => {
-    Header();
+    MenuToggle();
+    SearchToggle();
   });
-  

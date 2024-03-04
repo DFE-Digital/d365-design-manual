@@ -10,6 +10,7 @@ const compression = require('compression');
 const favicon = require('serve-favicon');
 const cheerio = require('cheerio');
 const $ = require('jquery')
+const archiver = require('archiver');
 
 const app = express();
 app.use(compression());
@@ -109,7 +110,7 @@ app.get(/^([^.]+)$/, function (req, res, next) {
   matchRoutes(req, res, next);
 });
 
-app.get('/downloads/:filename', (req, res) => {
+/*app.get('/downloads/:filename', (req, res) => {
   const filename = req.params.filename;
   const filePath = path.join(__dirname, 'public', 'downloads', filename);
 
@@ -119,6 +120,42 @@ app.get('/downloads/:filename', (req, res) => {
       res.status(404).send('File not found');
     }
   });
+});*/
+
+//download set up files
+app.get('/downloads/:folder/:variant', (req, res) => {
+  const folder = req.params.folder;
+  const variant = req.params.variant;
+  const baseDirectory = path.join(__dirname, 'public', 'downloads', 'setup');
+  const theme = variant.split("-");
+  console.log(theme[0]);
+  const variantDirectory = path.join(baseDirectory, folder, theme[0]);
+  const zipFileName = `${variant}.zip`;
+
+  // Ensure the requested variant directory exists
+  if (!fs.existsSync(variantDirectory)) {
+    return res.status(404).send('Variant not found');
+  }
+
+  // Create a new ZIP archive
+  const archive = archiver('zip', { zlib: { level: 9 } });
+  archive.on('error', (err) => {
+    res.status(500).send({ error: err.message });
+  });
+
+  // Pipe the ZIP archive to the response stream
+  res.set({
+    'Content-Type': 'application/zip',
+    'Content-Disposition': `attachment; filename="${zipFileName}"`,
+  });
+
+  archive.pipe(res);
+
+  // Add files from the variant directory
+  archive.directory(variantDirectory, false);
+
+  // Finalize the ZIP archive
+  archive.finalize();
 });
 
 
