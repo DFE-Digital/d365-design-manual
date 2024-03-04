@@ -1,6 +1,6 @@
 {% set pageName = "Getting started" %}
 {% set pageDescription = "Understand how to get started with building and designing your portal service." %}
-{% set selectedNav = "Getting started" %}
+{% set selectedNav = "getting-started" %}
 {% set dateUpdated = "July 2023" %}
 
 {% extends "layouts/content-with-sidenav.html" %}
@@ -21,27 +21,35 @@
     </thead>
     <tbody class="govuk-table__body">
     {% for section in getting_started %}
-        {% if section.title != 'Getting started' %}
+      {% if section.title != 'Getting started' %}
         <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header"><a class="govuk-link" href="{{section.url}}">{{section.title}}</a></th>
-            <td class="govuk-table__cell">
-            {% if section.title == 'Branding standards' %}
-                {% from 'portals/getting-started/branding-standards/index.html' import pageDescription as relatedPageDescription %}
-                {{ relatedPageDescription }}
-            {% endif %}
-            {% if section.title == 'Create your portal' %}
-                {% from 'portals/getting-started/create-your-portal/index.html' import pageDescription as relatedPageDescription %}
-                {{ relatedPageDescription }}
-            {% endif %}
-            {% if section.title == 'Download base portal files' %}
-                {% from 'portals/getting-started/download-portal-files/index.html' import pageDescription as relatedPageDescription %}
-                {{ relatedPageDescription }}
-            {% endif %}
-            {% if section.title == 'Set up your portal' %}
-                {% from 'portals/getting-started/portal-setup/index.html' import pageDescription as relatedPageDescription %}
-                {{ relatedPageDescription }}
-            {% endif %}      
-            </td>
+          <th scope="row" class="govuk-table__header"><a class="govuk-link" href="{{section.url}}">{{section.title}}</a></th>
+          <td class="govuk-table__cell">
+          {% if section.title == 'Branding standards' %}
+            {% from 'portals/getting-started/branding-standards/index.html' import pageDescription as relatedPageDescription %}
+            {{ relatedPageDescription }}
+          {% endif %}
+
+          {% if section.title == 'Create your portal' %}
+            {% from 'portals/getting-started/create-your-portal/index.html' import pageDescription as relatedPageDescription %}
+            {{ relatedPageDescription }}
+          {% endif %}
+
+          {% if section.title == 'Pre-requisites' %}
+            {% from 'portals/getting-started/pre-requisites/index.html' import pageDescription as relatedPageDescription %}
+            {{ relatedPageDescription }}
+          {% endif %}
+
+          {% if section.title == 'Download base portal files' %}
+            {% from 'portals/getting-started/download-portal-files/index.html' import pageDescription as relatedPageDescription %}
+            {{ relatedPageDescription }}
+          {% endif %}
+
+          {% if section.title == 'Set up your portal' %}
+            {% from 'portals/getting-started/setup-your-portal/index.html' import pageDescription as relatedPageDescription %}
+            {{ relatedPageDescription }}
+          {% endif %}           
+          </td>
         </tr>
         {% endif %}
     {% endfor %}

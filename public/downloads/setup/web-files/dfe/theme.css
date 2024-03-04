@@ -4,6 +4,10 @@ html body {
     font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
 }
 
+html[dir=ltr] li a {
+  margin-left: 0;
+}
+
 /* Custom loader */
 .loader {
     border:7px solid #347ca9;

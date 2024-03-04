@@ -1,0 +1,39 @@
+<!-- 
+  - This template renders a one column layout.
+  - It contains:
+      - a phase banner (switch between Alpha and Beta as required, or remove if not necessary).
+      - breadcrumbs block containing the breadcrumbs web template
+      - title block containing the page heading web template
+      - main block, which by default, renders any entity forms, entity lists or web forms associated with the web page. 
+  - Replace the content of 'Layout 1 Column' web template with the code below.
+  - Rename the template to 'DfE/Layouts/1Column'.
+ -->
+
+<div class="dfe-width-container">
+  {% include 'DfE/Content/PhaseBanner/Beta' %}
+  {% block breadcrumbs %}
+    {% include 'DfE/Content/Breadcrumbs' %}
+  {% endblock %}
+  <main class="dfe-main-wrapper" id="main-content" role="main">
+    <div class="dfe-grid-row">
+      <div class="dfe-grid-column-full">
+        <div id="error-summary-container"></div>
+        {% block title %}
+          {% include 'DfE/Content/PageHeading' %}
+        {% endblock %}
+        {% block main %}
+          {% include 'Page Copy' %}
+          {% if page.adx_entitylist %}
+            {% include 'entity_list' key:page.adx_entitylist.id %}
+          {% endif %}    
+          {% if page.adx_entityform %}
+            {% entityform id: page.adx_entityform.id %}
+          {% endif %}    
+          {% if page.adx_webform %}
+            {% webform id: page.adx_webform.id %}
+          {% endif %}
+        {% endblock %}
+      </div>
+    </div>
+  </main>
+</div>

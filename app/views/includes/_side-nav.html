@@ -32,35 +32,16 @@
         url: "/portals/getting-started/create-your-portal"
     },
     {
-        title: "Download base portal files",
+        title: "Download core portal files",
         url: "/portals/getting-started/download-portal-files"
     },
     {
+      title: "Pre-requisites",
+      url: "/portals/getting-started/pre-requisites"
+    },
+    {
         title: "Set up your portal",
-        url: "/portals/getting-started/portal-setup"
-    }
-] %}
-
-{% set portal_setup = [
-    {
-        title: "Pre-requisites",
-        url: "/portals/getting-started/portal-setup/pre-requisites"
-    },
-    {
-        title: "Web files",
-        url: "/portals/getting-started/portal-setup/web-files"
-    },
-    {
-        title: "Web templates",
-        url: "/portals/getting-started/portal-setup/web-templates"
-    },
-    {
-        title: "Content snippets",
-        url: "/portals/getting-started/portal-setup/content-snippets"
-    },
-    {
-        title: "Web page content",
-        url: "/portals/getting-started/portal-setup/web-page-content"
+        url: "/portals/getting-started/setup-your-portal"
     }
 ] %}
 
@@ -140,20 +121,9 @@
     </ul>
     {% endif %}
 
-    {%- if selectedNav == "Getting started" or selectedNav == "Branding standards" or selectedNav == "Create your portal" or selectedNav == "Download base portal files" %}
+    {%- if selectedNav == "getting-started" or selectedNav == "branding-standards" or selectedNav == "create-your-portal" or selectedNav == "download-portal-files" or selectedNav == "pre-requisites" or selectedNav == "setup-your-portal"%}
     <ul class="dfe-vertical-nav__section">
         {% for item in getting_started %}
-        <li
-            class="dfe-vertical-nav__section-item {% if item.title === pageName  or setSelectedSideNav === item.title %}dfe-vertical-nav__section-item--current{% endif %}">
-            <a class="dfe-vertical-nav__link" href="{{ item.url }}">{{ item.title }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-
-    {%- if selectedNav == "Set up your portal" or selectedNav == "Pre-requisites" or selectedNav == "Web files" or selectedNav == "Web templates" or selectedNav == "Content snippets" or selectedNav == "Web page content"%}
-    <ul class="dfe-vertical-nav__section">
-        {% for item in portal_setup %}
         <li
             class="dfe-vertical-nav__section-item {% if item.title === pageName  or setSelectedSideNav === item.title %}dfe-vertical-nav__section-item--current{% endif %}">
             <a class="dfe-vertical-nav__link" href="{{ item.url }}">{{ item.title }}</a>

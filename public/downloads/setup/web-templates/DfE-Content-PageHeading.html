@@ -1,0 +1,9 @@
+<!-- 
+  - This template renders the page title
+  - Replace the content of the 'Page Header' web template with the code below
+  - Rename the template to: DfE/Content/PageHeading
+ -->
+ 
+{% assign title = title | default: page.title %}
+
+<h1 class='govuk-heading-l'>{{ title | h }}</h1>
