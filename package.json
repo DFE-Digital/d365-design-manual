@@ -28,6 +28,7 @@
     "express": "^4.18.2",
     "express-force-https": "^1.0.0",
     "express-recaptcha": "^5.1.0",
+    "fs": "^0.0.1-security",
     "govuk-frontend": "^4.8.0",
     "gulp-nunjucks-render": "^2.2.3",
     "gulp-webp": "^3.0.0",

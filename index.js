@@ -9,8 +9,9 @@ const config = require('./app/config');
 const compression = require('compression');
 const favicon = require('serve-favicon');
 const cheerio = require('cheerio');
-const $ = require('jquery')
+const $ = require('jquery');
 const archiver = require('archiver');
+const fs = require('fs');
 
 const app = express();
 app.use(compression());
@@ -73,6 +74,47 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('/downloads/:folder/:variant', (req, res) => {
+  const folder = req.params.folder;
+  const variant = req.params.variant;
+  console.log(folder);
+  console.log(variant);
+  const baseDirectory = path.join(__dirname, 'public', 'downloads', 'setup', folder);
+  const theme = variant.split("-");
+  console.log(theme[0]);
+  const variantDirectory = path.join(baseDirectory, theme[0]);
+  const zipFileName = `${variant}.zip`;
+
+  // Create a new ZIP archive
+  const archive = archiver('zip', { zlib: { level: 9 } });
+  archive.on('error', (err) => {
+    res.status(500).send({ error: err.message });
+  });
+
+  // Pipe the ZIP archive to the response stream
+  res.set({
+    'Content-Type': 'application/zip',
+    'Content-Disposition': `attachment; filename="${zipFileName}"`,
+  });
+
+  archive.pipe(res);
+
+  // Add files from the base directory
+  // Manually iterate over the base directory and add only desired directories
+  fs.readdirSync(baseDirectory, { withFileTypes: true }).forEach((item) => {
+    const itemPath = path.join(baseDirectory, item.name);
+    if (!item.isDirectory()) {
+      archive.file(itemPath, { name: item.name });
+    }
+  });
+  // Add files from the variant directory
+  archive.directory(variantDirectory, false);
+
+  // Finalize the ZIP archive
+  archive.finalize();
+});
+
+
 app.get('/design-system/dfe-frontend', async (req, res, next) => {
   try {
     const packageName = 'dfe-frontend-alpha';
@@ -123,40 +165,6 @@ app.get(/^([^.]+)$/, function (req, res, next) {
 });*/
 
 //download set up files
-app.get('/downloads/:folder/:variant', (req, res) => {
-  const folder = req.params.folder;
-  const variant = req.params.variant;
-  const baseDirectory = path.join(__dirname, 'public', 'downloads', 'setup');
-  const theme = variant.split("-");
-  console.log(theme[0]);
-  const variantDirectory = path.join(baseDirectory, folder, theme[0]);
-  const zipFileName = `${variant}.zip`;
-
-  // Ensure the requested variant directory exists
-  if (!fs.existsSync(variantDirectory)) {
-    return res.status(404).send('Variant not found');
-  }
-
-  // Create a new ZIP archive
-  const archive = archiver('zip', { zlib: { level: 9 } });
-  archive.on('error', (err) => {
-    res.status(500).send({ error: err.message });
-  });
-
-  // Pipe the ZIP archive to the response stream
-  res.set({
-    'Content-Type': 'application/zip',
-    'Content-Disposition': `attachment; filename="${zipFileName}"`,
-  });
-
-  archive.pipe(res);
-
-  // Add files from the variant directory
-  archive.directory(variantDirectory, false);
-
-  // Finalize the ZIP archive
-  archive.finalize();
-});
 
 
 function renderPath(path, res, next) {
