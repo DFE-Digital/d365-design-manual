@@ -32,7 +32,6 @@
     "govuk-frontend": "^4.8.0",
     "gulp-nunjucks-render": "^2.2.3",
     "gulp-webp": "^3.0.0",
-    "highlight.js": "^11.7.0",
     "jquery": "^3.7.0",
     "lunr": "^2.3.9",
     "marked": "^4.3.0",

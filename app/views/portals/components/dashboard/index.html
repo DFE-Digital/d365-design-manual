@@ -1,0 +1,79 @@
+{% set pageName = "Dashboard" %}
+{% set pageDescription = "Use the dashboard component to present a summarised view of information for groups. This is particularly beneficial for segregating statuses within a large dataset or displaying financial transaction totals." %}
+{% set selectedNav = "Dashboard" %}
+{% set dateUpdated = "March 2024" %}
+
+{% from 'includes/components/_dashboard.njk' import dashboardThreeColumnExample, dashboardThreeColumnCountOnlyExample, dashboardTwoColumnCountOnlyExample %}
+
+{% extends "layouts/content-with-sidenav.html" %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+<div class="dfe-contents-container">
+  <nav class="dfe-contents-list">
+    <h2 class="dfe-contents-list__title">Contents</h2>
+    <ol class="dfe-contents-list__list">
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#when-to-use-this-component">When to use this component</a>
+      </li>          
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#when-to-not-use-this-component">When to not use this component</a>
+      </li>
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#how-it-works">How it works</a>
+      </li>
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#customisation">Customisation options</a>
+      </li>
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#width">Width adjustment</a>
+      </li>
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#html-examples">HTML examples</a>
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<h2 class="govuk-heading-l" id="when-to-use-this-component">When to use this component</h2>
+<p class="govuk-body">{{ pageDescription }}</p>
+
+<h2 class="govuk-heading-l" id="when-to-not-use-this-component">When to not use this component</h2>
+<p class="govuk-body">Avoid using the dashboard component if there's no need to present summary totals or a total count.</p>
+<p class="govuk-body">If dealing with a limited number of records, it's advisable to use the table component upfront, which can display a list of records alongside status tags for each entry.</p>
+
+<h2 class="govuk-heading-l" id="how-it-works">How it works</h2>
+<p class="govuk-body">The default dashboard consists of three columns, each accommodating an <code>article</code> for the dashboard content. However, you can customise the number of columns and articles according to your requirements.</p>
+<p class="govuk-body">You have the flexibility to include or exclude count or value sections within the dashboard as per your needs.</p>
+
+<h2 class="govuk-heading-l" id="customisation">Customisation options</h2>
+<p class="govuk-body">The dashboard component offers three interchangeable colour schemes to suit your preferences or requirements:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Default (black)</li>
+  <li>Red: Add the class <code>dfe-dashboard-total-group__values--red</code> to your <code>dl</code> element.</li>
+  <li>Blue: Add the class <code>dfe-dashboard-total-group__values--blue</code> to your <code>dl</code> element.</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="width">Width adjustment</h2>
+<p class="govuk-body">If your dashboard comprises fewer than three columns and you want the component to match the page container width, adjust the <code>govuk-grid-column-one-third</code> class for the <code>article</code> elements.</p>
+<p class="govuk-body">For instance, if opting for two dashboard columns instead of three, substitute the <code>govuk-grid-column-one-third</code> class for both articles with <code>govuk-grid-column-one-half</code> to align with the page container width.</p>
+
+<h2 class="govuk-heading-l" id="html-examples">HTML Examples</h2>
+
+<p class="govuk-body">
+  Select the appropriate example below and directly integrate the HTML into your web template. You can customise these examples to align with your specific requirements, as indicated earlier.
+  Refer to the <a class="govuk-link" href="../layouts">layouts</a> section for further guidance on structuring your web template.
+</p>
+
+<h3 class="govuk-heading-s">Three column example with count and amount</h3>
+{{ dashboardThreeColumnExample() }}
+
+<h3 class="govuk-heading-s">Three column example with count only</h3>
+{{ dashboardThreeColumnCountOnlyExample() }}
+
+<h3 class="govuk-heading-s">Two column example with count only</h3>
+{{ dashboardTwoColumnCountOnlyExample() }}
+
+{% endblock %}
+

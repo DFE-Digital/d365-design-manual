@@ -1,0 +1,297 @@
+{% set layoutExample %}
+{% verbatim %}
+{% extends 'DfE/Layouts/2ColumnWideLeft' %}
+
+{% block title %}{% endblock %}   
+
+{% block main %}
+  {% if user %}
+
+    ## HTML content goes here ##
+
+  {% else %}
+    <script>
+      window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
+    </script>
+  {% endif %}
+{% endblock %}
+{% endverbatim %}
+{% endset %}
+
+{% set threeColumnExample %}
+<div class="dfe-dashboard">
+  <article class="dfe-dashboard-total-group govuk-grid-column-one-third">
+    <header class="dfe-dashboard-total-group__heading">
+      <h2 class="dfe-dashboard-total-group__title">
+        <a class="govuk-link" href="#" title="View not started applications">
+          Successful payments
+        </a>
+      </h2>
+    </header>
+    <dl class="dfe-dashboard-total-group__values dfe-dashboard-total-group__values--blue">
+      <dt class="govuk-visually-hidden">Count</dt>
+      <dd class="dfe-dashboard-total-group__count">5</dd>
+      <dt class="govuk-visually-hidden">Amount</dt>
+      <dd class="dfe-dashboard-total-group__amount">£1605.00</dd>
+    </dl>
+  </article>
+  <article class="dfe-dashboard-total-group govuk-grid-column-one-third">
+    <header class="dfe-dashboard-total-group__heading">
+      <h2 class="dfe-dashboard-total-group__title">
+        <a class="govuk-link" href="#" title="View refunded transactions">
+          Successful refunds
+        </a>
+      </h2>
+    </header>
+    <dl class="dfe-dashboard-total-group__values dfe-dashboard-total-group__values--red">
+      <dt class="govuk-visually-hidden">Count</dt>
+      <dd class="dfe-dashboard-total-group__count">0</dd>
+      <dt class="govuk-visually-hidden">Amount</dt>
+      <dd class="dfe-dashboard-total-group__amount">£0.00</dd>
+    </dl>
+  </article>
+  <article class="dfe-dashboard-total-group govuk-grid-column-one-third">
+    <header class="dfe-dashboard-total-group__heading">
+      <h2 class="dfe-dashboard-total-group__title">
+        <a class="govuk-link" href="#" title="View successful payments and refunded transactions">
+          Net income
+        </a>
+      </h2>
+    </header>
+    <dl class="dfe-dashboard-total-group__values">
+      <dt class="govuk-visually-hidden">Amount</dt>
+      <dd class="dfe-dashboard-total-group__amount">£0.00</dd>
+    </dl>
+  </article>
+</div>
+{% endset %}
+
+{% set threeColumnCountOnlyExample %}
+<div class="dfe-dashboard">
+  <article class="dfe-dashboard-total-group govuk-grid-column-one-third">
+    <header class="dfe-dashboard-total-group__heading">
+      <h2 class="dfe-dashboard-total-group__title">
+        <a class="govuk-link" href="#" title="View applications not started">
+          Not started
+        </a>
+      </h2>
+    </header>
+    <dl class="dfe-dashboard-total-group__values dfe-dashboard-total-group__values--red">
+      <dt class="govuk-visually-hidden">Count</dt>
+      <dd class="dfe-dashboard-total-group__count">5</dd>
+    </dl>
+  </article>
+  <article class="dfe-dashboard-total-group govuk-grid-column-one-third">
+    <header class="dfe-dashboard-total-group__heading">
+      <h2 class="dfe-dashboard-total-group__title">
+        <a class="govuk-link" href="#" title="View applications in progress">
+          In progress
+        </a>
+      </h2>
+    </header>
+    <dl class="dfe-dashboard-total-group__values dfe-dashboard-total-group__values--blue">
+      <dt class="govuk-visually-hidden">Count</dt>
+      <dd class="dfe-dashboard-total-group__count">15</dd>
+    </dl>
+  </article>
+  <article class="dfe-dashboard-total-group govuk-grid-column-one-third">
+    <header class="dfe-dashboard-total-group__heading">
+      <h2 class="dfe-dashboard-total-group__title">
+        <a class="govuk-link" href="#" title="View completed applications">
+          Completed
+        </a>
+      </h2>
+    </header>
+    <dl class="dfe-dashboard-total-group__values">
+      <dt class="govuk-visually-hidden">Count</dt>
+      <dd class="dfe-dashboard-total-group__count">98</dd>
+    </dl>
+  </article>
+</div>
+{% endset %}
+
+{% set twoColumnCountOnlyExample %}
+<div class="dfe-dashboard">
+  <article class="dfe-dashboard-total-group govuk-grid-column-one-half">
+    <header class="dfe-dashboard-total-group__heading">
+      <h2 class="dfe-dashboard-total-group__title">
+        <a class="govuk-link" href="#" title="View incomplete">
+          Incomplete
+        </a>
+      </h2>
+    </header>
+    <dl class="dfe-dashboard-total-group__values dfe-dashboard-total-group__values--blue">
+      <dt class="govuk-visually-hidden">Count</dt>
+      <dd class="dfe-dashboard-total-group__count">20</dd>
+    </dl>
+  </article>
+  <article class="dfe-dashboard-total-group govuk-grid-column-one-half">
+    <header class="dfe-dashboard-total-group__heading">
+      <h2 class="dfe-dashboard-total-group__title">
+        <a class="govuk-link" href="#" title="View complete">
+          Complete
+        </a>
+      </h2>
+    </header>
+    <dl class="dfe-dashboard-total-group__values">
+      <dt class="govuk-visually-hidden">Count</dt>
+      <dd class="dfe-dashboard-total-group__count">64</dd>
+    </dl>
+  </article>
+</div>
+{% endset %}
+
+{% set layoutWarningText = "This is a basic web template page layout with a logged in user check and does not include additional liquid items which are common place on a CRM Portal, for example, web role, URL parameter or record checks." %}
+
+{% macro dashboardThreeColumnExample () %}
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">
+  Dashboard totals component
+  </h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#example">
+      Example
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#html">
+      HTML
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#liquid">
+      Web Template
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel" id="example">
+    <div class="govuk-grid-row">
+    {{ threeColumnExample | safe }}
+    </div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html">
+    <pre>
+      <code>
+      {{ threeColumnExample }}
+      </code>
+    </pre>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="liquid">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        {{ layoutWarningText }}
+      </strong>
+    </div>
+    <pre>
+      <code>
+      {{ layoutExample }}
+      </code>
+    </pre>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro dashboardThreeColumnCountOnlyExample () %}
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">
+  Radio component
+  </h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#example1">
+      Example
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#html1">
+      HTML
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#liquid1">
+      Web Template
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel" id="example1">
+    <div class="govuk-grid-row">
+    {{ threeColumnCountOnlyExample | safe }}
+    </div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html1">
+    <pre>
+      <code>
+      {{ threeColumnCountOnlyExample }}
+      </code>
+    </pre>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="liquid1">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        {{ layoutWarningText }}
+      </strong>
+    </div>
+    <pre>
+      <code>
+      {{ layoutExample }}
+      </code>
+    </pre>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro dashboardTwoColumnCountOnlyExample () %}
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">
+  Radio component
+  </h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#example2">
+      Example
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#html2">
+      HTML
+      </a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#liquid2">
+      Web Template
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel" id="example2">
+    <div class="govuk-grid-row">
+    {{ twoColumnCountOnlyExample | safe }}
+    </div>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html2">
+    <pre>
+      <code>
+      {{ twoColumnCountOnlyExample }}
+      </code>
+    </pre>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="liquid2">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        {{ layoutWarningText }}
+      </strong>
+    </div>
+    <pre>
+      <code>
+      {{ layoutExample }}
+      </code>
+    </pre>
+  </div>
+</div>
+{% endmacro %}
