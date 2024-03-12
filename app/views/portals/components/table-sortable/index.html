@@ -1,7 +1,7 @@
 {% set pageName = "Table (sortable)" %}
 {% set pageDescription = "Use the sortable table component to let users sort columns in ascending or descending order. This may be useful to help find data within a large table of data." %}
 {% set selectedNav = "Table (sortable)" %}
-{% set dateUpdated = "July 2023" %}
+{% set dateUpdated = "March 2024" %}
 
 {% from 'includes/components/_table-sortable.njk' import sortableTableExample %}
 
@@ -44,49 +44,6 @@
   </nav>
 </div>
 
-<div class="govuk-form-group" data-module="dfe-table-search">
-  <label class="govuk-label" for="search">
-      Search by project reference
-  </label>
-  <div class="dfe-form-search__item-wrapper dfe-table-search">
-    <input class="dfe-form-search__item dfe-form-search__input govuk-!-width-two-thirds" id="search" name="search" title="Search" type="search">
-    <div class="dfe-form-search__item dfe-form-search__submit-wrapper">
-      <button class="dfe-form-search__submit" id="search-btn" type="submit">
-        Search organisation
-        <svg class="dfe-form-search__icon" width="27" height="27" viewBox="0 0 27 27" fill="none"
-            xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-            <circle cx="12.0161" cy="11.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
-            <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="currentColor" stroke-width="3"></line>
-        </svg>
-      </button>
-    </div>
-  </div>
-</div>
-<table class="govuk-table" data-module="dfe-searchable-table">
-  <caption class="govuk-table__caption govuk-table__caption--m">Dates and amounts</caption>
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header" aria-sort="ascending">Date</th>
-      <th scope="col" class="govuk-table__header" aria-sort="none">Amount</th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">First 6 weeks</th>
-      <td class="govuk-table__cell" data-sort-value="109.80">£109.80 per week</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Next 33 weeks</th>
-      <td class="govuk-table__cell" data-sort-value="109.80">£109.80 per week</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Total estimated pay</th>
-      <td class="govuk-table__cell" data-sort-value="4282.20">£4,282.20</td>
-    </tr>
-  </tbody>
-</table>
-<div aria-live="polite" role="status" aria-atomic="true" class="govuk-visually-hidden"></div>
-
 <h2 class="govuk-heading-l" id="when-to-use-this-component">When to use this component</h2>
 <p class="govuk-body">{{ pageDescription }}</p>
 
@@ -108,13 +65,5 @@
 <p class="govuk-body">This step is essential for the custom portal helper framework to validate and submit data to CRM. <a class="govuk-link" href="">Read about data validation and submitting data to CRM</a>.</p>
 
 {{ sortableTableExample() }}
-
-<h3 class="govuk-heading-m" id="error-messages">Error messages</h3>
-<p class="govuk-body">An error message is shown next to the field and in the error summary when there is a validation error. The HTML content for these errors is already 
-  included in the component examples and in the base portal web template set up, therefore you do not need to add any additional error containers to your page.</p>
-<p class="govuk-body">The <a class="govuk-link" href="#">portal helper framework</a> validation process automatically handles error messages for specific error states.</p>
-<p class="govuk-body govuk-!-font-weight-bold">If nothing is chosen and the question is required</p>
-<p class="govuk-body">'Choose [whatever it is]'.<br><br>For example, 'Choose location'.</p>
-<p class="govuk-body">Occasionally you may wish to use error messages outside of the validation process. You can <a class="govuk-link" href="">read about the functions available within the portal helper framework</a> to help you with this.</p>
 
 {% endblock %}

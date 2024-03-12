@@ -1983,33 +1983,161 @@ select {
   background: currentColor
 }
 
-.code-block {
-  background-color: #f5f5f5;
-  border: 1px solid #ccc;
-  padding-left: 1em;
-  font-family: monospace;
-  overflow: auto; /* Enable scrolling if the content overflows */
+
+// App-specific variables
+$app-light-grey: #f8f8f8;
+$app-code-color: #d13118;
+
+.govuk-tabs code,
+.govuk-tabs code span {
+  /// System ui-monospace font stack
+  ///
+  /// @link https://caniuse.com/extended-system-fonts
+  /// @link https://www.w3.org/TR/css-fonts-4/#ui-monospace-def
+  ///
+  /// Android typically avoids the "Courier" based monospace
+  /// default but we need to specify fallbacks for others:
+  ///
+  /// * SF Mono - Font for Safari 13.1+ via ui-monospace
+  /// * Menlo - Font for older macOS, OS X versions
+  /// * Cascadia Mono, Segoe UI Mono, Consolas - Fonts for Windows 11, 10, 8
+  /// * Consolas - Font for older Windows versions
+  /// * Liberation Mono - Font for Linux used by GitHub
+
+  // font family in a separate variable to avoid syntax errors when passing
+  // to the common typography mixin
+  font-family: ui-monospace, menlo, "Cascadia Mono", "Segoe UI Mono", consolas, "Liberation Mono", monospace !important;
 }
 
-code {
-  color: red;
-  background-color: #f5f5f5;
+
+// Add styling for inline code
+li code,
+caption code,
+td code,
+p code {
+  font-family: ui-monospace, menlo, "Cascadia Mono", "Segoe UI Mono", consolas, "Liberation Mono", monospace !important;
+  padding: 1px 3px;
+  color: $app-code-color;
+  background-color: govuk-colour("light-grey");
+  font-size: 16px;
+  @include govuk-media-query($from: tablet) {
+    padding: 2px 4px;
+  }
 }
 
-.code-block code {
-  white-space: pre; /* Preserve white spaces and line breaks */
-  color: #003a69;
+// Add styling for code in headings
+.govuk-heading-s code,
+.govuk-heading-m code,
+.govuk-heading-l code,
+.govuk-heading-xl code {
+  font-size: inherit;
 }
 
-.code-block span.code-highlight {
-  color:red;
-  font-family: monospace !important;
+// Add styling for block code
+pre code {
+  display: block;
+  margin: 0;
+  padding: 0 20px 0 20px;
+  overflow-x: auto;
+  border: $govuk-focus-width solid transparent;
+  outline: 1px solid $govuk-border-colour;
+  background-color: $app-light-grey;
+  font-size: 16px;
+  @include govuk-responsive-margin(4, "bottom");
+
+  &:focus {
+    border: $govuk-focus-width solid $govuk-input-border-colour;
+    outline: $govuk-focus-width solid $govuk-focus-colour;
+  }
 }
 
-.code-block span.code-highlight-green {
-  color:green;
-  font-family: monospace !important;
+// Allow text to wrap
+pre .language-xml,
+pre .language-php {
+  white-space: pre-wrap;
 }
+
+.hljs-comment,
+.hljs-quote {
+  color: #545555;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333333;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #00703c;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d13118;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #990000;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #445588;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #003078;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #008020;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-builtin,
+.hljs-builtin-name {
+  color: #017ba5;
+}
+
+.hljs-meta {
+  color: #545555;
+}
+
+.hljs-deletion {
+  background: #ffdddd;
+}
+
+.hljs-addition {
+  background: #ddffdd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
 
 /**
 * Search input to be embedded on a form within a text component
@@ -2398,4 +2526,186 @@ div[data-module="dfe-table-search"] {
 .dfe-table-search {
   flex: 1;
   margin-right: 10px;
+}
+
+/*DASHBOARD TOTALS COMPONENT */
+.dfe-dashboard-date-range-container {
+  display: block
+}
+
+@media(min-width: 40.0625em) {
+  .dfe-dashboard-date-range-container {
+      display:inline-block;
+  }
+}
+
+.dfe-dashboard-date-range-container__select {
+  width: 100%
+}
+
+.dfe-dashboard-total-group {
+  margin-bottom: 30px
+}
+
+.dfe-dashboard-total-group__title {
+  color: #0b0c0c;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.25;
+  display: block;
+  margin: 30px 0 5px
+}
+
+@media print {
+  .dfe-dashboard-total-group__title {
+      color: #000
+  }
+}
+
+@media print {
+  .dfe-dashboard-total-group__title {
+      font-family: sans-serif
+  }
+}
+
+@media(min-width: 40.0625em) {
+  .dfe-dashboard-total-group__title {
+      font-size:19px;
+      line-height: 1.3157894737
+  }
+}
+
+@media print {
+  .dfe-dashboard-total-group__title {
+      font-size: 14pt;
+      line-height: 1.15
+  }
+}
+
+.dfe-dashboard-total-group__values {
+  display: flex;
+  position: relative;
+  margin: 0;
+  padding: 15px;
+  padding-left: 25px;
+  border: 2px solid #b1b4b6;
+  border-left: 0;
+  background-color: #f3f2f1;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline
+}
+
+.dfe-dashboard-total-group__values::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  left: 0;
+  width: .625rem;
+  background-color: #0b0c0c
+}
+
+.dfe-dashboard-total-group__values--red::before {
+  background-color: #d4351c
+}
+
+.dfe-dashboard-total-group__values--blue::before {
+  background-color: #347ca9
+}
+
+.dfe-dashboard-total-group__count {
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.1111111111;
+  float: left;
+  margin-left: 0
+}
+
+@media print {
+  .dfe-dashboard-total-group__count {
+      font-family: sans-serif
+  }
+}
+
+@media(min-width: 40.0625em) {
+  .dfe-dashboard-total-group__count {
+      font-size:24px;
+      line-height: 1.25
+  }
+}
+
+@media print {
+  .dfe-dashboard-total-group__count {
+      font-size: 18pt;
+      line-height: 1.15
+  }
+}
+
+.dfe-dashboard-total-group__amount {
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.1111111111;
+  text-align: right;
+  flex: 1;
+  float: right
+}
+
+@media print {
+  .dfe-dashboard-total-group__amount {
+      font-family: sans-serif
+  }
+}
+
+@media(min-width: 40.0625em) {
+  .dfe-dashboard-total-group__amount {
+      font-size:24px;
+      line-height: 1.25
+  }
+}
+
+@media print {
+  .dfe-dashboard-total-group__amount {
+      font-size: 18pt;
+      line-height: 1.15
+  }
+}
+
+.dfe-dashboard-total-explainer {
+  margin-top: 10px;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.1428571429
+}
+
+@media print {
+  .dfe-dashboard-total-explainer {
+      font-family: sans-serif
+  }
+}
+
+@media(min-width: 40.0625em) {
+  .dfe-dashboard-total-explainer {
+      font-size:16px;
+      line-height: 1.25
+  }
+}
+
+@media print {
+  .dfe-dashboard-total-explainer {
+      font-size: 14pt;
+      line-height: 1.2
+  }
 }

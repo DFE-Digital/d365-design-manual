@@ -152,20 +152,6 @@ app.get(/^([^.]+)$/, function (req, res, next) {
   matchRoutes(req, res, next);
 });
 
-/*app.get('/downloads/:filename', (req, res) => {
-  const filename = req.params.filename;
-  const filePath = path.join(__dirname, 'public', 'downloads', filename);
-
-  res.download(filePath, (error) => {
-    if (error) {
-      console.error(error);
-      res.status(404).send('File not found');
-    }
-  });
-});*/
-
-//download set up files
-
 
 function renderPath(path, res, next) {
   res.render(path, { 'Content-type': 'text/html; charset=utf-8' }, (error, html) => {

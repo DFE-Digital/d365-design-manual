@@ -655,7 +655,7 @@ DfEPortal.ValidationHelper = {
   IsEmail: function (input) {
     const inputLength = $(`#${input}`).val().length;
     if (inputLength > 0) {
-      const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,9})+$/;
       return {
         identifier: input,
         value: $(`#${input}`).val().match(mailformat) ? true : false,

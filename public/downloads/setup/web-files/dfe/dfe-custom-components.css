@@ -871,3 +871,186 @@
   top: 4px;
 }
 /** END CUSTOM DFE SORTABLE TABLE **/
+
+/** CUSTOM DFE DASHBOARD COMPONENT TO DISPLAY TOTALS **/
+.dfe-dashboard-date-range-container {
+  display: block
+}
+
+@media(min-width: 40.0625em) {
+  .dfe-dashboard-date-range-container {
+      display:inline-block;
+  }
+}
+
+.dfe-dashboard-date-range-container__select {
+  width: 100%
+}
+
+.dfe-dashboard-total-group {
+  margin-bottom: 30px
+}
+
+.dfe-dashboard-total-group__title {
+  color: #0b0c0c;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.25;
+  display: block;
+  margin: 30px 0 5px
+}
+
+@media print {
+  .dfe-dashboard-total-group__title {
+      color: #000
+  }
+}
+
+@media print {
+  .dfe-dashboard-total-group__title {
+      font-family: sans-serif
+  }
+}
+
+@media(min-width: 40.0625em) {
+  .dfe-dashboard-total-group__title {
+      font-size:19px;
+      line-height: 1.3157894737
+  }
+}
+
+@media print {
+  .dfe-dashboard-total-group__title {
+      font-size: 14pt;
+      line-height: 1.15
+  }
+}
+
+.dfe-dashboard-total-group__values {
+  display: flex;
+  position: relative;
+  margin: 0;
+  padding: 15px;
+  padding-left: 25px;
+  border: 2px solid #b1b4b6;
+  border-left: 0;
+  background-color: #f3f2f1;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline
+}
+
+.dfe-dashboard-total-group__values::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  left: 0;
+  width: .625rem;
+  background-color: #0b0c0c
+}
+
+.dfe-dashboard-total-group__values--red::before {
+  background-color: #d4351c
+}
+
+.dfe-dashboard-total-group__values--blue::before {
+  background-color: #347ca9
+}
+
+.dfe-dashboard-total-group__count {
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.1111111111;
+  float: left;
+  margin-left: 0
+}
+
+@media print {
+  .dfe-dashboard-total-group__count {
+      font-family: sans-serif
+  }
+}
+
+@media(min-width: 40.0625em) {
+  .dfe-dashboard-total-group__count {
+      font-size:24px;
+      line-height: 1.25
+  }
+}
+
+@media print {
+  .dfe-dashboard-total-group__count {
+      font-size: 18pt;
+      line-height: 1.15
+  }
+}
+
+.dfe-dashboard-total-group__amount {
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.1111111111;
+  text-align: right;
+  flex: 1;
+  float: right
+}
+
+@media print {
+  .dfe-dashboard-total-group__amount {
+      font-family: sans-serif
+  }
+}
+
+@media(min-width: 40.0625em) {
+  .dfe-dashboard-total-group__amount {
+      font-size:24px;
+      line-height: 1.25
+  }
+}
+
+@media print {
+  .dfe-dashboard-total-group__amount {
+      font-size: 18pt;
+      line-height: 1.15
+  }
+}
+
+.dfe-dashboard-total-explainer {
+  margin-top: 10px;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.1428571429
+}
+
+@media print {
+  .dfe-dashboard-total-explainer {
+      font-family: sans-serif
+  }
+}
+
+@media(min-width: 40.0625em) {
+  .dfe-dashboard-total-explainer {
+      font-size:16px;
+      line-height: 1.25
+  }
+}
+
+@media print {
+  .dfe-dashboard-total-explainer {
+      font-size: 14pt;
+      line-height: 1.2
+  }
+}
+/** END CUSTOM DFE DASHBOARD COMPONENT **/
