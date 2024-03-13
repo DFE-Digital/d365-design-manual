@@ -3,8 +3,8 @@ Principles, guidance, and standards to support people delivering joined-up, effe
 
 [Access the Dynamics 365 Design Manual](https://d365-design-manual-8523de7fad90.herokuapp.com/) 
 
-## Portals
-Use this guidance on this site to make your Dynamics 365 (D365) portal service as consistent as possible with Government Design Service (GDS) styles, components and patterns.
+## PowerPages
+Use this guidance on this site to make your Dynamics 365 PowerPages service as consistent as possible with Government Design Service (GDS) styles, components and patterns.
 
 ### What's included?
 - Create and set up your portal
@@ -14,8 +14,8 @@ Use this guidance on this site to make your Dynamics 365 (D365) portal service a
 - Using the portal WebApi
 
 ### Experience required
-- Building D365 portals (now PowerApps Portals/PowerPages)
-- Creating custom web templates with D365 Portals using the Liquid templating language
+- Building PowerPages websites
+- Creating custom web pages within PowerPages using the Liquid templating language
 - Use of the jQuery JavaScript library
 
 **Read the 'Getting started' section before proceeding to build your portal.**
