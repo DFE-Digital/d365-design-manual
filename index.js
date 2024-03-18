@@ -74,6 +74,12 @@ app.use((req, res, next) => {
   next();
 });
 
+// Middleware to inject script
+app.use(function(req, res, next) {
+  res.locals.includeScript = true;
+  next();
+});
+
 app.get('/downloads/:folder/:variant', (req, res) => {
   const folder = req.params.folder;
   const variant = req.params.variant;

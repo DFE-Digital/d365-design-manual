@@ -1,7 +1,7 @@
 {% set pageName = "Date input" %}
-{% set pageDescription = "Use the date input component to help users enter a memorable date or one they can easily look up. When submitting data to CRM, this can be used when the target field is a date type." %}
+{% set pageDescription = "Use the date input component when users need to input a memorable or easily retrievable date. When submitting data to CRM, this component is suitable for date type target fields." %}
 {% set selectedNav = "Date input" %}
-{% set dateUpdated = "July 2023" %}
+{% set dateUpdated = "March 2024" %}
 
 {% from 'includes/components/_date-input.njk' import dateHeaderExample, dateStandardExample, dateAutocompleteExample %}
 
@@ -14,88 +14,131 @@
   <nav class="dfe-contents-list">
     <h2 class="dfe-contents-list__title">Contents</h2>
     <ol class="dfe-contents-list__list">
-      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+      <li class="dfe-contents-list__list-item">
         <a class="dfe-contents-list__link govuk-link" href="#when-to-use-this-component">When to use this component</a>
       </li>          
-      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+      <li class="dfe-contents-list__list-item">
         <a class="dfe-contents-list__link govuk-link" href="#when-to-not-use-this-component">When to not use this component</a>
       </li>
-      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+      <li class="dfe-contents-list__list-item">
         <a class="dfe-contents-list__link govuk-link" href="#how-it-works">How it works</a>
+      </li>
+      <li class="dfe-contents-list__list-item">
+        <a class="dfe-contents-list__link govuk-link" href="#html-examples">HTML examples</a>
         <ol class="dfe-contents-list__nested-list">
           <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
-            <a class="dfe-contents-list__link govuk-link" href="#html-copy">Copy and amend the HTML examples</a>
+            <a class="dfe-contents-list__link govuk-link" href="#single-question">For single question pages</a>
           </li>
           <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
-            <a class="dfe-contents-list__link govuk-link" href="#one-question">If you are asking one question on the page</a>
+            <a class="dfe-contents-list__link govuk-link" href="#multiple-questions">For multiple question pages</a>
           </li>
           <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
-            <a class="dfe-contents-list__link govuk-link" href="#more-than-one-question">If you are asking more than one question on the page</a>
+            <a class="dfe-contents-list__link govuk-link" href="#dob">Asking for a date of birth</a>
           </li>
-          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
-            <a class="dfe-contents-list__link govuk-link" href="#autocomplete">Use the autocomplete attribute for a date of birth</a>
-          </li>
-          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
-            <a class="dfe-contents-list__link govuk-link" href="#error-messages">Error messages</a>
-          </li>
-        </ol>  
-      </li>  
+        </ol>
+      </li>
+      <li class="dfe-contents-list__list-item">
+        <a class="dfe-contents-list__link govuk-link" href="#error-messages">Error messages</a>
+      </li> 
     </ol>
   </nav>
 </div>
 
 <h2 class="govuk-heading-l" id="when-to-use-this-component">When to use this component</h2>
+
 <p class="govuk-body">{{ pageDescription }}</p>
 
 <h2 class="govuk-heading-l" id="when-to-not-use-this-component">When to not use this component</h2>
-<p class="govuk-body">Do not use the date input component if users are unlikely to know the exact date of the event you're asking about.</p>
+
+<p class="govuk-body">Avoid using the date input component if users are unlikely to know the precise date of the event in question.</p>
 
 <h2 class="govuk-heading-l" id="how-it-works">How it works</h2>
-<p class="govuk-body">The date input component consists of 3 fields to let users enter a day, month and year.</p>
-<p class="govuk-body">Make sure that any example dates you use in hint text are valid for the question being asked.</p>
 
-<h3 class="govuk-heading-m" id="html-copy">Copy and amend the HTML examples</h3>
-<p class="govuk-body">Choose the appropriate example from this page and copy the HTML directly into your web template. <a class="govuk-link" href="../layouts">Read about layouts</a>
-  for more information about how to structure your web template.</p>
-<p class="govuk-body">If the component needs to submit to a field in CRM, replace the highlighted <code>schema-name</code> text in the example 
-  HTML with the target field schema name. <strong>Do not</strong> remove any prepended or appended text to the schema name. For example, if the id attribute is 
-  displayed as <code>schema-name-day</code> in the example, the value should still contain <code>-day</code> after the schema name has been replaced (<code>dfe_field-day</code>).</p>
-<p class="govuk-body">This step is essential for the custom portal helper framework to validate and submit data to CRM. <a class="govuk-link" href="">Read about data validation and submitting data to CRM</a>.</p>
+<p class="govuk-body">The date input component comprises three fields allowing users to enter the day, month, and year individually.</p>
 
-<h3 class="govuk-heading-m" id="one-question">If you are asking one question on the page</h3>
-<p class="govuk-body">If you are asking just one question on the page, set the contents of the <code>&lt;legend&gt;</code> as the page heading. This is good practice as it 
-  means that users of screen readers will only hear the contents once.</p>
-<p class="govuk-body">You will need to include an empty <code>&#123;% title %&#125;</code> block in your web template to override the default page header.</p>
+<p class="govuk-body">
+  Always include hint text within date components to inform users about the required input format. 
+  Additional hint text can be added as needed. 
+  Ensure that any example dates provided in hint text are relevant to the specific question being asked.
+</p>
+
+<h2 class="govuk-heading-l" id="html-examples">HTML examples</h2>
+
+<p class="govuk-body">
+  Select the appropriate example from this page and directly integrate the HTML into your web template. 
+  You can customise these examples to align with your specific requirements, as indicated below.
+  Refer to the <a class="govuk-link" href="../layouts">layouts</a> section for further guidance on structuring your web template.
+</p>
+
+<p class="govuk-body">
+  If the component requires submission to a CRM field, ensure to replace the placeholder <code>schema-name</code> text in the HTML example with the actual target field schema name. 
+  Retain any prefixed or suffixed text related to the schema name. 
+  For instance, if the id attribute reads <code>schema-name-hint</code> in the example, ensure the replacement maintains the <code>-hint</code> suffix (e.g. <code>dfe_field-hint</code>).
+</p>
+
+<p class="govuk-body">
+  This step is crucial for allowing the <a class="govuk-link" href="">portal helper framework</a> to validate and submit data to CRM.
+</p>
+
+<h3 class="govuk-heading-s" id="single-question">For single question pages</h3>
+
+<p class="govuk-body">
+  If presenting only one question on the page, designate the contents of the <code>legend</code> as the page heading. 
+  This practice ensures users of screen readers hear the contents only once.
+</p>
+
+<p class="govuk-body">You will need to include an empty <code>&#123;% title %&#125;</code> block in your web template to remove the default page header and avoid duplication.</p>
 
 {{ dateHeaderExample() }}
 
-<h3 class="govuk-heading-m" id="more-than-one-question">If you are asking more than one question on the page</h3>
-<p class="govuk-body">If you're asking more than one question on the page, do not set the contents of the <code>&lt;legend&gt;</code> as the page heading.</p>
+<h3 class="govuk-heading-s" id="multiple-questions">For multiple question pages</h3>
+
+<p class="govuk-body">If presenting more than one question on the page, do not set the contents of the <code>&lt;legend&gt;</code> as the page heading.</p>
 
 {{ dateStandardExample() }}
 
-<h3 class="govuk-heading-m" id="autocomplete">Use the autocomplete attribute for a date of birth</h3>
-<p class="govuk-body">Use the autocomplete attribute on the date input component when you're asking for a date of birth. This lets browsers autofill the information on a 
-  user's behalf if they've entered it previously.</p>
-<p class="govuk-body">To do this, set the <code>autocomplete</code> attribute on the 3 inputs to <code>bday-day</code>, <code>bday-month</code> and <code>bday-year</code>.</p>
+<h3 class="govuk-heading-s" id="dob">Asking for a date of birth</h3>
+
+<p class="govuk-body">
+  When collecting a date of birth, apply the autocomplete attribute to the date input component. 
+  This enables browsers to autofill the information if previously entered by the user.
+</p>
+
+<p class="govuk-body">
+  Set the <code>autocomplete</code> attribute on the day, month, and year inputs to <code>bday-day</code>, <code>bday-month</code> and <code>bday-year</code> respectively.
+</p>
 
 {{ dateAutocompleteExample() }}
 
-<h3 class="govuk-heading-m" id="error-messages">Error messages</h3>
-<p class="govuk-body">An error message is shown next to the field and in the error summary when there is a validation error. The HTML content for these errors is already 
-  included in the component examples and in the base portal web template set up, therefore you do not need to add any additional error containers to your page.</p>
-<p class="govuk-body">The <a class="govuk-link" href="#">portal helper framework</a> validation process automatically handles error messages for specific error states.</p>
+<h2 class="govuk-heading-l" id="error-messages">Error messages</h2>
+
+<p class="govuk-body">
+  An error message is displayed next to the field and in the error summary when a validation error occurs. 
+  The portal helper framework automatically handles error messages for specific error states, therefore you do not need to add any additional error containers to your HTML. 
+  <a class="govuk-link" href="#">Refer to the portal helper framework guide</a> to understand how to validate your front-end data.
+</p>
+
+<p class="govuk-body">Ensure that your component HTML and your <a class="govuk-link" href="#">inputs validation JavaScript object</a> are structured correctly for your component type.</p>
+
 <p class="govuk-body govuk-!-font-weight-bold">If nothing is entered</p>
-<p class="govuk-body">'Enter [whatever it is].<br><br>For example, 'Enter your date of birth'.</p>
+<p class="govuk-body">'Enter [whatever it is].<br>For example, 'Enter your date of birth'.</p>
+
 <p class="govuk-body govuk-!-font-weight-bold">If the date is incomplete</p>
-<p class="govuk-body">'[whatever it is] must include a [whatever is missing]'.<br><br>For example, 'Date of birth must include a month', 'Date of birth must include a day and month'.</p>
+<p class="govuk-body">'[whatever it is] must include a [whatever is missing]'.<br>For example, 'Date of birth must include a month', 'Date of birth must include a day and month'.</p>
+
 <p class="govuk-body govuk-!-font-weight-bold">If one or more date inputs are not valid</p>
-<p class="govuk-body">'[whatever it is] must contain a valid [whatever input is invalid]'.<br><br>For example, 'Date of birth must contain a valid month', 'Date of birth must contain a valid day and month'.</p>
+<p class="govuk-body">'[whatever it is] must contain a valid [whatever input is invalid]'.<br>For example, 'Date of birth must contain a valid month', 'Date of birth must contain a valid day and month'.</p>
+
 <p class="govuk-body govuk-!-font-weight-bold">If the date entered cannot be correct (for example, 31st February)</p>
-<p class="govuk-body">'[whatever it is] must be a real date'.<br><br>For example, 'Date of birth must be a real date'.</p>
+<p class="govuk-body">'[whatever it is] must be a real date'.<br>For example, 'Date of birth must be a real date'.</p>
 
-<p class="govuk-body">Occasionally you may wish to use error messages outside of the validation process. You can <a class="govuk-link" href="">read about the functions available within the portal helper framework</a> to help you with this.</p>
+<p class="govuk-body">
+  Occasionally you may wish to employ error messages outside of the validation process. 
+  You can <a class="govuk-link" href="">read about the functions available within the portal helper framework</a> to assist you with this.
+</p>
 
-<p class="govuk-body">If you would like any additional advice or guidance with using these examples on Dynamics 365 Portals, or with the portal helper framework, please contact the Solutions Delivery Team.</p>
+{% if includeScript %}
+<script src="/assets/js/updateHtmlExample.min.js"></script>
+{% endif %}
 
 {% endblock %}

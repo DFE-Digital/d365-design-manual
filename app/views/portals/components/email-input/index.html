@@ -1,9 +1,9 @@
 {% set pageName = "Email input" %}
-{% set pageDescription = "Use the email input component when you need to let users enter an email address. When submitting data to CRM, this can be used when the target field is a single line of text of type email." %}
+{% set pageDescription = "Use the email input component when allowing users to input their email address. When submitting data to CRM, this component is suitable for single line of text of type email target field." %}
 {% set selectedNav = "Email input" %}
-{% set dateUpdated = "July 2023" %}
+{% set dateUpdated = "March 2024" %}
 
-{% from 'includes/components/_email-input.njk' import emailHeaderExample, emailStandardExample, emailNoHintExample %}
+{% from 'includes/components/_email-input.njk' import emailHeaderExample, emailStandardExample, emailHintExample %}
 
 {% extends "layouts/content-with-sidenav.html" %}
 
@@ -14,35 +14,35 @@
   <nav class="dfe-contents-list">
     <h2 class="dfe-contents-list__title">Contents</h2>
     <ol class="dfe-contents-list__list">
-      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+      <li class="dfe-contents-list__list-item">
         <a class="dfe-contents-list__link govuk-link" href="#when-to-use-this-component">When to use this component</a>
       </li>          
-      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+      <li class="dfe-contents-list__list-item">
         <a class="dfe-contents-list__link govuk-link" href="#when-to-not-use-this-component">When to not use this component</a>
       </li>
-      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+      <li class="dfe-contents-list__list-item">
         <a class="dfe-contents-list__link govuk-link" href="#how-it-works">How it works</a>
+      </li>
+      <li class="dfe-contents-list__list-item">
+        <a class="dfe-contents-list__link govuk-link" href="#html-examples">HTML examples</a>
         <ol class="dfe-contents-list__nested-list">
           <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
-            <a class="dfe-contents-list__link govuk-link" href="#html-copy">Copy and amend the HTML examples</a>
+            <a class="dfe-contents-list__link govuk-link" href="#single-question">For single question pages</a>
           </li>
           <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
-            <a class="dfe-contents-list__link govuk-link" href="#placeholder-text">Avoid placeholder text</a>
-          </li>
-          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
-            <a class="dfe-contents-list__link govuk-link" href="#one-question">If you are asking one question on the page</a>
-          </li>
-          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
-            <a class="dfe-contents-list__link govuk-link" href="#more-than-one-question">If you are asking more than one question on the page</a>
+            <a class="dfe-contents-list__link govuk-link" href="#multiple-question">For multiple question pages</a>
           </li>
           <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
             <a class="dfe-contents-list__link govuk-link" href="#hint-text">Using hint text</a>
           </li>
           <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
-            <a class="dfe-contents-list__link govuk-link" href="#error-messages">Error messages</a>
+            <a class="dfe-contents-list__link govuk-link" href="#additional-examples">Additional examples</a>
           </li>
-        </ol>  
-      </li>  
+        </ol> 
+      </li>
+      <li class="dfe-contents-list__list-item">
+        <a class="dfe-contents-list__link govuk-link" href="#error-messages">Error messages</a>
+      </li>
     </ol>
   </nav>
 </div>
@@ -51,66 +51,114 @@
 <p class="govuk-body">{{ pageDescription }}</p>
 
 <h2 class="govuk-heading-l" id="when-to-not-use-this-component">When to not use this component</h2>
+
 <p class="govuk-body">Do not use the email input component for any other purpose than allowing users to enter an email address.</p>
 
 <h2 class="govuk-heading-l" id="how-it-works">How it works</h2>
+
 <p class="govuk-body">All email inputs must have labels, and in most cases the label should be visible.</p>
-<p class="govuk-body">Labels are aligned above the text input they refer to. They should be short, direct and written in sentence case. Do not use colons at the end of labels.</p>
 
-<h3 class="govuk-heading-m" id="html-copy">Copy and amend the HTML examples</h3>
-<p class="govuk-body">Choose the appropriate example from this page and copy the HTML directly into your web template. <a class="govuk-link" href="../layouts">Read about layouts</a>
-  for more information about how to structure your web template.</p>
-<p class="govuk-body">If the component needs to submit to a field in CRM, replace the highlighted <code>schema-name</code> text in the example 
-  HTML with the target field schema name. <strong>Do not</strong> remove any prepended or appended text to the schema name. For example, if the id attribute is 
-  displayed as <code>schema-name-error</code> in the example, the value should still contain <code>-error</code> after the schema name has been replaced (<code>dfe_field-error</code>).</p>
-<p class="govuk-body">This step is essential for the custom portal helper framework to validate and submit data to CRM. <a class="govuk-link" href="">Read about data validation and submitting data to CRM</a>.</p>
+<p class="govuk-body">
+  Labels are aligned above the text input they refer to. 
+  They should be short, direct and written in sentence case. 
+  Do not use colons at the end of labels.
+</p>
 
-<h3 class="govuk-heading-m" id="placeholder-text">Avoid placeholder text</h3>
+<h3 class="govuk-heading-s" id="placeholder-text">Avoid placeholder text</h3>
+
 <p class="govuk-body">Do not use placeholder text in place of a label, or for hints or examples, as:</p>
+
 <ul class="govuk-list govuk-list--bullet">
   <li>it vanishes when the user starts typing, which can cause problems for users with memory conditions or when reviewing answers</li>
   <li>not all screen readers read it out</li>
   <li>its browser default styles often do not meet minimum contrast requirements</li>
 </ul>
 
-<h3 class="govuk-heading-m" id="one-question">If you are asking one question on the page</h3>
-<p class="govuk-body">If you are asking just one question on the page, set the contents of the <code>&lt;label&gt;</code> as the page heading. This is good practice as it 
-  means that users of screen readers will only hear the contents once.</p>
-<p class="govuk-body">You will need to include an empty <code>&#123;% title %&#125;</code> block in your web template to override the default page header.</p>
+<h2 class="govuk-heading-l" id="html-examples">HTML examples</h2>
+
+<p class="govuk-body">
+  Select the appropriate example from this page and directly integrate the HTML into your web template. 
+  You can customise these examples to align with your specific requirements, as indicated below.
+  Refer to the <a class="govuk-link" href="../layouts">layouts</a> section for further guidance on structuring your web template.
+</p>
+
+<p class="govuk-body">
+  If the component requires submission to a CRM field, ensure to replace the placeholder <code>schema-name</code> text in the HTML example with the actual target field schema name. 
+  Retain any prefixed or suffixed text related to the schema name. 
+  For instance, if the id attribute reads <code>schema-name-hint</code> in the example, ensure the replacement maintains the <code>-hint</code> suffix (e.g. <code>dfe_field-hint</code>).
+</p>
+
+<p class="govuk-body">
+  This step is crucial for allowing the <a class="govuk-link" href="">portal helper framework</a> to validate and submit data to CRM.
+</p>
+
+<h3 class="govuk-heading-s" id="single-question">For single question pages</h3>
+
+<p class="govuk-body">
+  If presenting only one question on the page, designate the contents of the <code>label</code> as the page heading. 
+  This practice ensures users of screen readers hear the contents only once.
+</p>
+
+<p class="govuk-body">You will need to include an empty <code>&#123;% title %&#125;</code> block in your web template to remove the default page header and avoid duplication.</p>
 
 {{ emailHeaderExample() }}
 
-<h3 class="govuk-heading-m" id="more-than-one-question">If you are asking more than one question on the page</h3>
-<p class="govuk-body">If you're asking more than one question on the page, do not set the contents of the <code>&lt;label&gt;</code> as the page heading.</p>
+<h3 class="govuk-heading-s" id="multiple-question">For multiple question pages</h3>
+
+<p class="govuk-body">If presenting more than one question on the page, do not set the contents of the <code>label</code> as the page heading.</p>
 
 {{ emailStandardExample() }}
 
-<h3 class="govuk-heading-m" id="hint-text">Using hint text</h3>
-<p class="govuk-body">Use hint text for help that's relevant to the majority of users, like how their information will be used, or where to find it. The hint text block is included in the previous examples on this page.</p>
-<p class="govuk-body">Hint text is not mandatory, and can be removed if it is not required.</p>
+<h3 class="govuk-heading-s" id="hint-text">Using hint text</h3>
 
-{{ emailNoHintExample() }}
+<p class="govuk-body">
+  Use hint text to provide relevant assistance to the majority of users, such as clarifying how their information will be used or where to locate it. 
+  The hint text block is demonstrated in the example below.
+</p>
 
-<h4 class="govuk-heading-s">When not to use hint text</h4>
-<p class="govuk-body">Do not use long paragraphs and lists in hint text. Screen readers read out the entire text when users interact with the form element. 
-  This could frustrate users if the text is long.</p>
+<p class="govuk-body">Please ensure the following:</p>
 
-<h4 class="govuk-heading-s">Avoid links in hint text</h4>
-<p class="govuk-body">Do not include links within hint text. While screen readers will read out the link text when describing the field, they will not tell users that 
-  the text is a link.</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use the hint text block appropriately</li>
+  <li>Place the hint block correctly within your HTML component</li>
+  <li>Add the <code>aria-describedby</code> attribute where necessary, for accessiblity. For the email component this is against the <code>input</code>.</li>
+</ul>
 
-<h3 class="govuk-heading-m" id="error-messages">Error messages</h3>
-<p class="govuk-body">An error message is shown next to the field and in the error summary when there is a validation error. The HTML content for these errors is already 
-  included in the component examples and in the base portal web template set up, therefore you do not need to add any additional error containers to your page.</p>
-<p class="govuk-body">The <a class="govuk-link" href="#">portal helper framework</a> validation process automatically handles error messages for specific error states.</p>
-<p class="govuk-body govuk-!-font-weight-bold">If nothing is entered</p>
-<p class="govuk-body">'Enter [whatever it is].<br><br>For example, 'Enter your work email address'.</p>
+<p class="govuk-body">
+  Avoid lengthy paragraphs and lists in hint text, as screen readers will read out the entire content, potentially frustrating users. 
+  Additionally, refrain from including links within hint text, as screen readers do not indicate that the text is a clickable link.
+</p>
+
+{{ emailHintExample() }}
+
+<h2 class="govuk-heading-l" id="error-messages">Error messages</h2>
+
+<p class="govuk-body">
+  An error message is displayed next to the field and in the error summary when a validation error occurs. 
+  The portal helper framework automatically handles error messages for specific error states, therefore you do not need to add any additional error containers to your HTML. 
+  <a class="govuk-link" href="#">Refer to the portal helper framework guide</a> to understand how to validate your front-end data.
+</p>
+
+<p class="govuk-body">Ensure that your component HTML and your <a class="govuk-link" href="#">inputs validation JavaScript object</a> are structured correctly for your component type.</p>
+
+<p class="govuk-body govuk-!-font-weight-bold">If nothing is entered and a value is required</p>
+
+<p class="govuk-body">
+  'Enter [whatever it is].<br>
+  For example, 'Enter your work email address'.
+</p>
+
 <p class="govuk-body govuk-!-font-weight-bold">If the input is not a valid email format</p>
+
 <p class="govuk-body">'Enter a valid email address'.</p>
 
-<p class="govuk-body">Occasionally you may wish to use error messages outside of the validation process. You can <a class="govuk-link" href="">read about the functions available within the portal helper framework</a> to help you with this.</p>
+<p class="govuk-body">
+  Occasionally you may wish to employ error messages outside of the validation process. 
+  You can <a class="govuk-link" href="">read about the functions available within the portal helper framework</a> to assist you with this.
+</p>
 
-<p class="govuk-body">If you would like any additional advice or guidance with using these examples on Dynamics 365 Portals, or with the portal helper framework, please contact the Solutions Delivery Team.</p>
-
+{% if includeScript %}
+<script src="/assets/js/updateHtmlExample.min.js"></script>
+{% endif %}
 
 {% endblock %}

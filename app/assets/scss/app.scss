@@ -2009,6 +2009,18 @@ $app-code-color: #d13118;
   font-family: ui-monospace, menlo, "Cascadia Mono", "Segoe UI Mono", consolas, "Liberation Mono", monospace !important;
 }
 
+/* Remove top margin from pre inside .govuk-tabs */
+.govuk-tabs pre {
+  margin-top: 0;
+}
+
+/* Remove bottom margin from .govuk-form-group and .govuk-button inside [id*='html'] within .govuk-tabs */
+/* Remove bottom margin from .govuk-warning-text inside [id*='liquid'] within .govuk-tabs */
+.govuk-tabs [id*='html'] .govuk-form-group,
+.govuk-tabs [id*='html'] .govuk-button,
+.govuk-tabs [id*='liquid'] .govuk-warning-text {
+  margin-bottom: 0;
+}
 
 // Add styling for inline code
 li code,
