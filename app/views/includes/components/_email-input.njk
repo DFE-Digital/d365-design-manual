@@ -1,3 +1,92 @@
+{% set layoutExample %}
+{% verbatim %}
+{% extends 'DfE/Layouts/2ColumnWideLeft' %}
+
+{% block title %}{% endblock %}   
+
+{% block main %}
+  {% if user %}
+
+    ## HTML content goes here ##
+
+  {% else %}
+    <script>
+      window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
+    </script>
+  {% endif %}
+{% endblock %}
+{% endverbatim %}
+{% endset %}
+
+{% set layoutExampleWithTitle %}
+{% verbatim %}
+{% extends 'DfE/Layouts/2ColumnWideLeft' %} 
+
+{% block main %}
+  {% if user %}
+
+    ## HTML content goes here ##
+
+  {% else %}
+    <script>
+      window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
+    </script>
+  {% endif %}
+{% endblock %}
+{% endverbatim %}
+{% endset %}
+
+{% macro updateHTMLSchemaName(index) %}
+<div class="govuk-form-group">
+  <label class="govuk-label govuk-label--s" for="enter-schema-name-{{ index }}">
+    Update the HTML example
+  </label>
+  <div class="govuk-hint" id="enter-schema-name-hint-{{ index }}">
+    Replace 'schema-name' in the example by entering the schema name of your target CRM field.
+  </div>
+  <input class="govuk-input govuk-input--width-20" id="enter-schema-name-{{ index }}" name="enter-schema-name" type="text" aria-describedby="enter-schema-name-hint-{{ index }}">
+  <button type="submit" class="govuk-button govuk-button--secondary update-html-example" data-module="govuk-button">
+    Update
+  </button>
+</div>
+{% endmacro %}
+
+{% set headerExample %}
+<div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="schema-name">
+      What is your email address?
+    </label>
+  </h1>
+  <input class="govuk-input" id="schema-name" name="schema-name" type="email" spellcheck="false" autocomplete="email">
+</div>
+{% endset %}
+
+{% set standardExample %}
+<div class="govuk-form-group">
+  <label class="govuk-label" for="schema-name">
+    What is your email address?
+  </label>
+  <input class="govuk-input" id="schema-name" name="schema-name" type="email" spellcheck="false" autocomplete="email">
+</div>
+{% endset %}
+
+{% set hintExample %}
+<div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="schema-name">
+      What is your email address?
+    </label>
+  </h1>
+  <div id="schema-name-hint" class="govuk-hint">
+    Enter your work email where possible
+  </div>
+  <input class="govuk-input" id="schema-name" name="schema-name" type="email" spellcheck="false" autocomplete="email" aria-describedby="schema-name-hint">
+</div>
+{% endset %}
+
+{% set layoutWarningText = "This is a basic web template page layout with a logged in user check and does not include additional liquid items which are common place on a CRM Portal, for example, web role, URL parameter or record checks." %}
+
 {% macro emailHeaderExample () %}
 <div class="govuk-tabs" data-module="govuk-tabs">
   <h2 class="govuk-tabs__title">
@@ -21,38 +110,13 @@
     </li>
   </ul>
   <div class="govuk-tabs__panel" id="example">  
-    <div class="govuk-form-group">
-      <h1 class="govuk-label-wrapper">
-        <label class="govuk-label govuk-label--l" for="schema-name">
-          What is your email address?
-        </label>
-      </h1>
-      <div id="schema-name-hint" class="govuk-hint">
-        Enter your work email where possible
-      </div>
-      <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
-        <span class="govuk-visually-hidden">Error:</span>
-      </p>
-      <input class="govuk-input" id="schema-name" name="schema-name" type="email" spellcheck="false" autocomplete="email" aria-describedby="schema-name-error schema-name-hint">
-    </div>
+  {{ headerExample | safe }}
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html">
-    <pre class="code-block">
-      <code class="html code-snippet">
-&lt;div class="govuk-form-group"&gt;
-  &lt;h1 class="govuk-label-wrapper"&gt;
-    &lt;label class="govuk-label govuk-label--l" for="<span class="code-highlight">schema-name</span>"&gt;
-      What is your email address?
-    &lt;/label&gt;
-  &lt;/h1&gt;
-  &lt;div id="<span class="code-highlight">schema-name</span>-hint" class="govuk-hint"&gt;
-    Enter your work email where possible
-  &lt;/div&gt;
-  &lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
-    &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
-  &lt;/p&gt;
-  &lt;input class="govuk-input" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="email" spellcheck="false" autocomplete="email" aria-describedby="<span class="code-highlight">schema-name</span>-error <span class="code-highlight">schema-name</span>-hint"&gt;
-&lt;/div&gt;
+    {{ updateHTMLSchemaName(1) | safe }}
+    <pre>
+      <code>
+      {{ headerExample }}
       </code>
     </pre>
   </div>
@@ -61,21 +125,12 @@
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">Warning</span>
-        This is a basic web template layout and does not include additional liquid items which are common place on a CRM Portal, for example, authenticated user, 
-        web role, or parameter checks
+        {{ layoutWarningText }}
       </strong>
     </div>
-    <pre class="code-block">
-      <code class="html code-snippet">
-&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
-
-&#123;% block title %&#125;&#123;% endblock %&#125;   
-
-&#123;% block main %&#125;
-
-  <span class="code-highlight">## HTML content goes here ##</span>
-
-&#123;% endblock %&#125;
+    <pre>
+      <code>
+      {{ layoutExample }}
       </code>
     </pre>
   </div>
@@ -105,34 +160,13 @@
     </li>
   </ul>
   <div class="govuk-tabs__panel" id="example1">
-    <div class="govuk-form-group">
-      <label class="govuk-label" for="schema-name">
-        What is your email address?
-      </label>
-      <div id="schema-name-hint" class="govuk-hint">
-        Enter your work email where possible
-      </div>
-      <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
-        <span class="govuk-visually-hidden">Error:</span>
-      </p>
-      <input class="govuk-input" id="schema-name" name="schema-name" type="email" spellcheck="false" autocomplete="email" aria-describedby="schema-name-error schema-name-hint">
-    </div>
+  {{ standardExample | safe }}
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html1">
-    <pre class="code-block">
-      <code class="html code-snippet">
-&lt;div class="govuk-form-group"&gt;
-  &lt;label class="govuk-label" for="<span class="code-highlight">schema-name</span>"&gt;
-    What is your email address?
-  &lt;/label&gt;
-  &lt;div id="<span class="code-highlight">schema-name</span>-hint" class="govuk-hint"&gt;
-    Enter your work email where possible
-  &lt;/div&gt;
-  &lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
-    &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
-  &lt;/p&gt;
-  &lt;input class="govuk-input" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="email" spellcheck="false" autocomplete="email" aria-describedby="<span class="code-highlight">schema-name</span>-error <span class="code-highlight">schema-name</span>-hint"&gt;
-&lt;/div&gt;
+    {{ updateHTMLSchemaName(2) | safe }}
+    <pre>
+      <code>
+      {{ standardExample }}
       </code>
     </pre>
   </div>
@@ -141,27 +175,19 @@
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">Warning</span>
-        This is a basic web template layout and does not include additional liquid items which are commonly used on a CRM Portal, for example, authenticated user, 
-        web role, or parameter checks.
+        {{ layoutWarningText }}
       </strong>
     </div>
-    <pre class="code-block">
-      <code class="html code-snippet">
-
-&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
-
-&#123;% block main %&#125;
-
-  <span class="code-highlight">## HTML content goes here ##</span>
-
-&#123;% endblock %&#125;
+    <pre>
+      <code>
+      {{ layoutExampleWithTitle }}
       </code>
     </pre>
   </div>
 </div>
 {% endmacro %}
 
-{% macro emailNoHintExample () %}
+{% macro emailHintExample () %}
 <div class="govuk-tabs" data-module="govuk-tabs">
   <h2 class="govuk-tabs__title">
     Date input component
@@ -184,32 +210,13 @@
     </li>
   </ul>
   <div class="govuk-tabs__panel" id="example2">  
-    <div class="govuk-form-group">
-      <h1 class="govuk-label-wrapper">
-        <label class="govuk-label govuk-label--l" for="schema-name">
-          What is your email address?
-        </label>
-      </h1>
-      <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
-        <span class="govuk-visually-hidden">Error:</span>
-      </p>
-      <input class="govuk-input" id="schema-name" name="schema-name" type="email" spellcheck="false" autocomplete="email" aria-describedby="schema-name-error schema-name-hint">
-    </div>
+  {{ hintExample | safe }}
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html2">
-    <pre class="code-block">
-      <code class="html code-snippet">
-&lt;div class="govuk-form-group"&gt;
-  &lt;h1 class="govuk-label-wrapper"&gt;
-    &lt;label class="govuk-label govuk-label--l" for="<span class="code-highlight">schema-name</span>"&gt;
-      What is your email address?
-    &lt;/label&gt;
-  &lt;/h1&gt;
-  &lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
-    &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
-  &lt;/p&gt;
-  &lt;input class="govuk-input" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="email" spellcheck="false" autocomplete="email" aria-describedby="<span class="code-highlight">schema-name</span>-error <span class="code-highlight">schema-name</span>-hint"&gt;
-&lt;/div&gt;
+    {{ updateHTMLSchemaName(3) | safe }}
+    <pre>
+      <code>
+      {{ hintExample }}
       </code>
     </pre>
   </div>
@@ -218,24 +225,14 @@
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">Warning</span>
-        This is a basic web template layout and does not include additional liquid items which are common place on a CRM Portal, for example, authenticated user, 
-        web role, or parameter checks
+        {{ layoutWarningText }}
       </strong>
     </div>
-    <pre class="code-block">
-      <code class="html code-snippet">
-&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
-
-&#123;% block title %&#125;&#123;% endblock %&#125;   
-
-&#123;% block main %&#125;
-
-  <span class="code-highlight">## HTML content goes here ##</span>
-
-&#123;% endblock %&#125;
+    <pre>
+      <code>
+      {{ layoutExample }}
       </code>
     </pre>
   </div>
 </div>
 {% endmacro %}
-

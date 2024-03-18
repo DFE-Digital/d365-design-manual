@@ -1,3 +1,146 @@
+{% set layoutExample %}
+{% verbatim %}
+{% extends 'DfE/Layouts/2ColumnWideLeft' %}
+
+{% block title %}{% endblock %}   
+
+{% block main %}
+  {% if user %}
+
+    ## HTML content goes here ##
+
+  {% else %}
+    <script>
+      window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
+    </script>
+  {% endif %}
+{% endblock %}
+{% endverbatim %}
+{% endset %}
+
+{% set layoutExampleWithTitle %}
+{% verbatim %}
+{% extends 'DfE/Layouts/2ColumnWideLeft' %} 
+
+{% block main %}
+  {% if user %}
+
+    ## HTML content goes here ##
+
+  {% else %}
+    <script>
+      window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
+    </script>
+  {% endif %}
+{% endblock %}
+{% endverbatim %}
+{% endset %}
+
+{% macro updateHTMLSchemaName(index) %}
+<div class="govuk-form-group">
+  <label class="govuk-label govuk-label--s" for="enter-schema-name-{{ index }}">
+    Update the HTML example
+  </label>
+  <div class="govuk-hint" id="enter-schema-name-hint-{{ index }}">
+    Replace 'schema-name' in the example by entering the schema name of your target CRM field.
+  </div>
+  <input class="govuk-input govuk-input--width-20" id="enter-schema-name-{{ index }}" name="enter-schema-name" type="text" aria-describedby="enter-schema-name-hint-{{ index }}">
+  <button type="submit" class="govuk-button govuk-button--secondary update-html-example" data-module="govuk-button">
+    Update
+  </button>
+</div>
+{% endmacro %}
+
+{% set headerExample %}
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" role="group" aria-describedby="schema-name-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h1 class="govuk-fieldset__heading">
+        What is your date of birth?
+      </h1>
+    </legend>
+    <div id="schema-name-hint" class="govuk-hint">
+      For example, 27 3 2021
+    </div>
+    <div class="govuk-date-input">
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="schema-name-day">
+            Day
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="schema-name-day" name="schema-name" type="text" inputmode="numeric">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="schema-name-month">
+            Month
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="schema-name-month" name="schema-name" type="text" inputmode="numeric"> 
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="schema-name-year">
+            Year
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="schema-name-year" name="schema-name" type="text" inputmode="numeric">
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</div>
+{% endset %}
+
+{% set standardExample %}
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" role="group" aria-describedby="schema-name-hint">
+    <legend class="govuk-fieldset__legend">
+      What is your date of birth?
+    </legend>
+    <div id="schema-name-hint" class="govuk-hint">
+      For example, 27 3 2021
+    </div>
+    <div class="govuk-date-input">
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="schema-name-day">
+            Day
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="schema-name-day" name="schema-name" type="text" inputmode="numeric">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="schema-name-month">
+            Month
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="schema-name-month" name="schema-name" type="text" inputmode="numeric"> 
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-date-input__label" for="schema-name-year">
+            Year
+          </label>
+          <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="schema-name-year" name="schema-name" type="text" inputmode="numeric">
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</div>
+{% endset %}
+
+{% set autocompleteExamples %}
+<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="schema-name-day" name="schema-name" type="text" autocomplete="bday-day"inputmode="numeric">   
+
+<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="schema-name-month" name="schema-name" type="text" autocomplete="bday-month" inputmode="numeric">       
+
+<input class="govuk-input govuk-date-input__input govuk-input--width-4" id="schema-name-year" name="schema-name" type="text" autocomplete="bday-year" inputmode="numeric">   
+{% endset %}
+
+{% set layoutWarningText = "This is a basic web template page layout with a logged in user check and does not include additional liquid items which are common place on a CRM Portal, for example, web role, URL parameter or record checks." %}
+
 {% macro dateHeaderExample () %}
 <div class="govuk-tabs" data-module="govuk-tabs">
   <h2 class="govuk-tabs__title">
@@ -21,92 +164,13 @@
     </li>
   </ul>
   <div class="govuk-tabs__panel" id="example">  
-    <div class="govuk-form-group">
-      <fieldset class="govuk-fieldset" role="group" aria-describedby="schema-name-error schema-name-hint">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-            <h1 class="govuk-fieldset__heading">
-              What is your date of birth?
-            </h1>
-          </legend>
-          <div id="schema-name-hint" class="govuk-hint">
-              For example, 27 3 2021
-          </div>
-          <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
-              <span class="govuk-visually-hidden">Error:</span>
-          </p>
-          <div class="govuk-date-input" id="schema-name">
-              <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
-                      <label class="govuk-label govuk-date-input__label" for="schema-name-day">
-                          Day
-                      </label>
-                      <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="schema-name-day" name="schema-name" type="text" inputmode="numeric">
-                  </div>
-              </div>
-              <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
-                      <label class="govuk-label govuk-date-input__label" for="schema-name-month">
-                          Month
-                      </label>
-                      <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="schema-name-month" name="schema-name" type="text" inputmode="numeric"> 
-                  </div>
-              </div>
-              <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
-                      <label class="govuk-label govuk-date-input__label" for="schema-name-year">
-                          Year
-                      </label>
-                      <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="schema-name-year" name="schema-name" type="text" inputmode="numeric">
-                  </div>
-              </div>
-          </div>
-      </fieldset>
-    </div>
+  {{ headerExample | safe }}
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html">
-    <pre class="code-block">
-      <code class="html code-snippet">
-&lt;div class="govuk-form-group"&gt;
-  &lt;fieldset class="govuk-fieldset" role="group" aria-describedby="<span class="code-highlight">schema-name</span>-error <span class="code-highlight">schema-name</span>-hint"&gt;
-    &lt;legend class="govuk-fieldset__legend govuk-fieldset__legend--l"&gt;
-      &lt;h1 class="govuk-fieldset__heading"&gt;
-        What is your date of birth?
-      &lt;/h1&gt;
-    &lt;/legend&gt;
-    &lt;div id="<span class="code-highlight">schema-name</span>-hint" class="govuk-hint"&gt;
-      For example, 27 3 2021
-    &lt;/div&gt;
-    &lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
-      &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
-    &lt;/p&gt;
-    &lt;div class="govuk-date-input" id="<span class="code-highlight">schema-name</span>"&gt;
-      &lt;div class="govuk-date-input__item"&gt;
-        &lt;div class="govuk-form-group"&gt;
-          &lt;label class="govuk-label govuk-date-input__label" for="<span class="code-highlight">schema-name</span>-day"&gt;
-            Day
-          &lt;/label&gt;
-          &lt;input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<span class="code-highlight">schema-name</span>-day" name="<span class="code-highlight">schema-name</span>" type="text" inputmode="numeric"&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div class="govuk-date-input__item"&gt;
-        &lt;div class="govuk-form-group"&gt;
-          &lt;label class="govuk-label govuk-date-input__label" for="<span class="code-highlight">schema-name</span>-month"&gt;
-            Month
-          &lt;/label&gt;
-          &lt;input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<span class="code-highlight">schema-name</span>-month" name="<span class="code-highlight">schema-name</span>" type="text" inputmode="numeric"&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div class="govuk-date-input__item"&gt;
-        &lt;div class="govuk-form-group"&gt;
-          &lt;label class="govuk-label govuk-date-input__label" for="<span class="code-highlight">schema-name</span>-year"&gt;
-            Year
-          &lt;/label&gt;
-          &lt;input class="govuk-input govuk-date-input__input govuk-input--width-4" id="<span class="code-highlight">schema-name</span>-year" name="<span class="code-highlight">schema-name</span>" type="text" inputmode="numeric"&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/fieldset&gt;
-&lt;/div&gt;
+    {{ updateHTMLSchemaName(1) | safe }}
+    <pre>
+      <code>
+      {{ headerExample }}
       </code>
     </pre>
   </div>
@@ -115,21 +179,12 @@
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">Warning</span>
-        This is a basic web template layout and does not include additional liquid items which are common place on a CRM Portal, for example, authenticated user, 
-        web role, or parameter checks
+        {{ layoutWarningText }}
       </strong>
     </div>
-    <pre class="code-block">
-      <code class="html code-snippet">
-&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
-
-&#123;% block title %&#125;&#123;% endblock %&#125;   
-
-&#123;% block main %&#125;
-
-  <span class="code-highlight">## HTML content goes here ##</span>
-
-&#123;% endblock %&#125;
+    <pre>
+      <code>
+      {{ layoutExample }}
       </code>
     </pre>
   </div>
@@ -159,88 +214,13 @@
     </li>
   </ul>
   <div class="govuk-tabs__panel" id="example1">
-    <div class="govuk-form-group">
-      <fieldset class="govuk-fieldset" role="group" aria-describedby="schema-name-error schema-name-hint">
-          <legend class="govuk-fieldset__legend">
-              What is your date of birth?
-          </legend>
-          <div id="schema-name-hint" class="govuk-hint">
-              For example, 27 3 2021
-          </div>
-          <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
-              <span class="govuk-visually-hidden">Error:</span>
-          </p>
-          <div class="govuk-date-input" id="schema-name">
-              <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
-                      <label class="govuk-label govuk-date-input__label" for="schema-name-day">
-                          Day
-                      </label>
-                      <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="schema-name-day" name="schema-name" type="text" inputmode="numeric">
-                  </div>
-              </div>
-              <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
-                      <label class="govuk-label govuk-date-input__label" for="schema-name-month">
-                          Month
-                      </label>
-                      <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="schema-name-month" name="schema-name" type="text" inputmode="numeric"> 
-                  </div>
-              </div>
-              <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
-                      <label class="govuk-label govuk-date-input__label" for="schema-name-year">
-                          Year
-                      </label>
-                      <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="schema-name-year" name="schema-name" type="text" inputmode="numeric">
-                  </div>
-              </div>
-          </div>
-      </fieldset>
-    </div>
+  {{ standardExample | safe }}
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html1">
-    <pre class="code-block">
-      <code class="html code-snippet">
-&lt;div class="govuk-form-group"&gt;
-  &lt;fieldset class="govuk-fieldset" role="group" aria-describedby="<span class="code-highlight">schema-name</span>-error <span class="code-highlight">schema-name</span>-hint"&gt;
-    &lt;legend class="govuk-fieldset__legend"&gt;
-      What is your date of birth?
-    &lt;/legend&gt;
-    &lt;div id="<span class="code-highlight">schema-name</span>-hint" class="govuk-hint"&gt;
-      For example, 27 3 2021
-    &lt;/div&gt;
-    &lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
-      &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
-    &lt;/p&gt;
-    &lt;div class="govuk-date-input" id="<span class="code-highlight">schema-name</span>"&gt;
-      &lt;div class="govuk-date-input__item"&gt;
-        &lt;div class="govuk-form-group"&gt;
-          &lt;label class="govuk-label govuk-date-input__label" for="<span class="code-highlight">schema-name</span>-day"&gt;
-            Day
-          &lt;/label&gt;
-          &lt;input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<span class="code-highlight">schema-name</span>-day" name="<span class="code-highlight">schema-name</span>" type="text" inputmode="numeric"&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div class="govuk-date-input__item"&gt;
-        &lt;div class="govuk-form-group"&gt;
-          &lt;label class="govuk-label govuk-date-input__label" for="<span class="code-highlight">schema-name</span>-month"&gt;
-            Month
-          &lt;/label&gt;
-          &lt;input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<span class="code-highlight">schema-name</span>-month" name="<span class="code-highlight">schema-name</span>" type="text" inputmode="numeric"&gt; 
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div class="govuk-date-input__item"&gt;
-        &lt;div class="govuk-form-group"&gt;
-          &lt;label class="govuk-label govuk-date-input__label" for="<span class="code-highlight">schema-name</span>-year"&gt;
-            Year
-          &lt;/label&gt;
-          &lt;input class="govuk-input govuk-date-input__input govuk-input--width-4" id="<span class="code-highlight">schema-name</span>-year" name="<span class="code-highlight">schema-name</span>" type="text" inputmode="numeric"&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/fieldset&gt;
-&lt;/div&gt;  
+    {{ updateHTMLSchemaName(2) | safe }}
+    <pre>
+      <code>
+      {{ standardExample }}
       </code>
     </pre>
   </div>
@@ -249,20 +229,12 @@
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">Warning</span>
-        This is a basic web template layout and does not include additional liquid items which are commonly used on a CRM Portal, for example, authenticated user, 
-        web role, or parameter checks.
+        {{ layoutWarningText }}
       </strong>
     </div>
-    <pre class="code-block">
-      <code class="html code-snippet">
-
-&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
-
-&#123;% block main %&#125;
-
-  <span class="code-highlight">## HTML content goes here ##</span>
-
-&#123;% endblock %&#125;
+    <pre>
+      <code>
+      {{ layoutExampleWithTitle }}
       </code>
     </pre>
   </div>
@@ -270,13 +242,24 @@
 {% endmacro %}
 
 {% macro dateAutocompleteExample() %}
-  <pre class="code-block">
-    <code class="html code-snippet">
-&lt;input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<span class="code-highlight">schema-name</span>-day" name="<span class="code-highlight">schema-name</span>" type="text" <span class="code-highlight-green">autocomplete="bday-day"</span> inputmode="numeric"&gt;
-    
-&lt;input class="govuk-input govuk-date-input__input govuk-input--width-2" id="<span class="code-highlight">schema-name</span>-month" name="<span class="code-highlight">schema-name</span>" type="text" <span class="code-highlight-green">autocomplete="bday-month"</span> inputmode="numeric"&gt;     
-    
-&lt;input class="govuk-input govuk-date-input__input govuk-input--width-4" id="<span class="code-highlight">schema-name</span>-year" name="<span class="code-highlight">schema-name</span>" type="text" <span class="code-highlight-green">autocomplete="bday-year"</span> inputmode="numeric"&gt;    
-    </code>
-  </pre>
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">
+    Date autocomplete example
+  </h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#html2">
+        HTML
+      </a>
+    </li>
+  </ul>
+  <div class="govuk-tabs__panel" id="html2">
+    {{ updateHTMLSchemaName(3) | safe }}
+    <pre>
+      <code class="language-php-template">
+      {{ autocompleteExamples }}
+      </code>
+    </pre>
+  </div>
+</div>
 {% endmacro %}
