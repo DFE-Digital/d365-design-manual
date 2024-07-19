@@ -1,7 +1,111 @@
+{% set layoutExample %}
+{% verbatim %}
+{% extends 'DfE/Layouts/2ColumnWideLeft' %}
+
+{% block title %}{% endblock %}   
+
+{% block main %}
+  {% if user %}
+
+    ## HTML content goes here ##
+
+  {% else %}
+    <script>
+      window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
+    </script>
+  {% endif %}
+{% endblock %}
+{% endverbatim %}
+{% endset %}
+
+{% set layoutExampleWithTitle %}
+{% verbatim %}
+{% extends 'DfE/Layouts/2ColumnWideLeft' %} 
+
+{% block main %}
+  {% if user %}
+
+    ## HTML content goes here ##
+
+  {% else %}
+    <script>
+      window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
+    </script>
+  {% endif %}
+{% endblock %}
+{% endverbatim %}
+{% endset %}
+
+{% macro updateHTMLSchemaName(index) %}
+<div class="govuk-form-group">
+  <label class="govuk-label govuk-label--s" for="enter-schema-name-{{ index }}">
+    Update the HTML example
+  </label>
+  <div class="govuk-hint" id="enter-schema-name-hint-{{ index }}">
+    Replace 'schema-name' in the example by entering the schema name of your target CRM field.
+  </div>
+  <input class="govuk-input govuk-input--width-20" id="enter-schema-name-{{ index }}" name="enter-schema-name" type="text" aria-describedby="enter-schema-name-hint-{{ index }}">
+  <button type="submit" class="govuk-button govuk-button--secondary update-html-example" data-module="govuk-button">
+    Update
+  </button>
+</div>
+{% endmacro %}
+
+{% set headerExample %}
+<div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="schema-name">
+      What is your age?
+    </label>
+  </h1>
+  <input class="govuk-input" id="schema-name" name="schema-name" type="text" spellcheck="false" inputmode="numeric">
+</div>
+{% endset %}
+
+{% set standardExample %}
+<div class="govuk-form-group">
+  <label class="govuk-label" for="schema-name">
+    What is your age?
+  </label>
+  <input class="govuk-input" id="schema-name" name="schema-name" type="text" spellcheck="false" inputmode="numeric">
+</div>
+{% endset %}
+
+{% set hintExample %}
+<div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="schema-name">
+      What is your account number?
+    </label>
+  </h1>
+  <div id="schema-name-hint" class="govuk-hint">
+    Must be between 6 and 8 digits long
+  </div>
+  <input class="govuk-input" id="schema-name" name="schema-name" type="text" spellcheck="false" aria-describedby="schema-name-hint" inputmode="numeric">
+</div>
+{% endset %}
+
+{% set suffixPrefixExample %}
+<div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="schema-name">
+      What is the cost per item, in pounds?
+    </label>
+  </h1>
+  <div class="govuk-input__wrapper">
+    <div class="govuk-input__prefix" aria-hidden="true">£</div>
+    <input class="govuk-input govuk-input--width-5" id="schema-name" name="schema-name" type="text" spellcheck="false">
+    <div class="govuk-input__suffix" aria-hidden="true">per item</div>
+  </div>
+</div>
+{% endset %}
+
+{% set layoutWarningText = "This is a basic web template page layout with a logged in user check and does not include additional liquid items which are common place on a CRM Portal, for example, web role, URL parameter or record checks." %}
+
 {% macro numberHeaderExample () %}
 <div class="govuk-tabs" data-module="govuk-tabs">
   <h2 class="govuk-tabs__title">
-    Date input component
+    Number input component header example
   </h2>
   <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
@@ -21,38 +125,13 @@
     </li>
   </ul>
   <div class="govuk-tabs__panel" id="example">  
-    <div class="govuk-form-group">
-      <h1 class="govuk-label-wrapper">
-        <label class="govuk-label govuk-label--l" for="schema-name">
-          What is your account number?
-        </label>
-      </h1>
-      <div id="schema-name-hint" class="govuk-hint">
-        Must be between 6 and 8 digits long
-      </div>
-      <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
-        <span class="govuk-visually-hidden">Error:</span>
-      </p>
-      <input class="govuk-input" id="schema-name" name="schema-name" type="text" spellcheck="false" aria-describedby="schema-name-hint schema-name-error" inputmode="numeric">
-    </div>
+  {{ headerExample | safe }}
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html">
-    <pre class="code-block">
-      <code class="html code-snippet">
-&lt;div class="govuk-form-group"&gt;
-  &lt;h1 class="govuk-label-wrapper"&gt;
-    &lt;label class="govuk-label govuk-label--l" for="<span class="code-highlight">schema-name</span>"&gt;
-      What is your account number?
-    &lt;/label&gt;
-  &lt;/h1&gt;
-  &lt;div id="<span class="code-highlight">schema-name</span>-hint" class="govuk-hint"&gt;
-    Must be between 6 and 8 digits long
-  &lt;/div&gt;
-  &lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
-    &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
-  &lt;/p&gt;
-  &lt;input class="govuk-input" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="text" spellcheck="false" aria-describedby="<span class="code-highlight">schema-name</span>-hint <span class="code-highlight">schema-name</span>-error" inputmode="numeric"&gt;
-&lt;/div&gt;
+    {{ updateHTMLSchemaName(1) | safe }}
+    <pre>
+      <code>
+      {{ headerExample }}
       </code>
     </pre>
   </div>
@@ -61,21 +140,12 @@
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">Warning</span>
-        This is a basic web template layout and does not include additional liquid items which are common place on a CRM Portal, for example, authenticated user, 
-        web role, or parameter checks
+        {{ layoutWarningText }}
       </strong>
     </div>
-    <pre class="code-block">
-      <code class="html code-snippet">
-&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
-
-&#123;% block title %&#125;&#123;% endblock %&#125;   
-
-&#123;% block main %&#125;
-
-  <span class="code-highlight">## HTML content goes here ##</span>
-
-&#123;% endblock %&#125;
+    <pre>
+      <code>
+      {{ layoutExample }}
       </code>
     </pre>
   </div>
@@ -85,7 +155,7 @@
 {% macro numberStandardExample () %}
 <div class="govuk-tabs" data-module="govuk-tabs">
   <h2 class="govuk-tabs__title">
-    Card component
+    Number input component standard example
   </h2>
   <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
@@ -104,35 +174,14 @@
       </a>
     </li>
   </ul>
-  <div class="govuk-tabs__panel" id="example1">
-    <div class="govuk-form-group">
-      <label class="govuk-label" for="schema-name">
-        What is your account number?
-      </label>
-      <div id="schema-name-hint" class="govuk-hint">
-        Must be between 6 and 8 digits long
-      </div>
-      <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
-        <span class="govuk-visually-hidden">Error:</span>
-      </p>
-      <input class="govuk-input" id="schema-name" name="schema-name" type="text" spellcheck="false" aria-describedby="schema-name-hint schema-name-error" inputmode="numeric">
-    </div>
+  <div class="govuk-tabs__panel" id="example1">  
+  {{ standardExample | safe }}
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html1">
-    <pre class="code-block">
-      <code class="html code-snippet">
-&lt;div class="govuk-form-group"&gt;
-  &lt;label class="govuk-label" for="<span class="code-highlight">schema-name</span>"&gt;
-    What is your account number?
-  &lt;/label&gt;
-  &lt;div id="<span class="code-highlight">schema-name</span>-hint" class="govuk-hint"&gt;
-    Must be between 6 and 8 digits long
-  &lt;/div&gt;
-  &lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
-    &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
-  &lt;/p&gt;
-  &lt;input class="govuk-input" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="text" spellcheck="false" aria-describedby="<span class="code-highlight">schema-name</span>-hint <span class="code-highlight">schema-name</span>-error" inputmode="numeric"&gt;
-&lt;/div&gt;
+    {{ updateHTMLSchemaName(2) | safe }}
+    <pre>
+      <code>
+      {{ standardExample }}
       </code>
     </pre>
   </div>
@@ -141,30 +190,22 @@
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">Warning</span>
-        This is a basic web template layout and does not include additional liquid items which are commonly used on a CRM Portal, for example, authenticated user, 
-        web role, or parameter checks.
+        {{ layoutWarningText }}
       </strong>
     </div>
-    <pre class="code-block">
-      <code class="html code-snippet">
-
-&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
-
-&#123;% block main %&#125;
-
-  <span class="code-highlight">## HTML content goes here ##</span>
-
-&#123;% endblock %&#125;
+    <pre>
+      <code>
+      {{ layoutExample }}
       </code>
     </pre>
   </div>
 </div>
 {% endmacro %}
 
-{% macro numberNoHintExample () %}
+{% macro numberHintExample () %}
 <div class="govuk-tabs" data-module="govuk-tabs">
   <h2 class="govuk-tabs__title">
-    Date input component
+    Number input component hint example
   </h2>
   <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
@@ -184,32 +225,13 @@
     </li>
   </ul>
   <div class="govuk-tabs__panel" id="example2">  
-    <div class="govuk-form-group">
-      <h1 class="govuk-label-wrapper">
-        <label class="govuk-label govuk-label--l" for="schema-name">
-          What is your account number?
-        </label>
-      </h1>
-      <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
-        <span class="govuk-visually-hidden">Error:</span>
-      </p>
-      <input class="govuk-input" id="schema-name" name="schema-name" type="text" spellcheck="false" aria-describedby="schema-name-error" inputmode="numeric">
-    </div>
+  {{ hintExample | safe }}
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html2">
-    <pre class="code-block">
-      <code class="html code-snippet">
-&lt;div class="govuk-form-group"&gt;
-  &lt;h1 class="govuk-label-wrapper"&gt;
-    &lt;label class="govuk-label govuk-label--l" for="<span class="code-highlight">schema-name</span>"&gt;
-      What is your account number?
-    &lt;/label&gt;
-  &lt;/h1&gt;
-  &lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
-    &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
-  &lt;/p&gt;
-  &lt;input class="govuk-input" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="text" spellcheck="false" aria-describedby="<span class="code-highlight">schema-name</span>-error" inputmode="numeric"&gt;
-&lt;/div&gt;
+    {{ updateHTMLSchemaName(3) | safe }}
+    <pre>
+      <code>
+      {{ hintExample }}
       </code>
     </pre>
   </div>
@@ -218,21 +240,12 @@
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">Warning</span>
-        This is a basic web template layout and does not include additional liquid items which are common place on a CRM Portal, for example, authenticated user, 
-        web role, or parameter checks
+        {{ layoutWarningText }}
       </strong>
     </div>
-    <pre class="code-block">
-      <code class="html code-snippet">
-&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
-
-&#123;% block title %&#125;&#123;% endblock %&#125;   
-
-&#123;% block main %&#125;
-
-  <span class="code-highlight">## HTML content goes here ##</span>
-
-&#123;% endblock %&#125;
+    <pre>
+      <code>
+      {{ layoutExample }}
       </code>
     </pre>
   </div>
@@ -242,7 +255,7 @@
 {% macro numberPrefixSuffixExample () %}
 <div class="govuk-tabs" data-module="govuk-tabs">
   <h2 class="govuk-tabs__title">
-    Date input component
+    Number input component prefix and suffix example
   </h2>
   <ul class="govuk-tabs__list">
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
@@ -262,38 +275,13 @@
     </li>
   </ul>
   <div class="govuk-tabs__panel" id="example3">  
-    <div class="govuk-form-group">
-      <h1 class="govuk-label-wrapper">
-        <label class="govuk-label govuk-label--l" for="schema-name">
-          What is the cost per item, in pounds?
-        </label>
-      </h1>
-      <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
-        <span class="govuk-visually-hidden">Error:</span>
-      </p>
-      <div class="govuk-input__wrapper">
-        <div class="govuk-input__prefix" aria-hidden="true">£</div>
-        <input class="govuk-input govuk-input--width-5" id="schema-name" name="schema-name" type="text" spellcheck="false">
-        <div class="govuk-input__suffix" aria-hidden="true">per item</div>
-      </div>
-    </div>
+  {{ suffixPrefixExample | safe }}
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html3">
-    <pre class="code-block">
-      <code class="html code-snippet">
-&lt;h1 class="govuk-label-wrapper"&gt;
-  &lt;label class="govuk-label govuk-label--l" for="<span class="code-highlight">schema-name</span>"&gt;
-    What is the cost per item, in pounds?
-  &lt;/label&gt;
-&lt;/h1&gt;
-&lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
-  &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
-&lt;/p&gt;
-&lt;div class="govuk-input__wrapper"&gt;
-  &lt;div class="govuk-input__prefix" aria-hidden="true"&gt;£&lt;/div&gt;
-  &lt;input class="govuk-input govuk-input--width-5" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="text" spellcheck="false"&gt;
-  &lt;div class="govuk-input__suffix" aria-hidden="true"&gt;per item&lt;/div&gt;
-&lt;/div&gt;
+    {{ updateHTMLSchemaName(4) | safe }}
+    <pre>
+      <code>
+      {{ suffixPrefixExample }}
       </code>
     </pre>
   </div>
@@ -302,185 +290,12 @@
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">Warning</span>
-        This is a basic web template layout and does not include additional liquid items which are common place on a CRM Portal, for example, authenticated user, 
-        web role, or parameter checks
+        {{ layoutWarningText }}
       </strong>
     </div>
-    <pre class="code-block">
-      <code class="html code-snippet">
-&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
-
-&#123;% block title %&#125;&#123;% endblock %&#125;   
-
-&#123;% block main %&#125;
-
-  <span class="code-highlight">## HTML content goes here ##</span>
-
-&#123;% endblock %&#125;
-      </code>
-    </pre>
-  </div>
-</div>
-{% endmacro %}
-
-{% macro numberPrefixExample () %}
-<div class="govuk-tabs" data-module="govuk-tabs">
-  <h2 class="govuk-tabs__title">
-    Date input component
-  </h2>
-  <ul class="govuk-tabs__list">
-    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-      <a class="govuk-tabs__tab" href="#example4">
-        Example
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="#html4">
-        HTML
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="#liquid4">
-        Web Template
-      </a>
-    </li>
-  </ul>
-  <div class="govuk-tabs__panel" id="example4">  
-    <div class="govuk-form-group">
-      <h1 class="govuk-label-wrapper">
-        <label class="govuk-label govuk-label--l" for="schema-name">
-          What is the cost in pounds?
-        </label>
-      </h1>
-      <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
-        <span class="govuk-visually-hidden">Error:</span>
-      </p>
-      <div class="govuk-input__wrapper">
-        <div class="govuk-input__prefix" aria-hidden="true">£</div>
-        <input class="govuk-input govuk-input--width-5" id="schema-name" name="schema-name" type="text" spellcheck="false">
-      </div>
-    </div>
-  </div>
-  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html4">
-    <pre class="code-block">
-      <code class="html code-snippet">
-&lt;h1 class="govuk-label-wrapper"&gt;
-  &lt;label class="govuk-label govuk-label--l" for="<span class="code-highlight">schema-name</span>"&gt;
-    What is the cost in pounds?
-  &lt;/label&gt;
-&lt;/h1&gt;
-&lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
-  &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
-&lt;/p&gt;
-&lt;div class="govuk-input__wrapper"&gt;
-  &lt;div class="govuk-input__prefix" aria-hidden="true"&gt;£&lt;/div&gt;
-  &lt;input class="govuk-input govuk-input--width-5" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="text" spellcheck="false"&gt;
-&lt;/div&gt;
-      </code>
-    </pre>
-  </div>
-  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="liquid4">
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Warning</span>
-        This is a basic web template layout and does not include additional liquid items which are common place on a CRM Portal, for example, authenticated user, 
-        web role, or parameter checks
-      </strong>
-    </div>
-    <pre class="code-block">
-      <code class="html code-snippet">
-&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
-
-&#123;% block title %&#125;&#123;% endblock %&#125;   
-
-&#123;% block main %&#125;
-
-  <span class="code-highlight">## HTML content goes here ##</span>
-
-&#123;% endblock %&#125;
-      </code>
-    </pre>
-  </div>
-</div>
-{% endmacro %}
-
-{% macro numberSuffixExample () %}
-<div class="govuk-tabs" data-module="govuk-tabs">
-  <h2 class="govuk-tabs__title">
-    Date input component
-  </h2>
-  <ul class="govuk-tabs__list">
-    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-      <a class="govuk-tabs__tab" href="#example5">
-        Example
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="#html5">
-        HTML
-      </a>
-    </li>
-    <li class="govuk-tabs__list-item">
-      <a class="govuk-tabs__tab" href="#liquid5">
-        Web Template
-      </a>
-    </li>
-  </ul>
-  <div class="govuk-tabs__panel" id="example5">  
-    <div class="govuk-form-group">
-      <h1 class="govuk-label-wrapper">
-        <label class="govuk-label govuk-label--l" for="schema-name">
-          What is the weight in kilograms?
-        </label>
-      </h1>
-      <p id="schema-name-error" class="govuk-error-message govuk-visually-hidden">
-        <span class="govuk-visually-hidden">Error:</span>
-      </p>
-      <div class="govuk-input__wrapper">
-        <input class="govuk-input govuk-input--width-5" id="schema-name" name="schema-name" type="text" spellcheck="false">
-        <div class="govuk-input__suffix" aria-hidden="true">kg</div>
-      </div>
-    </div>
-  </div>
-  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="html5">
-    <pre class="code-block">
-      <code class="html code-snippet">
-&lt;h1 class="govuk-label-wrapper"&gt;
-  &lt;label class="govuk-label govuk-label--l" for="<span class="code-highlight">schema-name</span>"&gt;
-    What is the weight in kilograms?
-  &lt;/label&gt;
-&lt;/h1&gt;
-&lt;p id="<span class="code-highlight">schema-name</span>-error" class="govuk-error-message govuk-visually-hidden"&gt;
-  &lt;span class="govuk-visually-hidden"&gt;Error:&lt;/span&gt;
-&lt;/p&gt;
-&lt;div class="govuk-input__wrapper"&gt;
-  &lt;input class="govuk-input govuk-input--width-5" id="<span class="code-highlight">schema-name</span>" name="<span class="code-highlight">schema-name</span>" type="text" spellcheck="false"&gt;
-  &lt;div class="govuk-input__suffix" aria-hidden="true"&gt;kg&lt;/div&gt;
-&lt;/div&gt;
-      </code>
-    </pre>
-  </div>
-  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="liquid5">
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Warning</span>
-        This is a basic web template layout and does not include additional liquid items which are common place on a CRM Portal, for example, authenticated user, 
-        web role, or parameter checks
-      </strong>
-    </div>
-    <pre class="code-block">
-      <code class="html code-snippet">
-&#123;% extends 'DfE/Layout/2ColumnWideLeft' %&#125;
-
-&#123;% block title %&#125;&#123;% endblock %&#125;   
-
-&#123;% block main %&#125;
-
-  <span class="code-highlight">## HTML content goes here ##</span>
-
-&#123;% endblock %&#125;
+    <pre>
+      <code>
+      {{ layoutExample }}
       </code>
     </pre>
   </div>
