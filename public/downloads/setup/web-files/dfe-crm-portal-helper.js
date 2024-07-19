@@ -50,7 +50,7 @@ DfEPortal = {
     if (!nullCheckObj.value) {
       return Promise.reject(nullCheckObj);
     }
-
+    
     if (inputObj.type === 'number') {
       return this.ValidateNumber(inputObj);
     }
@@ -77,6 +77,9 @@ DfEPortal = {
     }
     if (inputObj.type === "date") {
       return this.ValidateDate(inputObj);
+    }
+    if (inputObj.type === 'file') {
+      return this.ValidateFile(inputObj);
     }
   },
 
@@ -285,6 +288,21 @@ DfEPortal = {
     const identifier = inputObj.identifier;
     const friendlyName = inputObj.friendlyName;
     const maxFileSize = inputObj.maxFileSize;
+    const maxLimit = inputObj.fileLimit;
+    const flowId = inputObj.virusCheckFlowId;
+    const allowedExtensions = inputObj.allowedExtensions;
+
+    // Check valid file extensions
+    const fileExtensionObj = DfEPortal.ValidationHelper.ValidFileExtensionCheck(identifier, allowedExtensions);
+    if (!fileExtensionObj.value) {
+      return Promise.reject(fileExtensionObj);
+    }
+
+    // Check max file attachment limit
+    const fileLimitObj = DfEPortal.ValidationHelper.FileLimitCheck(identifier, maxLimit);
+    if (!fileLimitObj.value) {
+      return Promise.reject(fileLimitObj);
+    }
 
     // Check file size
     const fileSizeObj = DfEPortal.ValidationHelper.FileSizeCheck(identifier, friendlyName, maxFileSize);
@@ -292,8 +310,73 @@ DfEPortal = {
       return Promise.reject(fileSizeObj);
     }
 
-    // If it reaches this point, the file is valid
+    // Perform virus check
+    const virusScanObj = await DfEPortal.ValidationHelper.VirusCheck(identifier, flowId);
+    if (!virusScanObj.value) {
+      return Promise.reject(virusScanObj);
+    }
+
+    // If it reaches this point, the file(s) are valid
     return Promise.resolve(inputObj);
+  },
+
+  GetFileContent: function(input) {
+    return new Promise((resolve, reject) => {
+      const $fileInput = $(`#${input}`);
+      const files = $fileInput[0].files;
+        
+      if (!files.length) {
+        const errorObj = {
+          identifier: input,
+          errorMessage: "There has been an unexpected error processing your files. No files have been found. Please contact the DfE."
+        };
+        DfEPortal.Errors.ShowInputError(errorObj.identifier, "file", errorObj.errorMessage);
+        DfEPortal.Errors.ShowErrorSummary();
+        DfEPortal.Errors.AddErrorSummaryDetail(errorObj.identifier, errorObj.errorMessage);
+        reject();
+        return;
+      }
+
+      const fileDetailsPromises = Array.from(files).map(file => {
+        return new Promise((fileResolve, fileReject) => {
+          const fileName = file.name;
+          const mimeType = file.type;
+          const fileSize = file.size;
+          const filenameExtension = fileName.slice((fileName.lastIndexOf(".") - 1 >>> 0) + 2);
+
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+
+          reader.onload = function(e) {
+            const documentbodyContents = e.target.result;
+            const base64Content = documentbodyContents.substring(documentbodyContents.indexOf(',') + 1);
+            fileResolve({
+                fileName: fileName,
+                mimeType: mimeType,
+                fileSize: fileSize,
+                fileExtension: filenameExtension,
+                fileContent: base64Content
+            });
+          };
+
+          reader.onerror = function() {
+            const errorObj = {
+              identifier: input,
+              errorMessage: `There has been an unexpected error reading your file "${fileName}". Please try again.`
+              };
+              fileReject(errorObj);
+          };
+        });
+      });
+
+      Promise.all(fileDetailsPromises)
+      .then(fileDetails => {
+          resolve(fileDetails);
+      })
+      .catch(error => {
+          reject(error);
+      });
+    });
   },
 
   DisableButton: function (btnId) {
@@ -339,95 +422,114 @@ DfEPortal.ValidationHelper = {
   },
 
   NullCheck: function (input, type, friendlyName, required) {
-    if (!required) {
-      return { identifier: input, value: true, errorMessage: null };
-    }
+    try {
+      if (!required) {
+        return { identifier: input, value: true, errorMessage: null };
+      }
 
-    const $input = $(`#${input}`);
-    const inputName = `input[name='${input}']`;
+      const $input = $(`#${input}`);
+      const inputName = `input[name='${input}']`;
 
-    if (type === this.InputTypes.Radio || type === this.InputTypes.Checkbox) {
-      const checked = $(inputName).is(':checked');
-      return {
-        identifier: input,
-        value: checked,
-        errorMessage: checked ? null : `Select ${friendlyName}`
-      };
-    } else if (type === this.InputTypes.Select) {
-      const selectedValue = $input.find('option:selected').val();
-      return {
-        identifier: input,
-        value: selectedValue !== "",
-        errorMessage: selectedValue !== "" ? null : `Choose ${friendlyName}`
-      };
-    } else if (type === this.InputTypes.Date) {
-      let dateObj = { day: "", month: "", year: "" };
-      const inputs = $(`input[name="${input}"]`);
-      inputs.each(function () {
-        const id = $(this).attr('id');
-        if (id.includes('-day')) {
-          dateObj.day = $(this).val();
-        } else if (id.includes('-month')) {
-          dateObj.month = $(this).val();
-        } else if (id.includes('-year')) {
-          dateObj.year = $(this).val();
+      if (type === this.InputTypes.Radio || type === this.InputTypes.Checkbox) {
+        const checked = $(inputName).is(':checked');
+        return {
+          identifier: input,
+          value: checked,
+          errorMessage: checked ? null : `Select ${friendlyName}`
+        };
+      } else if (type === this.InputTypes.Select) {
+        const selectedValue = $input.find('option:selected').val();
+        return {
+          identifier: input,
+          value: selectedValue !== "",
+          errorMessage: selectedValue !== "" ? null : `Choose ${friendlyName}`
+        };
+      } else if (type === this.InputTypes.Date) {
+        let dateObj = { day: "", month: "", year: "" };
+        const inputs = $(`input[name="${input}"]`);
+        inputs.each(function () {
+          const id = $(this).attr('id');
+          if (id.includes('-day')) {
+            dateObj.day = $(this).val();
+          } else if (id.includes('-month')) {
+            dateObj.month = $(this).val();
+          } else if (id.includes('-year')) {
+            dateObj.year = $(this).val();
+          }
+        });
+
+        const allNullValues = Object.values(dateObj).every(val => val === "");
+
+        if (allNullValues) {
+          const messageStr = `Enter ${friendlyName}`;
+          return {
+            identifier: input,
+            value: false,
+            errorMessage: messageStr
+          };
         }
-      });
 
-      const allNullValues = Object.values(dateObj).every(val => val === "");
+        const missingValues = [];
+        if (dateObj.day === "") {
+          missingValues.push("day");
+        }
+        if (dateObj.month === "") {
+          missingValues.push("month");
+        }
+        if (dateObj.year === "") {
+          missingValues.push("year");
+        }
 
-      if (allNullValues) {
-        const messageStr = `Enter ${friendlyName}`;
+        if (missingValues.length > 0) {
+          const missingFields = missingValues.join(" and ");
+          const messageStr = `${this.ToProperCase(friendlyName)} must contain a ${missingFields}`;
+          return {
+            identifier: input,
+            value: false,
+            errorMessage: messageStr
+          };
+        }
+
         return {
           identifier: input,
-          value: false,
-          errorMessage: messageStr
+          value: true,
+          errorMessage: null
         };
-      }
-
-      const missingValues = [];
-      if (dateObj.day === "") {
-        missingValues.push("day");
-      }
-      if (dateObj.month === "") {
-        missingValues.push("month");
-      }
-      if (dateObj.year === "") {
-        missingValues.push("year");
-      }
-
-      if (missingValues.length > 0) {
-        const missingFields = missingValues.join(" and ");
-        const messageStr = `${this.ToProperCase(friendlyName)} must contain a ${missingFields}`;
+      } else if (type === this.InputTypes.FileColumn) {
+        const fileLength = $input[0].files.length;
         return {
           identifier: input,
-          value: false,
-          errorMessage: messageStr
+          value: fileLength > 0 ? true : false,
+          errorMessage: fileLength > 0 ? null : `Select a file`
+        }
+      } else if (this.IsWhiteSpace($input.val()) === true) {
+        return {
+          identifier: input,
+          value: this.IsWhiteSpace($input.val()) === false ? true : false,
+          errorMessage: `Enter ${friendlyName}`
+        }
+      } else {
+        const inputValue = $input.val();
+        return {
+          identifier: input,
+          value: inputValue || !isWhiteSpace ? true : false,
+          errorMessage: inputValue || !isWhiteSpace ? null : `Enter ${friendlyName}`
         };
       }
-
+    }
+    catch(error) {
+      console.log(error);
       return {
         identifier: input,
-        value: true,
-        errorMessage: null
-      };
-    } else if (type === this.InputTypes.FileColumn) {
-      const fileLength = $input.files.length;
-      return {
-        identifier: input,
-        value: fileLength > 0 ? true : false,
-        errorMessage: fileLength > 0 ? null : `Select a file for ${friendlyName}`
-      }
-    } else {
-      const inputValue = $input.val();
-      return {
-        identifier: input,
-        value: inputValue ? true : false,
-        errorMessage: inputValue ? null : `Enter ${friendlyName}`
+        value: false,
+        errorMessage: `An unexpected error has occured. Please try again. If the problem continues contact the DfE.`
       };
     }
   },
 
+  IsWhiteSpace: function (input) {
+    return /^\s*$/.test(input);
+  },
 
   ValidateDateInputs: function (input, friendlyName) {
     let dateObj = { day: "", month: "", year: "" };
@@ -614,7 +716,6 @@ DfEPortal.ValidationHelper = {
     }
   },
 
-
   IsWholeNumber: function (input, friendlyName) {
     const value = $(`#${input}`).val();
 
@@ -650,7 +751,6 @@ DfEPortal.ValidationHelper = {
       };
     }
   },
-
 
   IsEmail: function (input) {
     const inputLength = $(`#${input}`).val().length;
@@ -985,14 +1085,112 @@ DfEPortal.ValidationHelper = {
     }
   },
 
-  FileSizeCheck(input, friendlyName, maxFileSize) {
-    const file = $(`#${input}`).files[0];
-    const fileSize = file.size;
+  FileSizeCheck: function(input, maxFileSize) {
+    const $fileInput = $(`#${input}`);
+    const files = $fileInput[0].files;
+
+    const maxFileSizeInBytes = maxFileSize * 1024 * 1024; // Convert MB to bytes
+    let errorMessage = '';
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (file.size > maxFileSizeInBytes) {
+        errorMessage += this.ToProperCase(`The selected file "${file.name}" must be smaller than ${maxFileSize}MB`);
+      }
+    }
 
     return {
       identifier: input,
-      value: fileSize > maxFileSize ? false : true,
-      errorMessage: fileSize > maxFileSize ? this.ToProperCase(`${friendlyName} must be smaller than ${maxFileSize}MB`) : null
+      value: errorMessage === '',
+      errorMessage: errorMessage || null
+    };
+  },
+
+  FileLimitCheck: function(input, maxLimit) {
+    const $fileInput = $(`#${input}`);
+    const files = $fileInput[0].files; // Accessing the files from the DOM element
+    const filesLength = files.length;
+    
+    const errorMessage = maxLimit === 1
+      ? `You can only select up to ${maxLimit} file at the same time.`
+      : `You can only select up to ${maxLimit} files at the same time.`;
+
+    return {
+      identifier: input,
+      value: filesLength <= maxLimit,
+      errorMessage: filesLength > maxLimit ? errorMessage : null
+    };
+  },
+
+  ValidFileExtensionCheck: function(identifier, allowedExtensions) {
+    const files = $(`#${identifier}`)[0].files;
+    const invalidFiles = [];
+
+    Array.from(files).forEach(file => {
+      const fileName = file.name;
+      const fileExtension = fileName.slice((fileName.lastIndexOf(".") - 1 >>> 0) + 2).toLowerCase();
+      if (!allowedExtensions.includes(fileExtension)) {
+        invalidFiles.push(fileName);
+      }
+    });
+
+    // Construct the allowed extensions string
+    const allowedExtensionsStr = allowedExtensions.join(", ").replace(/, ([^,]*)$/, ' or $1');
+
+    return {
+      identifier: identifier,
+      value: invalidFiles.length === 0,
+      errorMessage: invalidFiles.length > 0 ? 
+        invalidFiles.map(file => `The selected file '${file}' must be a ${allowedExtensionsStr}.`).join("\n") : 
+        null
+    };
+  },
+
+  VirusCheck: async function(identifier, flowId) {
+    try {
+      const filesDataArray = await DfEPortal.GetFileContent(identifier);
+      
+      const virusCheckPromises = filesDataArray.map(fileData => {
+        let dataObj = {}
+        dataObj["fileContent"] = {
+          "file": {
+            "name": fileData.fileName,
+            "contentBytes": fileData.fileContent,
+          }     
+        };
+
+        const request = {};
+        request.eventData = JSON.stringify(dataObj);
+        return DfEPortal.WebApi.CallCloudFlow(flowId, request);
+      });
+
+      const results = await Promise.all(virusCheckPromises);
+
+      const failedFiles = results
+      .filter(result => !result.isFileClean || !result.scanSuccess)
+      .map((result, index) => filesDataArray[index].fileName);
+
+      if (failedFiles.length > 0) {
+        const errorMessage = failedFiles.map(fileName => `The file "${fileName}" contains a virus.`).join('\n');
+        return {
+          identifier: identifier,
+          value: false,
+          errorMessage: errorMessage
+        }
+      }
+
+      return {
+        identifier: identifier,
+        value: true,
+        errorMessage: null
+      };
+    } catch (error) {
+      console.error(error);
+      return {
+        identifier: identifier,
+        value: false,
+        errorMessage: "An error occurred. Please try again."
+      };
     }
   },
 
@@ -1056,7 +1254,7 @@ DfEPortal.Errors = {
         let describedBy = formGroup.find('textarea').attr("aria-describedby");
         describedBy = describedBy ? `${describedBy} ${errorContainerId}` : errorContainerId;
         formGroup.find('textarea').attr("aria-describedby", describedBy);
-      } else if (type === "text" || type === "tel" || type === "email" || type === "number" || type === "whole-number" || type === "decimal-number") {
+      } else if (type === "text" || type === "tel" || type === "email" || type === "number" || type === "whole-number" || type === "decimal-number" || type === "file") {
         if ($(`#${input}`).attr("type") == "search") {
           formGroup.find('.dfe-form-search__item-wrapper').before(errorContainer);
         } else {
@@ -1081,7 +1279,7 @@ DfEPortal.Errors = {
       $(`#${input} input`).addClass('govuk-input--error');
     } else if (type === "text-area") {
       $(`#${input}`).addClass('govuk-textarea--error');
-    } else if (type === "text" || type === "tel" || type === "email" || type === "number" || type === "whole-number" || type === "decimal-number") {
+    } else if (type === "text" || type === "tel" || type === "email" || type === "number" || type === "whole-number" || type === "decimal-number" || type === "file") {
       $(`#${input}`).addClass('govuk-input--error');
     }
   },
@@ -1157,7 +1355,6 @@ DfEPortal.Errors = {
       $(`#${input}`).removeClass('govuk-input--error');
     }
   },
-
 
   HideErrorSummary: function () {
     $('.govuk-error-summary').remove();
@@ -1399,8 +1596,12 @@ DfEPortal.WebApi = {
                   ? `/${objItem.targetEntity}(${checkedValue})`
                   : null;
 
+                const key = odataBindValue != null
+                  ? `${objItem.identifier}@odata.bind`
+                  : `${objItem.identifier}`
+
                 $.extend(data, {
-                  [`${objItem.identifier}@odata.bind`]: odataBindValue,
+                  [`${key}`]: odataBindValue,
                 });
               } else {
                 handleInternalError(`'targetEntity' is missing from the data object`);
@@ -1447,7 +1648,7 @@ DfEPortal.WebApi = {
                   [objItem.identifier]: value === "1" ? true : false,
                 });
               } else {
-                handleInternalError(`${objItem.targetType} targetType can only contain one selection`);
+                handleInternalError(`${objItem.targetType} targetType can only accept a single selection`);
               }
               break;
 
@@ -1457,13 +1658,25 @@ DfEPortal.WebApi = {
                   [objItem.identifier]: parseInt($(`input[name='${objItem.identifier}']:checked`).val()),
                 });
               } else {
-                let options = [];
-                $.each($(`input[name='${objItem.identifier}']:checked`), (index, input) => {
-                  options.push(parseInt($(input).val()));
+                handleInternalError(`${objItem.targetType} targetType can only accept a single selection.`);
+              }
+              break;
+
+            case "multi-select":
+              if (length === 1) {
+                $.extend(data, {
+                  [objItem.identifier]: String($(`input[name='${objItem.identifier}']:checked`).val()),
                 });
+              } else if (length > 1) {
+                let options = $(`input[name='${objItem.identifier}']:checked`).map((index, input) => {
+                  return String($(input).val());
+                }).get().join(',');
+
                 $.extend(data, {
                   [objItem.identifier]: options,
                 });
+              } else {
+                handleInternalError(`${objItem.targetType} targetType error.`);
               }
               break;
 
@@ -1502,11 +1715,17 @@ DfEPortal.WebApi = {
             case "lookup":
               if (objItem.targetEntity !== null) {
                 const selectedValue = $(`#${objItem.identifier} option:selected`).val();
+
                 const odataBindValue = selectedValue
                   ? `/${objItem.targetEntity}(${selectedValue})`
                   : null;
+
+                const key = odataBindValue != null
+                  ? `${objItem.identifier}@odata.bind`
+                  : `${objItem.identifier}`
+                  
                 $.extend(data, {
-                  [`${objItem.identifier}@odata.bind`]: odataBindValue,
+                  [`${key}`]: odataBindValue,
                 });
               } else {
                 handleInternalError(`'targetEntity' is missing from the data object`);
@@ -1568,7 +1787,6 @@ DfEPortal.WebApi = {
     });
   },
 
-
   Update: function (id, entityName, dataObj) {
     return new Promise((resolve, reject) => {
       webapi.safeAjax({
@@ -1581,7 +1799,13 @@ DfEPortal.WebApi = {
         },
         error: function (res, status, error) {
           DfEPortal.Errors.ShowWebApiError();
-          reject(error);
+          const errorObj = {
+            status: xhr.status,             
+            statusText: xhr.statusText,     
+            responseText: xhr.responseText,
+            error: error                    
+          };
+          reject(errorObj);
         },
       });
     });
@@ -1599,7 +1823,13 @@ DfEPortal.WebApi = {
         },
         error: function (res, status, error) {
           DfEPortal.Errors.ShowWebApiError();
-          reject(error);
+          const errorObj = {
+            status: xhr.status,             
+            statusText: xhr.statusText,     
+            responseText: xhr.responseText,
+            error: error                    
+          };
+          reject(errorObj);
         },
       });
     });
@@ -1616,7 +1846,13 @@ DfEPortal.WebApi = {
         },
         error: function (res, status, error) {
           DfEPortal.Errors.ShowWebApiError();
-          reject(error);
+          const errorObj = {
+            status: xhr.status,             
+            statusText: xhr.statusText,     
+            responseText: xhr.responseText,
+            error: error                    
+          };
+          reject(errorObj);
         },
       });
     });
@@ -1633,7 +1869,13 @@ DfEPortal.WebApi = {
         },
         error: function (res, status, error) {
           DfEPortal.Errors.ShowWebApiError();
-          reject(error);
+          const errorObj = {
+            status: xhr.status,             
+            statusText: xhr.statusText,     
+            responseText: xhr.responseText,
+            error: error                    
+          };
+          reject(errorObj);
         },
       });
     });
@@ -1651,12 +1893,52 @@ DfEPortal.WebApi = {
         },
         error: function (res, status, error) {
           DfEPortal.Errors.ShowWebApiError();
-          reject(error);
+          const errorObj = {
+            status: xhr.status,             
+            statusText: xhr.statusText,     
+            responseText: xhr.responseText,
+            error: error                    
+          };
+          reject(errorObj);
         },
       });
     });
   },
 
+  CallCloudFlow: function(flowApiId, dataObj) {
+    return new Promise((resolve, reject) => {
+      shell.ajaxSafePost({
+        type: "POST",
+        url: `/_api/cloudflow/v1.0/trigger/${flowApiId}`,
+        contentType: "application/json",
+        data: JSON.stringify(dataObj),
+        success: function(res, status, xhr) {
+          try {
+            const result = JSON.parse(res);
+            const isFileClean = result["cleanfile"];
+            const scanSuccess = result["scansuccess"];
+            resolve({ isFileClean, scanSuccess });
+          } catch (error) {
+            reject({
+              status: xhr.status,
+              statusText: xhr.statusText,
+              responseText: xhr.responseText,
+              error: 'Error parsing the response'
+            });
+          }
+        },
+        error: function(xhr, status, error) {
+          const errorObj = {
+            status: xhr.status,
+            statusText: xhr.statusText,
+            responseText: xhr.responseText,
+            error: error
+          };
+          reject(errorObj);
+        },
+      });
+    });
+  },
 
   UploadFile: function (inputName, entityName, entityId) {
     try {
