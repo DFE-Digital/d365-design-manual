@@ -162,7 +162,7 @@ export default {
   "powerpages/patterns/crm-helper-framework": {
     title: "Validating and submitting data to CRM",
     url: "/powerpages/patterns/crm-helper-framework/",
-    description: "Use the CRM Helper Framework to validate user input and submit data to Dynamics CRM."
+    description: "Use the CRM Helper Framework to validate user input and submit data to CRM."
   },
   "crm": {
     title: "CRM",

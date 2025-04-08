@@ -1549,7 +1549,7 @@ p code {
   padding: 1px 3px;
   color: #d13118;
   background-color: govuk-colour("light-grey");
-  @include govuk-font-size($size: 16);
+  @include govuk-font-size($size: 19);
   @include govuk-media-query($from: tablet) {
     padding: 2px 4px;
   }
