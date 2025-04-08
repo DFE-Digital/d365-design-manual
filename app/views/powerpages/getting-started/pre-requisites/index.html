@@ -1,0 +1,82 @@
+{% set pageData = pages['powerpages/getting-started/pre-requisites'] %}
+{% set showHeaderSection = true %}
+{% set showSubNav = true %}
+{% set dateUpdated = "April 2025" %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+<h2 class="govuk-heading-m">{{ pageData.description | replace(".","") }}</h2>
+
+<p class="govuk-body">Complete the following pre-requisite steps to ensure your environment is correctly configured. These steps prepare the Dynamics 365 environment, install necessary components, and provide a clean slate for your website.</p>
+
+<h2 class="govuk-heading-m">Remove JavaScript from blocked extensions in Power Platform Admin settings</h2>
+
+<p class="govuk-body">
+  JavaScript files (e.g. <code>.js</code>) may be blocked by default in your Dynamics 365 environment, which can prevent custom scripts from running on your Power Pages website. You must remove JavaScript from the list of blocked extensions to allow your custom website to function correctly.
+</p>
+<ol class="govuk-list govuk-list--number">
+  <li>Sign in to the <a href="https://admin.powerplatform.microsoft.com" class="govuk-link">Power Platform Admin Center</a>.</li>
+  <li>Navigate to <strong>Environments</strong>, then select the Dynamics 365 environment where your Power Pages website will be hosted.</li>
+  <li>Go to <strong>Settings</strong> > <strong>Product</strong> > <strong>Privacy + Security</strong>.</li>
+  <li>Under <strong>File Extensions</strong>, locate the list of blocked file extensions.</li>
+  <li>Find <code>.js</code> in the list and remove it. If it's not listed, no action is needed.</li>
+  <li>Select <strong>Save</strong> to apply the changes.</li>
+</ol>
+<div class="govuk-inset-text">
+  Ensure you have the System Administrator security role to modify these settings.
+</div>
+
+<h2 class="govuk-heading-m">
+  Install a Customer Service Portal from Power Pages Templates
+</h2>
+<p class="govuk-body">
+  Installing a Customer Service Portal template in Power Pages ensures that all necessary solutions, tables, and fields are installed in your Dynamics 365 environment. This provides a foundation for your custom portal.
+</p>
+<ol class="govuk-list govuk-list--number">
+  <li>Go to <a href="https://make.powerpages.microsoft.com" class="govuk-link">Power Pages</a>.</li>
+  <li>Select the correct Dynamics 365 environment from the environment selector in the top right.</li>
+  <li>Click <strong>Start with a template</strong>.</li>
+  <li>Choose the <strong>Customer Self Service Portal</strong> template.</li>
+  <li>Leave the default values, or enter a name for the portal (e.g. "Customer Service Portal") and a URL (e.g. <code>customer-service-portal.powerappsportals.com</code>).</li>
+  <li>Click <strong>Done</strong> to provision the website. This may take a while to complete.</li>
+  <li>Once created, verify that the website is listed under <strong>Power Pages sites</strong> in the Power Platform Admin Center.</li>
+</ol>
+<div class="govuk-inset-text">
+  The Customer Self Service Portal template installs solutions and related tables. These are required for your custom portal. Alternatively, you can choose <strong>Start from blank</strong> in step 3 to install a basic website, however this approach has not been tested with the custom setup required to ensure your Power Pages website is GDS compliant.
+</div>
+
+<h2 class="govuk-heading-m">
+  Delete pre-installed records to ensure an empty Portal Management model-driven app
+</h2>
+<p class="govuk-body">
+  After installing the Customer Self Service Portal, the portal will include pre-installed content (e.g. web pages, entity lists, forms) in the Portal Management model-driven app. To start with a completely custom website, you must delete all the available records.
+</p>
+<ol class="govuk-list govuk-list--number">
+  <li>Go to <a href="https://make.powerpages.microsoft.com" class="govuk-link">Power Pages</a>.</li>
+  <li>Select the correct Dynamics 365 environment from the environment selector in the top right.</li>
+  <li>Click <strong>Edit</strong> against your Customer Self Service Portal website, then select <strong>Portal Mangement</strong> from the left-hand navigation bar (you may need to select the ellipsis).</li>
+  <li>In the Portal Management app, go to <strong>Websites</strong> and locate the website record for your portal (e.g. “Customer Service Portal”).</li>
+  <li>Delete the website record. This will remove all associated metadata (e.g., web pages, entity lists, forms), leaving the model-driven app blank.</li>
+  <li>The previous step does not always ensure a complete deletion of records. Verify that no website records or content remain by checking the other record types in the Portal Management app.</li>
+  <li>Return to Power Pages and delete the website associated with the Customer Self Service Portal.</li>
+</ol>
+<div class="govuk-inset-text">
+  Do not delete the Portal Management app itself, as it is required for managing your website.
+</div>
+
+<!-- Next Steps -->
+<h2 class="govuk-heading-m">
+  Next steps
+</h2>
+<p class="govuk-body">
+  Once these pre-requisites are complete, you can <a class="govuk-link" href="{{ pages['powerpages/getting-started/setup-your-custom-website'].url }}">set up your custom website</a>.
+</p>
+<p class="govuk-body">
+  For more detailed guidance, refer to the <a href="https://learn.microsoft.com/en-us/power-pages/" class="govuk-link">Power Pages documentation</a> or the <a href="https://learn.microsoft.com/en-us/dynamics365/" class="govuk-link">Dynamics 365 documentation</a>.
+</p>
+
+{% endblock %}

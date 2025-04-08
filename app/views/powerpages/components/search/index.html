@@ -1,0 +1,118 @@
+{% set pageData = pages['powerpages/components/search'] %}
+{% set showHeaderSection = true %}
+{% set showSubNav = true %}
+{% set dateUpdated = "July 2023" %}
+
+{% from 'includes/components/_search.njk' import searchHeaderExample, searchNoHintExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block content %}
+<div class="dfe-contents-container">
+  <nav class="dfe-contents-list">
+    <h2 class="dfe-contents-list__title">Contents</h2>
+    <ol class="dfe-contents-list__list">
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#when-to-use-this-component">When to use this component</a>
+      </li>          
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#when-to-not-use-this-component">When to not use this component</a>
+      </li>
+      <li class="dfe-contents-list__list-item dfe-contents-list__list-item--parent">
+        <a class="dfe-contents-list__link govuk-link" href="#how-it-works">How it works</a>
+        <ol class="dfe-contents-list__nested-list">
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#html-copy">Copy the HTML example</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#using-hint-text">Using hint text</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#min-max-length">Minimum and maximum length</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#input-size">Use appropriately-sized inputs</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#display-search-results">Display your search results</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#error-messages">Error messages</a>
+          </li>
+        </ol>  
+      </li>  
+    </ol>
+  </nav>
+</div>
+
+<h2 class="govuk-heading-l" id="when-to-use-this-component">When to use this component</h2>
+<p class="govuk-body">{{ pageData.description }}</p>
+
+<h2 class="govuk-heading-l" id="when-to-not-use-this-component">When to not use this component</h2>
+<p class="govuk-body">Do not use the search component as part of a table. In this case, you should use the searchable table component instead.</p>
+
+<h2 class="govuk-heading-l" id="how-it-works">How it works</h2>
+<p class="govuk-body">Always use the search component as the only component on a page. The search component is often accompanied by a radio component to display the 
+  search results, which requires the user to choose an option. If the search and related components are not the only compononents on the page it is more likely that 
+  users will not realise they've missed a question.</p>
+<p class="govuk-body">Set the contents of the <code>&lt;label&gt;</code> as the page heading. This is good practice as it 
+  means that users of screen readers will only hear the contents once.</p>
+<p class="govuk-body">You will need to include an empty <code>&#123;% title %&#125;</code> block in your web template to override the default page header.</p> 
+
+<h3 class="govuk-heading-m" id="html-copy">Copy the HTML example</h3>
+<p class="govuk-body">Choose the appropriate example from this page and copy the HTML directly into your web template. <a class="govuk-link" href="../layouts">Read about layouts</a>
+  for more information about how to structure your web template.</p>
+<p class="govuk-body">If you need to submit the search value to a field in CRM, replace the highlighted <code>search</code> text in the example 
+  HTML with the target field schema name. <strong>Do not</strong> remove any prepended or appended text to the schema name. For example, if the id attribute is 
+  displayed as <code>search-error</code> in the example, the value should still contain <code>-error</code> after the search text has been replaced (<code>dfe_field-error</code>).</p>
+<p class="govuk-body">This step is essential for the custom portal helper framework to validate and submit data to CRM. <a class="govuk-link" href="">Read about data validation and submitting data to CRM</a>.</p>
+<p class="govuk-body">If you do not need to submit the search value to a field in CRM, you can copy the HTML example as it is displayed.</p>
+
+{{ searchHeaderExample() }}
+
+<h3 class="govuk-heading-m" id="using-hint-text">Using hint text</h3>
+<p class="govuk-body">Use hint text for help that's relevant to the majority of users, like how their information will be used, or where to find it. The hint text block is included in the previous examples on this page.</p>
+<p class="govuk-body">Hint text is not mandatory, and can be removed if it is not required.</p>
+
+{{ searchNoHintExample() }}
+
+<h4 class="govuk-heading-s">When not to use hint text</h4>
+<p class="govuk-body">Do not use long paragraphs and lists in hint text. Screen readers read out the entire text when users interact with the form element. 
+  This could frustrate users if the text is long.</p>
+
+<h4 class="govuk-heading-s">Avoid links in hint text</h4>
+<p class="govuk-body">Do not include links within hint text. While screen readers will read out the link text when describing the field, they will not tell users that 
+  the text is a link.</p>
+
+<h3 class="govuk-heading-m" id="min-max-length">Minimum and maximum length</h3>
+<p class="govuk-body">Use custom <code>minchar</code> and <code>maxchar</code> attributes to set a minimum or maximum length for your search input. For example, you may wish to use <code>input minchar="6" maxchar="6"</code> 
+  when asking for a school's URN. This will ensure the user can only submit a search query of 6 characters in length.</p>
+<p class="govuk-body">You can use the <code>minchar</code> attribute together with the <code>maxchar</code> attribute to create a range of allowed lengths, as described in the example above, or as individual attributes.</p>
+
+<h3 class="govuk-heading-m" id="input-size">Use appropriately-sized inputs</h3>
+<p class="govuk-body">Help users understand what they should enter by making search inputs the right size for the content they're intended for.</p>
+<p class="govuk-body">By default, the examples on this page contain the input class <code>govuk-!-width-two-thirds</code>. Removing this class makes the width of search inputs fluid and they will fit the full width of the container they are placed into.</p>
+<p class="govuk-body">If you want to change the search input size, you can either use a fixed width input, or use the width override classes.</p>
+<p class="govuk-body"><a class="govuk-link" href="https://design-system.service.gov.uk/components/text-input/#use-appropriately-sized-text-inputs" target="_blank">Read more about sizing your inputs and see examples (opens in a new tab)</a> on the GOV.UK Design System.</p>
+
+<h3 class="govuk-heading-m" id="display-search-results">Display your search results</h3>
+<p class="govuk-body">Your search results should be displayed in an accompanying radio component unless your user research shows there is need for an alternative approach. 
+<p class="govuk-body"><a class="govuk-link" href="#">Read about how to display search results using a radio component</a>.</p>
+
+<h3 class="govuk-heading-m" id="error-messages">Error messages</h3>
+<p class="govuk-body">An error message is shown next to the field and in the error summary when there is a validation error. The HTML content for these errors is already 
+  included in the component examples and in the base portal web template set up, therefore you do not need to add any additional error containers to your page.</p>
+<p class="govuk-body">The <a class="govuk-link" href="#">portal helper framework</a> validation process automatically handles error messages for specific error states.</p>
+<p class="govuk-body govuk-!-font-weight-bold">If nothing is entered</p>
+<p class="govuk-body">'Enter [whatever it is]'.<br><br>For example, 'Enter your URN'.</p>
+<p class="govuk-body govuk-!-font-weight-bold">If the input is too short</p>
+<p class="govuk-body">'[whatever it is] must be [number] characters or more'.<br><br>For example, 'Your reference number must be 8 characters or more'.</p>
+<p class="govuk-body govuk-!-font-weight-bold">If the input is too long</p>
+<p class="govuk-body">'[whatever it is] must be [number] characters or less'.<br><br>For example, 'Your reference must be 8 characters or less'.</p>
+<p class="govuk-body govuk-!-font-weight-bold">If the input has both a minimum and maximum length</p>
+<p class="govuk-body">'[whatever it is] must be between [number] and [number] characters'.<br><br>For example, 'Your reference number must be between 6 and 8 characters'.</p>
+<p class="govuk-body govuk-!-font-weight-bold">If the input has equal value minimum and maximum lengths</p>
+<p class="govuk-body">'[whatever it is] must be [number] characters'.<br><br>For example, 'Your URN must be 6 characters'.</p>
+<p class="govuk-body">Occasionally you may wish to use error messages outside of the validation process. You can <a class="govuk-link" href="">read about the functions available within the portal helper framework</a> to help you with this.</p>
+
+{% endblock %}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template ">
+
+<head>
+    <meta charset="utf-8">
+    <title>{% if seoPageName %}{{seoPageName}}{% elseif pageData.title %}{{pageData.title}}{%endif%} - Dynamics 365 Design Manual - Department for Education</title>
+    <meta name="description" content="{% if seoPageDescription %}{{seoPageDescription}}{% elseif pageName %}{{pageDescription}}{%endif%}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0b0c0c">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="mask-icon" href="/assets/images/govuk-mask-icon.svg" color="#0b0c0c">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/govuk-icon-180.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/assets/images/govuk-icon-192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="/assets/images/govuk-icon-512.png">
+    <link href="/assets/css/app.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"/>
+    {% block head %}{% endblock %}
+</head>
+
+<body class="govuk-template__body ">
+    <script>
+      document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
+    </script>
+
+    {% include 'includes/_header.html' %}
+
+    {% if showHeaderSection %}
+      <section style="background-color:#f3f2f1;" class="govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+        <div class="govuk-width-container">
+          <div class="govuk-grid-row ">
+            <div class="govuk-grid-column-two-thirds">
+              <h1 class="govuk-heading-xl  govuk-!-margin-top-5 govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+              <p class="govuk-body-l">{{ pageData.description }}</p>
+              {% if showSubNav %}
+                {% include "includes/_sub-nav.html" %}
+              {% endif %}
+              {% if dateUpdated %}
+                <p class="govuk-body-s govuk-!-margin-top-4 govuk-!-margin-bottom-0">
+                  <span class="govuk-!-font-weight-bold">Last updated: </span>
+                  {{ dateUpdated }}
+                </p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </section>
+    {% endif %}
+
+    <!-- Anchor for scrolling -->
+    <a id="top"></a>
+
+    <!-- Back to top link -->
+    <a href="#top" id="back-to-top" class="govuk-link" style="display: none; position: fixed; bottom: 2rem; right: 2rem; z-index: 1000; background: white; padding: 0.5rem 1rem; border: 1px solid #b1b4b6; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-decoration: none;" aria-label="Back to top of page">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="vertical-align: middle; margin-right: 0.3em;" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+        <path fill-rule="evenodd" d="M8 3.293l4.646 4.647-.708.707L8 4.707 4.061 8.647l-.708-.707L8 3.293z"/>
+      </svg>
+      Back to top
+    </a>
+
+    {% block main %}{% endblock %}
+
+    {% include 'includes/_footer.html'%}
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script type="module" src="/assets/js/govuk-frontend.min.js"></script>
+    <script src="/assets/js/dfefrontend.min.js"></script>
+    <script type="module" src="/assets/js/dfe-custom-components.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script type="module">
+      import { initAll } from "/assets/js/govuk-frontend.min.js";
+      import { DfEComponents } from "/assets/js/dfe-custom-components.js";
+      initAll()
+      DfEComponents.initAll()
+      hljs.highlightAll();
+    </script>
+
+
+
+    <script>
+      window.addEventListener('scroll', function () {
+        const link = document.getElementById('back-to-top');
+        if (window.scrollY > 800) {
+          link.style.display = 'inline-block';
+        } else {
+          link.style.display = 'none';
+        }
+      });
+    </script>
+
+</body>
+
+</html>

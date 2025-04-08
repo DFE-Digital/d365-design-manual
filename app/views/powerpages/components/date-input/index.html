@@ -1,0 +1,115 @@
+{% set pageData = pages['powerpages/components/date-input'] %}
+{% set showHeaderSection = true %}
+{% set showSubNav = true %}
+{% set dateUpdated = "April 2025" %}
+
+{% from 'includes/components/_date-input.njk' import dateHeaderExample, dateStandardExample, dateAutocompleteExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block content %}
+<div class="dfe-contents-container">
+  <nav class="dfe-contents-list">
+    <h2 class="dfe-contents-list__title">Contents</h2>
+    <ol class="dfe-contents-list__list">
+      <li class="dfe-contents-list__list-item">
+        <a class="dfe-contents-list__link govuk-link" href="#when-to-use-this-component">When to use this component</a>
+      </li>          
+      <li class="dfe-contents-list__list-item">
+        <a class="dfe-contents-list__link govuk-link" href="#when-to-not-use-this-component">When to not use this component</a>
+      </li>
+      <li class="dfe-contents-list__list-item">
+        <a class="dfe-contents-list__link govuk-link" href="#how-it-works">How it works</a>
+      </li>
+      <li class="dfe-contents-list__list-item">
+        <a class="dfe-contents-list__link govuk-link" href="#html-examples">HTML examples</a>
+        <ol class="dfe-contents-list__nested-list">
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#single-question">For single question pages</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#multiple-questions">For multiple question pages</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link govuk-link" href="#dob">Asking for a date of birth</a>
+          </li>
+        </ol>
+      </li>
+      <li class="dfe-contents-list__list-item">
+        <a class="dfe-contents-list__link govuk-link" href="#error-messages">Error messages</a>
+      </li> 
+    </ol>
+  </nav>
+</div>
+
+<h2 class="govuk-heading-m" id="when-to-use-this-component">When to use this component</h2>
+<p class="govuk-body">{{ pageData.description }}</p>
+
+<h2 class="govuk-heading-m" id="when-to-not-use-this-component">When to not use this component</h2>
+<p class="govuk-body">Avoid using the date input component if users are unlikely to know the precise date of the event in question.</p>
+
+<h2 class="govuk-heading-m" id="how-it-works">How it works</h2>
+<p class="govuk-body">The date input component comprises three fields allowing users to enter the day, month, and year individually.</p>
+<p class="govuk-body">
+  Always include hint text within date components to inform users about the required input format. 
+  Additional hint text can be added as needed. 
+  Ensure that any example dates provided in hint text are relevant to the specific question being asked.
+</p>
+
+<h2 class="govuk-heading-m" id="html-examples">HTML examples</h2>
+<p class="govuk-body">
+  Select the appropriate example from this page and directly integrate the HTML into your web template. 
+  You can customise these examples to align with your specific requirements, as indicated below.
+  Refer to the <a class="govuk-link" href="../layouts">layouts</a> section for further guidance on structuring your web template.
+</p>
+<p class="govuk-body">
+  If the component requires submission to a CRM field, ensure to replace the placeholder <code>schema-name</code> text in the HTML example with the actual target field schema name. 
+  Retain any prefixed or suffixed text related to the schema name. 
+  For instance, if the id attribute reads <code>schema-name-hint</code> in the example, ensure the replacement maintains the <code>-hint</code> suffix (e.g. <code>dfe_field-hint</code>).
+</p>
+<p class="govuk-body">
+  This step is crucial for allowing the <a class="govuk-link" href="">CRM helper framework</a> to validate and submit data to CRM.
+</p>
+
+<h3 class="govuk-heading-s" id="single-question">For single question pages</h3>
+<p class="govuk-body">
+  If presenting only one question on the page, designate the contents of the <code>legend</code> as the page heading. 
+  This practice ensures users of screen readers hear the contents only once.
+</p>
+<p class="govuk-body">You will need to include an empty <code>&#123;% title %&#125;</code> block in your web template to remove the default page header and avoid duplication.</p>
+
+{{ dateHeaderExample() }}
+
+<h3 class="govuk-heading-s" id="multiple-questions">For multiple question pages</h3>
+<p class="govuk-body">If presenting more than one question on the page, do not set the contents of the <code>&lt;legend&gt;</code> as the page heading.</p>
+
+{{ dateStandardExample() }}
+
+<h3 class="govuk-heading-s" id="dob">Asking for a date of birth</h3>
+<p class="govuk-body">
+  When collecting a date of birth, apply the autocomplete attribute to the date input component. 
+  This enables browsers to autofill the information if previously entered by the user.
+</p>
+<p class="govuk-body">
+  Set the <code>autocomplete</code> attribute on the day, month, and year inputs to <code>bday-day</code>, <code>bday-month</code> and <code>bday-year</code> respectively.
+</p>
+
+{{ dateAutocompleteExample() }}
+
+<h2 class="govuk-heading-m" id="error-messages">Error messages</h2>
+<p class="govuk-body">
+  An error message is displayed next to the field and in the error summary when a validation error occurs. 
+  The CRM helper framework automatically handles error messages for specific error states, therefore you do not need to add any additional error containers to your HTML. 
+  <a class="govuk-link" href="#">Refer to the CRM helper framework guide</a> to understand how to validate your front-end data.
+</p>
+<p class="govuk-body">Ensure that your component HTML and your <a class="govuk-link" href="#">inputs validation JavaScript object</a> are structured correctly for your component type.</p>
+<p class="govuk-body">
+  Occasionally you may wish to employ error messages outside of the validation process. 
+  You can <a class="govuk-link" href="">read about the functions available within the CRM helper framework</a> to assist you with this.
+</p>
+
+<p class="govuk-body">If you would like any additional advice or guidance with using these examples on Power Pages, please contact the Solutions Delivery Team.</p>
+
+<script type="text/javascript" src="/assets/js/update-html-example.js"></script>
+
+{% endblock %}

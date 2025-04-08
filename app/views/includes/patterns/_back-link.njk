@@ -1,0 +1,74 @@
+{% set backLinkBasicExample %}
+{% raw %}
+{% extends 'DfE/Layouts/2ColumnWideLeft' %}
+
+{% block breadcrumbs %}
+  <a href="{{ sitemarkers['PREVIOUS_PAGE_SITEMARKER_NAME'].url }}" class="govuk-back-link">Back</a>
+{% endblock %}
+
+{% block title %}{% endblock %}   
+
+{% block main %}
+  {% unless user %}
+    <script>
+      window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
+    </script>
+  {% endunless %}
+
+  <div class="govuk-form-group">
+    <h1 class="govuk-label-wrapper">
+      <label class="govuk-label govuk-label--l" for="schema-name">
+        {{ page.title }} 
+      </label>
+    </h1>
+    <input class="govuk-input" id="schema-name" name="schema-name" type="text">
+  </div>
+{% endblock %}
+{% endraw %}
+{% endset %}
+
+{% set backLinkEnhancedExample %}
+{% raw %}
+{% extends 'DfE/Layouts/2ColumnWideLeft' %}
+
+{% block breadcrumbs %}
+  {% unless params.id %}
+    <a href="{{ sitemarkers['PREVIOUS_PAGE_SITEMARKER_NAME'].url }}" class="govuk-back-link">Back</a>
+  {% endunless %}
+  <a href="{{ sitemarkers['PREVIOUS_PAGE_SITEMARKER_NAME'].url | add_query: 'id', params.id }}" class="govuk-back-link">Back</a>
+{% endblock %}
+
+{% block title %}{% endblock %}   
+
+{% block main %}
+  {% unless user %}
+    <script>
+      window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
+    </script>
+  {% endunless %}
+
+  {% unless params.id %}
+    <script>
+      window.location.href="{{ sitemarkers['DfE/Error/RecordNotFound'].url }}"
+    </script>
+  {% endunless %}
+
+  <div class="govuk-form-group">
+    <h1 class="govuk-label-wrapper">
+      <label class="govuk-label govuk-label--l" for="schema-name">
+        {{ page.title }} 
+      </label>
+    </h1>
+    <input class="govuk-input" id="schema-name" name="schema-name" type="text">
+  </div>
+{% endblock %}
+{% endraw %}
+{% endset %}
+
+{% macro patternsBackLinkBasicExample () %}
+<pre><code>{{ backLinkBasicExample }}</code></pre>
+{% endmacro %}
+
+{% macro patternsBackLinkEnhancedExample () %}
+<pre><code>{{ backLinkEnhancedExample }}</code></pre>
+{% endmacro %}

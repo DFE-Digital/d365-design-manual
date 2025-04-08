@@ -1,0 +1,32 @@
+{% set powerpages = [
+  { title: "Overview", url: pages['powerpages'].url },
+  pages['powerpages/getting-started'],
+  pages['powerpages/styles'],
+  pages['powerpages/components'],
+  pages['powerpages/patterns']
+] %}
+
+{% set activeUrl = pages['powerpages'].url %}
+{% if currentPath %}
+  {% if currentPath | contains(pages['powerpages/getting-started'].url) %}
+    {% set activeUrl = pages['powerpages/getting-started'].url %}
+  {% elseif currentPath | contains(pages['powerpages/styles'].url) %}
+    {% set activeUrl = pages['powerpages/styles'].url %}
+  {% elseif currentPath | contains(pages['powerpages/components'].url) %}
+    {% set activeUrl = pages['powerpages/components'].url %}
+  {% elseif currentPath | contains(pages['powerpages/patterns'].url) %}
+    {% set activeUrl = pages['powerpages/patterns'].url %}
+  {% endif %}
+{% endif %}
+
+<nav class="app-sub-navigation" aria-label="Portals menu">
+  <ul class="app-sub-navigation__list">
+    {% for page in powerpages %}
+      <li class="app-sub-navigation__item">
+        <a class="app-sub-navigation__link" href="{{ page.url }}" {% if page.url == activeUrl %}aria-current="page"{% endif %}>
+          {{ page.title }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</nav>

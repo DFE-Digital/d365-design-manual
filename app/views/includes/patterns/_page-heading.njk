@@ -1,0 +1,61 @@
+{% set headingSingleExample %}
+{% raw %}
+{% extends 'DfE/Layouts/2ColumnWideLeft' %}
+
+{% block title %}{% endblock %}
+
+{% block main %}
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <h1 class="govuk-fieldset__heading">
+          {{ page.title }}
+        </h1>
+      </legend>
+      <div class="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="schema-name" name="schema-name" type="radio" value="yes">
+          <label class="govuk-label govuk-radios__label" for="schema-name">Yes</label>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="schema-name-2" name="schema-name" type="radio" value="no">
+          <label class="govuk-label govuk-radios__label" for="schema-name-2">No</label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+{% endblock %}
+{% endraw %}
+{% endset %}
+
+{% set headingMultipleExample %}
+{% raw %}
+{% extends 'DfE/Layouts/2ColumnWideLeft' %}
+
+## Default page heading will display here instead (e.g. 'Personal information')
+ 
+{% block main %}
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="schema-name">
+      What is your first name?
+    </label>
+    <input class="govuk-input" id="schema-name" name="schema-name" type="text">
+  </div>
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="schema-name">
+      What is your last name?
+    </label>
+    <input class="govuk-input" id="schema-name" name="schema-name" type="text">
+  </div>
+{% endblock %}
+{% endraw %}
+{% endset %}
+
+{% macro patternsHeadingSingleExample () %}
+<pre><code>{{ headingSingleExample }}</code></pre>
+{% endmacro %}
+
+{% macro patternsHeadingMultipleExample () %}
+<pre><code>{{ headingMultipleExample }}</code></pre>
+{% endmacro %}

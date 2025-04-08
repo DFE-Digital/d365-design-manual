@@ -5,15 +5,14 @@
 {% block title %}{% endblock %}   
 
 {% block main %}
-  {% if user %}
-
-    ## HTML content goes here ##
-
-  {% else %}
+  {% unless user %}
     <script>
       window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
     </script>
-  {% endif %}
+  {% endunless %}
+
+  ## HTML content goes here ##
+
 {% endblock %}
 {% endverbatim %}
 {% endset %}
@@ -23,15 +22,14 @@
 {% extends 'DfE/Layouts/2ColumnWideLeft' %} 
 
 {% block main %}
-  {% if user %}
-
-    ## HTML content goes here ##
-
-  {% else %}
+  {% unless user %}
     <script>
       window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
     </script>
-  {% endif %}
+  {% endunless %}
+
+  ## HTML content goes here ##
+
 {% endblock %}
 {% endverbatim %}
 {% endset %}
@@ -58,7 +56,7 @@
       What is your age?
     </label>
   </h1>
-  <input class="govuk-input" id="schema-name" name="schema-name" type="text" spellcheck="false" inputmode="numeric">
+  <input class="govuk-input govuk-input--width-5" id="schema-name" name="schema-name" type="text" spellcheck="false" inputmode="numeric">
 </div>
 {% endset %}
 
@@ -67,7 +65,7 @@
   <label class="govuk-label" for="schema-name">
     What is your age?
   </label>
-  <input class="govuk-input" id="schema-name" name="schema-name" type="text" spellcheck="false" inputmode="numeric">
+  <input class="govuk-input govuk-input--width-5" id="schema-name" name="schema-name" type="text" spellcheck="false" inputmode="numeric">
 </div>
 {% endset %}
 
@@ -81,7 +79,7 @@
   <div id="schema-name-hint" class="govuk-hint">
     Must be between 6 and 8 digits long
   </div>
-  <input class="govuk-input" id="schema-name" name="schema-name" type="text" spellcheck="false" aria-describedby="schema-name-hint" inputmode="numeric">
+  <input class="govuk-input govuk-input--width-10" id="schema-name" name="schema-name" type="text" spellcheck="false" aria-describedby="schema-name-hint" inputmode="numeric">
 </div>
 {% endset %}
 

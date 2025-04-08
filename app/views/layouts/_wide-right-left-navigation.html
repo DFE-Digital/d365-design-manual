@@ -1,0 +1,16 @@
+{% extends "layouts/_base.html" %}
+
+{% block main %}
+<div class="govuk-width-container">
+  <main class="govuk-main-wrapper " id="main-content" role="main">
+    <div class="govuk-grid-row ">
+      <div class="dfe-grid-column-one-quarter">
+        {% include "includes/_side-nav.html" %}
+      </div>
+      <div class="dfe-grid-column-three-quarters">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}
