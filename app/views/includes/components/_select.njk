@@ -5,15 +5,31 @@
 {% block title %}{% endblock %}   
 
 {% block main %}
-  {% if user %}
-
-    ## HTML content goes here ##
-
-  {% else %}
+  {% unless user %}
     <script>
       window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
     </script>
-  {% endif %}
+  {% endunless %}
+
+  ## HTML content goes here ##
+
+{% endblock %}
+{% endverbatim %}
+{% endset %}
+
+{% set layoutExampleWithTitle %}
+{% verbatim %}
+{% extends 'DfE/Layouts/2ColumnWideLeft' %} 
+
+{% block main %}
+  {% unless user %}
+    <script>
+      window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
+    </script>
+  {% endunless %}
+
+  ## HTML content goes here ##
+
 {% endblock %}
 {% endverbatim %}
 {% endset %}
@@ -62,11 +78,13 @@
 
 {% set hintExample %}
 <div class="govuk-form-group">
-  <label class="govuk-label" for="schema-name">
-  Sort by
-  </label>
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="schema-name">
+      Sort by
+    </label>
+  </h1>
   <div id="schema-name-hint" class="govuk-hint">
-    It can be different to where you went before
+    Choose a single option to sort by
   </div>
   <select class="govuk-select" id="schema-name" name="schema-name">
     <option value="published">Recently published</option>
@@ -170,7 +188,7 @@
     </div>
     <pre>
       <code>
-      {{ layoutExample }}
+      {{ layoutExampleWithTitle }}
       </code>
     </pre>
   </div>

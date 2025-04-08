@@ -5,15 +5,14 @@
 {% block title %}{% endblock %}   
 
 {% block main %}
-  {% if user %}
-
-    ## HTML content goes here ##
-
-  {% else %}
+  {% unless user %}
     <script>
       window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
     </script>
-  {% endif %}
+  {% endunless %}
+
+  ## HTML content goes here ##
+
 {% endblock %}
 {% endverbatim %}
 {% endset %}
@@ -23,15 +22,14 @@
 {% extends 'DfE/Layouts/2ColumnWideLeft' %} 
 
 {% block main %}
-  {% if user %}
-
-    ## HTML content goes here ##
-
-  {% else %}
+  {% unless user %}
     <script>
       window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
     </script>
-  {% endif %}
+  {% endunless %}
+
+  ## HTML content goes here ##
+
 {% endblock %}
 {% endverbatim %}
 {% endset %}

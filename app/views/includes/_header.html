@@ -1,0 +1,36 @@
+{% from "header/macro.njk" import header %}
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+
+{{ header({
+    "showNav": "false",
+    "showSearch": "false",
+    "showHeaderActionLinks": "false",
+    "logoPath": "assets/images",
+    "logoAltText": "Department for Education",
+    "homeHref": pages['home'].url,
+    "service": {
+      "serviceUrl": pages['home'].url    
+    }
+  })
+}}
+
+{% set navigationItems = [
+  { href: pages['powerpages'].url, text: "Power Pages" },
+  { href: pages['crm'].url, text: "CRM" }
+] %}
+
+{% set updatedNavigation = [] %}
+
+{% set powerPagesActive = currentPath | contains(pages['powerpages'].url) %}
+{% set updatedPowerPagesItem = navigationItems[0] | merge({ active: powerPagesActive }) %}
+
+{% set crmActive = currentPath | contains(pages['crm'].url) %}
+{% set updatedCRMItem = navigationItems[1] | merge({ active: crmActive }) %}
+
+{% set updatedNavigation = [updatedPowerPagesItem, updatedCRMItem] %}
+
+{{ govukServiceNavigation({
+  serviceName: "Dynamics 365 Design Manual",
+  serviceUrl: pages['home'].url,
+  navigation: updatedNavigation
+}) }}

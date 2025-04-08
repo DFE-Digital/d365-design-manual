@@ -1,0 +1,103 @@
+{% set pageData = pages['powerpages/getting-started/set-up-your-custom-website'] %}
+{% set showHeaderSection = true %}
+{% set showSubNav = true %}
+{% set dateUpdated = "April 2025" %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+<h2 class="govuk-heading-m">Set up your custom Power Pages website</h2>
+
+<p class="govuk-body">
+  These instructions guide you through setting up your custom Power Pages website using the code from the repository <a href="https://github.com/DFE-Digital/d365-gds-powerpages" class="govuk-link" target="_blank">https://github.com/DFE-Digital/d365-gds-powerpages (opens in a new tab)</a>.
+  You will choose between the DfE and GOV.UK versions based on your <a class="govuk-link" href="{{ pages['powerpages/getting-started/branding-standards'].url }}">branding standards</a>, set up an app registration in the Azure Portal, configure permissions in Dynamics 365, run a GitHub action, and re-activate the website in Power Pages.
+</p>
+
+<p class="govuk-body">Before starting, ensure you have the following permissions:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Access to the Azure Portal with permissions to create app registrations in the <strong>Department for Education directory</strong>.</li>
+  <li>System Administrator role in the Dynamics 365 environment.</li>
+  <li>Permissions to run workflows in the GitHub repository.</li>
+</ul>
+
+<h2 class="govuk-heading-m">Set up App Registration in Azure Portal</h2>
+
+<p class="govuk-body">You need to create an app registration in the Azure Portal to allow the GitHub action to interact with your Dynamics 365 environment.</p>
+
+<ol class="govuk-list govuk-list--number">
+  <li>Sign in to the <a href="https://portal.azure.com" class="govuk-link" target="_blank">Azure Portal (opens in a new tab)</a> using your Department for Education credentials and ensure you are in the <strong>Department for Education directory</strong>.</li>
+  <li>In the search bar at the top of the screen, search for <strong>App registrations</strong> and click <strong>New registration</strong>.</li>
+  <li>Enter a name for the app (e.g. "[Your Service] Power Pages Setup App"), select "Accounts in this organizational directory only," and click <strong>Register</strong>.</li>
+  <li>In the app registration, go to <strong>API permissions</strong> > <strong>Add a permission</strong> > <strong>Dynamics CRM</strong>.</li>
+  <li>Select <strong>Delegated permissions</strong>, check <strong>user_impersonation</strong>, and click <strong>Add permissions</strong>.</li>
+  <li>Go to <strong>Certificates & secrets</strong> > <strong>New client secret</strong>. Provide a description (e.g., "GitHub Action Secret"), set an expiration date, and click <strong>Add</strong>. Copy the secret value immediately.</li>
+</ol>
+
+<div class="govuk-inset-text">
+  The client secret will be hidden after you navigate away, so copy it now and store it securely.
+</div>
+
+<h2 class="govuk-heading-m">Add App Registration as a User in Dynamics 365</h2>
+
+<p class="govuk-body">Add the app registration as an application user in your Dynamics 365 environment and grant it system admin permissions.</p>
+
+<ol class="govuk-list govuk-list--number">
+  <li>Sign in to the <a href="https://admin.powerplatform.microsoft.com" class="govuk-link" target="_blank">Power Platform Admin Center (opens in a new tab)</a>.</li>
+  <li>Navigate to <strong>Manage</strong> > <strong>Environments</strong>, then select your Dynamics 365 environment.</li>
+  <li>Go to <strong>Settings</strong> > <strong>Users + permissions</strong> > <strong>Application users</strong> > <strong>New app user</strong>.</li>
+  <li>Select <strong>Add an app</strong> and enter the app's client ID in the search bar (found in Azure Portal under "Overview").</li>
+  <li>Select the app and click <strong>Add</strong>.</li>
+  <li>Complete the remaining details:
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Business unit</strong>: Usually the default business unit and can often be found and selected by entering a vowel to trigger the search dropdown.</li>
+      <li><strong>Security role</strong>: Assign the System Administrator permission to the app</li>
+    </ul>
+  </li>
+  <li>Click <strong>Create</strong>.</li>
+</ol>
+
+<h2 class="govuk-heading-m">Run the appropriate GitHub Action</h2>
+
+<p class="govuk-body">Choose the DFE or GOVUK version based on your branding standards and run the corresponding "Create" action in GitHub.</p>
+
+<ol class="govuk-list govuk-list--number">
+  <li>Go to the repository <a href="https://github.com/DFE-Digital/d365-gds-powerpages" class="govuk-link" target="_blank">https://github.com/DFE-Digital/d365-gds-powerpages (opens in a new tab)</a>.</li>
+  <li>Navigate to the <strong>Actions</strong> tab.</li>
+  <li>Select the workflow for your chosen version:
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Create DFE Portal</strong> for Department for Education branding.</li>
+      <li><strong>Create GOVUK Portal</strong> for GOV.UK branding.</li>
+    </ul>
+  </li>
+  <li>Click <strong>Run workflow</strong>.</li>
+  <li>Fill in the required fields:
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Azure AD Client ID for target environment</strong>: Enter the app's client ID from Azure Portal.</li>
+      <li><strong>Azure AD Client Secret for target environment</strong>: Enter the client secret you copied.</li>
+      <li><strong>Environment URL for the target environment</strong>: Enter your Dynamics 365 environment URL (e.g. https://your-env.crm4.dynamics.com).</li>
+    </ul>
+  </li>
+  <li>Click <strong>Run workflow</strong> and wait for the action to complete successfully (indicated by a green checkmark).</li>
+</ol>
+
+<div class="govuk-inset-text">
+  If the workflow fails, check the error logs in the GitHub Actions interface and ensure all inputs are correct and the app registration is properly configured.
+</div>
+
+<h2 class="govuk-heading-m">Re-activate the website in Power Pages</h2>
+
+<p class="govuk-body">After the GitHub action completes, re-activate your website in Power Pages to make it live.</p>
+
+<ol class="govuk-list govuk-list--number">
+  <li>Sign in to <a href="https://make.powerpages.microsoft.com" class="govuk-link" target="_blank">Power Pages (opens in a new tab)</a>.</li>
+  <li>Select the environment where the portal was created (matching the Dynamics 365 environment URL used in Step 3).</li>
+  <li>Go to <strong>Inactive sites</strong> and locate your portal site (e.g. "DfE Portal" or "GOVUK Portal").</li>
+  <li>Click <strong>Activate</strong>.</li>
+</ol>
+
+<p class="govuk-body">Your custom Power Pages website should now be set up and live. Verify it by visiting the site URL provided in Power Pages once the activation is complete.</p>
+
+{% endblock %}

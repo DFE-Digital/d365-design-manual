@@ -1,151 +1,85 @@
-{% set portals = [
-    {
-        title: "Portals",
-        url: "/portals"
-    },
-    {
-        title: "Getting started",
-        url: "/portals/getting-started"
-    },
-    {
-        title: "Styles",
-        url: "/portals/styles"
-    },
-    {
-        title: "Components",
-        url: "/portals/components"
-    },
-    {
-        title: "Patterns",
-        url: "/portals/patterns"
-    }
-] %}
-
 {% set getting_started = [
-
-    {
-        title: "Branding standards",
-        url: "/portals/getting-started/branding-standards/"
-    },
-    {
-        title: "Create your portal",
-        url: "/portals/getting-started/create-your-portal"
-    },
-    {
-        title: "Download core portal files",
-        url: "/portals/getting-started/download-portal-files"
-    },
-    {
-      title: "Pre-requisites",
-      url: "/portals/getting-started/pre-requisites"
-    },
-    {
-        title: "Set up your portal",
-        url: "/portals/getting-started/setup-your-portal"
-    }
+  pages["powerpages/getting-started"],
+  pages["powerpages/getting-started/branding-standards"],
+  pages["powerpages/getting-started/pre-requisites"],
+  pages["powerpages/getting-started/set-up-your-custom-website"]
 ] %}
 
 {% set components = [
-    {
-        title: "Components",
-        url: "/portals/components"
-    },
-    {
-        title: "Checkboxes",
-        url: "/portals/components/checkboxes"
-    },
-    {
-      title: "Contents list",
-      url: "/portals/components/contents-list"
-    },
-    {
-      title: "Dashboard",
-      url: "/portals/components/dashboard"
-    },
-    {
-        title: "Date input",
-        url: "/portals/components/date-input"
-    },
-    {
-        title: "Email input",
-        url: "/portals/components/email-input"
-    },
-    {
-        title: "Number inputs",
-        url: "/portals/components/number-inputs"
-    },
-    {
-      title: "Panel card",
-      url: "/portals/components/panel-card"
-    },
-    {
-        title: "Radios",
-        url: "/portals/components/radios"
-    },
-    {
-        title: "Search",
-        url: "/portals/components/search"
-    },
-    {
-        title: "Select",
-        url: "/portals/components/select"
-    },
-    {
-      title: "Table (sortable)",
-      url: "/portals/components/table-sortable"
-    },
-    {
-        title: "Telephone input",
-        url: "/portals/components/telephone-input"
-    },
-    {
-        title: "Textarea",
-        url: "/portals/components/textarea"
-    },
-    {
-        title: "Text input",
-        url: "/portals/components/text-input"
-    },
-    {
-        title: "Timeline",
-        url: "/portals/components/timeline"
-    }
+  pages["powerpages/components"],
+  pages["powerpages/components/attachment"],
+  pages["powerpages/components/card"],
+  pages["powerpages/components/checkboxes"],
+  pages["powerpages/components/contents-list"],
+  pages["powerpages/components/dashboard"],
+  pages["powerpages/components/date-input"],
+  pages["powerpages/components/email-input"],
+  pages["powerpages/components/number-input"],
+  pages["powerpages/components/radios"],
+  pages["powerpages/components/search"],
+  pages["powerpages/components/select"],
+  pages["powerpages/components/sortable-table"],
+  pages["powerpages/components/telephone-input"],
+  pages["powerpages/components/textarea"],
+  pages["powerpages/components/text-input"],
+  pages["powerpages/components/timeline"]
+] %}
+
+{% set styles = [
+  pages["powerpages/styles"],
+  pages["powerpages/styles/layout"]
+] %}
+
+{% set patterns = [
+  pages["powerpages/patterns"],
+  pages["powerpages/patterns/custom-errors"],
+  pages["powerpages/patterns/back-link"],
+  pages["powerpages/patterns/phase-banner"],
+  pages["powerpages/patterns/page-heading"],
+  pages["powerpages/patterns/caption-page-heading"],
+  pages["powerpages/patterns/crm-helper-framework"]
 ] %}
 
 
+
+{% if currentPath | contains(pages['powerpages/getting-started'].url) %}
 <nav class="dfe-vertical-nav">
-    {%- if selectedNav === "Portals" %}
-    <ul class="dfe-vertical-nav__section">
-        {% for item in portals %}
-        <li
-            class="dfe-vertical-nav__section-item {% if item.title === pageName  or setSelectedSideNav === item.title %}dfe-vertical-nav__section-item--current{% endif %}">
-            <a class="dfe-vertical-nav__link" href="{{ item.url }}">{{ item.title }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-
-    {%- if selectedNav == "getting-started" or selectedNav == "branding-standards" or selectedNav == "create-your-portal" or selectedNav == "download-portal-files" or selectedNav == "pre-requisites" or selectedNav == "setup-your-portal"%}
-    <ul class="dfe-vertical-nav__section">
-        {% for item in getting_started %}
-        <li
-            class="dfe-vertical-nav__section-item {% if item.title === pageName  or setSelectedSideNav === item.title %}dfe-vertical-nav__section-item--current{% endif %}">
-            <a class="dfe-vertical-nav__link" href="{{ item.url }}">{{ item.title }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-
-    {%- if selectedNav == "Components" or selectedNav == "Panel card" or selectedNav == "Checkboxes" or selectedNav == "Contents list" or selectedNav == "Dashboard" or selectedNav == "Date input" or selectedNav == "Email input" or 
-    selectedNav == "Number inputs" or selectedNav == "Radios" or selectedNav == "Search" or selectedNav == "Select" or selectedNav == "Table (sortable)" or selectedNav == "Telephone input" or 
-    selectedNav == "Textarea" or selectedNav == "Text input" or selectedNav == "Timeline"  %}
-    <ul class="dfe-vertical-nav__section">
-        {% for item in components %}
-        <li
-            class="dfe-vertical-nav__section-item {% if item.title === pageName  or setSelectedSideNav === item.title %}dfe-vertical-nav__section-item--current{% endif %}">
-            <a class="dfe-vertical-nav__link" href="{{ item.url }}">{{ item.title }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+  <ul class="dfe-vertical-nav__section">
+    {% for page in getting_started %}
+    <li class="dfe-vertical-nav__section-item {% if page.title === pageData.title %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link" href="{{ page.url }}">{{ page.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
 </nav>
+{% elseif currentPath | contains(pages['powerpages/components'].url) %}
+<nav class="dfe-vertical-nav">
+  <ul class="dfe-vertical-nav__section">
+    {% for page in components %}
+    <li class="dfe-vertical-nav__section-item {% if page.title === pageData.title %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link" href="{{ page.url }}">{{ page.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
+{% elseif currentPath | contains(pages['powerpages/styles'].url) %}
+<nav class="dfe-vertical-nav">
+  <ul class="dfe-vertical-nav__section">
+    {% for page in styles %}
+    <li class="dfe-vertical-nav__section-item {% if page.title === pageData.title %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link" href="{{ page.url }}">{{ page.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
+{% elseif currentPath | contains(pages['powerpages/patterns'].url) %}
+<nav class="dfe-vertical-nav">
+  <ul class="dfe-vertical-nav__section">
+    {% for page in patterns %}
+    <li class="dfe-vertical-nav__section-item {% if page.title === pageData.title %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link" href="{{ page.url }}">{{ page.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
+{% endif %}

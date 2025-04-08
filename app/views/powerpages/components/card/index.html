@@ -1,0 +1,69 @@
+{% set pageData = pages['powerpages/components/card'] %}
+{% set showHeaderSection = true %}
+{% set showSubNav = true %}
+{% set dateUpdated = "April 2025" %}
+
+{% from 'includes/components/_card.njk' import cardBasicExample, cardBasicMetaExample, cardImageExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block content %}
+<div class="dfe-contents-container">
+  <nav class="dfe-contents-list">
+    <h2 class="dfe-contents-list__title">Contents</h2>
+    <ol class="dfe-contents-list__list">
+      <li class="dfe-contents-list__list-item">
+        <a class="dfe-contents-list__link govuk-link" href="#when-to-use-this-component">When to use this component</a>
+      </li> 
+      <li class="dfe-contents-list__list-item">
+        <a class="dfe-contents-list__link" href="#when-to-not-use-this-component">When to not use this component</a>
+      </li>         
+      <li class="dfe-contents-list__list-item">
+        <a class="dfe-contents-list__link" href="#html-examples">HTML examples</a>
+        <ol class="dfe-contents-list__nested-list">
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link" href="#basic-cards">Basic cards</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link" href="#basic-meta">Basic cards with meta information</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link" href="#cards-image">Cards with image</a>
+          </li>
+        </ol> 
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<h2 class="govuk-heading-m" id="when-to-use-this-component">When to use this component</h2>
+<p class="govuk-body">{{ pageData.description }}</p>
+
+<h2 class="govuk-heading-m" id="when-to-not-use-this-component">When to not use this component</h2>
+<p class="govuk-body">Cards can make things harder to understand if overused or used incorrectly. Before using them, test your content as structured content with headers and paragraphs and grid layout.</p>
+
+<h2 class="govuk-heading-m" id="html-examples">HTML examples</h2>
+<p class="govuk-body">
+  Select the appropriate example from this page and directly integrate the HTML into your web template. 
+  You can customise these examples to align with your specific requirements, as indicated below.
+  Refer to the <a class="govuk-link" href="../layouts">layouts</a> section for further guidance on structuring your web template.
+</p>
+
+<h3 class="govuk-heading-s" id="basic-cards">Basic cards</h3>
+<p class="govuk-body">An example of a basic card component used in a group.</p>
+
+{{ cardBasicExample() }}
+
+<h3 class="govuk-heading-s" id="basic-meta">Basic cards with meta information</h3>
+<p class="govuk-body">An example of a basic card component used in a group which has meta data.</p>
+
+{{ cardBasicMetaExample() }}
+
+<h3 class="govuk-heading-s" id="cards-image">Cards with image</h3>
+<p class="govuk-body">An example of a card component used in a group which has meta data and an image.</p>
+
+{{ cardImageExample() }}
+
+<p class="govuk-body">If you would like any additional advice or guidance with using these examples on Dynamics 365 Portals, please contact the Solutions Delivery Team.</p>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% set 2ColumnExample %}
+{% raw %}
+{% extends 'DfE/Layouts/2ColumnWideLeft' %}
+
+{% block title %}{% endblock %}   
+
+{% block main %}
+  {% unless user %}
+    <script>
+      window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
+    </script>
+  {% endunless %}
+
+  <div class="govuk-form-group">
+    <h1 class="govuk-label-wrapper">
+      <label class="govuk-label govuk-label--l" for="schema-name">
+        {{ page.title }} 
+      </label>
+    </h1>
+    <input class="govuk-input" id="schema-name" name="schema-name" type="text">
+  </div>
+{% endblock %}
+
+{% block rightColumn %}
+  <h2 class="govuk-heading-m">Related Links</h2>
+  <ul class="govuk-list govuk-list--bullet">
+    <li><a href="#" class="govuk-link">Guidance</a></li>
+    <li><a href="#" class="govuk-link">Contact us</a></li>
+  </ul>
+{% endblock %}
+{% endraw %}
+{% endset %}
+
+{% set 1ColumnExample %}
+{% raw %}
+{% extends 'DfE/Layouts/1Column' %}
+
+{% block main %}
+  <p class="govuk-body">Welcome to our service. This page uses a full-width layout for maximum readability.</p>
+  <button class="govuk-button" id="submit-btn" data-module="govuk-button">Get Started</button>
+{% endblock %}
+{% endraw %}
+{% endset %}
+
+{% macro layouts2ColumnExample () %}
+<pre><code>{{ 2ColumnExample }}</code></pre>
+{% endmacro %}
+
+{% macro layouts1ColumnExample () %}
+<pre><code>{{ 1ColumnExample }}</code></pre>
+{% endmacro %}
+

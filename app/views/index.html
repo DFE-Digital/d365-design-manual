@@ -1,91 +1,61 @@
-{% extends "layouts/homepage.html" %}
+{% set pageData = pages['home'] %}
+{% set showHeaderSection = true %}
+{% set showSubNav = false %}
 
-{% set selectedNav = "Home" %}
-{% set pageName = "Homepage" %}
-
-{% block hero %}
-<section class="dfe-hero">
-    <div class="dfe-width-container ">
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds">
-                <h1 class="govuk-heading-xl">Department for Education<br />Dynamics 365 Design Manual</h1>
-                <p class="govuk-body-l">Principles, guidance, and standards to support people delivering joined-up,
-                    effective, user-centred outcomes for people who use Department for Education Dynamics 365 services.</p>
-            </div>
-        </div>
-    </div>
-</section>
-{% endblock %}
+{% extends "layouts/_full-page.html" %}
 
 {% block content %}
-<section class="govuk-!-margin-bottom-9">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <div class="dfe-grid-container">
-                <div class="dfe-card">
-                    <div class="dfe-card-container">
-                        <h2 class="govuk-heading-m">
-                            <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header" href="/portals">PowerPages</a>
-                        </h2>
-                        <p>We use a combination of the GOV.UK Design System, DfE Frontend and custom frameworks to create consistent looking Dynamics 365 PowerPages websites.</p>
-                    </div>
-                </div>
-                <div class="dfe-card">
-                    <div class="dfe-card-container">
-                        <h2 class="govuk-heading-m">
-                            <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header"
-                                href="/crm">CRM</a>
-                        </h2>
-                        <p>We maintain a consistent process of building and releasing the back end of a Dynamics 365 CRM system, encompassing its configuration, customization, and deployment.</p>
-                    </div>
-                </div>
-                <div class="dfe-card">
-                    <div class="dfe-card-container">
-                        <h2 class="govuk-heading-m">
-                            <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header"
-                                href="/accessibility">Accessibility</a>
-                        </h2>
-                        <p>Use our templates, audit plans and WCAG guidelines to ensure we design PowerPages websites with accessibility in mind.</p>
-                    </div>
-                </div>
-                <div class="dfe-card">
-                    <div class="dfe-card-container">
-                        <h2 class="govuk-heading-m">
-                            <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header" href="https://design.education.gov.uk/content-design">Content design</a>
-                        </h2>
-                        <p>Writing in plain language, to create clear and consistent content for the departments digital services.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="dfe-grid-container">
+  <div class="dfe-card">
+    <div class="dfe-card-container">
+      <h2 class="govuk-heading-m">
+          <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header" href="{{ pages['powerpages'].url }}">Power Pages</a>
+      </h2>
+      <p>We use a combination of the GOV.UK Design System, DfE Frontend and custom frameworks to create consistent looking Dynamics 365 Power Pages websites.</p>
     </div>
-</section>
-
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-        <div class="dfe-section-break dfe-section-break--m"></div>
+   </div>
+    <div class="dfe-card">
+      <div class="dfe-card-container">
+        <h2 class="govuk-heading-m">
+          <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header" href="{{ pages['crm'].url }}">CRM</a>
+        </h2>
+        <p>We maintain a consistent process of building and releasing the back end of a Dynamics 365 CRM, encompassing its configuration, customisation, and deployment.</p>
+      </div>
     </div>
+    <div class="dfe-card">
+      <div class="dfe-card-container">
+        <h2 class="govuk-heading-m">
+          <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header" href="/accessibility">Accessibility</a>
+        </h2>
+          <p>Use our templates, audit plans and WCAG guidelines to ensure we design Power Pages websites with accessibility in mind.</p>
+      </div>
+    </div>
+    <div class="dfe-card">
+      <div class="dfe-card-container">
+        <h2 class="govuk-heading-m">
+          <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header" href="https://design.education.gov.uk/content-design">Content design</a>
+        </h2>
+        <p>Writing in plain language, to create clear and consistent content for the departments digital services.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="dfe-grid-column-full">
+<h2 class="govuk-heading-l">Other resources and guidance</h2>
+<ul class="govuk-list govuk-list--spaced">
+  <li>
+    <a class="govuk-link" href="https://user-research.education.gov.uk/" target="_blank">User Research in DfE</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="https://design-system.service.gov.uk/" target="_blank">GOV.UK Design System</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="https://www.gov.uk/service-manual" target="_blank">GOV.UK Service Manual</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="https://www.gov.uk/service-manual/communities/design-community" target="_blank">Cross government design community</a>
+  </li>
+</ul>
 </div>
 
-<section>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-half">
-            <h2 class="govuk-heading-l">Other resources and guidance</h2>
-            <ul class="govuk-list govuk-list--spaced">
-                <li>
-                    <a href="https://user-research.education.gov.uk/" target="_blank">User Research in DfE</a>
-                </li>
-                <li>
-                    <a href="https://design-system.service.gov.uk/" target="_blank">GOV.UK Design System</a>
-                </li>
-                <li>
-                    <a href="https://www.gov.uk/service-manual" target="_blank">GOV.UK Service Manual</a>
-                </li>
-                <li>
-                    <a href="https://www.gov.uk/service-manual/communities/design-community" target="_blank">Cross government design community</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</section>
 {% endblock %}
