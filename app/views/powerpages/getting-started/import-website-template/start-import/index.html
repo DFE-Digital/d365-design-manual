@@ -1,0 +1,191 @@
+{% set pageData = pages['powerpages/getting-started/import-website-template/start-import'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+<div id="import-error"></div>
+
+<form id="import-form">
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+        Website Brand
+      </legend>
+      <div class="govuk-radios" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="brand" name="brand" type="radio" value="govuk">
+          <label class="govuk-label govuk-radios__label" for="changedName">
+            GOV.UK
+          </label>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="brand-2" name="brand" type="radio" value="dfe">
+          <label class="govuk-label govuk-radios__label" for="changedName-2">
+            DfE
+          </label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <div class="govuk-form-group">
+    <label class="govuk-label govuk-label--s" for="environmentUrl" aria-describedby="environmentUrl-hint">
+      Environment URL
+    </label>
+    <div class="govuk-hint" id="environmentUrl-hint">
+      Must start with https://
+    </div>
+    <input class="govuk-input" id="environmentUrl" name="environmentUrl" type="text">
+  </div>
+  <div class="govuk-form-group">
+    <label class="govuk-label govuk-label--s" for="clientId" aria-describedby="clientId-hint">
+      Client ID
+    </label>
+    <div class="govuk-hint" id="clientId-hint">
+      Your App Registration ID
+    </div>
+    <input class="govuk-input" id="clientId" name="clientId" type="text">
+  </div>
+  <div class="govuk-form-group govuk-password-input" data-module="govuk-password-input">
+    <label class="govuk-label govuk-label--s" for="clientSecret">
+      Client secret
+    </label>
+    <div class="govuk-input__wrapper govuk-password-input__wrapper">
+      <input class="govuk-input govuk-password-input__input govuk-js-password-input-input" id="clientSecret" name="clientSecret" type="password" spellcheck="false" autocapitalize="none">
+      <button type="button" class="govuk-button govuk-button--secondary govuk-password-input__toggle govuk-js-password-input-toggle" data-module="govuk-button" aria-controls="clientSecret" aria-label="Show secret" hidden>
+        Show
+      </button>
+    </div>
+  </div>
+  <div class="govuk-inset-text">
+    The import workflow can take a while to complete &#8212; please do not refresh or navigate away from this page after starting the import.
+  </div>
+  <button type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">Start import</button>
+</form>
+
+<div class="dfe-loading-spinner" hidden>
+  <div class="dfe-loading-spinner__spinner" aria-live="polite" role="status"></div>
+  <div class="dfe-loading-spinner__content">
+    <p class="govuk-hint"></p>
+    <h3 class="govuk-heading-s" id="loading-message"></h3>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+  const $form = $('#import-form');
+  const $errorContainer = $('#import-error');
+
+  function showError(message) {
+    $errorContainer.html(`
+      <div class="govuk-error-summary" data-module="govuk-error-summary">
+        <div role="alert">
+          <h2 class="govuk-error-summary__title" id="error-summary-title">
+            There is a problem
+          </h2>
+          <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+              <li>
+                <a href="#">${message}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>`);
+    // Focus the summary so screen-readers announce it immediately
+    $errorContainer.find('.govuk-error-summary').focus();
+  }
+
+  $form.on('submit', async function(e) {
+    e.preventDefault();
+
+    // Show loading spinner and add intiial message
+    const $spinner = $('.dfe-loading-spinner');
+    const $msg     = $('#loading-message');
+    $spinner.removeAttr('hidden');
+    $msg.text('Starting import…');
+    
+    $errorContainer.empty();  // clear previous errors
+
+    const data = {
+      brand:          $form.find('input[name="brand"]:checked').val(),
+      environmentUrl: $form.find('#environmentUrl').val(),
+      clientId:       $form.find('#clientId').val(),
+      clientSecret:   $form.find('#clientSecret').val()
+    };
+
+    let triggerRes;
+    try {
+      triggerRes = await fetch('/api/trigger-import', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(data)
+      });
+    } catch (networkErr) {
+      $spinner.attr('hidden', true);
+      return showError('Error starting import. Check your input values and try again.');
+    }
+
+    if (!triggerRes.ok) {
+      let errJson;
+      try {
+        errJson = await triggerRes.json();
+      } catch {
+        $spinner.attr('hidden', true);
+        return showError(`Unexpected error (${triggerRes.status})`);
+      }
+      $spinner.attr('hidden', true);
+      return showError(errJson.error || 'Unknown error starting import');
+    }
+
+    const runIdInterval = setInterval(async () => {
+      const runIdStatusRes = await fetch('/api/run-id');
+      const { id } = await runIdStatusRes.json();
+
+      if (id === null) {
+        $msg.text('Waiting for GitHub to start your import…');
+        return;
+      }
+
+      clearInterval(runIdInterval);
+
+      const statusInterval = setInterval(async () => {
+        const statusRes = await fetch(`/api/import-status?runId=${id}`);
+        const { status, conclusion } = await statusRes.json();
+
+        if (status === 'unknown') {
+          $msg.text('Waiting for GitHub to start your import…');
+        } else if (status === 'queued') {
+          $msg.text('Your import is queued…');
+        } else if (status === 'in_progress') {
+          $msg.text('Import in progress…');
+        } else if (status === 'completed') {
+          $msg.text('Finalising import…');
+        }
+
+        if (status === 'completed') {
+          console.log("completed");
+          const successUrl = "{{ pages['powerpages/getting-started/import-website-template/import-success'].url }}";
+          const failureUrl = "{{ pages['powerpages/getting-started/import-website-template/import-failed'].url }}";
+          clearInterval(statusInterval );
+          window.location.href = conclusion === 'success'
+            ? successUrl
+            : `${failureUrl}?status=${conclusion}`;
+        }
+      }, 10000);
+    }, 5000); 
+  });
+</script>
+{% endblock %}

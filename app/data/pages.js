@@ -1,13 +1,13 @@
 export default {
   "home": {
-    title: "Dynamics 365 Design Manual",
+    title: "Home",
     url: "/",
     description: "Principles, guidance, and standards to support people delivering joined-up, effective, user-centred outcomes for people who use Department for Education Dynamics 365 services."
   },
   "powerpages": {
     title: "Power Pages",
     url: "/powerpages/",
-    description: "Understand how we design consistent Power Pages services for sector users."
+    description: "Guidance for building GOV.UK-aligned Power Pages with the GOV.UK Design System, DfE Frontend and custom components."
   },
   "powerpages/getting-started": {
     title: "Getting started",
@@ -22,12 +22,27 @@ export default {
   "powerpages/getting-started/pre-requisites": {
     title: "Pre-requisites",
     url: "/powerpages/getting-started/pre-requisites/",
-    description: "Understand the pre-requisites before starting with Power Pages."
+    description: "Complete the pre-requisite steps before starting with Power Pages."
   },
-  "powerpages/getting-started/set-up-your-custom-website": {
-    title: "Set up your custom website",
-    url: "/powerpages/getting-started/set-up-your-custom-website/",
-    description: "Guide to setting up your custom Power Pages website."
+  "powerpages/getting-started/import-website-template": {
+    title: "Website import tool",
+    url: "/powerpages/getting-started/import-website-template/",
+    description: "Import the website template to your Dymamics 365 environment."
+  },
+  "powerpages/getting-started/import-website-template/start-import": {
+    title: "Import website",
+    url: "/powerpages/getting-started/import-website-template/start-import/",
+    description: "Start the website import."
+  },
+  "powerpages/getting-started/import-website-template/import-success": {
+    title: "Import success",
+    url: "/powerpages/getting-started/import-website-template/import-success/",
+    description: "Your website has imported successfully."
+  },
+  "powerpages/getting-started/import-website-template/import-failed": {
+    title: "Import failed",
+    url: "/powerpages/getting-started/import-website-template/import-failure/",
+    description: "Your website has failed to import."
   },
   "powerpages/styles": {
     title: "Styles",
@@ -167,6 +182,6 @@ export default {
   "crm": {
     title: "CRM",
     url: "/crm/",
-    description: "Guide to CRM."
+    description: "Standardised configuration, customisation and deployment for Dynamics 365 CRM."
   }
 };

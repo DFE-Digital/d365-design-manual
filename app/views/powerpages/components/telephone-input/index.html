@@ -1,12 +1,17 @@
 {% set pageData = pages['powerpages/components/telephone-input'] %}
-{% set showHeaderSection = true %}
+{% set showHeaderSection = false %}
 {% set showSubNav = true %}
-{% set dateUpdated = "April 2025" %}
 
 {% from 'includes/components/_telephone.njk' import * %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
 {% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
 
 {% endblock %}

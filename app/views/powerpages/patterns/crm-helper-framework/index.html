@@ -1,13 +1,18 @@
 {% set pageData = pages['powerpages/patterns/crm-helper-framework'] %}
-{% set showHeaderSection = true %}
+{% set showTitlePanel = false %}
 {% set showSubNav = true %}
-{% set dateUpdated = "April 2025" %}
 
 {% from 'includes/patterns/_crm-helper-framework.njk' import patternsUpdateContactRecordExample, patternsCreateLeadRecordExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
 {% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5" id="introduction">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5" id="introduction">{{ pageData.title }}</h2>
+{% endif %}
 
 <div class="dfe-contents-container">
   <nav class="dfe-contents-list">
@@ -65,7 +70,6 @@
   </nav>
 </div>
 
-<h2 class="govuk-heading-l" id="introduction">Introduction</h2>
 <p class="govuk-body">The CRM Helper Framework is a JavaScript library designed to simplify validation and data submission tasks in Power Pages, particularly for interacting with Dynamics 365. It provides a set of reusable functions to handle form validation, data submission to CRM entities, and user experience enhancements like error handling, button state management, and loading spinners. This framework is pre-installed with the base portal, making it readily available for you to use in your front-end development.</p>
 
 <p class="govuk-body">This page covers how to set up validation, use the framework's functions, and provides practical examples for common scenarios.</p>
@@ -75,7 +79,7 @@
 
 <h3 class="govuk-heading-m" id="base-properties">Base properties for all input types</h3>
 <p class="govuk-body">Each input object must include the following properties:</p>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li><code>identifier</code>: String- The schema name of the target CRM field (e.g., <code>dfe_firstname</code>).</li>
   <li><code>type</code>: String - The type of input. Supported types are: <code>number</code>, <code>whole-number</code>, <code>decimal-number</code>, <code>text</code>, <code>text-area</code>, <code>email</code>, <code>tel</code>, <code>radio</code>, <code>checkbox</code>, <code>search</code>, <code>select</code>, <code>date</code>.</li>
   <li><code>friendlyName</code>: String - A user-friendly name for the input, used in error messages (e.g. "your first name" will display as "Enter your first name").</li>
@@ -88,7 +92,7 @@
 
 <h4 class="govuk-heading-s" id="text-input">Text input for record search</h4>
 <p class="govuk-body">For text inputs used to search records (e.g. finding an application by reference number):</p>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li><code>targetType</code>: String - Set to <code>lookup</code>.</li>
   <li><code>targetEntity</code>: String - Schema name of the table to search (e.g., <code>dfe_application</code>).</li>
   <li><code>targetEntityPrimaryKey</code>: String - Primary key schema name of the table (e.g., <code>dfe_applicationid</code>).</li>
@@ -103,7 +107,7 @@
 
 <h4 class="govuk-heading-s" id="radio-input">Radio inputs</h4>
 <p class="govuk-body">For radio inputs:</p>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li><code>targetType</code>: String - Supported types: <code>lookup</code>, <code>bool</code>, <code>select</code>, <code>text</code>.</li>
   <li><code>targetEntity</code>: String - Required if <code>targetType</code> is <code>lookup</code>. Schema name of the lookup table.</li>
 </ul>
@@ -116,7 +120,7 @@
 
 <h4 class="govuk-heading-s" id="select-input">Select inputs</h4>
 <p class="govuk-body">For select (dropdown) inputs:</p>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li><code>targetType</code>: String - Supported types: <code>lookup</code>, <code>select</code>, <code>text</code>.</li>
   <li><code>targetEntity</code>: String- Required if <code>targetType</code> is <code>lookup</code>. Schema name of the lookup table.</li>
 </ul>
@@ -134,7 +138,7 @@
 </ul>
 <p class="govuk-body">Return value: A Promise that resolves if all inputs pass validation, or rejects if any fail.</p>
 <p class="govuk-body">Example scenarios:</p>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li>Validating a contact form to ensure all required fields (e.g., first name, email) are filled correctly.</li>
   <li>Checking a date input to confirm it's a valid date before submission.</li>
   <li>Ensuring a search field matches a record in the CRM before proceeding.</li>
@@ -148,7 +152,7 @@
 </ul>
 <p class="govuk-body">Return value: A Promise that resolves with the constructed data object.</p>
 <p class="govuk-body">Example scenarios:</p>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li>Preparing form data (e.g. first name, last name) for submission to a <code>contact</code> entity.</li>
   <li>Formatting a date input into an ISO string for a CRM date/time field.</li>
   <li>Mapping a radio input to a boolean value for a CRM field.</li>
@@ -157,14 +161,14 @@
 <h4 class="govuk-heading-s">DfEPortal.WebApi.Update(recordId, entityName, dataObj)</h4>
 <p class="govuk-body">Purpose: Updates an existing record in the CRM.</p>
 <p class="govuk-body">Parameters:</p>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li><code>recordId</code>: String - The ID of the record to update.</li>
   <li><code>entityName</code>: String - Schema name of the table to update (e.g. <code>contact</code>).</li>
   <li><code>dataObj</code>: Object - Data object constructed by <code>ConstructData</code>.</li>
 </ul>
 <p class="govuk-body">Return value: A Promise that resolves on success or rejects with an error.</p>
 <p class="govuk-body">Example scenarios:</p>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li>Updating a contact's email address after the user edits their profile.</li>
   <li>Modifying an application record with new details from a form submission.</li>
 </ul>
@@ -172,13 +176,13 @@
 <h4 class="govuk-heading-s">DfEPortal.WebApi.Create(entityName, dataObj)</h4>
 <p class="govuk-body">Purpose: Creates a new record in the CRM.</p>
 <p class="govuk-body">Parameters:</p>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li><code>entityName</code>: String - Schema name of the table (e.g. <code>lead</code>).</li>
   <li><code>dataObj</code>: Object - Data object constructed by <code>ConstructData</code>.</li>
 </ul>
 <p class="govuk-body">Return value: A Promise that resolves with the ID of the created record or rejects with an error.</p>
 <p class="govuk-body">Example scenarios:</p>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li>Creating a new lead record when a user signs up.</li>
   <li>Adding a new contact record from a "Contact Us" form submission.</li>
 </ul>
@@ -186,13 +190,13 @@
 <h4 class="govuk-heading-s">DfEPortal.WebApi.Delete(entityName, recordId)</h4>
 <p class="govuk-body">Purpose: Deletes a record from the CRM.</p>
 <p class="govuk-body">Parameters:</p>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li><code>entityName</code>: String - Schema name of the table.</li>
   <li><code>recordId</code>: String - ID of the record to delete.</li>
 </ul>
 <p class="govuk-body">Return value: A Promise that resolves on success or rejects with an error.</p>
 <p class="govuk-body">Example scenarios:</p>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li>Deleting a draft application record when a user cancels their submission.</li>
   <li>Removing a contact record when a user requests account deletion.</li>
 </ul>
@@ -207,7 +211,7 @@
 </ul>
 <p class="govuk-body">Return value: None.</p>
 <p class="govuk-body">Example scenarios:</p>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li>Disabling a submit button during form processing to prevent double submissions.</li>
   <li>Re-enabling the button if an error occurs, allowing the user to retry.</li>
 </ul>
@@ -220,7 +224,7 @@
 </ul>
 <p class="govuk-body">Return value: None.</p>
 <p class="govuk-body">Example scenarios:</p>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li>Showing a spinner while submitting data to the CRM.</li>
   <li>Hiding the spinner when submission completes or fails.</li>
 </ul>
@@ -234,7 +238,7 @@
 {{ patternsUpdateContactRecordExample() }}
 
 <p class="govuk-body"><strong>Explanation</strong>:</p>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li>The <code>inputObj</code> array defines validation rules for the first name and last name fields.</li>
   <li>The button is disabled, and a spinner is shown during processing.</li>
   <li><code>ValidateData</code> checks that both fields are filled (since <code>required: true</code>).</li>
@@ -248,7 +252,7 @@
 {{ patternsCreateLeadRecordExample() }}
 
 <p class="govuk-body"><strong>Explanation</strong>:</p>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li>The <code>inputObj</code> sets the validation rules for the email field</li>
   <li><code>ValidateData</code> checks the email input ensuring it has a value and that the value is in a valid email format.</li>
   <li><code>ConstructData</code> prepares the email for submission to the CRM.</li>
@@ -257,7 +261,7 @@
 </ul>
 
 <h2 class="govuk-heading-l" id="best-practices">Best practices</h2>
-<ul class="govuk-list govuk-list--bullet">
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li>Use <code>ValidateData</code> before calling <code>ConstructData</code> or any Web API functions to ensure data integrity.</li>
   <li>Use try-catch blocks to handle errors, and leverage the framework's error display functions (<code>DfEPortal.Errors.ShowErrorSummary</code>).</li>
   <li>Use <code>DisableButton</code> and <code>ShowLoadingSpinner</code> during processing to prevent multiple submissions and provide visual feedback.</li>

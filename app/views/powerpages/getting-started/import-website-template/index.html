@@ -1,0 +1,41 @@
+{% set pageData = pages['powerpages/getting-started/import-website-template'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+<p class="govuk-body">You will:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>choose between the DfE and GOV.UK versions based on your <a class="govuk-link" href="{{ pages['powerpages/getting-started/branding-standards'].url }}">branding standards</a></li>
+  <li>enter your app registration credentials</li>
+  <li>start the import</li>
+</ul>
+
+<p class="govuk-body"> This tool triggers a GitHub action to install the selected base website files from <a href="https://github.com/DFE-Digital/d365-gds-powerpages" class="govuk-link" target="_blank">https://github.com/DFE-Digital/d365-gds-powerpages</a>.
+
+<div class="govuk-inset-text">
+  If the import fails, check the error logs in the GitHub actions interface, ensure all inputs are correct and the app registration is properly configured.
+</div>
+
+<button class="govuk-button" id="submit" type="submit" data-module="govuk-button">Continue</button> 
+
+{% endblock %}
+
+{% block script %}
+<script>
+    $('#submit').on('click', () => {
+      window.location.href = "{{ pages['powerpages/getting-started/import-website-template/start-import'].url }}";
+    })
+</script>
+{% endblock %}

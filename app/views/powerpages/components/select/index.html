@@ -1,13 +1,18 @@
 {% set pageData = pages['powerpages/components/select'] %}
-{% set showHeaderSection = true %}
+{% set showHeaderSection = false %}
 {% set showSubNav = true %}
-{% set dateUpdated = "March 2024" %}
-
 {% from 'includes/components/_select.njk' import selectHeaderExample, selectStandardExample, selectHintExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
 {% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
 <div class="dfe-contents-container">
   <nav class="dfe-contents-list">
     <h2 class="dfe-contents-list__title">Contents</h2>

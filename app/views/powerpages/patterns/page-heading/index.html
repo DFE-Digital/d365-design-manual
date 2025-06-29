@@ -1,13 +1,18 @@
 {% set pageData = pages['powerpages/patterns/page-heading'] %}
-{% set showHeaderSection = true %}
+{% set showTitlePanel = false %}
 {% set showSubNav = true %}
-{% set dateUpdated = "April 2025" %}
 
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
 {% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5" id="setting-heading">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5" id="setting-heading">{{ pageData.title }}</h2>
+{% endif %}
 
 <div class="dfe-contents-container">
   <nav class="dfe-contents-list">
@@ -40,13 +45,11 @@
   </nav>
 </div>
 
-<h2 class="govuk-heading-m" id="setting-heading">Setting the page heading</h2>
-
 <p class="govuk-body">
   In Power Pages, it is essential to apply consistent headings for better user experience and accessibility. The way the heading is presented depends on the page type: whether it is a single question page or a multiple question page.
 </p>
 
-<h3 class="govuk-heading-s" id="single-question">Single question page</h3>
+<h3 class="govuk-heading-l" id="single-question">Single question page</h3>
 <p class="govuk-body">
   For single question pages, the page heading should be included as part of the question's <code>&lt;legend&gt;</code> or <code>&lt;label&gt;</code> element in the form. The default title block in the extended template should be replaced with a blank block, effectively canceling the default title behavior. This ensures the question's title (which comes from the content page's title) is used within the form itself.
 </p>
@@ -56,21 +59,21 @@
 
 {{ patternsHeadingSingleExample() }}
 
-<h3 class="govuk-heading-s" id="multiple-question">Multiple question page</h3>
+<h3 class="govuk-heading-l" id="multiple-question">Multiple question page</h3>
 <p class="govuk-body">
   For multiple question pages, you can omit the <code>{% raw %}{% block title %}{% endraw %}</code> block in the extended template. In this case, the page will inherit the default page title from the content page, which is set in the "Title" field in the Power Pages configuration.
 </p>
 
 {{ patternsHeadingMultipleExample() }}
 
-<h3 class="govuk-heading-s" id="difference">Why this difference?</h3>
+<h3 class="govuk-heading-l" id="difference">Why this difference?</h3>
 <p class="govuk-body">
   Single question pages need a custom structure for the heading as part of the form itself, while multiple question pages can use the default inherited title. This ensures that both types of pages follow accessible design principles while maintaining consistency across the service.
 </p>
 
 <p class="govuk-body">Both options should inherit the page title from the content page web, where you can set the title of the webpage. This is accessed in Liquid as <code>{% raw %}{{ page.title }}{% endraw %}</code>.</p>
 
-<h2 class="govuk-heading-m" id="how-to">How to access and edit Web Page Content in Dynamics 365</h2>
+<h2 class="govuk-heading-l" id="how-to">How to access and edit Web Page Content in Dynamics 365</h2>
 
 <p class="govuk-body">To access and modify the content page settings, such as the page title, follow these steps:</p>
 
@@ -86,14 +89,14 @@
  <img src="/assets/images/page-heading.png">
 </p>
 
-<h2 class="govuk-heading-m" id="best-practices">Best practices</h2>
+<h2 class="govuk-heading-l" id="best-practices">Best practices</h2>
 <ul class="govuk-list govuk-list--bullet">
   <li>For single question pages, use the <code>&lt;legend&gt;</code> or <code>&lt;label&gt;</code> element to present the question with its title.</li>
   <li>For multiple question pages, let the page title automatically inherit from the content page's metadata.</li>
   <li>Remember to use the appropriate component structure and classes associated with single question and multiple question pages. The <a class="govuk-link" href="{{ pages['powerpages/components'].url }}">components</a> area of this design manual provides examples for each use case.</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="further-reading">Further reading</h2>
+<h2 class="govuk-heading-l" id="further-reading">Further reading</h2>
 <p class="govuk-body">
   For more guidance on using labels and legends as headings, check the <a href="https://design-system.service.gov.uk/get-started/labels-legends-headings/" target="_blank" class="govuk-link">Labels, Legends, and Headings (opens in a new tab)</a> section of the GOV.UK Design System.
 </p>

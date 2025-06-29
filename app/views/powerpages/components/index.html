@@ -1,5 +1,5 @@
 {% set pageData = pages['powerpages/components'] %}
-{% set showHeaderSection = true %}
+{% set showTitlePanel = true %}
 {% set showSubNav = true %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
@@ -10,7 +10,11 @@
 
 {% block content %}
 
-<h2 class="govuk-heading-m">Summary</h2>
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
 
 <p class="govuk-body">Components are:</p>
 
@@ -38,12 +42,10 @@
     </thead>
     <tbody class="govuk-table__body">
     {% for page in components %}
-      {% if page.url != pageData.url %}
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header"><a class="govuk-link" href="{{page.url}}">{{page.title}}</a></th>
-          <td class="govuk-table__cell">{{ page.description }}</td>
-        </tr>
-      {% endif %}
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header"><a class="govuk-link" href="{{page.url}}">{{page.title}}</a></th>
+        <td class="govuk-table__cell">{{ page.description }}</td>
+      </tr>
     {% endfor %}
     </tbody>
   </table>

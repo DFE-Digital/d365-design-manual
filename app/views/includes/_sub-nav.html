@@ -19,14 +19,20 @@
   {% endif %}
 {% endif %}
 
-<nav class="app-sub-navigation" aria-label="Portals menu">
-  <ul class="app-sub-navigation__list">
-    {% for page in powerpages %}
-      <li class="app-sub-navigation__item">
-        <a class="app-sub-navigation__link" href="{{ page.url }}" {% if page.url == activeUrl %}aria-current="page"{% endif %}>
-          {{ page.title }}
-        </a>
-      </li>
-    {% endfor %}
-  </ul>
-</nav>
+<div class="govuk-service-navigation {% if showTitlePanel %}govuk-service-navigation--inverse{% endif %}" {% if showTitlePanel %}style="padding-bottom: 20px;"{% endif %} {% if not showTitlePanel %}style="background: #fff;"{% endif %} data-module="govuk-service-navigation">
+  <div class="govuk-width-container">
+    <div class="govuk-service-navigation__container">
+      <nav aria-label="Power Pages Menu" class="govuk-service-navigation__wrapper">
+        <ul class="govuk-service-navigation__list" id="sub-navigation">
+          {% for page in powerpages %}
+          <li class="govuk-service-navigation__item {% if page.url == activeUrl %}govuk-service-navigation__item--active{% endif %}">
+            <a class="govuk-service-navigation__link" href="{{ page.url }}">
+              {{ page.title }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

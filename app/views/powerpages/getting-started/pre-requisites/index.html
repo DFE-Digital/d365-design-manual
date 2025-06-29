@@ -1,7 +1,6 @@
 {% set pageData = pages['powerpages/getting-started/pre-requisites'] %}
-{% set showHeaderSection = true %}
+{% set showTitlePanel = false %}
 {% set showSubNav = true %}
-{% set dateUpdated = "April 2025" %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
@@ -9,71 +8,109 @@
 
 {% block content %}
 
-<h2 class="govuk-heading-m">{{ pageData.description | replace(".","") }}</h2>
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
 
-<p class="govuk-body">Complete the following pre-requisite steps to ensure your environment is correctly configured. These steps prepare the Dynamics 365 environment, install necessary components, and provide a clean slate for your website.</p>
-
-<h2 class="govuk-heading-m">Remove JavaScript from blocked extensions in Power Platform Admin settings</h2>
-
-<p class="govuk-body">
-  JavaScript files (e.g. <code>.js</code>) may be blocked by default in your Dynamics 365 environment, which can prevent custom scripts from running on your Power Pages website. You must remove JavaScript from the list of blocked extensions to allow your custom website to function correctly.
+<p class="govuk-body">Complete the following pre-requisite steps to ensure your environment is correctly configured. These steps install necessary components, and provide a clean slate for your website and prepare the Dynamics 365 environment.</p>
 </p>
-<ol class="govuk-list govuk-list--number">
-  <li>Sign in to the <a href="https://admin.powerplatform.microsoft.com" class="govuk-link">Power Platform Admin Center</a>.</li>
-  <li>Navigate to <strong>Environments</strong>, then select the Dynamics 365 environment where your Power Pages website will be hosted.</li>
-  <li>Go to <strong>Settings</strong> > <strong>Product</strong> > <strong>Privacy + Security</strong>.</li>
-  <li>Under <strong>File Extensions</strong>, locate the list of blocked file extensions.</li>
-  <li>Find <code>.js</code> in the list and remove it. If it's not listed, no action is needed.</li>
-  <li>Select <strong>Save</strong> to apply the changes.</li>
-</ol>
-<div class="govuk-inset-text">
-  Ensure you have the System Administrator security role to modify these settings.
-</div>
 
-<h2 class="govuk-heading-m">
-  Install a Customer Service Portal from Power Pages Templates
+<p class="govuk-body">You will:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>install website configuration components in your Dynamics 365 environment</li>
+  <li>set up an app registration in the Azure Portal and configure it's permissions in your Dynamics 365 environment</li>
+</ul>
+
+<p class="govuk-body">Before starting, ensure you have:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li><strong>System Administrator</strong> role in your Dynamics 365 environment</li>
+  <li>access to the Azure Portal with permissions to create app registrations in the <strong>Department for Education directory</strong></li>
+</ul>
+
+<h2 class="govuk-heading-l" id="install-blank-site">
+  Install a blank site from Power Pages
 </h2>
+
 <p class="govuk-body">
-  Installing a Customer Service Portal template in Power Pages ensures that all necessary solutions, tables, and fields are installed in your Dynamics 365 environment. This provides a foundation for your custom portal.
+  Installing a blank site in Power Pages ensures that all necessary solutions, tables, and fields are installed in your Dynamics 365 environment. This provides a foundation for your website.
 </p>
 <ol class="govuk-list govuk-list--number">
   <li>Go to <a href="https://make.powerpages.microsoft.com" class="govuk-link">Power Pages</a>.</li>
   <li>Select the correct Dynamics 365 environment from the environment selector in the top right.</li>
-  <li>Click <strong>Start with a template</strong>.</li>
-  <li>Choose the <strong>Customer Self Service Portal</strong> template.</li>
-  <li>Leave the default values, or enter a name for the portal (e.g. "Customer Service Portal") and a URL (e.g. <code>customer-service-portal.powerappsportals.com</code>).</li>
+  <li>Under <strong>Other ways to create a site</strong> click <strong>Start from blank</strong>.</li>
+  <li>You can leave the default values at this stage, or choose temporary values for your site name and web address.</li>
   <li>Click <strong>Done</strong> to provision the website. This may take a while to complete.</li>
   <li>Once created, verify that the website is listed under <strong>Power Pages sites</strong> in the Power Platform Admin Center.</li>
 </ol>
 <div class="govuk-inset-text">
-  The Customer Self Service Portal template installs solutions and related tables. These are required for your custom portal. Alternatively, you can choose <strong>Start from blank</strong> in step 3 to install a basic website, however this approach has not been tested with the custom setup required to ensure your Power Pages website is GDS compliant.
+  The blank site installs solutions and related tables for the <strong>enhanced</strong> Power Pages model.
 </div>
 
-<h2 class="govuk-heading-m">
-  Delete pre-installed records to ensure an empty Portal Management model-driven app
+<h2 class="govuk-heading-l" id="delete-blank-site">
+  Delete blank site records to ensure an empty Power Pages Management model-driven app
 </h2>
 <p class="govuk-body">
-  After installing the Customer Self Service Portal, the portal will include pre-installed content (e.g. web pages, entity lists, forms) in the Portal Management model-driven app. To start with a completely custom website, you must delete all the available records.
+  The blank site install will include website content (e.g. website record, web pages, entity lists, forms etc.) in the Power Pages Management model-driven app. To start with a completely custom website, you must delete all the visible records.
 </p>
 <ol class="govuk-list govuk-list--number">
   <li>Go to <a href="https://make.powerpages.microsoft.com" class="govuk-link">Power Pages</a>.</li>
   <li>Select the correct Dynamics 365 environment from the environment selector in the top right.</li>
-  <li>Click <strong>Edit</strong> against your Customer Self Service Portal website, then select <strong>Portal Mangement</strong> from the left-hand navigation bar (you may need to select the ellipsis).</li>
-  <li>In the Portal Management app, go to <strong>Websites</strong> and locate the website record for your portal (e.g. “Customer Service Portal”).</li>
+  <li>Click the elipsis against your recently installed active website, then select <strong>Power Pages Management</strong>.</li>
+  <li>In the Power Pages Management app, go to <strong>Websites</strong> where you should see the website record for your blank site.</li>
   <li>Delete the website record. This will remove all associated metadata (e.g., web pages, entity lists, forms), leaving the model-driven app blank.</li>
-  <li>The previous step does not always ensure a complete deletion of records. Verify that no website records or content remain by checking the other record types in the Portal Management app.</li>
-  <li>Return to Power Pages and delete the website associated with the Customer Self Service Portal.</li>
+  <li>The previous step does not always ensure a complete deletion of records. Verify that no website records or content remain by checking the other record types in the Power Pages Management app.</li>
+  <li>Return to <a href="https://make.powerpages.microsoft.com" class="govuk-link">Power Pages</a> and delete the website record associated with the blank site.</li>
 </ol>
 <div class="govuk-inset-text">
-  Do not delete the Portal Management app itself, as it is required for managing your website.
+  Do not delete the Power Pages Management app itself, as it is required for managing your website.
 </div>
 
+<h2 class="govuk-heading-l" id="create-app-reg">Create App Registration in Azure Portal</h2>
+
+<p class="govuk-body">You need to create an app registration in the Azure Portal to allow the GitHub action to interact with your Dynamics 365 environment.</p>
+
+<ol class="govuk-list govuk-list--number">
+  <li>Sign in to the <a href="https://portal.azure.com" class="govuk-link" target="_blank">Azure Portal</a> and ensure you are in the <strong>Department for Education</strong> directory.</li>
+  <li>In the search bar at the top of the screen, search for and select <strong>Microsoft Entra ID</strong> 
+  <li>In the left navigation, go to <strong>Manage > App registrations</strong>, then click <strong>+ New registration</strong>
+  <li>Enter a name for the app (e.g. "[Your Service] Power Pages Setup App"), select <strong>Accounts in this organizational directory only</strong> and click <strong>Register</strong>.</li>
+  <li>In the app registration, go to <strong>API permissions</strong> > <strong>Add a permission</strong> > <strong>Dynamics CRM</strong>.</li>
+  <li>Select <strong>Delegated permissions</strong>, check <strong>user_impersonation</strong>, and click <strong>Add permissions</strong></li>
+  <li>Go to <strong>Certificates & secrets</strong> > <strong>New client secret</strong>. Provide a description (e.g., "GitHub Action Secret"), choose an expiration date, and click <strong>Add</strong>. Copy the secret value immediately.</li>
+</ol>
+
+<div class="govuk-inset-text">
+  The client secret will be hidden after you navigate away, so copy it now and store it securely.
+</div>
+
+<h2 class="govuk-heading-l" id="add-app-user">Add Application User in Dynamics 365</h2>
+
+<p class="govuk-body">Add the app registration as an application user in your Dynamics 365 environment and grant it the System Administrator security role.</p>
+
+<ol class="govuk-list govuk-list--number">
+  <li>Sign in to the <a href="https://admin.powerplatform.microsoft.com" class="govuk-link" target="_blank">Power Platform Admin Center</a></li>
+  <li>Navigate to <strong>Manage > Environments</strong>, then select your Dynamics 365 environment</li>
+  <li>Go to <strong>Settings > Users + permissions > Application users > New app user</strong></li>
+  <li>Select <strong>Add an app</strong> and enter the App Registration's Client ID in the search bar</li>
+  <li>Select the app and click <strong>Add</strong>.</li>
+  <li>Complete the remaining details:
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Business unit</strong>: Usually the default business unit and can often be found and selected by entering a vowel to trigger the search dropdown.</li>
+      <li><strong>Security role</strong>: Assign the System Administrator permission to the app</li>
+    </ul>
+  </li>
+  <li>Click <strong>Create</strong></li>
+</ol>
+
 <!-- Next Steps -->
-<h2 class="govuk-heading-m">
+<h2 class="govuk-heading-l">
   Next steps
 </h2>
 <p class="govuk-body">
-  Once these pre-requisites are complete, you can <a class="govuk-link" href="{{ pages['powerpages/getting-started/setup-your-custom-website'].url }}">set up your custom website</a>.
+  Once these pre-requisites are complete, you can <a class="govuk-link" href="{{ pages['powerpages/getting-started/import-website-template'].url }}">import your website template</a>.
 </p>
 <p class="govuk-body">
   For more detailed guidance, refer to the <a href="https://learn.microsoft.com/en-us/power-pages/" class="govuk-link">Power Pages documentation</a> or the <a href="https://learn.microsoft.com/en-us/dynamics365/" class="govuk-link">Dynamics 365 documentation</a>.

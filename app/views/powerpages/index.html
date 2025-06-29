@@ -1,15 +1,14 @@
 {% set pageData = pages['powerpages'] %}
-{% set showHeaderSection = true %}
+{% set showTitlePanel = true %}
 {% set showSubNav = true %}
 
 {% extends "layouts/_two-column-wide-left.html" %}
 
 {% block content %}
 
-<h2 class="govuk-heading-m">Overview</h2>
-<p class="govuk-body">Use this guidance on this site to make your Dynamics 365 Power Pages service consistent with Government Design Service (GDS) styles, components and patterns.</p>
+<p class="govuk-body-l">Use this guidance to make your Dynamics 365 Power Pages service consistent with Government Digital Service (GDS) styles, components and patterns.</p>
 
-<h2 class="govuk-heading-m">What's included?</h2>
+<h2 class="govuk-heading-l">What's included?</h2>
 <ul class="govuk-list govuk-list--bullet">
     <li>Create and set up your Power Pages website</li>
     <li>Styles, components and patterns for developers</li>
@@ -18,14 +17,20 @@
     <li>Using the Power Pages WebApi</li>
 </ul>
 
-<h2 class="govuk-heading-m">Experience required</h2>
+<h2 class="govuk-heading-l">Experience required</h2>
 <ul class="govuk-list govuk-list--bullet">
     <li>Building Power Pages</li>
     <li>Creating custom web templates in Power Pages using the Liquid templating language</li>
     <li>Use of the jQuery JavaScript library</li>
 </ul>
 
-<p class="govuk-body"><a class="govuk-link" href="{{ pages['powerpages/getting-started'].url }}">Read the 'Getting started' section</a> before proceeding to build your website.</p>
+<div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-visually-hidden">Warning</span>
+    <a class="govuk-link" href="{{ pages['powerpages/getting-started'].url }}">Read the getting started pages</a> before proceeding to build your website.
+  </strong>
+</div>
 
 <p class="govuk-body">You can <a class="govuk-link" href="mailto:solutionsdevelopment.techdirectorate@education.gov.uk/">contact the Solutions Delivery Team</a> for advice and guidance.</p>
 {% endblock %}
