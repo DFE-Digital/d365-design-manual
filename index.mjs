@@ -220,7 +220,7 @@ app.post('/api/trigger-import', async (req, res) => {
   }
 });
 
-app.get('/api/download-logs', async (_req, res) => {
+app.get('/api/run-id', async (_req, res) => {
   try {
     const now = Math.floor(Date.now() / 1000);
     const payload = {
