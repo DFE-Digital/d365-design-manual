@@ -1,12 +1,10 @@
 {% set getting_started = [
-  pages["powerpages/getting-started"],
   pages["powerpages/getting-started/branding-standards"],
   pages["powerpages/getting-started/pre-requisites"],
-  pages["powerpages/getting-started/set-up-your-custom-website"]
+  pages["powerpages/getting-started/import-website-template"]
 ] %}
 
 {% set components = [
-  pages["powerpages/components"],
   pages["powerpages/components/attachment"],
   pages["powerpages/components/card"],
   pages["powerpages/components/checkboxes"],
@@ -26,12 +24,10 @@
 ] %}
 
 {% set styles = [
-  pages["powerpages/styles"],
   pages["powerpages/styles/layout"]
 ] %}
 
 {% set patterns = [
-  pages["powerpages/patterns"],
   pages["powerpages/patterns/custom-errors"],
   pages["powerpages/patterns/back-link"],
   pages["powerpages/patterns/phase-banner"],
@@ -40,44 +36,92 @@
   pages["powerpages/patterns/crm-helper-framework"]
 ] %}
 
-
-
 {% if currentPath | contains(pages['powerpages/getting-started'].url) %}
-<nav class="dfe-vertical-nav">
-  <ul class="dfe-vertical-nav__section">
+<nav aria-label="Getting Started Menu" class="dfe-vertical-nav">
+  <button type="button" class="dfe-vertical-nav__toggle dfe-js-vertical-nav-toggle" aria-controls="side-navigation" hidden>
+    Getting started menu
+  </button>
+  <ul class="dfe-vertical-nav__section" id="side-navigation">
     {% for page in getting_started %}
-    <li class="dfe-vertical-nav__section-item {% if page.title === pageData.title %}dfe-vertical-nav__section-item--current{% endif %}">
-      <a class="dfe-vertical-nav__link" href="{{ page.url }}">{{ page.title }}</a>
+    <li class="dfe-vertical-nav__section-item {% if currentPath | contains(page.url) %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}">{{ page.title }}</a>
+      {% if page.title == "Pre-requisites" %}
+        <ul class="dfe-vertical-nav__section dfe-vertical-nav__section--nested">
+          <li class="dfe-vertical-nav__section-item">
+            <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}#install-blank-site">Install a blank site</a>
+          </li>
+          <li class="dfe-vertical-nav__section-item">
+            <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}#delete-blank-site">Delete blank site records</a>
+          </li>
+          <li class="dfe-vertical-nav__section-item">
+            <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}#create-app-reg">Create App Registration</a>
+          </li>
+          <li class="dfe-vertical-nav__section-item">
+            <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}#add-app-user">Add Application User</a>
+          </li>
+        </ul>
+      {% endif %}
     </li>
     {% endfor %}
   </ul>
 </nav>
 {% elseif currentPath | contains(pages['powerpages/components'].url) %}
-<nav class="dfe-vertical-nav">
-  <ul class="dfe-vertical-nav__section">
+<nav aria-label="Components Menu" class="dfe-vertical-nav">
+  <button type="button" class="dfe-vertical-nav__toggle dfe-js-vertical-nav-toggle" aria-controls="side-navigation" hidden>
+    Components Menu
+  </button>
+  <ul class="dfe-vertical-nav__section" id="side-navigation">
     {% for page in components %}
-    <li class="dfe-vertical-nav__section-item {% if page.title === pageData.title %}dfe-vertical-nav__section-item--current{% endif %}">
-      <a class="dfe-vertical-nav__link" href="{{ page.url }}">{{ page.title }}</a>
+    <li class="dfe-vertical-nav__section-item {% if currentPath | contains(page.url) %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}">{{ page.title }}</a>
     </li>
     {% endfor %}
   </ul>
 </nav>
 {% elseif currentPath | contains(pages['powerpages/styles'].url) %}
-<nav class="dfe-vertical-nav">
-  <ul class="dfe-vertical-nav__section">
+<nav aria-label="Styles Menu" class="dfe-vertical-nav">
+  <button type="button" class="dfe-vertical-nav__toggle dfe-js-vertical-nav-toggle" aria-controls="side-navigation" hidden>
+    Styles Menu
+  </button>
+  <ul class="dfe-vertical-nav__section" id="side-navigation">
     {% for page in styles %}
-    <li class="dfe-vertical-nav__section-item {% if page.title === pageData.title %}dfe-vertical-nav__section-item--current{% endif %}">
-      <a class="dfe-vertical-nav__link" href="{{ page.url }}">{{ page.title }}</a>
+    <li class="dfe-vertical-nav__section-item {% if currentPath | contains(page.url) %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}">{{ page.title }}</a>
+      {% if page.title == "Layout" %}
+        <ul class="dfe-vertical-nav__section dfe-vertical-nav__section--nested">
+          <li class="dfe-vertical-nav__section-item">
+            <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}#available-layouts">Available layouts</a>
+          </li>
+          <li class="dfe-vertical-nav__section-item">
+            <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}#included-web-templates">Included Web Templates</a>
+          </li>
+          <li class="dfe-vertical-nav__section-item">
+            <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}#choosing-layout">Choosing the right layout</a>
+          </li>
+          <li class="dfe-vertical-nav__section-item">
+            <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}#examples">Examples of extending layouts</a>
+          </li>
+          <li class="dfe-vertical-nav__section-item">
+            <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}#compliance">Compliance with GOV.UK standards</a>
+          </li>
+          <li class="dfe-vertical-nav__section-item">
+            <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}#notes">Additional notes</a>
+          </li>
+        </ul>
+      {% endif %}
     </li>
     {% endfor %}
   </ul>
 </nav>
 {% elseif currentPath | contains(pages['powerpages/patterns'].url) %}
-<nav class="dfe-vertical-nav">
-  <ul class="dfe-vertical-nav__section">
+<nav aria-label="Patterns Menu" class="dfe-vertical-nav">
+  <button type="button" class="dfe-vertical-nav__toggle dfe-js-vertical-nav-toggle" aria-controls="side-navigation" hidden>
+    Patterns Menu
+  </button>
+  <ul class="dfe-vertical-nav__section" id="side-navigation">
     {% for page in patterns %}
-    <li class="dfe-vertical-nav__section-item {% if page.title === pageData.title %}dfe-vertical-nav__section-item--current{% endif %}">
-      <a class="dfe-vertical-nav__link" href="{{ page.url }}">{{ page.title }}</a>
+    <li class="dfe-vertical-nav__section-item {% if currentPath | contains(page.url) %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}">{{ page.title }}</a>
     </li>
     {% endfor %}
   </ul>

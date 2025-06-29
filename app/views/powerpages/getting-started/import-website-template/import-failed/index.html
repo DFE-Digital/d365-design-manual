@@ -1,0 +1,36 @@
+{% set pageData = pages['powerpages/getting-started/import-website-template/import-failed'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+<div class="govuk-panel govuk-panel--confirmation" style="background-color:#d4351c;">
+  {% if showTitlePanel == false %}
+  <h1 class="govuk-panel__title">{{ pageData.title }}</h1>
+  {% else %}
+  <h2 class="govuk-panel__title">{{ pageData.title }}</h2>
+  {% endif %}
+  <div class="govuk-panel__body">
+    {{ pageData.description }}
+  </div>
+</div>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<p class="govuk-body">You import has failed with the conclusion: <code>{{ query.status }}</code></p>
+
+<p class="govuk-body"><a class="govuk-link" href="{{ pages['powerpages/getting-started/import-website-template/start-import'].url }}">Go back and try again</a></p>
+
+<div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-visually-hidden">Warning</span>
+    The ability to download run logs will be added soon.
+  </strong>
+</div>
+
+{% endblock %}

@@ -1,13 +1,19 @@
 {% set pageData = pages['powerpages/components/email-input'] %}
-{% set showHeaderSection = true %}
+{% set showTitlePanel = false %}
 {% set showSubNav = true %}
-{% set dateUpdated = "April 2025" %}
 
 {% from 'includes/components/_email-input.njk' import emailHeaderExample, emailStandardExample, emailHintExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
 {% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
 <div class="dfe-contents-container">
   <nav class="dfe-contents-list">
     <h2 class="dfe-contents-list__title">Contents</h2>

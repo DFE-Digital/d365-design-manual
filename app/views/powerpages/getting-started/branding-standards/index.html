@@ -1,50 +1,47 @@
 {% set pageData = pages['powerpages/getting-started/branding-standards'] %}
-{% set showHeaderSection = true %}
+{% set showTitlePanel = false %}
 {% set showSubNav = true %}
-{% set dateUpdated = "April 2025" %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
 {% block content %}
 
-<h2 class="govuk-heading-m">Branding on Power Pages</h2>
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
 
-<p class="govuk-body">Power Pages can be branded a DfE service <strong>or</strong> a GOV.UK service, however GOV.UK patterns and frontend 
-    code are predominantly used across both. To work with the Power Pages functionality and out-of-the-box limitations you'll sometimes need to use slightly 
-    different patterns and tweak the recommended frontend code. This site includes examples of best practice use for working with GOV.UK and 
-    DfE design patterns and frontend code on Power Pages.</p>
+<p class="govuk-body">Power Pages sites can carry either the DfE or GOV.UK brand, but predominantly use GOV.UK design patterns and frontend code. 
+  Because Power Pages has its own layout and built-in constraints, this site shows how to adapt those patterns and code examples for GOV.UK and DfE styles on Power Pages.</p>
 
-<p class="govuk-body">The styles, patterns and components detailed on this site are based on the GOV.UK Design System and adapted for use with Power Pages. 
-    There are additional styles, patterns and components on the GOV.UK Design System not included on this site. You can use these with Power Pages without any specific customisation* required e.g. HTML for tables.</p>
+<h2 class="govuk-heading-l">Design system coverage</h2>
+<p class="govuk-body">All styles, components and patterns here come from the GOV.UK Design System, tailored for Power Pages. Many other static GOV.UK elements (for example, table HTML) work out-of-the-box and don't require customisation — just drop them in as documented.</p>
 
 <p class="govuk-body"><a class="govuk-link" href="https://design-system.service.gov.uk/" target="_blank">Access the GOV.UK Design System (opens in a new tab)</a></p>
 
-<div class="govuk-inset-text">
-  The additional styles, patterns and components referred to on the GOV.UK Design System are static HTML snippets which do not require adapting for use with the Power Pages WebApi service to submit data to Dynamics 365 CRM. The examples provided on the GOV.UK Design System contain sample data which you will need to replace with your own content.
-</div>
-
-<h2 class="govuk-heading-m">Products on the service.gov.uk domain</h2>
-<p class="govuk-body">If your product is provided on the service.gov.uk domain, you must:</p>
+<h2 class="govuk-heading-l">Products on the service.gov.uk domain</h2>
+<p class="govuk-body">If your product is hosted on the service.gov.uk domain, you must:</p>
 <ul class="govuk-list govuk-list--bullet">
   <li>use the GOV.UK header</li>
   <li>use GDS Transport typeface</li>
   <li>meet the requirements of the <a class="govuk-link" href="https://www.gov.uk/government/publications/govuk-proposition/govuk-proposition" target="_blank">GOV.UK Proposition (opens in a new tab)</a></li>
 </ul>
 
-<h2 class="govuk-heading-m">Products on the education.gov.uk domain</h2>
+<h2 class="govuk-heading-l">Products on the education.gov.uk domain</h2>
 <p class="govuk-body">For products hosted on education.gov.uk, and internal staff facing products built by DfE teams, you must:</p>
 <ul class="govuk-list govuk-list--bullet">
   <li>use the DfE header</li>
-  <li>use the Inter typeface</li>
+  <li>show the DfE logo in the header</li>
 </ul>
 
-<p class="govuk-body">There are <a href="https://standards.education.gov.uk/standard/digital-product-branding#toleratedproducts" target="_blank">tolerated instances (opens in a new tab)</a> where this is not appropriate.</p>
+<p class="govuk-body">There are <a class="govuk-link" href="https://standards.education.gov.uk/standard/digital-product-branding#toleratedproducts" target="_blank">tolerated instances (opens in a new tab)</a> where this is not appropriate.</p>
 <p class="govuk-body">Existing products that do not meet this standard, and are not an exception, must include alignment to the standard as part of their product roadmap.</p>
 
-<h2 class="govuk-heading-m">When you need to meet this standard</h2>
+<h2 class="govuk-heading-l">When you need to meet this standard</h2>
 <p class="govuk-body">New products and those in development must meet this standard at their launch from public beta.</p>
 
-<h3 class="govuk-heading-s">Things to consider when applying this standard</h3>
+<h3 class="govuk-heading-m">Things to consider when applying this standard</h3>
 <ul class="govuk-list govuk-list--bullet">
   <li>Engage early with content and interaction designers to ensure branding choices are integrated into your service's overall user experience.</li>
   <li>Understand and review the design system and proposition guidelines during development to ensure compliance before launch.</li>

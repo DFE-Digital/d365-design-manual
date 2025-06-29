@@ -1,13 +1,16 @@
 {% set pageData = pages['powerpages/patterns/phase-banner'] %}
-{% set showHeaderSection = true %}
+{% set showTitlePanel = true %}
 {% set showSubNav = true %}
-{% set dateUpdated = "April 2025" %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
 {% block content %}
 
-<h2 class="govuk-heading-m">Overriding the phase banner</h2>
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5" id="setting-heading">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5" id="setting-heading">{{ pageData.title }}</h2>
+{% endif %}
 
 <p class="govuk-body">
   The GOV.UK phase banner component is included by default in the layout templates and displays a Beta label. If you want to override this to display the Alpha phase instead, you need to make the change directly in the layout templates.

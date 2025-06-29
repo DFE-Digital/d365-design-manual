@@ -1,46 +1,32 @@
 {% set pageData = pages['home'] %}
-{% set showHeaderSection = true %}
+{% set showTitlePanel= false %}
 {% set showSubNav = false %}
 
-{% extends "layouts/_full-page.html" %}
+{% extends "layouts/_two-column-wide-left.html" %}
 
 {% block content %}
-<div class="dfe-grid-container">
-  <div class="dfe-card">
-    <div class="dfe-card-container">
-      <h2 class="govuk-heading-m">
-          <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header" href="{{ pages['powerpages'].url }}">Power Pages</a>
-      </h2>
-      <p>We use a combination of the GOV.UK Design System, DfE Frontend and custom frameworks to create consistent looking Dynamics 365 Power Pages websites.</p>
-    </div>
-   </div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+  <div class="dfe-grid-container">
     <div class="dfe-card">
       <div class="dfe-card-container">
-        <h2 class="govuk-heading-m">
-          <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header" href="{{ pages['crm'].url }}">CRM</a>
-        </h2>
-        <p>We maintain a consistent process of building and releasing the back end of a Dynamics 365 CRM, encompassing its configuration, customisation, and deployment.</p>
+        <h3 class="govuk-heading-m">
+          <a href="{{pages['powerpages'].url}}" class="govuk-link govuk-link--no-visited-state dfe-card-link--header">Power Pages</a>
+        </h3>
+        <p class="govuk-body">Step-by-step guidance on crafting GOV.UK-aligned front-end experiences using the GOV.UK Design System, DfE Frontend and bespoke components &mdash; so your Power Pages sites look and feel consistent from page to page.</p>
       </div>
     </div>
     <div class="dfe-card">
       <div class="dfe-card-container">
-        <h2 class="govuk-heading-m">
-          <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header" href="/accessibility">Accessibility</a>
-        </h2>
-          <p>Use our templates, audit plans and WCAG guidelines to ensure we design Power Pages websites with accessibility in mind.</p>
-      </div>
-    </div>
-    <div class="dfe-card">
-      <div class="dfe-card-container">
-        <h2 class="govuk-heading-m">
-          <a class="govuk-link govuk-link--no-visited-state dfe-card-link--header" href="https://design.education.gov.uk/content-design">Content design</a>
-        </h2>
-        <p>Writing in plain language, to create clear and consistent content for the departments digital services.</p>
+        <h3 class="govuk-heading-m">
+          <a href="{{pages['crm'].url}}" class="govuk-link govuk-link--no-visited-state dfe-card-link--header">CRM</a>
+        </h3>
+        <p class="govuk-body">A standardised process for configuring, customising and deploying the Dynamics 365 back end &mdash; covering solution architecture, environment strategies, custom entities and release practices to keep your CRM robust and maintainable.</p>
       </div>
     </div>
   </div>
+  </div>
 </div>
-<div class="dfe-grid-column-full">
 <h2 class="govuk-heading-l">Other resources and guidance</h2>
 <ul class="govuk-list govuk-list--spaced">
   <li>

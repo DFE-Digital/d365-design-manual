@@ -1,18 +1,12 @@
-{% from "header/macro.njk" import header %}
-{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
-
-{{ header({
-    "showNav": "false",
-    "showSearch": "false",
-    "showHeaderActionLinks": "false",
-    "logoPath": "assets/images",
-    "logoAltText": "Department for Education",
-    "homeHref": pages['home'].url,
-    "service": {
-      "serviceUrl": pages['home'].url    
-    }
-  })
-}}
+<header class="govuk-header" data-module="govuk-header">
+  <div class="govuk-header__container govuk-width-container">
+    <div class="govuk-header__logo">
+      <a href="/" class="govuk-header__link govuk-header__link--homepage">
+        <img src="/assets/images/dfe-logo_white.png" alt="Department for Education" class="govuk-header__logotype">
+      </a>
+    </div>
+  </div>
+</header>
 
 {% set navigationItems = [
   { href: pages['powerpages'].url, text: "Power Pages" },
@@ -29,8 +23,12 @@
 
 {% set updatedNavigation = [updatedPowerPagesItem, updatedCRMItem] %}
 
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+
+{% if pageData.title != "Home" %}
 {{ govukServiceNavigation({
-  serviceName: "Dynamics 365 Design Manual",
+  serviceName: "Dynamics 365 Design System",
   serviceUrl: pages['home'].url,
   navigation: updatedNavigation
 }) }}
+{% endif %}
