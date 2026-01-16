@@ -1,0 +1,68 @@
+{% set pageData = pages['powerpages/components/contents-list'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_contents.njk' import contentsStandardExample, contentsWithoutDashesExample, contentsNestedListExample, contentsNestedListBoldExample %}
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+<p class="govuk-body"><a class="govuk-link" href="#html-examples">Skip to HTML examples</a></p>
+
+<h2 class="govuk-heading-l" id="when-to-use-this-component">When to use this component</h2>
+<p class="govuk-body">{{ pageData.description }}</p>
+
+<h2 class="govuk-heading-l" id="when-not-to-use-this-component">When not to use this component</h2>
+<p class="govuk-body">Avoid using a contents list on pages that lack clear grouping or related content, as this may confuse users.</p>
+<p class="govuk-body">Additionally, do not incorporate a contents list in transactional services or forms. Instead, use alternative components such as buttons for navigation or back links.</p>
+
+<h2 class="govuk-heading-l" id="how-it-works">How it works</h2>
+<p class="govuk-body">Ensure that links are concise and descriptive, as overly lengthy links (exceeding two lines) hinder user scanning. Page titles or headers must accurately reflect the content of the page to provide users with clear navigation cues.</p>
+
+<h2 class="govuk-heading-l" id="customisation-options">Customisation options</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li><strong>Without dashes:</strong> You can choose not to use dashes before your links by removing the <code>dfe-contents-list__list-item--dashed</code> class from the list item.</li>
+  <li><strong>Bold links:</strong> You can enhance the visibility of links by adding the <code>dfe-contents-list__list-item--parent</code> class to the list item. This is particularly useful for showcasing parent-child page or page content relationships in nested contents lists.</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="html-examples">HTML examples</h2>
+<p class="govuk-body">
+  Select the appropriate example below and directly integrate the HTML into your web template.
+  You can customise these examples to align with your specific requirements, as indicated earlier.
+  Refer to the <a class="govuk-link" href="{{ pages['powerpages/styles/layout'].url }}">layouts</a> section for further guidance on structuring your web template.
+</p>
+
+<h3 class="govuk-heading-m">With dashes</h3>
+{{ contentsStandardExample() }}
+
+<h3 class="govuk-heading-m">Without dashes</h3>
+<p class="govuk-body">Display the contents list without dashes preceding each link.</p>
+
+{{ contentsWithoutDashesExample() }}
+
+<h3 class="govuk-heading-m">Nested child links</h3>
+<p class="govuk-body">Use nested child links to illustrate structural relationships between child pages or page headers.</p>
+
+{{ contentsNestedListExample() }}
+
+<h3 class="govuk-heading-m">Nested child links with bold parent links</h3>
+<p class="govuk-body">Highlight parent links in bold to emphasise structural relationships between parent and child pages or headers.</p>
+
+{{ contentsNestedListBoldExample() }}
+
+<p class="govuk-body">If you would like any additional advice or guidance with using these examples on Power Pages, please contact the Solutions Delivery Team.</p>
+
+
+{% endblock %}

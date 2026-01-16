@@ -1,0 +1,223 @@
+{% set pageData = pages['powerpages/patterns/apply-sort-and-filters'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_codeExample.njk' import codeExample %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5" id="introduction">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5" id="introduction">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Overview", href: "#overview" },
+  { text: "How URL parameters work", href: "#url-parameters" },
+  { text: "Reading URL parameters in Liquid", href: "#reading-params" },
+  { text: "Building FetchXML queries", href: "#fetchxml-queries" },
+  { text: "Rendering the filter summary", href: "#filter-summary" },
+  { text: "Complete page example", href: "#complete-example" },
+  { text: "JavaScript for the design manual", href: "#design-manual-js" }
+]) }}
+
+<p class="govuk-body">This pattern explains how to implement server-side filtering and sorting in Power Pages using URL parameters. When users apply filters, the page reloads with the filter values in the URL, which are then used to query Dataverse and display filtered results.</p>
+
+<h2 class="govuk-heading-l" id="overview">Overview</h2>
+
+<p class="govuk-body">The filter and sort pattern follows this flow:</p>
+
+<ol class="govuk-list govuk-list--number">
+  <li>User selects filter options from the <a href="{{ pages['powerpages/components/filter-panel'].url }}" class="govuk-link">filter panel component</a></li>
+  <li>User clicks "Apply" which reloads the page with filter values as URL parameters</li>
+  <li>Server-side Liquid code reads the URL parameters</li>
+  <li>FetchXML query is built dynamically based on the parameters</li>
+  <li>Filtered results are displayed along with a "Filters applied" summary</li>
+  <li>Users can remove individual filters or clear all filters</li>
+</ol>
+
+<p class="govuk-body">This approach is preferred over client-side filtering because:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>it works with large datasets without loading all records</li>
+  <li>filter state is preserved in the URL (shareable, bookmarkable)</li>
+  <li>it works without JavaScript for basic functionality</li>
+  <li>it's more performant for complex queries</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="url-parameters">How URL parameters work</h2>
+
+<p class="govuk-body">When the user applies filters, the form submits and appends the selected values to the URL as query parameters. For example:</p>
+
+<pre><code>/search?order=updated-newest&status[]=active&status[]=pending&topic=education</code></pre>
+
+<p class="govuk-body">In this URL:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li><code>order=updated-newest</code> - a single value parameter (sort order)</li>
+  <li><code>status[]=active&status[]=pending</code> - multiple values for the same parameter (checkboxes)</li>
+  <li><code>topic=education</code> - a single value parameter (select dropdown)</li>
+</ul>
+
+<p class="govuk-body">The filter panel must be wrapped in a form using the <code>GET</code> method. This ensures filter values are appended to the URL as query parameters when the user clicks Apply.</p>
+
+<h2 class="govuk-heading-l" id="reading-params">Reading URL parameters in Liquid</h2>
+
+<p class="govuk-body">In Power Pages, URL parameters are accessed via the <code>request.params</code> object. You can read single values or handle arrays for multi-select filters.</p>
+
+<h3 class="govuk-heading-m">Reading single value parameters</h3>
+
+<p class="govuk-body">For parameters like sort order or select dropdowns that have a single value:</p>
+
+{{ codeExample(
+  "Reading single value parameters",
+  "includes/patterns/apply-sort-and-filters/readSingleParam.njk",
+  { index: 2, language: "django" }
+) }}
+
+<h3 class="govuk-heading-m">Reading multi-value parameters (checkboxes)</h3>
+
+<p class="govuk-body">For checkbox groups where multiple values can be selected, the values come through as a comma-separated string. Use Liquid's <code>split</code> filter to convert to an array:</p>
+
+{{ codeExample(
+  "Reading multi-value parameters",
+  "includes/patterns/apply-sort-and-filters/readMultiParam.njk",
+  { index: 3, language: "django" }
+) }}
+
+<h3 class="govuk-heading-m">Setting form values from URL parameters</h3>
+
+<p class="govuk-body">When the page loads with URL parameters, you need to pre-select the corresponding form inputs so users can see what filters are active:</p>
+
+{{ codeExample(
+  "Pre-selecting checkboxes from URL params",
+  "includes/patterns/apply-sort-and-filters/preSelectCheckboxes.njk",
+  { index: 4, language: "django" }
+) }}
+
+{{ codeExample(
+  "Pre-selecting radio buttons from URL params",
+  "includes/patterns/apply-sort-and-filters/preSelectRadios.njk",
+  { index: 5, language: "django" }
+) }}
+
+{{ codeExample(
+  "Pre-selecting dropdown from URL params",
+  "includes/patterns/apply-sort-and-filters/preSelectDropdown.njk",
+  { index: 6, language: "django" }
+) }}
+
+<h2 class="govuk-heading-l" id="fetchxml-queries">Building FetchXML queries</h2>
+
+<p class="govuk-body">Use the URL parameters to dynamically build your FetchXML query. This allows you to filter and sort the data based on user selections.</p>
+
+<h3 class="govuk-heading-m">Basic query with sorting</h3>
+
+{{ codeExample(
+  "FetchXML with dynamic sorting",
+  "includes/patterns/apply-sort-and-filters/fetchxmlSorting.njk",
+  { index: 7, language: "django" }
+) }}
+
+<h3 class="govuk-heading-m">Query with filter conditions</h3>
+
+<p class="govuk-body">Add filter conditions based on the URL parameters. Use the <code>condition</code> element for single values and loop through arrays for multi-select filters:</p>
+
+{{ codeExample(
+  "FetchXML with filter conditions",
+  "includes/patterns/apply-sort-and-filters/fetchxmlFilters.njk",
+  { index: 8, language: "django" }
+) }}
+
+<h3 class="govuk-heading-m">Complete FetchXML example</h3>
+
+<p class="govuk-body">Here's a complete example combining sorting and multiple filter types:</p>
+
+{{ codeExample(
+  "Complete FetchXML query",
+  "includes/patterns/apply-sort-and-filters/fetchxmlComplete.njk",
+  { index: 9, language: "django" }
+) }}
+
+<h2 class="govuk-heading-l" id="filter-summary">Rendering the filter summary</h2>
+
+<p class="govuk-body">When filters are active, display a summary below the filter panel showing the applied filters. Each filter should be a link that removes that specific filter when clicked.</p>
+
+<h3 class="govuk-heading-m">Building the remove filter URL</h3>
+
+<p class="govuk-body">To remove a filter, you need to rebuild the URL without that specific parameter. Create a Liquid snippet that generates the URL:</p>
+
+{{ codeExample(
+  "Building remove filter URL",
+  "includes/patterns/apply-sort-and-filters/removeFilterUrl.njk",
+  { index: 10, language: "django" }
+) }}
+
+<h3 class="govuk-heading-m">Rendering the filter summary HTML</h3>
+
+<p class="govuk-body">Use the filter summary component to display active filters:</p>
+
+{{ codeExample(
+  "Filter summary component",
+  "includes/patterns/apply-sort-and-filters/filterSummaryHtml.njk",
+  { index: 11, language: "django" }
+) }}
+
+<h3 class="govuk-heading-m">Building the clear all URL</h3>
+
+<p class="govuk-body">The "Clear all filters" link should remove all filter parameters but preserve non-filter parameters like search keywords:</p>
+
+{{ codeExample(
+  "Clear all filters URL",
+  "includes/patterns/apply-sort-and-filters/clearAllUrl.njk",
+  { index: 12, language: "django" }
+) }}
+
+<h2 class="govuk-heading-l" id="complete-example">Complete page example</h2>
+
+<p class="govuk-body">Here's a complete example showing how all the pieces fit together on a search results page:</p>
+
+{{ codeExample(
+  "Complete search results page",
+  "includes/patterns/apply-sort-and-filters/completePage.njk",
+  { index: 13, language: "django" }
+) }}
+
+<h2 class="govuk-heading-l" id="design-manual-js">JavaScript for the design manual</h2>
+
+<p class="govuk-body">The filter panel component in this design manual includes JavaScript that demonstrates the filter behaviour. This JavaScript handles:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>reading URL parameters on page load and pre-selecting form inputs</li>
+  <li>showing selected filters in real-time as users make selections</li>
+  <li>building URL parameters and reloading the page when "Apply" is clicked</li>
+  <li>removing individual filters and reloading with updated parameters</li>
+  <li>clearing all filters and reloading</li>
+</ul>
+
+<div class="govuk-inset-text">
+  <p class="govuk-body">For Power Pages, you typically won't need this JavaScript as the filtering is handled server-side with Liquid. The JavaScript is provided for demonstration purposes in the design manual and for scenarios where you want to show filter selections before applying.</p>
+</div>
+
+<p class="govuk-body">The <a href="{{ pages['powerpages/components/filter-panel'].url }}" class="govuk-link">filter panel component</a> JavaScript automatically provides real-time selection feedback, showing users their selected filters before they click Apply.</p>
+
+<h2 class="govuk-heading-l">Best practices</h2>
+
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+  <li>Always wrap the filter panel in a form with <code>method="get"</code> so filter values appear in the URL</li>
+  <li>Preserve non-filter parameters (like search keywords) when building filter URLs</li>
+  <li>Use meaningful parameter names that describe the filter (e.g. <code>status</code> not <code>s</code>)</li>
+  <li>Provide a "Clear all filters" option when multiple filters are active</li>
+  <li>Show a count of results to help users understand the effect of their filters</li>
+  <li>Consider pagination alongside filtering for large result sets</li>
+  <li>Test with no filters, single filters, and multiple filters to ensure all combinations work</li>
+</ul>
+
+{% endblock %}

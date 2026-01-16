@@ -1,0 +1,37 @@
+{% raw %}
+{% comment %}
+  Pre-select radio buttons based on URL parameters
+{% endcomment %}
+
+{% assign sort_order = request.params['order'] | default: 'relevance' %}
+
+<div class="govuk-radios govuk-radios--small">
+  <div class="govuk-radios__item">
+    <input type="radio"
+           name="order"
+           id="sort-relevance"
+           value="relevance"
+           class="govuk-radios__input"
+           {% if sort_order == 'relevance' %}checked{% endif %}>
+    <label for="sort-relevance" class="govuk-label govuk-radios__label">Relevance</label>
+  </div>
+  <div class="govuk-radios__item">
+    <input type="radio"
+           name="order"
+           id="sort-newest"
+           value="updated-newest"
+           class="govuk-radios__input"
+           {% if sort_order == 'updated-newest' %}checked{% endif %}>
+    <label for="sort-newest" class="govuk-label govuk-radios__label">Updated (newest)</label>
+  </div>
+  <div class="govuk-radios__item">
+    <input type="radio"
+           name="order"
+           id="sort-oldest"
+           value="updated-oldest"
+           class="govuk-radios__input"
+           {% if sort_order == 'updated-oldest' %}checked{% endif %}>
+    <label for="sort-oldest" class="govuk-label govuk-radios__label">Updated (oldest)</label>
+  </div>
+</div>
+{% endraw %}

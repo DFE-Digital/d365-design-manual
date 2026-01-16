@@ -1,0 +1,11 @@
+{% macro codeExample(title, examplePath, options = {}) %}
+
+{% set exampleCode %}
+{% include examplePath %}
+{% endset %}
+
+{% set language = options.language or 'django' %}
+
+<pre><code class="language-{{ language }}" id="code-example-{{ options.index or 1 }}">{{- exampleCode | trim -}}</code></pre>
+
+{% endmacro %}

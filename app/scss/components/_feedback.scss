@@ -1,0 +1,203 @@
+// Feedback Component
+// ===================
+
+.dfe-feedback {
+  background: govuk-colour("white");
+  margin-top: 30px;
+}
+
+@media(min-width: 48.0625em) {
+  .dfe-feedback {
+    margin-top: 60px;
+  }
+}
+
+@media(max-width: 40.0525em) {
+  .dfe-feedback {
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+}
+
+@media(min-width: 40.0625em) and (max-width: 48.0525em) {
+  .dfe-feedback {
+    margin-right: -30px;
+    margin-left: -30px;
+  }
+}
+
+.dfe-feedback [hidden] {
+  display: none !important;
+}
+
+.dfe-feedback__prompt {
+  background-color: govuk-tint($govuk-brand-colour, 95%);
+  color: $govuk-text-colour;
+  border-top: 1px solid govuk-tint($govuk-brand-colour, 80%);
+  outline: 0;
+}
+
+.dfe-feedback__prompt-content {
+  display: flex;
+  flex-direction: column;
+  padding: 0 15px;
+}
+
+@media(min-width: 40.0625em) {
+  .dfe-feedback__prompt-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.dfe-feedback__prompt-questions {
+  text-align: left;
+  padding: 20px 0;
+}
+
+@media(min-width: 40.0625em) {
+  .dfe-feedback__prompt-questions {
+    margin: 0 15px;
+  }
+}
+
+.dfe-feedback__prompt-questions--something-is-wrong {
+  border-top: 1px solid $govuk-border-colour;
+}
+
+@media(min-width: 40.0625em) {
+  .dfe-feedback__prompt-questions--something-is-wrong {
+    border: 0;
+  }
+}
+
+.dfe-feedback__prompt-question-answer {
+  display: flex;
+  align-items: center;
+}
+
+@media(max-width: 19.99em) {
+  .dfe-feedback__prompt-question-answer {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+.dfe-feedback__prompt-question,
+.dfe-feedback__prompt-success {
+  @include govuk-font($size: 19, $weight: bold);
+}
+
+.dfe-feedback__prompt-question {
+  margin: 0;
+  padding-bottom: 10px;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+@media(min-width: 20em) {
+  .dfe-feedback__prompt-question {
+    padding-bottom: 0;
+    margin-right: 10px;
+  }
+}
+
+@media(min-width: 48.0625em) {
+  .dfe-feedback__prompt-question {
+    margin-right: 20px;
+  }
+}
+
+.dfe-feedback__prompt-link {
+  background: transparent;
+  color: $govuk-text-colour;
+  box-shadow: 0 3px 0 $govuk-input-border-colour;
+  border: 1px $govuk-input-border-colour solid;
+  margin-bottom: 0;
+  width: 100%;
+  @include govuk-font($size: 19);
+
+  &:focus,
+  &:focus:not(:active):not(:hover) {
+    background: $govuk-focus-colour;
+    border-color: $govuk-input-border-colour;
+    box-shadow: 0 5px 0 $govuk-input-border-colour;
+  }
+
+  &:active {
+    color: $govuk-link-active-colour;
+  }
+
+  &:hover {
+    background: govuk-colour("mid-grey");
+    color: $govuk-text-colour;
+  }
+
+  &:link,
+  &:visited {
+    color: $govuk-text-colour;
+  }
+
+  &:link:focus,
+  &:link:active,
+  &:visited:focus,
+  &:visited:active {
+    color: $govuk-text-colour;
+  }
+}
+
+.dfe-feedback__option-list {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dfe-feedback__option-list-item:last-child {
+  margin-left: 10px;
+}
+
+@media(min-width: 48.0625em) {
+  .dfe-feedback__option-list-item:last-child {
+    margin-left: 20px;
+  }
+}
+
+.dfe-feedback__option-list-item .dfe-feedback__prompt-link {
+  min-width: 100px;
+}
+
+@media(max-width: 48.0525em) {
+  .dfe-feedback__option-list-item .dfe-feedback__prompt-link {
+    min-width: 80px;
+  }
+}
+
+.dfe-feedback__close {
+  margin: 0 10px;
+}
+
+@media(max-width: 40.0525em) {
+  .dfe-feedback__close {
+    margin: 20px 0 0;
+  }
+}
+
+.dfe-feedback__email-link {
+  display: inline-block;
+  margin-top: 20px;
+}
+
+@media(min-width: 48.0625em) {
+  .dfe-feedback__email-link {
+    margin-top: 10px;
+  }
+}
+
+.dfe-feedback__email-link:focus,
+.dfe-feedback__email-link:active {
+  color: $govuk-focus-text-colour;
+}

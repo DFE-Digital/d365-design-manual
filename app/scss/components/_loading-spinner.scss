@@ -1,0 +1,21 @@
+// Loading Spinner
+// ================
+
+.dfe-loading-spinner {
+  border: 6px solid govuk-colour("light-grey");
+  border-radius: 50%;
+  border-top-color: $govuk-brand-colour;
+  margin-bottom: 10px;
+  width: 30px;
+  height: 30px;
+  animation: dfe-spin 2s linear infinite;
+}
+
+@keyframes dfe-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

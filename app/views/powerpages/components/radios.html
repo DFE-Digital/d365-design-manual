@@ -1,0 +1,142 @@
+{% set pageData = pages['powerpages/components/radios'] %}
+{% set showHeaderSection = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_exampleTabs.njk' import exampleTabs %}
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+<p class="govuk-body"><a class="govuk-link" href="#html-examples">Skip to HTML examples</a></p>
+
+<h2 class="govuk-heading-l" id="when-to-use-this-component">When to use this component</h2>
+<p class="govuk-body">{{ pageData.description }}</p>
+
+<h2 class="govuk-heading-l" id="when-not-to-use-this-component">When not to use this component</h2>
+<p class="govuk-body">Do not use the radios component if users might need to select more than one option. In this case, you should use the <a class="govuk-link" href="{{ pages['powerpages/components/checkboxes'].url }}">checkboxes</a> component instead.</p>
+
+<h2 class="govuk-heading-l" id="how-it-works">How it works</h2>
+<p class="govuk-body">Read the <a class="govuk-link" href="https://design-system.service.gov.uk/components/radios/#how-it-works" target="_blank">GOV.UK Design System guidance on radios (opens in a new tab)</a> for information on ordering options, hint text, and accessibility considerations.</p>
+
+<h2 class="govuk-heading-l" id="html-examples">HTML examples</h2>
+<p class="govuk-body">
+  Copy the HTML into your web template. Replace <code>schema-name</code> with your CRM field schema name, keeping any suffixes like <code>-hint</code>. This is required for the <a class="govuk-link" href="{{ pages['powerpages/patterns/crm-helper-framework'].url }}">CRM helper framework</a> to validate and submit data.
+</p>
+<p class="govuk-body">
+  Use the input field above each example to enter your schema name. This updates all instances in the code automatically, ensuring no mistakes that could impact validation or accessibility.
+</p>
+
+<h3 class="govuk-heading-m" id="single-question">For single question pages</h3>
+<p class="govuk-body">
+  If presenting only one question on the page, designate the contents of the <code>label</code> as the page heading.
+  This practice ensures users of screen readers hear the contents only once.
+</p>
+
+<p class="govuk-body">You will need to include an empty <code>&#123;% title %&#125;</code> block in your web template to remove the default page header and avoid duplication.</p>
+
+{{ exampleTabs(
+  "For single question pages",
+  "includes/components/radios/headerExample.njk",
+  { showUpdateSchema: true, index: 1, layout: 'default' }
+) }}
+
+<h3 class="govuk-heading-m" id="multiple-question">For multiple question pages</h3>
+<p class="govuk-body">If presenting more than one question on the page, do not set the contents of the <code>&lt;legend&gt;</code> as the page heading.</p>
+
+{{ exampleTabs(
+  "For multiple question pages",
+  "includes/components/radios/standardExample.njk",
+  { showUpdateSchema: true, index: 2, layout: 'withTitle' }
+) }}
+
+<h3 class="govuk-heading-m" id="using-hint-text">Using hint text</h3>
+<p class="govuk-body">
+  Use hint text to provide relevant assistance to the majority of users, such as clarifying how their information will be used or where to locate it.
+  The hint text block is demonstrated in the example below.
+</p>
+<p class="govuk-body">Please ensure the following:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use the hint text block appropriately</li>
+  <li>Place the hint block correctly within your HTML component</li>
+  <li>Add the <code>aria-describedby</code> attribute where necessary, for accessiblity. For radios this is against the <code>fieldset</code>.</li>
+</ul>
+<p class="govuk-body">
+  Avoid lengthy paragraphs and lists in hint text, as screen readers will read out the entire content, potentially frustrating users.
+  Additionally, refrain from including links within hint text, as screen readers do not indicate that the text is a clickable link.
+</p>
+
+{{ exampleTabs(
+  "Radios with hint text",
+  "includes/components/radios/hintExample.njk",
+  { showUpdateSchema: true, index: 3, layout: 'default' }
+) }}
+
+<h3 class="govuk-heading-m" id="inline-radios">Inline radios</h3>
+<p class="govuk-body">
+  In some cases, you can choose to display radios 'inline' beside one another (horizontally).
+  Only use inline radios when the question only has two options or both options are short.
+</p>
+<p class="govuk-body">On small screens such as mobile devices, the radios will still be 'stacked' on top of one another (vertically).</p>
+
+{{ exampleTabs(
+  "Inline radios",
+  "includes/components/radios/inlineExample.njk",
+  { showUpdateSchema: true, index: 4, layout: 'default' }
+) }}
+
+<h3 class="govuk-heading-m" id="conditional-questions">Conditionally revealing a related question</h3>
+<p class="govuk-body">You can ask the user a related question when they select a particular radio option, so they only see the question when it's relevant to them.</p>
+<p class="govuk-body">This might make two related questions easier to answer by grouping them on the same page. For example, you could reveal a phone number input when the user selects the 'Contact me by phone' option.</p>
+<p class="govuk-body">If the related question is complicated or has more than one part, show it on the next page in the process instead.</p>
+<p class="govuk-body">Do not conditionally reveal questions to inline radios, such as 'yes' and 'no' options placed next to each other.</p>
+<p class="govuk-body">Conditionally reveal questions only - do not show or hide anything that is not a question.</p>
+
+<div class="govuk-inset-text">
+  <p class="govuk-body">
+    Your schema names are likely to be different for your related questions. Using the above code example as reference, your 'Text message' option and related 'Mobile phone number' input
+    are likely to have different schema names if you are submitting both values to fields in the CRM database. Be aware of this when replacing the 'schema-name' placeholder values.
+  </p>
+</div>
+
+{{ exampleTabs(
+  "Conditional radios",
+  "includes/components/radios/conditionalExample.njk",
+  { showUpdateSchema: true, index: 5, layout: 'default' }
+) }}
+
+<h3 class="govuk-heading-m" id="additional-examples">Additional examples</h3>
+<p class="govuk-body">Additional examples can be found on the GOV.UK Design System:</p>
+<ul class="govuk-list">
+  <li><a class="govuk-link" href="https://design-system.service.gov.uk/components/radios#radio-items-with-a-text-divider">Radio items with a text divider</a></li>
+  <li><a class="govuk-link" href="https://design-system.service.gov.uk/components/radios#smaller-radios">Smaller radios</a></li>
+</ul>
+<p class="govuk-body">
+  These examples will eventually be incorporated into this guidance, demonstrating how to use each of these additional examples with Power Pages.
+  If you require assistance in the interim to adapt these additional examples for use with Power Pages and the CRM helper framework, please contact the Solutions Delivery Team.
+</p>
+
+<h2 class="govuk-heading-l" id="error-messages">Error messages</h2>
+<p class="govuk-body">
+  An error message is displayed next to the field and in the error summary when a validation error occurs.
+  The <a class="govuk-link" href="{{ pages['powerpages/patterns/crm-helper-framework'].url }}">CRM helper framework</a> automatically handles error messages for specific error states.
+</p>
+<p class="govuk-body govuk-!-font-weight-bold">If nothing is selected and the question is required</p>
+<p class="govuk-body">'Select [whatever it is]'. For example, 'Select how you want to be contacted'.</p>
+
+<p class="govuk-body">If you would like any additional advice or guidance with using these examples on Power Pages, please contact the Solutions Delivery Team.</p>
+
+<script type="text/javascript" src="/assets/js/update-html-example.js"></script>
+
+{% endblock %}

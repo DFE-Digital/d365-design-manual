@@ -1,0 +1,84 @@
+{% raw %}
+{% comment %}
+  Complete FetchXML query with sorting and multiple filter types
+{% endcomment %}
+
+{% comment %} Read URL parameters {% endcomment %}
+{% assign sort_order = request.params['order'] | default: 'updated-newest' %}
+{% assign selected_topic = request.params['topic'] %}
+{% assign status_param = request.params['status[]'] %}
+{% assign selected_statuses = status_param | split: ',' %}
+{% assign type_param = request.params['type[]'] %}
+{% assign selected_types = type_param | split: ',' %}
+{% assign keywords = request.params['keywords'] %}
+
+{% comment %} Determine sort order {% endcomment %}
+{% case sort_order %}
+  {% when 'updated-newest' %}
+    {% assign sort_attribute = 'modifiedon' %}
+    {% assign sort_descending = 'true' %}
+  {% when 'updated-oldest' %}
+    {% assign sort_attribute = 'modifiedon' %}
+    {% assign sort_descending = 'false' %}
+  {% else %}
+    {% assign sort_attribute = 'createdon' %}
+    {% assign sort_descending = 'true' %}
+{% endcase %}
+
+{% comment %} Check if any filters are active {% endcomment %}
+{% assign has_filters = false %}
+{% if selected_topic != blank %}{% assign has_filters = true %}{% endif %}
+{% if selected_statuses.size > 0 %}{% assign has_filters = true %}{% endif %}
+{% if selected_types.size > 0 %}{% assign has_filters = true %}{% endif %}
+{% if keywords != blank %}{% assign has_filters = true %}{% endif %}
+
+{% fetchxml records %}
+<fetch>
+  <entity name="dfe_record">
+    <attribute name="dfe_recordid" />
+    <attribute name="dfe_name" />
+    <attribute name="dfe_description" />
+    <attribute name="dfe_topic" />
+    <attribute name="dfe_type" />
+    <attribute name="statuscode" />
+    <attribute name="modifiedon" />
+    <attribute name="createdon" />
+    <order attribute="{{ sort_attribute }}" descending="{{ sort_descending }}" />
+    {% if has_filters %}
+    <filter type="and">
+      {% comment %} Keyword search {% endcomment %}
+      {% if keywords != blank %}
+        <filter type="or">
+          <condition attribute="dfe_name" operator="like" value="%{{ keywords }}%" />
+          <condition attribute="dfe_description" operator="like" value="%{{ keywords }}%" />
+        </filter>
+      {% endif %}
+
+      {% comment %} Topic filter (single select) {% endcomment %}
+      {% if selected_topic != blank %}
+        <condition attribute="dfe_topic" operator="eq" value="{{ selected_topic }}" />
+      {% endif %}
+
+      {% comment %} Status filter (multi-select checkboxes) {% endcomment %}
+      {% if selected_statuses.size > 0 %}
+        <filter type="or">
+          {% for status in selected_statuses %}
+            <condition attribute="statuscode" operator="eq" value="{{ status }}" />
+          {% endfor %}
+        </filter>
+      {% endif %}
+
+      {% comment %} Type filter (multi-select checkboxes) {% endcomment %}
+      {% if selected_types.size > 0 %}
+        <filter type="or">
+          {% for type in selected_types %}
+            <condition attribute="dfe_type" operator="eq" value="{{ type }}" />
+          {% endfor %}
+        </filter>
+      {% endif %}
+    </filter>
+    {% endif %}
+  </entity>
+</fetch>
+{% endfetchxml %}
+{% endraw %}

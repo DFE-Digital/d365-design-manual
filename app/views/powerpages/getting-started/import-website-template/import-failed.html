@@ -1,0 +1,70 @@
+{% set pageData = pages['powerpages/getting-started/import-website-template/import-failed'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-panel govuk-panel--confirmation" style="background-color:#d4351c;">
+  {% if showTitlePanel == false %}
+  <h1 class="govuk-panel__title">{{ pageData.title }}</h1>
+  {% else %}
+  <h2 class="govuk-panel__title">{{ pageData.title }}</h2>
+  {% endif %}
+  <div class="govuk-panel__body">
+    {{ pageData.description }}
+  </div>
+</div>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<p class="govuk-body">Your import has failed with the status: <code>{{ query.status or 'unknown' }}</code></p>
+
+{% if query.runUrl %}
+<p class="govuk-body">
+  <a class="govuk-link" href="{{ query.runUrl }}" target="_blank">View the workflow logs on GitHub (opens in new tab)</a> for more details about what went wrong.
+</p>
+{% endif %}
+
+<h2 class="govuk-heading-m">Common causes</h2>
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Invalid credentials</dt>
+    <dd class="govuk-summary-list__value">The Client ID or Client Secret may be incorrect or expired</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Incorrect Environment URL</dt>
+    <dd class="govuk-summary-list__value">Ensure the URL matches your Dynamics 365 environment exactly</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Missing permissions</dt>
+    <dd class="govuk-summary-list__value">The app registration may not have the System Administrator role in Dynamics 365</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Environment not ready</dt>
+    <dd class="govuk-summary-list__value">The Power Pages solutions may not be fully installed</dd>
+  </div>
+</dl>
+
+<h2 class="govuk-heading-m">What to do next</h2>
+
+<ol class="govuk-list govuk-list--number">
+  <li>{% if query.runUrl %}Review the <a class="govuk-link" href="{{ query.runUrl }}" target="_blank">workflow logs</a> to identify the specific error.{% else %}Check the <a class="govuk-link" href="https://github.com/DFE-Digital/d365-gds-powerpages/actions" target="_blank">GitHub Actions page</a> for your workflow run.{% endif %}</li>
+  <li>Verify your <a class="govuk-link" href="{{ pages['powerpages/getting-started/pre-requisites'].url }}">pre-requisites</a> are correctly configured.</li>
+  <li>Check that your Client Secret has not expired in the Azure Portal.</li>
+  <li>Ensure the app registration has the <code>user_impersonation</code> permission for Dynamics CRM.</li>
+</ol>
+
+<p class="govuk-body">
+  <a class="govuk-link" href="{{ pages['powerpages/getting-started/import-website-template/start-import'].url }}">Try the import again</a>
+</p>
+
+{% endblock %}

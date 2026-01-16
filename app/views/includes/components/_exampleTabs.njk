@@ -1,0 +1,69 @@
+{% macro exampleTabs(title, exampleHtmlPath, options = {}) %}
+
+{% set exampleHtml %}
+{% include exampleHtmlPath %}
+{% endset %}
+
+{% set layoutExamples = {
+  "default": "{% extends 'DfE/Layouts/2ColumnWideLeft' %}\n\n{% block title %}{% endblock %}\n\n{% block main %}\n\n{% unless user %}\n  <script>\n    window.location.href=\"{{ sitemarkers['DfE/Error/AccessDenied'].url }}\"\n  </script>\n{% endunless %}\n[[HTML]]\n{% endblock %}",
+  "withTitle": "{% extends 'DfE/Layouts/2ColumnWideLeft' %}\n\n{% block main %}\n\n{% unless user %}\n  <script>\n    window.location.href=\"{{ sitemarkers['DfE/Error/AccessDenied'].url }}\"\n  </script>\n{% endunless %}\n[[HTML]]\n{% endblock %}",
+  "rightColumn": "{% extends 'DfE/Layouts/2ColumnWideLeft' %}\n\n{% block title %}{% endblock %}\n\n{% block main %}\n  <!-- Main page content -->\n{% endblock %}\n\n{% block rightColumn %}\n[[HTML]]\n{% endblock %}"
+} %}
+
+{% set layoutRaw = layoutExamples[options.layout or 'default'] + '' %}
+{% set layoutWithExample = layoutRaw | replace('[[HTML]]', exampleHtml + '') %}
+
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <h2 class="govuk-tabs__title">{{ title }}</h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#{{ title | slugify }}-example">Example</a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#{{ title | slugify }}-html">HTML</a>
+    </li>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#{{ title | slugify }}-liquid">Web Template</a>
+    </li>
+  </ul>
+
+  <div class="govuk-tabs__panel" id="{{ title | slugify }}-example">
+    {{- exampleHtml | safe -}}
+  </div>
+
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="{{ title | slugify }}-html">
+    {% if options.showUpdateSchema %}
+      <div class="govuk-form-group govuk-!-margin-bottom-0">
+        <label class="govuk-label govuk-label--s" for="enter-schema-name-{{ options.index }}">
+          Update the HTML example
+        </label>
+        <div class="govuk-hint">
+          Replace 'schema-name' by entering your CRM field schema name.
+        </div>
+        <input class="govuk-input govuk-input--width-20 schema-update-input" 
+               id="enter-schema-name-{{ options.index }}" 
+               name="enter-schema-name" 
+               type="text">
+        <button type="button" 
+                class="govuk-button govuk-button--secondary update-html-example"
+                data-target-code="code-block-{{ options.index }}">
+          Update
+        </button>
+      </div>
+    {% endif %}
+    <pre><code class="language-html" id="code-block-{{ options.index }}">{{- exampleHtml | trim -}}</code></pre>
+  </div>
+
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="{{ title | slugify }}-liquid">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        This is a basic web template page layout with a logged-in user check and does not include additional liquid items which are commonplace on a CRM Portal.
+      </strong>
+    </div>
+    <pre><code class="language-django">{{- layoutWithExample -}}</code></pre>
+  </div>
+</div>
+
+{% endmacro %}

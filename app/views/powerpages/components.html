@@ -1,0 +1,128 @@
+{% set pageData = pages['powerpages/components'] %}
+{% set showTitlePanel = true %}
+{% set showSubNav = true %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% from 'includes/_side-nav.html' import components %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+<p class="govuk-body-l">{{ pageData.description }}</p>
+
+<p class="govuk-body">Components are reusable parts of the user interface that have been adapted to work with Dynamics 365 Power Pages. They are:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+    <li>based on <a class="govuk-link" href="https://design-system.service.gov.uk/components/" target="_blank">GOV.UK Design System (opens in a new tab)</a> components</li>
+    <li>suitable for use with Dynamics 365 Power Pages websites</li>
+</ul>
+
+<p class="govuk-body">You can use these individual components in many different patterns and contexts. For example, you can use the text input component to ask for an email address, a National Insurance number or someone's name. These component types have been broken down for specific use cases on Power Pages.</p>
+
+<p class="govuk-body">If you require a component which is not included in the list below, <a class="govuk-link" href="{{ pages['powerpages/patterns'].url}}">refer to the patterns</a> included in this manual in the first instance. Some of the general use components, for example, breadcrumbs and error summary, are already embedded within the liquid template layouts. The patterns section will advise how to work with these components.</p>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<h2 class="govuk-heading-m">In this section</h2>
+
+<ul class="dfe-component-list">
+  {% for page in components %}
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="{{ page.url }}">{{ page.title }}</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ page.description }}</p>
+  </li>
+  {% endfor %}
+</ul>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<h2 class="govuk-heading-m">Components available on GOV.UK Design System</h2>
+
+<p class="govuk-body">The following components from the GOV.UK Design System do not require any customisation to work with Power Pages and Dynamics 365. You can copy the HTML directly from the GOV.UK Design System and use it in your web templates.</p>
+
+<ul class="dfe-component-list">
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/components/accordion/" target="_blank">Accordion</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Let users show and hide sections of related content on a page.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/components/button/" target="_blank">Button</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Help users carry out an action like starting an application or saving their information.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/components/details/" target="_blank">Details</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Make a page easier to scan by letting users reveal more detailed information only if they need it.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/components/inset-text/" target="_blank">Inset text</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Differentiate a block of text from the content that surrounds it.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/components/notification-banner/" target="_blank">Notification banner</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Tell the user about something they need to know about, but that's not directly related to the page content.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/components/pagination/" target="_blank">Pagination</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Help users navigate forwards and backwards through a series of pages.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/components/panel/" target="_blank">Panel</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Communicate a successful or important action to the user.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/components/summary-list/" target="_blank">Summary list</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Summarise information, for example, a user's responses at the end of a form.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/components/table/" target="_blank">Table</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Make information easier to compare and scan for users.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/components/tabs/" target="_blank">Tabs</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Let users navigate between related sections of content, displaying one section at a time.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/components/tag/" target="_blank">Tag</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Show users the status of something with a phase indicator.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/components/task-list/" target="_blank">Task list</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Help users understand tasks involved in completing a transaction and know when they have finished.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/components/warning-text/" target="_blank">Warning text</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Warn users about something important, such as legal consequences of an action.</p>
+  </li>
+</ul>
+
+{% endblock %}

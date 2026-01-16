@@ -1,0 +1,381 @@
+// Filter Panel Component (GOV.UK Style)
+// ======================================
+
+.dfe-filter-panel {
+  padding-top: 15px;
+  margin-bottom: 10px;
+}
+
+.dfe-filter-panel__header {
+  display: flex;
+  flex-wrap: wrap;
+  place-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.dfe-filter-panel__button {
+  @include govuk-font($size: 19);
+  background-color: transparent;
+  color: $govuk-link-colour;
+  text-decoration: none;
+  border-style: none;
+  padding-left: 0;
+  cursor: pointer;
+
+  // Chevron arrow (pointing down when closed)
+  &::before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    width: 10px;
+    height: 10px;
+    left: 5px;
+    margin: 0 10px 5px 0;
+    border-style: solid;
+    border-width: 2px 2px 0 0;
+    border-color: inherit;
+    vertical-align: middle;
+    transform: translateY(-25%) rotate(135deg) scale(1);
+  }
+
+  // Chevron points up when expanded
+  &[aria-expanded="true"]::before {
+    transform: translateY(30%) rotate(-45deg) scale(1);
+  }
+
+  &:hover .dfe-filter-panel__button-inner {
+    text-decoration: underline;
+    text-decoration-thickness: max(3px, .1875rem, .12em);
+    text-underline-offset: .1578em;
+    text-decoration-skip-ink: none;
+  }
+
+  &:focus,
+  &:focus-visible {
+    text-decoration: none;
+    background-color: $govuk-focus-colour;
+    outline: 3px solid transparent;
+    color: $govuk-focus-text-colour;
+    box-shadow: 0 -2px $govuk-focus-colour, 0 4px $govuk-focus-text-colour;
+
+    .dfe-filter-panel__button-inner {
+      text-decoration: none;
+    }
+  }
+}
+
+.dfe-filter-panel__button-inner {
+  display: inline;
+}
+
+.dfe-filter-panel__count {
+  @include govuk-font($size: 16);
+  margin: 0;
+  color: $govuk-secondary-text-colour;
+}
+
+.dfe-filter-panel__content {
+  display: block;
+  background-color: govuk-colour("light-grey");
+  padding: 0 15px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+
+  // GOV.UK Frontend radio and checkboxes are rendered with a transparent background
+  // which makes them look wrong on grey background. Add white background.
+  .govuk-checkboxes__label,
+  .govuk-radios__label {
+    &::before {
+      background-color: govuk-colour("white");
+    }
+  }
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+// =============================================================================
+// DFE FILTER SECTION (Details/Summary pattern)
+// =============================================================================
+
+.dfe-filter-section {
+  border-bottom: 1px solid $govuk-border-colour;
+
+  &:last-child {
+    border-bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  // Chevron points up when open
+  &[open] .dfe-filter-section__summary::before {
+    transform: translateY(30%) rotate(-45deg) scale(1);
+  }
+}
+
+.dfe-filter-section__summary {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 5px 0;
+  cursor: pointer;
+  color: $govuk-text-colour;
+  list-style: none;
+
+  // Remove default marker
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &::marker {
+    display: none;
+  }
+
+  // Chevron arrow (pointing down when closed)
+  &::before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    width: 10px;
+    height: 10px;
+    left: 5px;
+    border-style: solid;
+    border-width: 2px 2px 0 0;
+    border-color: inherit;
+    vertical-align: middle;
+    transform: translateY(-25%) rotate(135deg) scale(1);
+  }
+
+  &:hover .dfe-filter-section__summary-heading {
+    text-decoration: underline;
+    text-decoration-thickness: max(3px, .1875rem, .12em);
+    text-underline-offset: .1578em;
+    text-decoration-skip-ink: none;
+  }
+
+  &:focus .dfe-filter-section__summary-heading {
+    background-color: $govuk-focus-colour;
+    outline: 3px solid transparent;
+    color: $govuk-focus-text-colour;
+    box-shadow: 0 -2px $govuk-focus-colour, 0 4px $govuk-focus-text-colour;
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.dfe-filter-section__summary-heading {
+  @include govuk-font($size: 19, $weight: bold);
+  margin: 0.83em 0 0.83em 15px; // ~15.77px vertical margin at 19px font size
+}
+
+.dfe-filter-section__summary-status {
+  @include govuk-font($size: 16);
+  padding-right: 5px;
+  flex-grow: 1;
+  text-align: right;
+}
+
+.dfe-filter-section__content {
+  padding: 0 0 20px 20px;
+}
+
+// =============================================================================
+// DFE FILTER PANEL ACTIONS
+// =============================================================================
+
+.dfe-filter-panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 0;
+}
+
+.dfe-filter-panel__action {
+  margin-bottom: 0;
+}
+
+.dfe-filter-panel__action--submit {
+  flex: 2 0 60%;
+  margin-bottom: 0;
+}
+
+.dfe-filter-panel__action--reset {
+  @include govuk-font($size: 19);
+  flex: 1 0 30%;
+  white-space: nowrap;
+  padding: 5px 0;
+  text-align: center;
+}
+
+// =============================================================================
+// DFE FILTER PANEL SELECTED FILTERS
+// =============================================================================
+
+.dfe-filter-panel__selected {
+  padding: 15px;
+  background-color: govuk-tint(govuk-colour("blue"), 90%);
+  border-bottom: 1px solid $govuk-border-colour;
+}
+
+.dfe-filter-panel__selected-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.dfe-filter-panel__selected-heading {
+  @include govuk-font($size: 19, $weight: bold);
+  margin: 0;
+}
+
+.dfe-filter-panel__selected-categories {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dfe-filter-panel__selected-category {
+  margin-bottom: 10px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.dfe-filter-panel__selected-category-heading {
+  @include govuk-font($size: 16, $weight: bold);
+  display: block;
+  margin-bottom: 5px;
+}
+
+.dfe-filter-panel__tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dfe-filter-panel__tag {
+  @include govuk-font($size: 16);
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border: 1px solid govuk-colour("black");
+  background-color: govuk-colour("white");
+  color: govuk-colour("black");
+  text-decoration: none;
+
+  &:link,
+  &:visited {
+    color: govuk-colour("black");
+  }
+
+  &:hover {
+    background-color: govuk-colour("black");
+    color: govuk-colour("white");
+
+    .dfe-filter-panel__tag-remove-icon {
+      fill: govuk-colour("white");
+    }
+  }
+
+  &:focus {
+    outline: 3px solid transparent;
+    color: $govuk-focus-text-colour;
+    background-color: $govuk-focus-colour;
+    box-shadow: 0 -2px $govuk-focus-colour, 0 4px $govuk-focus-text-colour;
+  }
+}
+
+.dfe-filter-panel__tag-remove-icon {
+  width: 12px;
+  height: 12px;
+  margin-left: 5px;
+  fill: govuk-colour("black");
+  flex-shrink: 0;
+}
+
+.dfe-filter-panel__clear-all {
+  @include govuk-font($size: 16);
+}
+
+// =============================================================================
+// DFE FILTER SUMMARY (Shown below filter panel after Apply)
+// =============================================================================
+
+.dfe-filter-summary {
+  padding: 15px 0 5px 0;
+  border-top: 1px solid $govuk-border-colour;
+}
+
+.dfe-filter-summary__heading {
+  @include govuk-font($size: 19, $weight: bold);
+  display: inline-block;
+  margin: 0 15px 10px 0;
+}
+
+.dfe-filter-summary__remove-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dfe-filter-summary__remove-filter {
+  @include govuk-font($size: 16);
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid $govuk-border-colour;
+  border-radius: 0.3125em;
+  padding: 5px 10px;
+  background-color: govuk-colour("light-grey");
+  color: govuk-colour("black");
+  text-decoration: none;
+
+  &::before {
+    content: "×";
+    padding-right: 5px;
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  &:link,
+  &:visited {
+    color: govuk-colour("black");
+  }
+
+  &:hover {
+    background-color: govuk-colour("black");
+    color: govuk-colour("white");
+    border-color: govuk-colour("black");
+  }
+
+  &:focus {
+    outline: 3px solid transparent;
+    color: $govuk-focus-text-colour;
+    background-color: $govuk-focus-colour;
+    box-shadow: 0 -2px $govuk-focus-colour, 0 4px $govuk-focus-text-colour;
+  }
+}
+
+.dfe-filter-summary__clear-filters {
+  @include govuk-font($size: 16);
+  display: block;
+  margin-top: 15px;
+}

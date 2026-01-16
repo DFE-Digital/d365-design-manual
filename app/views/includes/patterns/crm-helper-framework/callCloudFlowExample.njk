@@ -1,0 +1,77 @@
+{% raw %}
+{% extends 'DfE/Layouts/2ColumnWideLeft' %}
+
+{% block title %}{% endblock %}
+
+{% block main %}
+
+  <div id="error-summary-container"></div>
+
+  <h1 class="govuk-heading-xl">Before you start</h1>
+
+  <p class="govuk-body">We need to check if an application already exists for your organisation.</p>
+
+  <button type="submit" id="check-btn" class="govuk-button" data-module="govuk-button">Check and continue</button>
+
+  <div id="loading-spinner" class="loader govuk-visually-hidden"></div>
+
+  <script type="text/javascript">
+    // Define your cloud flow API ID and query parameters
+    const flowApiId = "your-cloud-flow-api-id";
+    const organisationId = "{{ user.parentcustomerid.Id }}";
+    const applicationRoundId = "{{ settings['ApplicationRoundId'] }}";
+
+    // Attach event handler to the button
+    $("#check-btn").on("click", async function(event) {
+      event.preventDefault();
+
+      // Disable the button and show the spinner
+      DfEPortal.DisableButton("check-btn");
+      DfEPortal.ShowLoadingSpinner("loading-spinner");
+
+      try {
+        // Prepare the data to send to the cloud flow
+        const queryData = {
+          "OrganisationId": organisationId,
+          "ApplicationRoundId": applicationRoundId
+        };
+
+        // Call the cloud flow
+        const result = await DfEPortal.WebApi.CallCloudFlow(flowApiId, queryData);
+
+        // Check if the cloud flow returned an error
+        if (!result.success) {
+          throw result.error;
+        }
+
+        // Check the response and show custom error if needed
+        if (result.applicationexists) {
+          // Use the error helper functions to display a custom error
+          DfEPortal.Errors.ShowErrorSummary();
+          DfEPortal.Errors.AddErrorSummaryDetail("check-btn", "An application for your organisation already exists.");
+          DfEPortal.Errors.FocusErrorSummary();
+
+          // Re-enable button and hide spinner
+          DfEPortal.EnableButton("check-btn");
+          DfEPortal.HideLoadingSpinner("loading-spinner");
+          return;
+        }
+
+        // Success - redirect to next page
+        window.location.href = "{{ sitemarkers['NEXT_PAGE_SITEMARKER'].url }}";
+
+      } catch (error) {
+        console.error("Error:", error);
+        // Show a generic error message
+        DfEPortal.Errors.ShowErrorSummary();
+        DfEPortal.Errors.AddErrorSummaryDetail("check-btn", "There was a problem checking your application. Please try again.");
+        DfEPortal.Errors.FocusErrorSummary();
+
+        // Re-enable the button and hide the spinner
+        DfEPortal.EnableButton("check-btn");
+        DfEPortal.HideLoadingSpinner("loading-spinner");
+      }
+    });
+  </script>
+{% endblock %}
+{% endraw %}

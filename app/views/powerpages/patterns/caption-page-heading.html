@@ -1,0 +1,54 @@
+{% set pageData = pages['powerpages/patterns/caption-page-heading'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_caption-page-heading.njk' import patternsCaptionHeadingSingleExample, patternsCaptionHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Single question page", href: "#single-question" },
+  { text: "Multiple question page", href: "#multiple-question" }
+]) }}
+
+<p class="govuk-body">You may need to include a caption above the page heading to indicate that the page is part of a larger section or group.</p>
+
+<p class="govuk-body">To apply consistent page headings with captions across Power Pages, you should first understand the guidance on <a class="govuk-link" href="{{ pages['powerpages/patterns/page-heading'].url }}">setting page headings</a>.</p>
+
+<p class="govuk-body">The main difference when including captions is that you set the page title in the Web Page Content record with the caption and title separated by a colon. For example:</p>
+
+<div class="govuk-inset-text">
+  About you: What is your first name?
+</div>
+
+<p class="govuk-body">In the Liquid template, you split the page title into caption and main title using the Liquid <code>split</code> filter. The first part becomes the caption, and the second part becomes the main title.</p>
+
+<h2 class="govuk-heading-l" id="single-question">Single question page</h2>
+
+{{ patternsCaptionHeadingSingleExample() }}
+
+<p class="govuk-body">In this example, <code>{% raw %}{{ title[0] }}{% endraw %}</code> is the caption (before the colon) and <code>{% raw %}{{ title[1] }}{% endraw %}</code> is the main title (after the colon).</p>
+
+<h2 class="govuk-heading-l" id="multiple-question">Multiple question page</h2>
+
+<p class="govuk-body">The guidance for captions differs slightly from setting a standard page heading on a multiple question page. When using captions you should include the <code>title</code> block and override its content as shown below:</p>
+
+{{ patternsCaptionHeadingMultipleExample() }}
+
+<p class="govuk-body">In this example, the <code>title</code> block overrides the default page title, splitting it into the caption and main title. The caption is displayed above the main title, helping to clarify that the page is part of a larger section or group.</p>
+
+{% endblock %}

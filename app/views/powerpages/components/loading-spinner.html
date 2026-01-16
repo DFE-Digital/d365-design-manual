@@ -1,0 +1,58 @@
+{% set pageData = pages['powerpages/components/loading-spinner'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_exampleTabs.njk' import exampleTabs %}
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+<p class="govuk-body"><a class="govuk-link" href="#html-example">Skip to HTML example</a></p>
+
+<h2 class="govuk-heading-l" id="when-to-use-this-component">When to use this component</h2>
+<p class="govuk-body">{{ pageData.description }}</p>
+<p class="govuk-body">Use a loading spinner when:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>submitting data to CRM via the Web API</li>
+  <li>loading content dynamically after the page has rendered</li>
+  <li>waiting for a response from an external service</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="when-not-to-use-this-component">When not to use this component</h2>
+<p class="govuk-body">Do not use a loading spinner:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>for initial page loads (the browser handles this)</li>
+  <li>when the wait time is very short (under 1 second)</li>
+  <li>without accompanying text explaining what is loading</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="how-it-works">How it works</h2>
+<p class="govuk-body">The loading spinner is a simple CSS animation that rotates continuously. It should be shown when an action begins and hidden when the action completes.</p>
+<p class="govuk-body">Always pair the spinner with descriptive text so users understand what is happening, especially for screen reader users.</p>
+
+<h2 class="govuk-heading-l" id="html-example">HTML example</h2>
+<p class="govuk-body">
+  Copy the HTML from this page directly into your web template.
+</p>
+
+{{ exampleTabs(
+  "Loading spinner",
+  "includes/components/loading-spinner/basicExample.njk",
+  { showUpdateSchema: false, index: 1 }
+) }}
+
+<p class="govuk-body">If you would like any additional advice or guidance with using this example on Power Pages, please contact the Solutions Delivery Team.</p>
+
+{% endblock %}

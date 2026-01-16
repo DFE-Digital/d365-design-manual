@@ -1,0 +1,38 @@
+{% raw %}
+{% comment %}
+  Pre-select checkboxes based on URL parameters
+{% endcomment %}
+
+{% assign status_param = request.params['status[]'] %}
+{% assign selected_statuses = status_param | split: ',' %}
+
+<div class="govuk-checkboxes govuk-checkboxes--small">
+  <div class="govuk-checkboxes__item">
+    <input type="checkbox"
+           name="status[]"
+           id="status-active"
+           value="active"
+           class="govuk-checkboxes__input"
+           {% if selected_statuses contains 'active' %}checked{% endif %}>
+    <label for="status-active" class="govuk-label govuk-checkboxes__label">Active</label>
+  </div>
+  <div class="govuk-checkboxes__item">
+    <input type="checkbox"
+           name="status[]"
+           id="status-pending"
+           value="pending"
+           class="govuk-checkboxes__input"
+           {% if selected_statuses contains 'pending' %}checked{% endif %}>
+    <label for="status-pending" class="govuk-label govuk-checkboxes__label">Pending review</label>
+  </div>
+  <div class="govuk-checkboxes__item">
+    <input type="checkbox"
+           name="status[]"
+           id="status-closed"
+           value="closed"
+           class="govuk-checkboxes__input"
+           {% if selected_statuses contains 'closed' %}checked{% endif %}>
+    <label for="status-closed" class="govuk-label govuk-checkboxes__label">Closed</label>
+  </div>
+</div>
+{% endraw %}

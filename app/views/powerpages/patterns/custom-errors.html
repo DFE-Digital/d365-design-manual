@@ -1,0 +1,164 @@
+{% set pageData = pages['powerpages/patterns/custom-errors'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Default error handling", href: "#default-error-handling" },
+  { text: "Using a custom error container", href: "#custom-error-container" },
+  { text: "Manually displaying errors", href: "#manually-displaying-errors" },
+  { text: "When to use custom error containers", href: "#when-to-use" }
+]) }}
+
+<p class="govuk-body">The <a class="govuk-link" href="{{ pages['powerpages/patterns/crm-helper-framework'].url }}">CRM Helper Framework</a> automatically handles displaying validation errors in a GOV.UK-compliant error summary. In most cases, the default behaviour works without any additional configuration. However, there are scenarios where you need to display errors in a custom location.</p>
+
+<h2 class="govuk-heading-l" id="default-error-handling">Default error handling</h2>
+
+<p class="govuk-body">By default, the <code>ValidateData</code> function looks for an element with the ID <code>error-summary-container</code> and displays the error summary there. This element is already included in the base layout templates, so you do not need to add it yourself.</p>
+
+<p class="govuk-body">When validation fails, the framework automatically:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>displays the GOV.UK error summary with links to each invalid field</li>
+  <li>adds error messages below each invalid field</li>
+  <li>adds the error styling to form groups</li>
+  <li>moves focus to the error summary for screen reader users</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="custom-error-container">Using a custom error container</h2>
+
+<p class="govuk-body">If your form is not on the main page (for example, inside a modal or a separate section), you can specify a different error container by passing a CSS selector as the second parameter to <code>ValidateData</code>.</p>
+
+<pre><code class="language-javascript">// Default - uses #error-summary-container
+const isValid = DfEPortal.ValidateData(inputObj);
+
+// Custom - uses a different container
+const isValid = DfEPortal.ValidateData(inputObj, "#modal-error-container");</code></pre>
+
+<p class="govuk-body">Make sure your custom container element exists in the HTML:</p>
+
+<pre><code class="language-html">&lt;div id="modal-error-container"&gt;&lt;/div&gt;</code></pre>
+
+<h2 class="govuk-heading-l" id="manually-displaying-errors">Manually displaying errors</h2>
+
+<p class="govuk-body">Sometimes you need to display error messages that are not related to form validation, for example after a failed API call or when business logic conditions are not met.</p>
+
+<p class="govuk-body">The framework provides three helper functions for manually managing errors:</p>
+
+<h3 class="govuk-heading-m">ShowErrorSummary</h3>
+
+<p class="govuk-body">Makes the error summary container visible.</p>
+
+<pre><code class="language-javascript">// Show the default error summary
+DfEPortal.Errors.ShowErrorSummary();
+
+// Show a custom error summary
+DfEPortal.Errors.ShowErrorSummary("#modal-error-container");</code></pre>
+
+<h3 class="govuk-heading-m">AddErrorSummaryDetail</h3>
+
+<p class="govuk-body">Adds an error message to the error summary. The first parameter is the ID of the element to link to (for the error summary link), and the second is the error message.</p>
+
+<pre><code class="language-javascript">// Add to default error summary
+DfEPortal.Errors.AddErrorSummaryDetail("submit-btn", "There was a problem submitting your application.");
+
+// Add to custom error summary
+DfEPortal.Errors.AddErrorSummaryDetail("feedback-submit", "Please tell us what went wrong.", "#modal-error-container");</code></pre>
+
+<h3 class="govuk-heading-m">FocusErrorSummary</h3>
+
+<p class="govuk-body">Moves keyboard focus to the error summary. This is important for accessibility so screen reader users are informed of the errors.</p>
+
+<pre><code class="language-javascript">// Focus the default error summary
+DfEPortal.Errors.FocusErrorSummary();
+
+// Focus a custom error summary
+DfEPortal.Errors.FocusErrorSummary("#modal-error-container");</code></pre>
+
+<h3 class="govuk-heading-m">Complete example</h3>
+
+<p class="govuk-body">Here is an example of manually displaying an error after a failed business logic check:</p>
+
+<pre><code class="language-javascript">try {
+  const result = await DfEPortal.WebApi.CallCloudFlow(flowApiId, queryData);
+
+  if (result.applicationExists) {
+    // Show a custom error - application already exists
+    DfEPortal.Errors.ShowErrorSummary();
+    DfEPortal.Errors.AddErrorSummaryDetail("check-btn", "An application for your organisation already exists.");
+    DfEPortal.Errors.FocusErrorSummary();
+    return;
+  }
+
+  // Continue with success flow...
+
+} catch (error) {
+  // Show a generic error
+  DfEPortal.Errors.ShowErrorSummary();
+  DfEPortal.Errors.AddErrorSummaryDetail("check-btn", "There was a problem. Please try again.");
+  DfEPortal.Errors.FocusErrorSummary();
+}</code></pre>
+
+<h2 class="govuk-heading-l" id="when-to-use">When to use custom error containers</h2>
+
+<p class="govuk-body">Use a custom error container when:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>your form is inside a modal or dialog</li>
+  <li>you have multiple forms on the same page</li>
+  <li>the default error summary position is not appropriate for the user journey</li>
+</ul>
+
+<h3 class="govuk-heading-m">Feedback component example</h3>
+
+<p class="govuk-body">A common use case is the <a class="govuk-link" href="{{ pages['powerpages/components/feedback'].url }}">feedback component</a>. On GOV.UK, the feedback form appears in a panel that expands when users click "Is this page useful?". If the feedback form has validation errors, they should appear within that panel, not at the top of the main page.</p>
+
+<p class="govuk-body">In this scenario, add an error container inside the feedback panel:</p>
+
+<pre><code class="language-html">&lt;div class="dfe-feedback__form-panel"&gt;
+  &lt;div id="feedback-error-container"&gt;&lt;/div&gt;
+
+  &lt;!-- Feedback form fields --&gt;
+  &lt;div class="govuk-form-group"&gt;
+    &lt;label class="govuk-label" for="feedback-comments"&gt;
+      How could we improve this page?
+    &lt;/label&gt;
+    &lt;textarea class="govuk-textarea" id="feedback-comments" name="feedback-comments"&gt;&lt;/textarea&gt;
+  &lt;/div&gt;
+
+  &lt;button type="submit" id="feedback-submit" class="govuk-button"&gt;
+    Send feedback
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+
+<p class="govuk-body">Then pass the custom container to <code>ValidateData</code>:</p>
+
+<pre><code class="language-javascript">const feedbackInput = [{
+  identifier: "feedback-comments",
+  type: "text-area",
+  friendlyName: "your feedback",
+  required: true
+}];
+
+const isValid = DfEPortal.ValidateData(feedbackInput, "#feedback-error-container");
+
+if (isValid) {
+  // Submit feedback...
+}</code></pre>
+
+{% endblock %}

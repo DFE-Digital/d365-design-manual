@@ -5,43 +5,124 @@
 {% extends "layouts/_two-column-wide-left.html" %}
 
 {% block content %}
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-  <div class="dfe-grid-container">
-    <div class="dfe-card">
-      <div class="dfe-card-container">
-        <h3 class="govuk-heading-m">
-          <a href="{{pages['powerpages'].url}}" class="govuk-link govuk-link--no-visited-state dfe-card-link--header">Power Pages</a>
-        </h3>
-        <p class="govuk-body">Step-by-step guidance on crafting GOV.UK-aligned front-end experiences using the GOV.UK Design System, DfE Frontend and bespoke components &mdash; so your Power Pages sites look and feel consistent from page to page.</p>
-      </div>
+
+<h2 class="govuk-heading-l">About this design system</h2>
+
+<p class="govuk-body">This design system provides standards, patterns, and guidance for teams building services on Microsoft Dynamics 365 within the Department for Education.</p>
+
+<p class="govuk-body">It supports the <a class="govuk-link" href="https://standards.education.gov.uk/standard/customer-relationship-management" target="_blank">DfE Customer Relationship Management standard (DDTS-760)</a>, which establishes Dynamics 365 as the approved CRM platform for contact centre operations, grant management, data collection, and programme management across the department.</p>
+
+<p class="govuk-body">The guidance here ensures that Dynamics 365 implementations are consistent, accessible, and aligned with Government Digital Service (GDS) standards &mdash; whether you're building a citizen-facing Power Pages portal or configuring the back-end CRM.</p>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<h2 class="govuk-heading-l">What's included</h2>
+
+<ul class="dfe-chevron-card__list govuk-!-margin-bottom-6">
+  <li class="dfe-chevron-card">
+    <div class="dfe-chevron-card__wrapper">
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-2">
+        <a class="govuk-link govuk-link--no-visited-state" href="{{pages['powerpages'].url}}">
+          Power Pages
+        </a>
+      </h3>
+      <p class="dfe-chevron-card__description govuk-body">
+        Build accessible, GOV.UK-compliant portal experiences using custom web templates, the GOV.UK Design System, and our JavaScript validation framework.
+      </p>
+      <a class="dfe-chevron-card__link" href="{{pages['powerpages'].url}}" aria-hidden="true" tabindex="-1">
+        <span class="govuk-visually-hidden">Power Pages</span>
+      </a>
     </div>
-    <div class="dfe-card">
-      <div class="dfe-card-container">
-        <h3 class="govuk-heading-m">
-          <a href="{{pages['crm'].url}}" class="govuk-link govuk-link--no-visited-state dfe-card-link--header">CRM</a>
-        </h3>
-        <p class="govuk-body">A standardised process for configuring, customising and deploying the Dynamics 365 back end &mdash; covering solution architecture, environment strategies, custom entities and release practices to keep your CRM robust and maintainable.</p>
-      </div>
-    </div>
-  </div>
-  </div>
-</div>
-<h2 class="govuk-heading-l">Other resources and guidance</h2>
-<ul class="govuk-list govuk-list--spaced">
-  <li>
-    <a class="govuk-link" href="https://user-research.education.gov.uk/" target="_blank">User Research in DfE</a>
   </li>
+  <li class="dfe-chevron-card">
+    <div class="dfe-chevron-card__wrapper">
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-2">
+        <a class="govuk-link govuk-link--no-visited-state" href="{{pages['crm'].url}}">
+          CRM
+        </a>
+      </h3>
+      <p class="dfe-chevron-card__description govuk-body">
+        Standards for configuring, customising, and deploying Dynamics 365 &mdash; covering solution architecture, environment strategies, entity design, and release practices.
+      </p>
+      <a class="dfe-chevron-card__link" href="{{pages['crm'].url}}" aria-hidden="true" tabindex="-1">
+        <span class="govuk-visually-hidden">CRM</span>
+      </a>
+    </div>
+  </li>
+</ul>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<h2 class="govuk-heading-l">Why this exists</h2>
+
+<p class="govuk-body">Microsoft's out-of-the-box Power Pages components don't meet government accessibility standards, and there was no consistent approach to building Dynamics 365 services across DfE.</p>
+
+<p class="govuk-body">This design system was created to solve that problem. It provides:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Custom Power Pages templates that use GOV.UK Frontend instead of Microsoft's default styling</li>
+  <li>A JavaScript framework for form validation and submission via the Power Pages Web API</li>
+  <li>Reusable components for common patterns not covered by the GOV.UK Design System</li>
+  <li>Standards for CRM configuration that ensure consistency across services</li>
+</ul>
+
+<p class="govuk-body">The aim is to help teams deliver user-centred, accessible services on Dynamics 365 without having to solve the same problems repeatedly.</p>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<h2 class="govuk-heading-l">Get involved</h2>
+
+<p class="govuk-body">If you have questions, suggestions, or want to contribute, get in touch using the contact details in the sidebar.</p>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<h2 class="govuk-heading-l">Other resources</h2>
+
+<ul class="govuk-list govuk-list--spaced">
   <li>
     <a class="govuk-link" href="https://design-system.service.gov.uk/" target="_blank">GOV.UK Design System</a>
   </li>
   <li>
-    <a class="govuk-link" href="https://www.gov.uk/service-manual" target="_blank">GOV.UK Service Manual</a>
+    <a class="govuk-link" href="https://design.education.gov.uk/" target="_blank">DfE Design Manual</a>
   </li>
   <li>
-    <a class="govuk-link" href="https://www.gov.uk/service-manual/communities/design-community" target="_blank">Cross government design community</a>
+    <a class="govuk-link" href="https://user-research.education.gov.uk/" target="_blank">User Research in DfE</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="https://accessibility.education.gov.uk/standards" target="_blank">DfE Accessibility Standards</a>
   </li>
 </ul>
-</div>
 
+{% endblock %}
+
+{% block sideContent %}
+<h2 class="govuk-heading-m">Contact</h2>
+
+<p class="govuk-body">This design system is maintained by the Solutions Delivery Team in the DfE Technical Directorate.</p>
+
+<p class="govuk-body">
+  <a class="govuk-link" href="mailto:solutionsdevelopment.techdirectorate@education.gov.uk">solutionsdevelopment.techdirectorate@education.gov.uk</a>
+</p>
+
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+<h2 class="govuk-heading-m">Related standards</h2>
+
+<ul class="govuk-list govuk-list--spaced">
+  <li>
+    <a class="govuk-link" href="https://standards.education.gov.uk/standard/customer-relationship-management" target="_blank">Customer Relationship Management (DDTS-760)</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="https://standards.education.gov.uk/standard/digital-product-branding" target="_blank">Digital Product Branding (DDTS-301)</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="https://standards.education.gov.uk/standard/plain-language" target="_blank">Plain Language (DDTS-529)</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="https://standards.education.gov.uk/standard/accessibility-statements" target="_blank">Accessibility Statements (DDTS-34)</a>
+  </li>
+  <li>
+    <a class="govuk-link" href="https://standards.education.gov.uk/standard/accessibility-conformance" target="_blank">Accessibility Conformance (DDTS-463)</a>
+  </li>
+</ul>
 {% endblock %}

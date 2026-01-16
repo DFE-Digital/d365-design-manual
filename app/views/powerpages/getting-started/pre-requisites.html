@@ -1,0 +1,141 @@
+{% set pageData = pages['powerpages/getting-started/pre-requisites'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Install a blank site from Power Pages", href: "#install-blank-site" },
+  { text: "Delete blank site records", href: "#delete-blank-site" },
+  { text: "Create app registration in Azure Portal", href: "#create-app-reg" },
+  { text: "Add application user in Dynamics 365", href: "#add-app-user" }
+]) }}
+
+<p class="govuk-body">Complete the following steps to ensure your environment is correctly configured. These steps install necessary components and prepare your Dynamics 365 environment for a custom Power Pages website.</p>
+
+<p class="govuk-body">You will:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>install Power Pages solutions and tables in your Dynamics 365 environment</li>
+  <li>set up an app registration in the Azure Portal and configure its permissions in Dynamics 365</li>
+</ul>
+
+<p class="govuk-body">Before starting, ensure you have:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li><strong>System Administrator</strong> role in your Dynamics 365 environment</li>
+  <li>access to the Azure Portal with permissions to create app registrations in the <strong>Department for Education</strong> directory</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="install-blank-site">Install a blank site from Power Pages</h2>
+
+<p class="govuk-body">
+  Installing a blank site in Power Pages ensures that all necessary solutions, tables, and fields are installed in your Dynamics 365 environment. This provides a foundation for your website.
+</p>
+<ol class="govuk-list govuk-list--number">
+  <li>Go to <a href="https://make.powerpages.microsoft.com" class="govuk-link">Power Pages</a>.</li>
+  <li>Select the correct Dynamics 365 environment from the environment selector in the top right.</li>
+  <li>Under <code>Other ways to create a site</code>, click <code>Start from blank</code>.</li>
+  <li>You can leave the default values at this stage, or choose temporary values for your site name and web address.</li>
+  <li>Click <code>Done</code> to provision the website. This may take a while to complete.</li>
+  <li>Once created, verify that the website is listed under <code>Power Pages sites</code> in the Power Platform Admin Center.</li>
+</ol>
+<div class="govuk-inset-text">
+  The blank site installs solutions and related tables for the enhanced Power Pages model.
+</div>
+
+<h2 class="govuk-heading-l" id="delete-blank-site">Delete blank site records</h2>
+<p class="govuk-body">
+  The blank site installation creates website content (website record, web pages, entity lists, forms, etc.) in the Power Pages Management model-driven app. To start with a completely custom website, you must delete these records.
+</p>
+<ol class="govuk-list govuk-list--number">
+  <li>Go to <a href="https://make.powerpages.microsoft.com" class="govuk-link">Power Pages</a>.</li>
+  <li>Select the correct Dynamics 365 environment from the environment selector in the top right.</li>
+  <li>Click the ellipsis (...) next to your recently installed website, then select <code>Power Pages Management</code>.</li>
+  <li>In the Power Pages Management app, go to <code>Websites</code> where you should see the website record for your blank site.</li>
+  <li>Delete the website record. This removes all associated metadata (web pages, entity lists, forms), leaving the model-driven app blank.</li>
+  <li>Verify that no website records or content remain by checking other record types in the Power Pages Management app. The previous step does not always delete all records.</li>
+  <li>Return to <a href="https://make.powerpages.microsoft.com" class="govuk-link">Power Pages</a> and delete the website from the sites list.</li>
+</ol>
+<div class="govuk-inset-text">
+  Do not delete the Power Pages Management app itself, as it is required for managing your website.
+</div>
+
+<h2 class="govuk-heading-l" id="create-app-reg">Create app registration in Azure Portal</h2>
+
+<p class="govuk-body">You need to create an app registration in the Azure Portal to allow the GitHub action to interact with your Dynamics 365 environment.</p>
+
+<ol class="govuk-list govuk-list--number">
+  <li>Sign in to the <a href="https://portal.azure.com" class="govuk-link" target="_blank">Azure Portal (opens in new tab)</a> and ensure you are in the <strong>Department for Education</strong> directory.</li>
+  <li>In the search bar at the top of the screen, search for and select <code>Microsoft Entra ID</code>.</li>
+  <li>In the left navigation, go to <code>Manage</code> > <code>App registrations</code>, then click <code>+ New registration</code>.</li>
+  <li>Enter a name for the app (e.g. "[Your Service] Power Pages Setup App"), select <code>Accounts in this organizational directory only</code>, and click <code>Register</code>.</li>
+  <li>In the app registration, go to <code>API permissions</code> > <code>Add a permission</code> > <code>Dynamics CRM</code>.</li>
+  <li>Select <code>Delegated permissions</code>, check <code>user_impersonation</code>, and click <code>Add permissions</code>.</li>
+  <li>Go to <code>Certificates & secrets</code> > <code>New client secret</code>. Provide a description (e.g. "GitHub Action Secret"), choose an expiration period, and click <code>Add</code>. Copy the secret value immediately.</li>
+</ol>
+
+<div class="govuk-inset-text">
+  The client secret will be hidden after you navigate away, so copy it now and store it securely.
+</div>
+
+<h2 class="govuk-heading-l" id="add-app-user">Add application user in Dynamics 365</h2>
+
+<p class="govuk-body">Add the app registration as an application user in your Dynamics 365 environment and grant it the System Administrator security role.</p>
+
+<ol class="govuk-list govuk-list--number">
+  <li>Sign in to the <a href="https://admin.powerplatform.microsoft.com" class="govuk-link" target="_blank">Power Platform Admin Center (opens in new tab)</a>.</li>
+  <li>Navigate to <code>Environments</code>, then select your Dynamics 365 environment.</li>
+  <li>Go to <code>Settings</code> > <code>Users + permissions</code> > <code>Application users</code>, then click <code>+ New app user</code>.</li>
+  <li>Click <code>+ Add an app</code> and enter the app registration's Client ID in the search bar.</li>
+  <li>Select the app and click <code>Add</code>.</li>
+  <li>Complete the remaining details:
+    <ul class="govuk-list govuk-list--bullet">
+      <li><code>Business unit</code>: Select your organisation's default business unit.</li>
+      <li><code>Security roles</code>: Assign the <strong>System Administrator</strong> role.</li>
+    </ul>
+  </li>
+  <li>Click <code>Create</code>.</li>
+</ol>
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['powerpages/getting-started/branding-standards'].url }}" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['powerpages/getting-started/branding-standards'].title }}</span>
+    </a>
+  </div>
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['powerpages/getting-started/import-website-template'].url }}" rel="next">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['powerpages/getting-started/import-website-template'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+{% endblock %}

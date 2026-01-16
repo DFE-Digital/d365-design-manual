@@ -1,0 +1,67 @@
+{% raw %}
+{% extends 'DfE/Layouts/2ColumnWideLeft' %}
+
+{% block title %}{% endblock %}
+
+{% block main %}
+
+  <div class="govuk-form-group">
+    <h1 class="govuk-label-wrapper">
+      <label class="govuk-label govuk-label--l" for="emailaddress">
+        ## 'What is your email address?' set as the title in the content web page
+        {{ page.title }}
+      </label>
+    </h1>
+    <input class="govuk-input" id="emailaddress" name="emailaddress" type="email">
+  </div>
+
+  <button type="submit" id="submit-btn" class="govuk-button" data-module="govuk-button">Continue</button>
+
+  <div id="loading-spinner" class="loader govuk-visually-hidden"></div>
+
+  <script type="text/javascript">
+    // Define the validation data object
+    const inputObj = [
+      {
+        identifier: "emailaddress",
+        type: "email",
+        friendlyName: "your email address",
+        required: true,
+        resolve: false
+      }
+    ];
+
+    // Attach event handler to the submit button
+    $("#submit-btn").on("click", async function(event) {
+      event.preventDefault();
+
+      // Disable the button and show the spinner
+      DfEPortal.DisableButton("submit-btn");
+      DfEPortal.ShowLoadingSpinner("loading-spinner");
+
+      try {
+        // Validate the input data
+        await DfEPortal.ValidateData(inputObj);
+
+        // Construct the data object for submission
+        const dataObj = await DfEPortal.WebApi.ConstructData(inputObj);
+
+        // Create the lead record
+        const entityName = "lead";
+        const leadId = await DfEPortal.WebApi.Create(entityName, dataObj);
+
+        // Redirect or notify the user of success
+        alert("Lead created successfully!");
+        // Optionally redirect: window.location.href = `{{ sitemarkers['NEXT_PAGE_SITEMARKER'].url }}?leadid=${leadId}`;
+
+      } catch (error) {
+        console.error("Error:", error);
+        // The framework automatically displays user-friendly error messages
+        // Re-enable the button and hide the spinner
+        DfEPortal.EnableButton("submit-btn");
+        DfEPortal.HideLoadingSpinner("loading-spinner");
+      }
+    });
+  </script>
+{% endblock %}
+{% endraw %}

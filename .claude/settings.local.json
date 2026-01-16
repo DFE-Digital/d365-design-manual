@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm uninstall:*)",
+      "Bash(npm run build:*)",
+      "Bash(timeout 5 node:*)",
+      "Bash(node:*)",
+      "Bash(dir:*)",
+      "Bash(powershell -Command:*)",
+      "Bash(npm run serve:*)",
+      "Bash(npm run styles:*)",
+      "Bash(npm run build-app-js:*)",
+      "Bash(find:*)",
+      "Bash(for:*)",
+      "Bash(do sed -i '/<script.*copy-code-button\\\\.js.*<\\\\/script>/d' \"$file\")",
+      "Bash(done)",
+      "Bash(npm run build-hljs:*)",
+      "WebFetch(domain:standards.education.gov.uk)",
+      "WebFetch(domain:design.education.gov.uk)",
+      "WebFetch(domain:www.gov.uk)",
+      "Bash(npm run build:css:*)",
+      "Bash(npm run:*)",
+      "WebFetch(domain:design-system.service.gov.uk)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "WebFetch(domain:design-guide.publishing.service.gov.uk)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\ehaynes\\\\source\\\\repos\\\\d365-design-manual\" -Recurse -Directory -Name)",
+      "Bash(Select-String -Pattern \"getting-started|branding\")",
+      "WebFetch(domain:design-patterns.service.justice.gov.uk)",
+      "Bash(tasklist:*)",
+      "Bash(findstr:*)",
+      "Bash(curl:*)",
+      "Bash(git config:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}

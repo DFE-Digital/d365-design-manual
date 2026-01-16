@@ -1,0 +1,106 @@
+{% set pageData = pages['powerpages/getting-started/branding-standards'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Choosing the right branding", href: "#choosing-the-right-branding" },
+  { text: "GOV.UK branding requirements", href: "#govuk-branding-requirements" },
+  { text: "DfE branding requirements", href: "#dfe-branding-requirements" },
+  { text: "When to apply branding standards", href: "#when-to-apply" },
+  { text: "Using the GOV.UK Design System", href: "#using-govuk-design-system" },
+  { text: "Things to consider", href: "#things-to-consider" }
+]) }}
+
+<p class="govuk-body">Power Pages sites built by DfE must use either GOV.UK or DfE branding, depending on where the service is hosted. This page explains how to determine which branding applies to your service and what requirements you must meet.</p>
+
+<h2 class="govuk-heading-l" id="choosing-the-right-branding">Choosing the right branding</h2>
+<p class="govuk-body">The domain your service is hosted on determines which branding you must use:</p>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Domain</th>
+      <th scope="col" class="govuk-table__header">Branding</th>
+      <th scope="col" class="govuk-table__header">Header</th>
+      <th scope="col" class="govuk-table__header">Typeface</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">service.gov.uk</td>
+      <td class="govuk-table__cell">GOV.UK</td>
+      <td class="govuk-table__cell">GOV.UK header with crown logo</td>
+      <td class="govuk-table__cell">GDS Transport</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">education.gov.uk</td>
+      <td class="govuk-table__cell">DfE</td>
+      <td class="govuk-table__cell">GOV.UK header with DfE logo</td>
+      <td class="govuk-table__cell">Inter</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 class="govuk-heading-l" id="govuk-branding-requirements">GOV.UK branding requirements</h2>
+<p class="govuk-body">Services hosted on the service.gov.uk domain must:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>use the GOV.UK header</li>
+  <li>use the GDS Transport typeface</li>
+  <li>meet the requirements of the <a class="govuk-link" href="https://www.gov.uk/government/publications/govuk-proposition/govuk-proposition" target="_blank">GOV.UK Proposition (opens in a new tab)</a></li>
+</ul>
+
+<h2 class="govuk-heading-l" id="dfe-branding-requirements">DfE branding requirements</h2>
+<p class="govuk-body">Services hosted on education.gov.uk, and internal staff-facing products built by DfE teams, must:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>use the GOV.UK header with the DfE logo</li>
+  <li>use the Inter typeface</li>
+</ul>
+<p class="govuk-body">There are <a class="govuk-link" href="https://standards.education.gov.uk/standard/digital-product-branding#toleratedproducts" target="_blank">tolerated exceptions (opens in a new tab)</a> where DfE branding may not be appropriate.</p>
+
+<h2 class="govuk-heading-l" id="when-to-apply">When to apply branding standards</h2>
+<p class="govuk-body">New services and those in development must meet the appropriate branding standard before launching into public beta.</p>
+<p class="govuk-body">Existing services that do not meet the standard, and are not an exception, should include alignment to the standard in their product roadmap.</p>
+
+<h2 class="govuk-heading-l" id="using-govuk-design-system">Using the GOV.UK Design System</h2>
+<p class="govuk-body">Regardless of which branding you use, all styles, components and patterns on this site are based on the <a class="govuk-link" href="https://design-system.service.gov.uk/" target="_blank">GOV.UK Design System (opens in a new tab)</a>, adapted for Power Pages.</p>
+<p class="govuk-body">Many GOV.UK elements (such as tables, lists and typography) work out-of-the-box on Power Pages without customisation. The components and patterns documented on this site focus on elements that require adaptation for Power Pages or CRM integration.</p>
+
+<h2 class="govuk-heading-l" id="things-to-consider">Things to consider</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Engage with content and interaction designers early to ensure branding choices integrate with your service's overall user experience.</li>
+  <li>Review the relevant proposition guidelines during development to ensure compliance before launch.</li>
+</ul>
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['powerpages/getting-started/pre-requisites'].url }}" rel="next">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['powerpages/getting-started/pre-requisites'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+{% endblock %}

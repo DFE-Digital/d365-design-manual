@@ -1,0 +1,219 @@
+{% raw %}
+{% comment %}
+  Complete search results page with filter panel and results
+{% endcomment %}
+
+{% comment %} ===== READ URL PARAMETERS ===== {% endcomment %}
+{% assign sort_order = request.params['order'] | default: 'updated-newest' %}
+{% assign selected_topic = request.params['topic'] %}
+{% assign status_param = request.params['status[]'] %}
+{% assign selected_statuses = status_param | split: ',' %}
+{% assign keywords = request.params['keywords'] %}
+
+{% comment %} ===== DETERMINE SORT ORDER ===== {% endcomment %}
+{% case sort_order %}
+  {% when 'updated-newest' %}
+    {% assign sort_attribute = 'modifiedon' %}
+    {% assign sort_descending = 'true' %}
+  {% when 'updated-oldest' %}
+    {% assign sort_attribute = 'modifiedon' %}
+    {% assign sort_descending = 'false' %}
+  {% else %}
+    {% assign sort_attribute = 'createdon' %}
+    {% assign sort_descending = 'true' %}
+{% endcase %}
+
+{% comment %} ===== CHECK IF FILTERS ARE ACTIVE ===== {% endcomment %}
+{% assign has_filters = false %}
+{% if selected_topic != blank %}{% assign has_filters = true %}{% endif %}
+{% if selected_statuses.size > 0 %}{% assign has_filters = true %}{% endif %}
+
+{% comment %} ===== FETCH DATA WITH FILTERS ===== {% endcomment %}
+{% fetchxml records %}
+<fetch>
+  <entity name="dfe_record">
+    <attribute name="dfe_recordid" />
+    <attribute name="dfe_name" />
+    <attribute name="dfe_description" />
+    <attribute name="dfe_topic" />
+    <attribute name="statuscode" />
+    <attribute name="modifiedon" />
+    <order attribute="{{ sort_attribute }}" descending="{{ sort_descending }}" />
+    {% if has_filters or keywords != blank %}
+    <filter type="and">
+      {% if keywords != blank %}
+        <filter type="or">
+          <condition attribute="dfe_name" operator="like" value="%{{ keywords }}%" />
+          <condition attribute="dfe_description" operator="like" value="%{{ keywords }}%" />
+        </filter>
+      {% endif %}
+      {% if selected_topic != blank %}
+        <condition attribute="dfe_topic" operator="eq" value="{{ selected_topic }}" />
+      {% endif %}
+      {% if selected_statuses.size > 0 %}
+        <filter type="or">
+          {% for status in selected_statuses %}
+            <condition attribute="statuscode" operator="eq" value="{{ status }}" />
+          {% endfor %}
+        </filter>
+      {% endif %}
+    </filter>
+    {% endif %}
+  </entity>
+</fetch>
+{% endfetchxml %}
+
+{% comment %} ===== PAGE TEMPLATE ===== {% endcomment %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">Search results</h1>
+
+    {% comment %} Search input {% endcomment %}
+    <form method="get" action="{{ page.url }}">
+      <div class="govuk-form-group">
+        <label for="keywords" class="govuk-label">Search</label>
+        <div class="dfe-search-input">
+          <input type="search"
+                 name="keywords"
+                 id="keywords"
+                 class="govuk-input"
+                 value="{{ keywords }}">
+          <button type="submit" class="dfe-search-input__button">
+            Search
+          </button>
+        </div>
+      </div>
+
+      {% comment %} ===== FILTER PANEL ===== {% endcomment %}
+      <div class="dfe-filter-panel" data-module="dfe-filter-panel">
+        <div class="dfe-filter-panel__header">
+          <button type="button"
+                  class="dfe-filter-panel__button govuk-link"
+                  aria-expanded="false"
+                  aria-controls="filter-panel-content">
+            <span class="dfe-filter-panel__button-inner">Filter and sort</span>
+          </button>
+          <p class="dfe-filter-panel__count">{{ records.results.entities.size }} results</p>
+        </div>
+
+        <div class="dfe-filter-panel__content" id="filter-panel-content" hidden>
+          {% comment %} Sort by {% endcomment %}
+          <details class="dfe-filter-section" open>
+            <summary class="dfe-filter-section__summary">
+              <h2 class="dfe-filter-section__summary-heading">Sort by</h2>
+            </summary>
+            <div class="dfe-filter-section__content">
+              <div class="govuk-radios govuk-radios--small">
+                <div class="govuk-radios__item">
+                  <input type="radio" name="order" id="sort-newest" value="updated-newest"
+                         class="govuk-radios__input"
+                         {% if sort_order == 'updated-newest' %}checked{% endif %}>
+                  <label for="sort-newest" class="govuk-label govuk-radios__label">Updated (newest)</label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input type="radio" name="order" id="sort-oldest" value="updated-oldest"
+                         class="govuk-radios__input"
+                         {% if sort_order == 'updated-oldest' %}checked{% endif %}>
+                  <label for="sort-oldest" class="govuk-label govuk-radios__label">Updated (oldest)</label>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          {% comment %} Topic filter {% endcomment %}
+          <details class="dfe-filter-section">
+            <summary class="dfe-filter-section__summary">
+              <h2 class="dfe-filter-section__summary-heading">Topic</h2>
+            </summary>
+            <div class="dfe-filter-section__content">
+              <select name="topic" id="topic" class="govuk-select govuk-!-width-full">
+                <option value="">All topics</option>
+                <option value="education" {% if selected_topic == 'education' %}selected{% endif %}>Education</option>
+                <option value="health" {% if selected_topic == 'health' %}selected{% endif %}>Health</option>
+                <option value="transport" {% if selected_topic == 'transport' %}selected{% endif %}>Transport</option>
+              </select>
+            </div>
+          </details>
+
+          {% comment %} Status filter {% endcomment %}
+          <details class="dfe-filter-section">
+            <summary class="dfe-filter-section__summary">
+              <h2 class="dfe-filter-section__summary-heading">Status</h2>
+            </summary>
+            <div class="dfe-filter-section__content">
+              <div class="govuk-checkboxes govuk-checkboxes--small">
+                <div class="govuk-checkboxes__item">
+                  <input type="checkbox" name="status[]" id="status-active" value="active"
+                         class="govuk-checkboxes__input"
+                         {% if selected_statuses contains 'active' %}checked{% endif %}>
+                  <label for="status-active" class="govuk-label govuk-checkboxes__label">Active</label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input type="checkbox" name="status[]" id="status-pending" value="pending"
+                         class="govuk-checkboxes__input"
+                         {% if selected_statuses contains 'pending' %}checked{% endif %}>
+                  <label for="status-pending" class="govuk-label govuk-checkboxes__label">Pending</label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input type="checkbox" name="status[]" id="status-closed" value="closed"
+                         class="govuk-checkboxes__input"
+                         {% if selected_statuses contains 'closed' %}checked{% endif %}>
+                  <label for="status-closed" class="govuk-label govuk-checkboxes__label">Closed</label>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <div class="dfe-filter-panel__actions">
+            <button type="submit" class="govuk-button">Apply filters</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    {% comment %} ===== FILTER SUMMARY ===== {% endcomment %}
+    {% if has_filters %}
+    <div class="dfe-filter-summary">
+      <h2 class="govuk-heading-s dfe-filter-summary__heading">Filters applied</h2>
+      <ul class="dfe-filter-summary__list">
+        {% if selected_topic != blank %}
+          <li class="dfe-filter-summary__tag">
+            <span class="dfe-filter-summary__tag-value">{{ selected_topic }}</span>
+            <a href="{{ page.url }}?keywords={{ keywords | url_encode }}{% for status in selected_statuses %}&status[]={{ status | url_encode }}{% endfor %}&order={{ sort_order }}"
+               class="dfe-filter-summary__tag-remove">&times;</a>
+          </li>
+        {% endif %}
+        {% for status in selected_statuses %}
+          <li class="dfe-filter-summary__tag">
+            <span class="dfe-filter-summary__tag-value">{{ status }}</span>
+            <a href="{{ page.url }}?keywords={{ keywords | url_encode }}&topic={{ selected_topic | url_encode }}{% for s in selected_statuses %}{% unless s == status %}&status[]={{ s | url_encode }}{% endunless %}{% endfor %}&order={{ sort_order }}"
+               class="dfe-filter-summary__tag-remove">&times;</a>
+          </li>
+        {% endfor %}
+      </ul>
+      <a href="{{ page.url }}?keywords={{ keywords | url_encode }}" class="govuk-link">Clear all filters</a>
+    </div>
+    {% endif %}
+
+    {% comment %} ===== RESULTS ===== {% endcomment %}
+    <ul class="govuk-list">
+      {% for record in records.results.entities %}
+        <li class="dfe-search-result">
+          <h2 class="govuk-heading-m">
+            <a href="/record/{{ record.dfe_recordid }}" class="govuk-link">{{ record.dfe_name }}</a>
+          </h2>
+          <p class="govuk-body">{{ record.dfe_description }}</p>
+          <p class="govuk-body-s govuk-!-margin-bottom-0">
+            Updated: {{ record.modifiedon | date: '%d %B %Y' }}
+          </p>
+        </li>
+      {% endfor %}
+    </ul>
+
+    {% if records.results.entities.size == 0 %}
+      <p class="govuk-body">No results found. Try adjusting your filters.</p>
+    {% endif %}
+
+  </div>
+</div>
+{% endraw %}

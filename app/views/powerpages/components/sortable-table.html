@@ -1,0 +1,65 @@
+{% set pageData = pages['powerpages/components/sortable-table'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_exampleTabs.njk' import exampleTabs %}
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+<p class="govuk-body"><a class="govuk-link" href="#html-example">Skip to HTML example</a></p>
+
+<h2 class="govuk-heading-l" id="when-to-use-this-component">When to use this component</h2>
+<p class="govuk-body">{{ pageData.description }}</p>
+<p class="govuk-body">Use a sortable table when:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>users need to compare data across rows</li>
+  <li>the order of data matters and users may want to reorder it</li>
+  <li>you have multiple columns that users might want to sort by</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="when-not-to-use-this-component">When not to use this component</h2>
+<p class="govuk-body">Do not use a sortable table:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>for simple data that doesn't need sorting</li>
+  <li>when the table has very few rows (under 5)</li>
+  <li>if the data is already in a logical order that users expect</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="how-it-works">How it works</h2>
+<p class="govuk-body">The sortable table component extends the standard GOV.UK table with sorting functionality. Users can click column headers to sort the table data in ascending or descending order.</p>
+<p class="govuk-body">Each sortable column header contains a button with sort indicators. The <code>aria-sort</code> attribute indicates the current sort state:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li><code>aria-sort="none"</code> - column is sortable but not currently sorted</li>
+  <li><code>aria-sort="ascending"</code> - sorted A to Z or lowest to highest</li>
+  <li><code>aria-sort="descending"</code> - sorted Z to A or highest to lowest</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="html-example">HTML example</h2>
+<p class="govuk-body">
+  Copy the HTML from this page directly into your web template.
+  Refer to the <a class="govuk-link" href="{{ pages['powerpages/styles/layout'].url }}">layouts</a> section for further guidance on structuring your web template.
+</p>
+<p class="govuk-body">You will need to add JavaScript to handle the sorting functionality when users click the column headers.</p>
+
+{{ exampleTabs(
+  "Sortable table",
+  "includes/components/sortable-table/example.njk",
+  { showUpdateSchema: false, index: 1, layout: 'withTitle' }
+) }}
+
+<p class="govuk-body">If you would like any additional advice or guidance with using this example on Power Pages, please contact the Solutions Delivery Team.</p>
+
+{% endblock %}

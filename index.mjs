@@ -3,20 +3,22 @@ dotenv.config();
 
 import express from 'express';
 import nunjucks from 'nunjucks';
+import slugify from 'slugify';
 import { marked } from 'marked';
 import bodyParser from 'body-parser';
-import { Octokit  } from '@octokit/rest';
-import fs from 'fs';
 import path from 'path';
-import jwt from 'jsonwebtoken';
 import config from './app/config.js';
 import compression from 'compression';
+import helmet from 'helmet';
 import favicon from 'serve-favicon';
 import * as cheerio from 'cheerio';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import pages from './app/data/pages.js';
+import pages, { getPageByUrl, getBreadcrumbs, getChildren, getAllPages } from './app/data/pages.js';
 import componentExamples from './app/data/component-examples.js';
+import components, { getComponent } from './app/data/components/index.js';
+import hljs from 'highlight.js';
+import * as githubService from './app/services/github.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -30,6 +32,21 @@ process.on('unhandledRejection', err => {
   console.error('Unhandled rejection:', err);
 });
 
+
+// Security headers
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://rsms.me"],
+      fontSrc: ["'self'", "https://rsms.me", "data:"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'"]
+    }
+  },
+  crossOriginEmbedderPolicy: false
+}));
 
 app.use(compression());
 app.use(bodyParser.json());
@@ -50,7 +67,12 @@ const nunjucksEnv = nunjucks.configure(
 );
 
 // Add the URLs as a global variable
-nunjucksEnv.addGlobal('pages', pages);
+nunjucksEnv.addGlobal('pages', getAllPages());
+
+// Add navigation helper functions
+nunjucksEnv.addGlobal('getBreadcrumbs', getBreadcrumbs);
+nunjucksEnv.addGlobal('getChildren', getChildren);
+nunjucksEnv.addGlobal('getPageByUrl', getPageByUrl);
 
 // Add component examples as a global variable
 nunjucksEnv.addGlobal('componentExamples', componentExamples);
@@ -62,6 +84,10 @@ nunjucksEnv.addFilter('merge', function(obj, additional) {
 
 nunjucksEnv.addFilter('push', function(array, item) {
   return [...array, item];
+});
+
+nunjucksEnv.addFilter('slugify', function(str) {
+  return slugify(str, { lower: true, strict: true });
 });
 
 // Custom filter to check if a string contains a substring
@@ -89,17 +115,12 @@ nunjucksEnv.addFilter('markdown', function (content) {
 });
 
 nunjucksEnv.addFilter('getPageDescription', (url) => {
-  let importPath = path.join(process.cwd(), 'app', 'views', url, 'index.html');
-  try {
-    const template = nunjucks.render(importPath);
-    const $ = cheerio.load(template);
-    const metaDescription = $('meta[name="description"]').attr('content');
-    const pageDescription = metaDescription || '';
-    return pageDescription;
-  } catch (error) {
-    console.error(`Error importing template from "${importPath}": ${error}`);
-    return '';
+  // Use the page registry to get description
+  const page = getPageByUrl(url);
+  if (page && page.description) {
+    return page.description;
   }
+  return '';
 });
 
 // Register the Nunjucks view engine
@@ -119,181 +140,191 @@ app.use((req, res, next) => {
   next();
 });
 
-function renderPath(path, res, next, currentPath) {
+// Process HTML to add syntax highlighting to code blocks
+function processHtml(html) {
+  let $ = cheerio.load(html);
+  $('pre code').each(function () {
+    const code = $(this).text();
+    const classAttr = $(this).attr('class') || '';
+    const langMatch = classAttr.match(/language-(\w+)/);
+    const language = langMatch ? langMatch[1] : null;
+
+    let result;
+    if (language && hljs.getLanguage(language)) {
+      result = hljs.highlight(code, { language });
+      $(this).addClass(`hljs ${language}`);
+    } else {
+      result = hljs.highlightAuto(code);
+      $(this).addClass(`hljs ${result.language || ''}`);
+    }
+    $(this).html(result.value);
+  });
+  return $.html();
+}
+
+// Render a data-driven component page
+function renderComponent(componentId, res, next, currentPath, pageData) {
+  const component = getComponent(componentId);
+  if (!component) {
+    return null; // Component not found
+  }
+
+  const pageKey = `powerpages/components/${componentId}`;
+  const breadcrumbs = getBreadcrumbs(pageKey);
+
   res.set('Content-type', 'text/html; charset=utf-8');
-  res.render(path, { 
-    currentPath: currentPath // Use the original currentPath
+  res.render('powerpages/components/_component', {
+    currentPath,
+    component,
+    pageData: pageData || { title: component.title, description: component.description },
+    breadcrumbs
+  }, (error, html) => {
+    if (error) {
+      next(error);
+    } else {
+      res.end(processHtml(html));
+    }
+  });
+  return true;
+}
+
+// Render a template file with page data
+function renderTemplate(templatePath, res, next, currentPath, pageData, pageKey) {
+  const breadcrumbs = pageKey ? getBreadcrumbs(pageKey) : [];
+  const children = pageKey ? getChildren(pageKey) : [];
+
+  res.set('Content-type', 'text/html; charset=utf-8');
+  res.render(templatePath, {
+    currentPath,
+    pageData,
+    breadcrumbs,
+    children
   }, (error, html) => {
     if (error) {
       if (error.message.startsWith('template not found')) {
-        renderPath(`${path}/index`, res, next, currentPath); // Pass currentPath along
+        // Try with /index suffix for backwards compatibility during migration
+        res.render(`${templatePath}/index`, {
+          currentPath,
+          pageData,
+          breadcrumbs,
+          children
+        }, (err2, html2) => {
+          if (err2) {
+            next(err2);
+          } else {
+            res.end(processHtml(html2));
+          }
+        });
       } else {
         next(error);
       }
     } else {
-      res.end(html);
+      res.end(processHtml(html));
     }
   });
 }
 
+// Route matching - use page registry, then fall back to file-based
 function matchRoutes(req, res, next) {
-  let path = req.path.substr(1);
-  const currentPath = req.path === '/' ? '/' : req.path; // Use the original request path
-  if (path === '') {
-    path = 'index';
-  }
-  renderPath(path, res, next, currentPath);
-}
+  const urlPath = req.path === '/' ? '/' : req.path;
+  const currentPath = urlPath;
 
-async function getInstallationToken(token) {
-  const octokit = new Octokit({
-    auth: token  // your newly minted JWT
-  });
+  // Look up page in registry by URL
+  const pageData = getPageByUrl(urlPath);
 
-  const { data } = await octokit.request(
-    'POST /app/installations/{installation_id}/access_tokens',
-    { installation_id: Number(process.env.GH_APP_INSTALL_ID) }
-  );
-  return data.token;
-}
-
-const privateKeyPath = path.join(process.cwd(), '/d365-powerpages-importer.2025-06-29.private-key.pem');
-const privateKey = fs.readFileSync(privateKeyPath, 'utf8');
-
-const OWNER = 'DFE-DIGITAL';
-const REPO  = 'd365-gds-powerpages';
-
-app.post('/api/trigger-import', async (req, res) => {
-  try {
-
-    const {brand, environmentUrl, clientId, clientSecret} = req.body;
-
-    const missing = [];
-    if (!brand)          missing.push('Website brand');
-    if (!environmentUrl) missing.push('Environment URL');
-    if (!clientId)       missing.push('Client ID');
-    if (!clientSecret)   missing.push('Client Secret');
-
-    if (missing.length) {
-      return res
-        .status(400)
-        .json({ error: `Missing required field${missing.length>1?'s':''}: ${missing.join(', ')}` });
-    }
-
-    const eventTypeMap = {
-      "dfe":  'create-dfe-website',
-      "govuk":'create-govuk-website'
-    };
-    const eventType = eventTypeMap[brand];
-
-    if (!eventType) {
-      return res.status(400).json({ error: 'Invalid brand. Must be "dfe" or "govuk"' });
-    }
-
-    const now = Math.floor(Date.now() / 1000);
-    const payload = {
-      iat: now - 60,
-      exp: now + (10 * 60),
-      iss: process.env.GH_APP_ID
-    };
-
-    const token = jwt.sign(payload, privateKey, { algorithm: 'RS256' });
-    const installToken = await getInstallationToken(token);
-    const github = new Octokit({ auth: installToken });
-
-    await github.request('POST /repos/{owner}/{repo}/dispatches', {
-      owner: OWNER,
-      repo: REPO,
-      event_type: eventType,
-      client_payload: {
-        environment_url: environmentUrl,
-        client_id:       clientId,
-        client_secret:   clientSecret
-      }
+  if (pageData) {
+    // Found in registry - determine how to render
+    const pageKey = Object.keys(getAllPages()).find(key => {
+      const p = getAllPages()[key];
+      const pUrl = p.url === '/' ? '/' : p.url.replace(/\/$/, '');
+      const targetUrl = urlPath === '/' ? '/' : urlPath.replace(/\/$/, '');
+      return pUrl === targetUrl;
     });
 
-    const dispatchTime = new Date().toISOString();
-    res.status(202).json({ ok: true, dispatchTime });
+    if (pageData.dataSource === 'components') {
+      // Data-driven component page
+      const componentId = urlPath.split('/').pop();
+      const rendered = renderComponent(componentId, res, next, currentPath, pageData);
+      if (rendered) return;
+    }
+
+    if (pageData.template) {
+      // Template-based page
+      renderTemplate(pageData.template, res, next, currentPath, pageData, pageKey);
+      return;
+    }
+  }
+
+  // Fall back to file-based routing for pages not in registry
+  let filePath = urlPath.substr(1).replace(/\/$/, '');
+  if (filePath === '') {
+    filePath = 'index';
+  }
+  renderTemplate(filePath, res, next, currentPath, null, null);
+}
+
+// GitHub API endpoints
+app.post('/api/trigger-import', async (req, res) => {
+  try {
+    const { brand, environmentUrl, clientId, clientSecret } = req.body;
+
+    // Validate required fields
+    const missing = [];
+    if (!brand) missing.push('Website brand');
+    if (!environmentUrl) missing.push('Environment URL');
+    if (!clientId) missing.push('Client ID');
+    if (!clientSecret) missing.push('Client Secret');
+
+    if (missing.length) {
+      return res.status(400).json({
+        error: `Missing required field${missing.length > 1 ? 's' : ''}: ${missing.join(', ')}`
+      });
+    }
+
+    // Validate environment URL format
+    if (!environmentUrl.startsWith('https://')) {
+      return res.status(400).json({
+        error: 'Environment URL must start with https://'
+      });
+    }
+
+    const result = await githubService.triggerImport({ brand, environmentUrl, clientId, clientSecret });
+    res.status(202).json({ ok: true, ...result });
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: err.message });
+    console.error('Trigger import error:', err.message);
+    const status = err.message.includes('Invalid brand') ? 400 : 500;
+    res.status(status).json({ error: err.message });
   }
 });
 
-app.get('/api/run-id', async (_req, res) => {
+app.get('/api/find-run', async (req, res) => {
   try {
-    const now = Math.floor(Date.now() / 1000);
-    const payload = {
-      iat: now - 60,
-      exp: now + (10 * 60),
-      iss: process.env.GH_APP_ID
-    };
+    const { dispatchTime } = req.query;
 
-    const token = jwt.sign(payload, privateKey, { algorithm: 'RS256' });
-    const installToken = await getInstallationToken(token);
-    const github = new Octokit({ auth: installToken });
-
-    const { data } = await github.request('GET /repos/{owner}/{repo}/actions/runs', {
-      owner: OWNER,
-      repo: REPO,
-      headers: {
-        'X-GitHub-Api-Version': '2022-11-28'
-      }
-    })
-
-    const yourRun = data.workflow_runs[0];
-
-    console.log(yourRun);
-
-    if (!yourRun) {
-      return res.json({ id: null });
+    if (!dispatchTime) {
+      return res.status(400).json({ error: 'dispatchTime is required' });
     }
 
-    return res.json({
-      id: yourRun.id
-    })
-  }
-  catch (err) {
-    console.error(err);
+    const run = await githubService.findRunAfterTime(dispatchTime, 'repository_dispatch');
+    res.json({ run });
+  } catch (err) {
+    console.error('Find run error:', err.message);
     res.status(500).json({ error: err.message });
   }
-})
+});
 
-// Endpoint to fetch the latest run status
-app.get('/api/import-status', async (_req, res) => {
+app.get('/api/import-status', async (req, res) => {
   try {
-    const now = Math.floor(Date.now() / 1000);
-    const payload = {
-      iat: now - 60,
-      exp: now + (10 * 60),
-      iss: process.env.GH_APP_ID
-    };
-
-    const token = jwt.sign(payload, privateKey, { algorithm: 'RS256' });
-    const installToken = await getInstallationToken(token);
-    const github = new Octokit({ auth: installToken });
-
-    const { runId } = _req.query;
+    const { runId } = req.query;
 
     if (!runId) {
-      return res.status(400).json({ error: 'Invalid run ID' });
+      return res.status(400).json({ error: 'Run ID is required' });
     }
 
-    const { data } = await github.request('GET /repos/{owner}/{repo}/actions/runs/{run_id}', {
-      owner: OWNER,
-      repo: REPO,
-      run_id: runId,
-      headers: {
-        'X-GitHub-Api-Version': '2022-11-28'
-      }
-    })
-
-    return res.json({
-      status: data.status,
-      conclusion: data.conclusion
-    });
+    const status = await githubService.getRunStatus(runId);
+    res.json(status);
   } catch (err) {
-    console.error(err);
+    console.error('Get import status error:', err.message);
     res.status(500).json({ error: err.message });
   }
 });
@@ -306,7 +337,7 @@ app.use((req, res, next) => {
 app.use(function(req, res, next) {
   res.locals.includeScript = true;
   next();
-});0
+});
 
 app.get(/\.html?$/i, function (req, res) {
   const path = req.path.replace(/\.html?$/, '');

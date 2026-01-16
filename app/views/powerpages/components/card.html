@@ -1,0 +1,67 @@
+{% set pageData = pages['powerpages/components/card'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_exampleTabs.njk' import exampleTabs %}
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+<p class="govuk-body"><a class="govuk-link" href="#html-examples">Skip to HTML examples</a></p>
+
+<h2 class="govuk-heading-l" id="when-to-use-this-component">When to use this component</h2>
+<p class="govuk-body">{{ pageData.description }}</p>
+
+<h2 class="govuk-heading-l" id="when-not-to-use-this-component">When not to use this component</h2>
+<p class="govuk-body">Cards can make things harder to understand if overused or used incorrectly. Before using them, test your content as structured content with headers and paragraphs and grid layout.</p>
+
+<h2 class="govuk-heading-l" id="html-examples">HTML examples</h2>
+<p class="govuk-body">
+  Select the appropriate example from this page and directly integrate the HTML into your web template.
+  You can customise these examples to align with your specific requirements, as indicated below.
+  Refer to the <a class="govuk-link" href="{{ pages['powerpages/styles/layout'].url }}">layouts</a> section for further guidance on structuring your web template.
+</p>
+
+<h3 class="govuk-heading-m" id="basic-cards">Basic cards</h3>
+<p class="govuk-body">An example of a basic card component used in a group.</p>
+
+{{ exampleTabs(
+  "Basic cards",
+  "includes/components/card/basicExample.njk",
+  { showUpdateSchema: false, index: 1 }
+) }}
+
+<h3 class="govuk-heading-m" id="basic-meta">Basic cards with meta information</h3>
+<p class="govuk-body">An example of a basic card component used in a group which has meta data.</p>
+
+{{ exampleTabs(
+  "Cards with meta information",
+  "includes/components/card/basicMetaExample.njk",
+  { showUpdateSchema: false, index: 2 }
+) }}
+
+<h3 class="govuk-heading-m" id="cards-image">Cards with image</h3>
+<p class="govuk-body">An example of a card component used in a group which has meta data and an image.</p>
+
+{{ exampleTabs(
+  "Cards with image",
+  "includes/components/card/imageExample.njk",
+  { showUpdateSchema: false, index: 3 }
+) }}
+
+<p class="govuk-body">If you would like any additional advice or guidance with using these examples on Power Pages, please contact the Solutions Delivery Team.</p>
+
+
+{% endblock %}

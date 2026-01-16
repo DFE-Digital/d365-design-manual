@@ -1,0 +1,214 @@
+<form method="get" action="">
+<div class="dfe-filter-panel" data-module="dfe-filter-panel">
+  <div class="dfe-filter-panel__header">
+    <button id="filter-button" class="dfe-filter-panel__button govuk-link" aria-expanded="false" aria-controls="filter-panel-content">
+      <span class="dfe-filter-panel__button-inner">Filter and sort</span>
+    </button>
+    <h2 class="dfe-filter-panel__count">24 results</h2>
+  </div>
+
+  <div class="dfe-filter-panel__content" id="filter-panel-content" role="region" aria-labelledby="filter-button" hidden>
+    <!-- Sort by section -->
+    <details class="dfe-filter-section">
+      <summary class="dfe-filter-section__summary">
+        <h2 class="dfe-filter-section__summary-heading">Sort by</h2>
+      </summary>
+      <div class="dfe-filter-section__content">
+        <div class="govuk-form-group govuk-!-margin-bottom-2">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-visually-hidden">
+              <span class="govuk-fieldset__heading">Sort order</span>
+            </legend>
+            <div class="govuk-radios govuk-radios--small">
+              <div class="govuk-radios__item">
+                <input type="radio" name="order" id="sort-relevance" value="relevance" class="govuk-radios__input" checked>
+                <label for="sort-relevance" class="govuk-label govuk-radios__label">Relevance</label>
+              </div>
+              <div class="govuk-radios__item">
+                <input type="radio" name="order" id="sort-newest" value="updated-newest" class="govuk-radios__input">
+                <label for="sort-newest" class="govuk-label govuk-radios__label">Updated (newest)</label>
+              </div>
+              <div class="govuk-radios__item">
+                <input type="radio" name="order" id="sort-oldest" value="updated-oldest" class="govuk-radios__input">
+                <label for="sort-oldest" class="govuk-label govuk-radios__label">Updated (oldest)</label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </details>
+
+    <!-- Date section -->
+    <details class="dfe-filter-section">
+      <summary class="dfe-filter-section__summary">
+        <h2 class="dfe-filter-section__summary-heading">
+          <span class="govuk-visually-hidden">Filter by </span>Date
+        </h2>
+      </summary>
+      <div class="dfe-filter-section__content">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="date-from-hint">
+            <legend class="govuk-fieldset__legend">Updated after</legend>
+            <div id="date-from-hint" class="govuk-hint govuk-!-margin-bottom-2">For example, 28 2 2024</div>
+            <div class="govuk-date-input" id="date-from">
+              <div class="govuk-date-input__item">
+                <div class="govuk-form-group">
+                  <label for="date-from-day" class="govuk-label">Day</label>
+                  <input class="govuk-input govuk-input--width-2" id="date-from-day" name="date_from[day]" type="text" inputmode="numeric">
+                </div>
+              </div>
+              <div class="govuk-date-input__item">
+                <div class="govuk-form-group">
+                  <label for="date-from-month" class="govuk-label">Month</label>
+                  <input class="govuk-input govuk-input--width-2" id="date-from-month" name="date_from[month]" type="text" inputmode="numeric">
+                </div>
+              </div>
+              <div class="govuk-date-input__item">
+                <div class="govuk-form-group">
+                  <label for="date-from-year" class="govuk-label">Year</label>
+                  <input class="govuk-input govuk-input--width-4" id="date-from-year" name="date_from[year]" type="text" inputmode="numeric">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" role="group" aria-describedby="date-to-hint">
+            <legend class="govuk-fieldset__legend">Updated before</legend>
+            <div id="date-to-hint" class="govuk-hint govuk-!-margin-bottom-2">For example, 13 12 2025</div>
+            <div class="govuk-date-input" id="date-to">
+              <div class="govuk-date-input__item">
+                <div class="govuk-form-group">
+                  <label for="date-to-day" class="govuk-label">Day</label>
+                  <input class="govuk-input govuk-input--width-2" id="date-to-day" name="date_to[day]" type="text" inputmode="numeric">
+                </div>
+              </div>
+              <div class="govuk-date-input__item">
+                <div class="govuk-form-group">
+                  <label for="date-to-month" class="govuk-label">Month</label>
+                  <input class="govuk-input govuk-input--width-2" id="date-to-month" name="date_to[month]" type="text" inputmode="numeric">
+                </div>
+              </div>
+              <div class="govuk-date-input__item">
+                <div class="govuk-form-group">
+                  <label for="date-to-year" class="govuk-label">Year</label>
+                  <input class="govuk-input govuk-input--width-4" id="date-to-year" name="date_to[year]" type="text" inputmode="numeric">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </details>
+
+    <!-- Topic section (select) -->
+    <details class="dfe-filter-section">
+      <summary class="dfe-filter-section__summary">
+        <h2 class="dfe-filter-section__summary-heading">
+          <span class="govuk-visually-hidden">Filter by </span>Topic
+        </h2>
+      </summary>
+      <div class="dfe-filter-section__content">
+        <div class="govuk-form-group">
+          <label for="topic" class="govuk-label">Topic</label>
+          <select name="topic" id="topic" class="govuk-select govuk-!-width-full">
+            <option value="">All topics</option>
+            <option value="business">Business and industry</option>
+            <option value="education">Education, training and skills</option>
+            <option value="health">Health and social care</option>
+            <option value="money">Money</option>
+            <option value="transport">Transport</option>
+          </select>
+        </div>
+        <div class="govuk-form-group">
+          <label for="subtopic" class="govuk-label">Subtopic</label>
+          <select name="subtopic" id="subtopic" class="govuk-select govuk-!-width-full" disabled>
+            <option value="">All subtopics</option>
+          </select>
+        </div>
+      </div>
+    </details>
+
+    <!-- Status section (checkboxes) -->
+    <details class="dfe-filter-section">
+      <summary class="dfe-filter-section__summary">
+        <h2 class="dfe-filter-section__summary-heading">
+          <span class="govuk-visually-hidden">Filter by </span>Status
+        </h2>
+      </summary>
+      <div class="dfe-filter-section__content">
+        <div class="govuk-form-group govuk-!-margin-bottom-2">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-visually-hidden">Status</legend>
+            <div class="govuk-checkboxes govuk-checkboxes--small">
+              <div class="govuk-checkboxes__item">
+                <input type="checkbox" name="status[]" id="status-active" value="active" class="govuk-checkboxes__input">
+                <label for="status-active" class="govuk-label govuk-checkboxes__label">Active</label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input type="checkbox" name="status[]" id="status-pending" value="pending" class="govuk-checkboxes__input">
+                <label for="status-pending" class="govuk-label govuk-checkboxes__label">Pending review</label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input type="checkbox" name="status[]" id="status-closed" value="closed" class="govuk-checkboxes__input">
+                <label for="status-closed" class="govuk-label govuk-checkboxes__label">Closed</label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input type="checkbox" name="status[]" id="status-archived" value="archived" class="govuk-checkboxes__input">
+                <label for="status-archived" class="govuk-label govuk-checkboxes__label">Archived</label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </details>
+
+    <!-- Type section (checkboxes) -->
+    <details class="dfe-filter-section">
+      <summary class="dfe-filter-section__summary">
+        <h2 class="dfe-filter-section__summary-heading">
+          <span class="govuk-visually-hidden">Filter by </span>Type
+        </h2>
+      </summary>
+      <div class="dfe-filter-section__content">
+        <div class="govuk-form-group govuk-!-margin-bottom-2">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-visually-hidden">Type</legend>
+            <div class="govuk-checkboxes govuk-checkboxes--small">
+              <div class="govuk-checkboxes__item">
+                <input type="checkbox" name="type[]" id="type-services" value="services" class="govuk-checkboxes__input">
+                <label for="type-services" class="govuk-label govuk-checkboxes__label">Services</label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input type="checkbox" name="type[]" id="type-guidance" value="guidance_and_regulation" class="govuk-checkboxes__input">
+                <label for="type-guidance" class="govuk-label govuk-checkboxes__label">Guidance and regulation</label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input type="checkbox" name="type[]" id="type-news" value="news_and_communications" class="govuk-checkboxes__input">
+                <label for="type-news" class="govuk-label govuk-checkboxes__label">News and communications</label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input type="checkbox" name="type[]" id="type-research" value="research_and_statistics" class="govuk-checkboxes__input">
+                <label for="type-research" class="govuk-label govuk-checkboxes__label">Research and statistics</label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input type="checkbox" name="type[]" id="type-policy" value="policy_and_engagement" class="govuk-checkboxes__input">
+                <label for="type-policy" class="govuk-label govuk-checkboxes__label">Policy papers and consultations</label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input type="checkbox" name="type[]" id="type-transparency" value="transparency" class="govuk-checkboxes__input">
+                <label for="type-transparency" class="govuk-label govuk-checkboxes__label">Transparency and FOI releases</label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </details>
+
+    <!-- Actions -->
+    <div class="dfe-filter-panel__actions">
+      <input type="submit" value="Apply" class="govuk-button dfe-filter-panel__action dfe-filter-panel__action--submit">
+    </div>
+  </div>
+</div>
+</form>

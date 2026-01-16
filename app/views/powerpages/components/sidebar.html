@@ -1,0 +1,58 @@
+{% set pageData = pages['powerpages/components/sidebar'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_exampleTabs.njk' import exampleTabs %}
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+<p class="govuk-body"><a class="govuk-link" href="#html-example">Skip to HTML example</a></p>
+
+<h2 class="govuk-heading-l" id="when-to-use-this-component">When to use this component</h2>
+<p class="govuk-body">{{ pageData.description }}</p>
+<p class="govuk-body">Use a sidebar when you need to:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>display related links alongside main content</li>
+  <li>show contact information or support details</li>
+  <li>provide quick access to related resources or documents</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="when-not-to-use-this-component">When not to use this component</h2>
+<p class="govuk-body">Do not use a sidebar:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>for primary navigation (use the main navigation instead)</li>
+  <li>on mobile-first designs where space is limited</li>
+  <li>when the sidebar content is more important than the main content</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="how-it-works">How it works</h2>
+<p class="govuk-body">The sidebar component has a coloured top border to visually separate it from the main content. It can contain multiple sections, each with a heading and list of links or content.</p>
+<p class="govuk-body">Place the sidebar in a one-third column alongside a two-thirds main content area.</p>
+
+<h2 class="govuk-heading-l" id="html-example">HTML example</h2>
+<p class="govuk-body">
+  Copy the HTML from this page directly into your web template.
+</p>
+
+{{ exampleTabs(
+  "Sidebar",
+  "includes/components/sidebar/basicExample.njk",
+  { showUpdateSchema: false, index: 1, layout: 'rightColumn' }
+) }}
+
+<p class="govuk-body">If you would like any additional advice or guidance with using this example on Power Pages, please contact the Solutions Delivery Team.</p>
+
+{% endblock %}

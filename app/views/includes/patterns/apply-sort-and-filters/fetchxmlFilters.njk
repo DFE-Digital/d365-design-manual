@@ -1,0 +1,39 @@
+{% raw %}
+{% comment %}
+  Build FetchXML filter conditions from URL parameters
+{% endcomment %}
+
+{% assign selected_topic = request.params['topic'] %}
+{% assign status_param = request.params['status[]'] %}
+{% assign selected_statuses = status_param | split: ',' %}
+
+{% fetchxml records %}
+<fetch>
+  <entity name="dfe_record">
+    <attribute name="dfe_recordid" />
+    <attribute name="dfe_name" />
+    <attribute name="dfe_topic" />
+    <attribute name="statuscode" />
+    <filter type="and">
+      {% comment %}
+        Single value filter - only add if parameter has a value
+      {% endcomment %}
+      {% if selected_topic != blank %}
+        <condition attribute="dfe_topic" operator="eq" value="{{ selected_topic }}" />
+      {% endif %}
+
+      {% comment %}
+        Multi-value filter - use OR condition for checkbox groups
+      {% endcomment %}
+      {% if selected_statuses.size > 0 %}
+        <filter type="or">
+          {% for status in selected_statuses %}
+            <condition attribute="statuscode" operator="eq" value="{{ status }}" />
+          {% endfor %}
+        </filter>
+      {% endif %}
+    </filter>
+  </entity>
+</fetch>
+{% endfetchxml %}
+{% endraw %}
