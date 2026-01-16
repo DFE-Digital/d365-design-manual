@@ -13,7 +13,7 @@
     "copy-code-theme": "cpx \"node_modules/highlight.js/styles/github.css\" public/css",
     "rebrand-images": "cpx \"node_modules/govuk-frontend/dist/govuk/assets/rebrand/**/*.{png,jpg,jpeg,svg,gif,ico}\" public",
     "other-images": "cpx \"app/images/**/*.{png,jpg,jpeg,svg,gif,ico}\" public/images",
-    "build": "npm run clean && npm run copy-vendor-js && npm run build-app-js && npm run build-hljs && npm run styles && npm run rebrand-images && npm run other-images",
+    "build": "npm run clean && npm run copy-vendor-js && npm run build-app-js && npm run build-hljs && npm run styles && npm run copy-code-theme && npm run rebrand-images && npm run other-images",
     "serve": "node index.mjs",
     "watch:js": "esbuild \"app/js/**/*.js\" --outdir=public/js --bundle=false --minify --sourcemap --target=es2015 --watch",
     "watch:css": "sass --load-path=node_modules/govuk-frontend/dist/govuk \"app/scss:public/css\" --source-map --watch",
