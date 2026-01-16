@@ -1,0 +1,96 @@
+// Form Search Component
+// ======================
+
+.dfe-form-search__item-wrapper {
+  display: flex;
+  width: 100%;
+  background: govuk-colour("white");
+
+  // When input has a width class, make wrapper fit content
+  &:has(.dfe-form-search__input[class*="govuk-!-width-"]) {
+    width: auto;
+  }
+}
+
+.dfe-form-search__item {
+  position: relative;
+}
+
+.dfe-form-search__input[type="search"] {
+  font-family: $govuk-font-family;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.4736842105;
+  margin: 0;
+  width: 100%;
+  height: 2.5em;
+  padding: .375em;
+  border: 2px solid $govuk-input-border-colour;
+  background: govuk-colour("white");
+  border-radius: 0;
+  box-sizing: border-box;
+  appearance: none;
+
+  @media print {
+    font-family: sans-serif;
+    font-size: 14pt;
+  }
+
+  @include govuk-media-query($from: tablet) {
+    font-size: 19px;
+    height: 2.1052631579em;
+    padding: .3157894737em;
+  }
+
+  &:focus {
+    outline: 3px solid $govuk-focus-colour;
+    outline-offset: 0;
+    box-shadow: inset 0 0 0 2px;
+    z-index: 2;
+  }
+}
+
+.dfe-form-search__submit-wrapper {
+  flex-shrink: 0;
+}
+
+.dfe-form-search__submit {
+  border: 0;
+  cursor: pointer;
+  border-radius: 0;
+  position: relative;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  text-indent: -5000px;
+  overflow: hidden;
+  background-color: $govuk-brand-colour;
+
+  .dfe-form-search__icon {
+    display: block;
+    pointer-events: none;
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    top: 10px;
+    left: 10px;
+    color: govuk-colour("white");
+  }
+
+  &:focus {
+    z-index: 2;
+    outline: 3px solid $govuk-focus-colour;
+    outline-offset: 0;
+    box-shadow: inset 0 0 0 4px $govuk-focus-text-colour;
+  }
+
+  &:hover {
+    background-color: $govuk-link-hover-colour;
+  }
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
+}

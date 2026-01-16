@@ -1,0 +1,83 @@
+{% set pageData = pages['powerpages/patterns/back-link'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/patterns/_back-link.njk' import patternsBackLinkBasicExample, patternsBackLinkEnhancedExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5" id="overriding-breadcrumbs">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5" id="overriding-breadcrumbs">{{ pageData.title }}</h2>
+{% endif %}
+
+<div class="dfe-contents-container">
+  <nav class="dfe-contents-list">
+    <h2 class="dfe-contents-list__title">Contents</h2>
+    <ol class="dfe-contents-list__list">
+      <li class="dfe-contents-list__list-item">
+        <a class="dfe-contents-list__link govuk-link" href="#overriding-breadcrumbs">Overriding breadcrumbs with a back link</a>
+        <ol class="dfe-contents-list__nested-list">
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link" href="#basic-example">Basic example</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link" href="#enhanced-example">Enhanced example</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link" href="#explanation">Explanation of the enhanced example</a>
+          </li>
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link" href="#differences">Key differences</a>
+          </li>
+        </ol>
+      </li>
+      <li class="dfe-contents-list__list-item">
+        <a class="dfe-contents-list__link" href="#best-practices">Best practices</a>
+      </li>
+      <li class="dfe-contents-list__list-item">
+        <a class="dfe-contents-list__link" href="#further-reading">Further reading</a>
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<h3 class="govuk-heading-l" id="basic-example">Basic example</h3>
+<p class="govuk-body">
+  In a simple case, a back link can replace the breadcrumbs component. Here's how you can set it up:
+</p>
+
+{{ patternsBackLinkBasicExample() }}
+
+<h3 class="govuk-heading-l" id="enhanced-example">Enhanced example</h3>
+<p class="govuk-body">
+  In the majority of cases, you may need to include a parameter (such as a record ID) in the back link URL. This can be achieved dynamically by appending parameters to the back link.
+</p>
+
+{{ patternsBackLinkEnhancedExample() }}
+
+<h3 class="govuk-heading-l" id="explanation">Explanation of the enhanced example</h3>
+<p class="govuk-body">
+  In the enhanced example, the back link dynamically adds the <code>id</code> parameter to the URL. This ensures that users are directed back to the exact record they were previously viewing, preserving context in the journey.
+</p>
+
+<h3 class="govuk-heading-l" id="differences">Key differences:</h3>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Without the <code>params.id</code> check, the back link will simply redirect the user to the previous page.</li>
+  <li>When the <code>params.id</code> is present, it is appended as a query parameter to the back link, allowing the back navigation to retain context by including the record's ID.</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="best-practices">Best practices</h2>
+<p class="govuk-body">
+  When implementing back links in a service, ensure they are consistent and provide a clear and intuitive navigation experience for the user. For pages involving records, include the appropriate parameters in the URL to preserve context, and handle missing parameters gracefully with error handling.
+</p>
+
+<h2 class="govuk-heading-l" id="further-reading">Further reading</h2>
+<p class="govuk-body">
+  For more details, refer to the <a href="https://design-system.service.gov.uk/components/back-link/" target="_blank" class="govuk-link">Back Link component (opens in a new tab)</a> in the GOV.UK Design System.
+</p>
+
+{% endblock %}

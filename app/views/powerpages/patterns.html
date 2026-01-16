@@ -1,0 +1,103 @@
+{% set pageData = pages['powerpages/patterns'] %}
+{% set showTitlePanel = true %}
+{% set showSubNav = true %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% from 'includes/_side-nav.html' import patterns %}
+
+{% block content %}
+
+<p class="govuk-body-l">{{ pageData.description }}</p>
+
+<p class="govuk-body">Patterns are best practice design solutions for specific user-focused tasks and page types. They combine components and styles to solve common problems users face when interacting with government services built on Power Pages and Dynamics 365.</p>
+
+<p class="govuk-body">Unlike components which are reusable building blocks, patterns show how to combine these elements to help users complete tasks like navigating a service, validating form inputs, or presenting data from Dynamics 365 in an accessible way.</p>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<h2 class="govuk-heading-m">In this section</h2>
+
+<ul class="dfe-component-list">
+  {% for page in patterns %}
+  {% if page.url != pageData.url %}
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="{{ page.url }}">{{ page.title }}</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ page.description }}</p>
+  </li>
+  {% endif %}
+  {% endfor %}
+</ul>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<h2 class="govuk-heading-m">Patterns available on GOV.UK Design System</h2>
+
+<p class="govuk-body">The following patterns from the GOV.UK Design System provide guidance that can be applied directly to your Power Pages portal.</p>
+
+<ul class="dfe-component-list">
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/patterns/addresses/" target="_blank">Addresses</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Help users provide an address using one of several approaches.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/patterns/check-answers/" target="_blank">Check answers</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Let users check their answers before submitting information to a service.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/patterns/confirm-an-email-address/" target="_blank">Confirm an email address</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Check that a user has access to a specific email account.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/patterns/confirmation-pages/" target="_blank">Confirmation pages</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Let users know they've completed a transaction.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/patterns/gender-or-sex/" target="_blank">Gender or sex</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Collect information about gender or sex in a respectful way.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/patterns/names/" target="_blank">Names</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Help users enter their name in a way that works for everyone.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/patterns/national-insurance-numbers/" target="_blank">National Insurance numbers</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Ask users for their National Insurance number.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/patterns/passwords/" target="_blank">Passwords</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Help users create and enter secure passwords.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/patterns/question-pages/" target="_blank">Question pages</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Follow a consistent structure when asking users questions.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/patterns/start-pages/" target="_blank">Start pages</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Use a starting point to explain what users need before they begin.</p>
+  </li>
+</ul>
+
+{% endblock %}

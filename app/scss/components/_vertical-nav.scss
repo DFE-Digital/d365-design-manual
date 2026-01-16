@@ -1,0 +1,100 @@
+// Vertical Navigation Component
+// ==============================
+
+.dfe-vertical-nav {
+  padding-right: govuk-spacing(3);
+  @include govuk-font(16);
+}
+
+.dfe-vertical-nav__section {
+  margin: 0 0 govuk-spacing(4);
+  padding: 0;
+  list-style-type: none;
+}
+
+.dfe-vertical-nav__link {
+  padding: 2px 0;
+}
+
+.dfe-vertical-nav__section-item {
+  margin-bottom: govuk-spacing(1);
+  padding-top: govuk-spacing(1);
+  padding-bottom: govuk-spacing(1);
+}
+
+.dfe-vertical-nav__section-item--current {
+  $_current-indicator-width: 4px;
+  margin-left: -(govuk-spacing(2) + $_current-indicator-width);
+  padding-left: govuk-spacing(2);
+  border-left: $_current-indicator-width solid govuk-colour("blue");
+  background-color: govuk-colour("white");
+
+  .dfe-vertical-nav__link {
+    font-weight: bold;
+  }
+}
+
+.dfe-vertical-nav__section--nested {
+  margin-top: govuk-spacing(2);
+  margin-bottom: 0;
+  padding-left: govuk-spacing(4);
+
+  .dfe-vertical-nav__section-item::before {
+    content: "—";
+    margin-left: -(govuk-spacing(4));
+    color: govuk-colour("dark-grey");
+  }
+
+  .dfe-vertical-nav__link {
+    padding-left: 0;
+    font-weight: normal;
+  }
+}
+
+.dfe-vertical-nav__theme {
+  @include govuk-font-size($size: 19);
+  @include govuk-typography-weight-regular;
+  margin: 0;
+  padding: govuk-spacing(2) govuk-spacing(3) govuk-spacing(2) 0;
+  color: govuk-colour("dark-grey");
+
+  &:first-of-type {
+    padding-top: 0;
+  }
+}
+
+.dfe-vertical-nav__toggle {
+  @include govuk-font($size: 19, $weight: bold);
+  display: inline-flex;
+  margin: govuk-spacing(4) 0;
+  margin-top: 0 !important;
+  padding: 0;
+  border: 0;
+  color: $govuk-link-colour;
+  background: none;
+  word-break: break-all;
+  cursor: pointer;
+  align-items: center;
+
+  &:focus {
+    @include govuk-focused-text;
+  }
+
+  &::after {
+    @include govuk-shape-arrow($direction: down, $base: 10px, $display: inline-block);
+    content: "";
+    margin-left: govuk-spacing(1);
+  }
+
+  &[aria-expanded="true"]::after {
+    @include govuk-shape-arrow($direction: up, $base: 10px, $display: inline-block);
+  }
+
+  &[hidden] {
+    display: none;
+  }
+
+  @media (min-width: 40.0625em) {
+    margin: govuk-spacing(2) 0;
+  }
+}

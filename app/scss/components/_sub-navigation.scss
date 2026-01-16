@@ -1,0 +1,60 @@
+// Sub Navigation Component
+// =========================
+
+.dfe-sub-navigation {
+  border-bottom: 1px solid $govuk-border-colour;
+  background-color: govuk-colour("white");
+}
+
+.dfe-sub-navigation__list {
+  @include govuk-font($size: 19);
+  margin: 0;
+  margin-bottom: 15px;
+  padding: 0;
+  list-style: none;
+
+  @include govuk-media-query($from: tablet) {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+  }
+}
+
+.dfe-sub-navigation__item {
+  position: relative;
+  margin: 10px 0;
+  border: 0 solid $govuk-link-colour;
+
+  @include govuk-media-query($from: tablet) {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 15px 0;
+    line-height: 1.5;
+
+    &:not(:last-child) {
+      margin-right: 30px;
+    }
+  }
+}
+
+.dfe-sub-navigation__item--active {
+  @include govuk-media-query($until: tablet) {
+    margin-left: -15px;
+    padding-left: 10px;
+    border-left-width: 5px;
+  }
+
+  @include govuk-media-query($from: tablet) {
+    padding-bottom: 10px;
+    border-bottom-width: 5px;
+  }
+}
+
+.dfe-sub-navigation__link {
+  @include govuk-link-common;
+  @include govuk-link-style-default;
+
+  &:not(:hover):not(:active) {
+    text-decoration: none;
+  }
+}

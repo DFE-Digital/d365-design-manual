@@ -1,0 +1,69 @@
+{% raw %}
+{% comment %}
+  Render the filter summary showing active filters
+{% endcomment %}
+
+{% assign selected_topic = request.params['topic'] %}
+{% assign status_param = request.params['status[]'] %}
+{% assign selected_statuses = status_param | split: ',' %}
+{% assign type_param = request.params['type[]'] %}
+{% assign selected_types = type_param | split: ',' %}
+
+{% comment %} Check if any filters are active {% endcomment %}
+{% assign has_filters = false %}
+{% if selected_topic != blank %}{% assign has_filters = true %}{% endif %}
+{% if selected_statuses.size > 0 %}{% assign has_filters = true %}{% endif %}
+{% if selected_types.size > 0 %}{% assign has_filters = true %}{% endif %}
+
+{% if has_filters %}
+<div class="dfe-filter-summary">
+  <h2 class="govuk-heading-s dfe-filter-summary__heading">Filters applied</h2>
+  <ul class="dfe-filter-summary__list">
+    {% comment %} Topic filter tag {% endcomment %}
+    {% if selected_topic != blank %}
+      <li class="dfe-filter-summary__tag">
+        <span class="dfe-filter-summary__tag-label">Topic:</span>
+        <span class="dfe-filter-summary__tag-value">{{ selected_topic }}</span>
+        <a href="{{ page.url }}?{% for param in request.params %}{% unless param[0] == 'topic' %}{{ param[0] }}={{ param[1] | url_encode }}&{% endunless %}{% endfor %}"
+           class="dfe-filter-summary__tag-remove">
+          <span class="govuk-visually-hidden">Remove topic filter</span>
+          &times;
+        </a>
+      </li>
+    {% endif %}
+
+    {% comment %} Status filter tags - one for each selected value {% endcomment %}
+    {% for status in selected_statuses %}
+      {% capture remove_url %}{{ page.url }}?{% for param in request.params %}{% if param[0] == 'status[]' %}{% for s in selected_statuses %}{% unless s == status %}status[]={{ s | url_encode }}&{% endunless %}{% endfor %}{% else %}{{ param[0] }}={{ param[1] | url_encode }}&{% endif %}{% endfor %}{% endcapture %}
+      <li class="dfe-filter-summary__tag">
+        <span class="dfe-filter-summary__tag-label">Status:</span>
+        <span class="dfe-filter-summary__tag-value">{{ status }}</span>
+        <a href="{{ remove_url | strip }}"
+           class="dfe-filter-summary__tag-remove">
+          <span class="govuk-visually-hidden">Remove {{ status }} status filter</span>
+          &times;
+        </a>
+      </li>
+    {% endfor %}
+
+    {% comment %} Type filter tags {% endcomment %}
+    {% for type in selected_types %}
+      {% capture remove_url %}{{ page.url }}?{% for param in request.params %}{% if param[0] == 'type[]' %}{% for t in selected_types %}{% unless t == type %}type[]={{ t | url_encode }}&{% endunless %}{% endfor %}{% else %}{{ param[0] }}={{ param[1] | url_encode }}&{% endif %}{% endfor %}{% endcapture %}
+      <li class="dfe-filter-summary__tag">
+        <span class="dfe-filter-summary__tag-label">Type:</span>
+        <span class="dfe-filter-summary__tag-value">{{ type | replace: '_', ' ' }}</span>
+        <a href="{{ remove_url | strip }}"
+           class="dfe-filter-summary__tag-remove">
+          <span class="govuk-visually-hidden">Remove {{ type }} type filter</span>
+          &times;
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <a href="{{ page.url }}" class="govuk-link dfe-filter-summary__clear">
+    Clear all filters
+  </a>
+</div>
+{% endif %}
+{% endraw %}

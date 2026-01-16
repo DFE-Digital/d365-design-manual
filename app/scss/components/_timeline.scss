@@ -1,0 +1,117 @@
+// Timeline Component
+// ===================
+
+.dfe-timeline {
+  border-left: 5px solid $govuk-brand-colour;
+  margin: 0 0 30px;
+  padding: 0;
+}
+
+.dfe-timeline__event {
+  list-style: none;
+  padding-bottom: 20px;
+  padding-left: 15px;
+  position: relative;
+
+  @media (min-width: 40.0625em) {
+    padding-bottom: 30px;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.dfe-timeline__event-title {
+  color: $govuk-text-colour;
+  font-family: $govuk-font-family;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.11111;
+  display: block;
+  margin-top: 0;
+  margin-bottom: 15px;
+
+  @media print {
+    color: #000;
+    font-family: sans-serif;
+    font-size: 18pt;
+    line-height: 1.15;
+  }
+
+  @media (min-width: 40.0625em) {
+    font-size: 24px;
+    line-height: 1.25;
+    margin-bottom: 20px;
+  }
+
+  &:before {
+    background-color: $govuk-brand-colour;
+    content: "";
+    height: 5px;
+    left: 0;
+    position: absolute;
+    top: .5em;
+    width: 7px;
+  }
+}
+
+.dfe-timeline__event-meta {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $govuk-text-colour;
+  display: block;
+  font-family: $govuk-font-family;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 8px;
+
+  @media print {
+    font-family: sans-serif;
+    color: #000;
+    font-size: 14pt;
+    line-height: 1.15;
+  }
+
+  @media (min-width: 40.0625em) {
+    font-size: 19px;
+    line-height: 1.31579;
+  }
+}
+
+.dfe-timeline__event-content {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $govuk-text-colour;
+  display: block;
+  font-family: $govuk-font-family;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  margin-bottom: 5px;
+
+  @media print {
+    font-family: sans-serif;
+    color: #000;
+    font-size: 14pt;
+    line-height: 1.15;
+  }
+
+  @media (min-width: 40.0625em) {
+    font-size: 19px;
+    line-height: 1.31579;
+  }
+}
+
+.govuk-body + .dfe-timeline__event-title,
+.govuk-body-m + .dfe-timeline__event-title,
+.govuk-body-s + .dfe-timeline__event-title {
+  padding-top: 5px;
+
+  @media (min-width: 40.0625em) {
+    padding-top: 10px;
+  }
+}

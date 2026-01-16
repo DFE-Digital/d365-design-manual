@@ -1,0 +1,24 @@
+{% raw %}
+{% comment %}
+  Reading multi-value parameters (from checkboxes)
+  Values come as comma-separated string: "active,pending,closed"
+{% endcomment %}
+
+{% assign status_param = request.params['status[]'] %}
+{% assign selected_statuses = status_param | split: ',' %}
+
+{% comment %}
+  Check if a specific value is selected
+{% endcomment %}
+{% assign has_active = false %}
+{% for status in selected_statuses %}
+  {% if status == 'active' %}
+    {% assign has_active = true %}
+  {% endif %}
+{% endfor %}
+
+{% comment %}
+  Count how many filters are active
+{% endcomment %}
+{% assign filter_count = selected_statuses | size %}
+{% endraw %}

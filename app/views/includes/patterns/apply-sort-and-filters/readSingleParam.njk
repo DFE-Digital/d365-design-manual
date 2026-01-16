@@ -1,0 +1,16 @@
+{% raw %}
+{% comment %}
+  Reading single value parameters from the URL
+{% endcomment %}
+
+{% assign sort_order = request.params['order'] | default: 'relevance' %}
+{% assign selected_topic = request.params['topic'] %}
+{% assign keywords = request.params['keywords'] %}
+
+{% comment %}
+  Use the values in your template
+{% endcomment %}
+{% if selected_topic %}
+  <p>Showing results for topic: {{ selected_topic }}</p>
+{% endif %}
+{% endraw %}

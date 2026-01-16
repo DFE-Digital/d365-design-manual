@@ -1,0 +1,134 @@
+// Dashboard Component
+// ====================
+
+.dfe-dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px;
+}
+
+.dfe-dashboard-date-range-container {
+  display: block;
+
+  @media (min-width: 40.0625em) {
+    display: inline-block;
+  }
+}
+
+.dfe-dashboard-date-range-container__select {
+  width: 100%;
+}
+
+.dfe-dashboard-total-group {
+  margin-bottom: 30px;
+  padding: 0 15px 0 0 !important;
+}
+
+.dfe-dashboard-total-group__title {
+  color: $govuk-text-colour;
+  font-family: $govuk-font-family;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.25;
+  display: block;
+  margin-bottom: 5px;
+
+  @media print {
+    color: #000;
+    font-family: sans-serif;
+    font-size: 14pt;
+    line-height: 1.15;
+  }
+
+  @media (min-width: 40.0625em) {
+    font-size: 19px;
+    line-height: 1.3157894737;
+  }
+}
+
+.dfe-dashboard-total-group__values {
+  display: flex;
+  position: relative;
+  margin: 0;
+  padding: 15px;
+  padding-left: 25px;
+  border: 2px solid $govuk-border-colour;
+  border-left: 0;
+  background-color: govuk-colour("light-grey");
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    bottom: -1px;
+    left: 0;
+    width: .625rem;
+    background-color: govuk-colour("black");
+  }
+
+  &--red::before {
+    background-color: govuk-colour("red");
+  }
+
+  &--blue::before {
+    background-color: govuk-colour("blue");
+  }
+}
+
+.dfe-dashboard-total-group__count,
+.dfe-dashboard-total-group__amount {
+  font-family: $govuk-font-family;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.1111111111;
+
+  @media print {
+    font-family: sans-serif;
+    font-size: 18pt;
+    line-height: 1.15;
+  }
+
+  @media (min-width: 40.0625em) {
+    font-size: 24px;
+    line-height: 1.25;
+  }
+}
+
+.dfe-dashboard-total-group__count {
+  float: left;
+  margin-left: 0;
+}
+
+.dfe-dashboard-total-group__amount {
+  text-align: right;
+  flex: 1;
+  float: right;
+}
+
+.dfe-dashboard-total-explainer {
+  margin-top: 10px;
+  font-family: $govuk-font-family;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.1428571429;
+
+  @media print {
+    font-family: sans-serif;
+    font-size: 14pt;
+    line-height: 1.2;
+  }
+
+  @media (min-width: 40.0625em) {
+    font-size: 16px;
+    line-height: 1.25;
+  }
+}

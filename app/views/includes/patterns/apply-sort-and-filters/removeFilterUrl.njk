@@ -1,0 +1,38 @@
+{% raw %}
+{% comment %}
+  Build URL that removes a specific filter parameter
+
+  This snippet creates a URL that preserves all current parameters
+  except the one being removed. For multi-value parameters (like
+  checkboxes), it removes only the specific value.
+{% endcomment %}
+
+{% comment %}
+  Example: Remove a single-value filter (e.g., topic)
+  Current URL: /search?topic=education&status[]=active
+  Result URL:  /search?status[]=active
+{% endcomment %}
+{% capture remove_topic_url %}{{ page.url }}?{% for param in request.params %}{% unless param[0] == 'topic' %}{{ param[0] }}={{ param[1] | url_encode }}{% unless forloop.last %}&{% endunless %}{% endunless %}{% endfor %}{% endcapture %}
+
+{% comment %}
+  Example: Remove a specific value from a multi-value filter (e.g., status)
+  Current URL: /search?status[]=active&status[]=pending
+  To remove 'active': /search?status[]=pending
+
+  This requires rebuilding the parameter without the specific value
+{% endcomment %}
+{% assign status_param = request.params['status[]'] %}
+{% assign selected_statuses = status_param | split: ',' %}
+{% assign value_to_remove = 'active' %}
+
+{% capture remove_status_url %}
+{{ page.url }}?{% for param in request.params %}{% if param[0] == 'status[]' %}{% comment %} Rebuild status without the removed value {% endcomment %}{% for status in selected_statuses %}{% unless status == value_to_remove %}status[]={{ status | url_encode }}&{% endunless %}{% endfor %}{% else %}{{ param[0] }}={{ param[1] | url_encode }}&{% endif %}{% endfor %}
+{% endcapture %}
+
+{% comment %}
+  Usage in template:
+{% endcomment %}
+<a href="{{ remove_topic_url | strip }}" class="dfe-filter-summary__tag-remove">
+  Remove topic filter
+</a>
+{% endraw %}

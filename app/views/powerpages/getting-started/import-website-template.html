@@ -1,0 +1,54 @@
+{% set pageData = pages['powerpages/getting-started/import-website-template'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+<p class="govuk-body">You will:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>choose between the DfE and GOV.UK versions based on your <a class="govuk-link" href="{{ pages['powerpages/getting-started/branding-standards'].url }}">branding standards</a></li>
+  <li>enter your app registration credentials</li>
+  <li>start the import</li>
+</ul>
+
+<p class="govuk-body">This tool triggers a GitHub Action to install the selected base website files from <a href="https://github.com/DFE-Digital/d365-gds-powerpages" class="govuk-link" target="_blank">d365-gds-powerpages (opens in new tab)</a>.</p>
+
+<div class="govuk-inset-text">
+  If the import fails, check the error logs in the GitHub Actions interface, ensure all inputs are correct and the app registration is properly configured.
+</div>
+
+<a href="{{ pages['powerpages/getting-started/import-website-template/start-import'].url }}" role="button" draggable="false" class="govuk-button" data-module="govuk-button">
+  Continue
+</a>
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['powerpages/getting-started/pre-requisites'].url }}" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['powerpages/getting-started/pre-requisites'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+{% endblock %}

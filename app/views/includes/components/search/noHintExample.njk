@@ -1,0 +1,24 @@
+<div class="govuk-form-group">
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l" for="search">
+      Enter your URN and click the search icon
+    </label>
+  </h1>
+  <p id="search-error" class="govuk-error-message govuk-visually-hidden">
+    <span class="govuk-visually-hidden">Error:</span>
+  </p>
+  <div class="dfe-form-search__item-wrapper">
+    <input class="dfe-form-search__item dfe-form-search__input govuk-!-width-two-thirds" id="search" name="search" title="Search" type="search">
+    <div class="dfe-form-search__item dfe-form-search__submit-wrapper">
+      <button class="dfe-form-search__submit" id="search-btn" type="submit">
+        Search organisation
+        <svg class="dfe-form-search__icon" width="27" height="27" viewBox="0 0 27 27" fill="none"
+            xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+            <circle cx="12.0161" cy="11.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+            <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="currentColor" stroke-width="3"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+<div id="search-loader" class="loader govuk-visually-hidden"></div>

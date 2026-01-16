@@ -1,0 +1,19 @@
+{% raw %}
+{% comment %}
+  Pre-select dropdown based on URL parameters
+{% endcomment %}
+
+{% assign selected_topic = request.params['topic'] %}
+
+<div class="govuk-form-group">
+  <label for="topic" class="govuk-label">Topic</label>
+  <select name="topic" id="topic" class="govuk-select govuk-!-width-full">
+    <option value="" {% if selected_topic == blank %}selected{% endif %}>All topics</option>
+    <option value="business" {% if selected_topic == 'business' %}selected{% endif %}>Business and industry</option>
+    <option value="education" {% if selected_topic == 'education' %}selected{% endif %}>Education, training and skills</option>
+    <option value="health" {% if selected_topic == 'health' %}selected{% endif %}>Health and social care</option>
+    <option value="money" {% if selected_topic == 'money' %}selected{% endif %}>Money</option>
+    <option value="transport" {% if selected_topic == 'transport' %}selected{% endif %}>Transport</option>
+  </select>
+</div>
+{% endraw %}

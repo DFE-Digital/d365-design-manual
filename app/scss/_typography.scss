@@ -1,0 +1,46 @@
+// Typography Overrides
+// =====================
+
+@import url('https://rsms.me/inter/inter.css');
+
+// Override GOV.UK font family
+$govuk-font-family: $dfe-font-family !important;
+
+// Code blocks
+pre * {
+  font-family: $code-font-family !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+pre code {
+  outline: 1px solid rgba(0, 0, 0, 0) !important;
+  color: #0b0c0c !important;
+  background-color: #f3f2f1 !important;
+}
+
+// Inline code styling
+caption code,
+p code,
+li code,
+td code,
+th code,
+dd code {
+  font-family: $code-font-family !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 2px 5px;
+  background-color: #f3f2f1;
+  color: #d13118;
+  font-weight: 400;
+  font-size: 0.95em;
+
+  @include govuk-media-query($from: tablet) {
+    padding: 2px 5px;
+  }
+}
+
+// Tabular numbers for data display
+.tableNumbers {
+  font-feature-settings: 'tnum' 1, 'ss01' 1, 'zero' 1;
+}

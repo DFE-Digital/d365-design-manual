@@ -1,0 +1,71 @@
+// Chevron Card Component
+// ======================
+
+.dfe-chevron-card__list {
+  list-style: none;
+  margin: 0 -15px;
+  padding: 0;
+}
+
+.dfe-chevron-card {
+  border-top: 1px solid $govuk-border-colour;
+  margin: 0 15px;
+  padding: 5px 0 20px 0;
+}
+
+.dfe-chevron-card:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.dfe-chevron-card:first-child .dfe-chevron-card__wrapper {
+  padding-top: 0;
+}
+
+.dfe-chevron-card__wrapper {
+  padding: 19px 0 4px;
+  position: relative;
+}
+
+@media (max-width: 40.0525em) {
+  .dfe-chevron-card__wrapper .govuk-heading-s,
+  .dfe-chevron-card__wrapper .dfe-chevron-card__description {
+    font-size: 19px;
+  }
+}
+
+.dfe-chevron-card__description {
+  margin: 0 30px 0 0;
+}
+
+.dfe-chevron-card__link::after {
+  bottom: 0;
+  content: "";
+  display: block;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.dfe-chevron-card__link::before {
+  border-right: 4px solid $govuk-brand-colour;
+  border-top: 4px solid $govuk-brand-colour;
+  content: "";
+  display: block;
+  height: 12px;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  margin-top: 5px;
+  transform: translateY(0) rotate(45deg) scale(1);
+  width: 12px;
+}
+
+.dfe-chevron-card__link:hover::before {
+  border-color: $govuk-brand-colour;
+}
+
+.dfe-chevron-card__link:focus::before {
+  border-color: $govuk-border-colour;
+}

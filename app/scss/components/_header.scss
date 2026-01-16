@@ -1,0 +1,47 @@
+// Header Component
+// =================
+
+// DfE branding updates
+.govuk-header__link .govuk-header__logotype {
+  height: 40px;
+}
+
+.govuk-header__link:focus .govuk-header__logotype {
+  content: url(/assets/images/dfe-logo_black.png);
+  height: 40px;
+}
+
+// Manual top navigation
+.dfe-manual-top-nav {
+  background: govuk-colour("dark-blue");
+  padding: 17px 0;
+}
+
+.dfe-manual-top-nav__container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.dfe-manual-top-nav__items {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.dfe-manual-top-nav__list {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dfe-manual-top-nav__item {
+  display: flex;
+  align-items: center;
+}
+
+.dfe-manual-top-nav__link {
+  color: govuk-colour("white");
+}

@@ -1,0 +1,40 @@
+{% raw %}
+{% comment %}
+  Build FetchXML with dynamic sorting based on URL parameters
+{% endcomment %}
+
+{% assign sort_order = request.params['order'] | default: 'relevance' %}
+
+{% comment %}
+  Map sort parameter to FetchXML order attributes
+{% endcomment %}
+{% case sort_order %}
+  {% when 'updated-newest' %}
+    {% assign sort_attribute = 'modifiedon' %}
+    {% assign sort_descending = 'true' %}
+  {% when 'updated-oldest' %}
+    {% assign sort_attribute = 'modifiedon' %}
+    {% assign sort_descending = 'false' %}
+  {% when 'name-asc' %}
+    {% assign sort_attribute = 'dfe_name' %}
+    {% assign sort_descending = 'false' %}
+  {% when 'name-desc' %}
+    {% assign sort_attribute = 'dfe_name' %}
+    {% assign sort_descending = 'true' %}
+  {% else %}
+    {% comment %} Default to relevance/created date {% endcomment %}
+    {% assign sort_attribute = 'createdon' %}
+    {% assign sort_descending = 'true' %}
+{% endcase %}
+
+{% fetchxml records %}
+<fetch>
+  <entity name="dfe_record">
+    <attribute name="dfe_recordid" />
+    <attribute name="dfe_name" />
+    <attribute name="modifiedon" />
+    <order attribute="{{ sort_attribute }}" descending="{{ sort_descending }}" />
+  </entity>
+</fetch>
+{% endfetchxml %}
+{% endraw %}

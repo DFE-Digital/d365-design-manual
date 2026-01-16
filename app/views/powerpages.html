@@ -1,0 +1,102 @@
+{% set pageData = pages['powerpages'] %}
+{% set showTitlePanel = true %}
+{% set showSubNav = true %}
+
+{% extends "layouts/_two-column-wide-left.html" %}
+
+{% block content %}
+
+<p class="govuk-body-l">{{ pageData.description }}</p>
+
+<h2 class="govuk-heading-m">Why we built this</h2>
+
+<p class="govuk-body">Microsoft's out-of-the-box Power Pages features, including entity forms, entity lists, and views, render HTML that we cannot fully control. This means we cannot guarantee accessibility compliance or apply GOV.UK Design System styling consistently.</p>
+
+<p class="govuk-body">To meet Government Digital Service (GDS) standards and deliver accessible, user-centred services, we took a different approach. We build completely custom web templates using Liquid, with GOV.UK Frontend styles and our own JavaScript framework for form validation and submission via the Power Pages Web API.</p>
+
+<p class="govuk-body">This manual documents that approach. It provides the base portal templates, styling, components, and patterns we've developed to build compliant Power Pages websites for DfE services.</p>
+
+<h2 class="govuk-heading-m">How it works</h2>
+
+<p class="govuk-body">This guidance assumes you're using the custom base portal available from the <a class="govuk-link" href="{{ pages['powerpages/getting-started/import-website-template'].url }}">website import tool</a>. The base portal includes:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>GOV.UK Frontend and DfE Frontend styles</li>
+  <li>Base Liquid templates for common page layouts</li>
+  <li>A JavaScript validation framework for custom forms</li>
+  <li>Helper utilities for working with the Power Pages Web API</li>
+</ul>
+
+<p class="govuk-body">The components and patterns in this manual are designed to work with this base portal. They won't work with standard Power Pages entity forms or the default Microsoft templates.</p>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<h2 class="govuk-heading-m">What's included</h2>
+
+<p class="govuk-body">This manual covers:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Base portal templates ready to import into your environment</li>
+  <li>GOV.UK Design System styles adapted for Power Pages</li>
+  <li>Custom components for service requirements not covered by the GOV.UK Design System</li>
+  <li>Form validation and submission patterns using the Power Pages Web API</li>
+  <li>CRM helper framework for building custom forms that write to Dynamics 365</li>
+</ul>
+
+<h2 class="govuk-heading-m">Experience required</h2>
+
+<p class="govuk-body">To use this manual effectively, you should be familiar with:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Power Pages and Dynamics 365 fundamentals</li>
+  <li>Creating custom web templates using Liquid</li>
+  <li>HTML, CSS, and JavaScript</li>
+  <li>The Dynamics 365 data model and Web API</li>
+</ul>
+
+<div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-visually-hidden">Warning</span>
+    Read the getting started section before building your website. It covers prerequisites and how to import the base portal templates.
+  </strong>
+</div>
+
+{% endblock %}
+
+{% block sideContent %}
+<h2 class="govuk-heading-m">Explore this section</h2>
+
+<ul class="dfe-component-list dfe-component-list--single-column">
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="{{ pages['powerpages/getting-started'].url }}">Getting started</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ pages['powerpages/getting-started'].description }}</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="{{ pages['powerpages/styles'].url }}">Styles</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ pages['powerpages/styles'].description }}</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="{{ pages['powerpages/components'].url }}">Components</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ pages['powerpages/components'].description }}</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="{{ pages['powerpages/patterns'].url }}">Patterns</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ pages['powerpages/patterns'].description }}</p>
+  </li>
+</ul>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<h2 class="govuk-heading-m">Get help</h2>
+
+<p class="govuk-body">If you have questions or need advice on implementing these patterns, <a class="govuk-link" href="mailto:solutionsdevelopment.techdirectorate@education.gov.uk">contact the Solutions Delivery Team</a>.</p>
+{% endblock %}

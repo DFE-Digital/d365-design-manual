@@ -1,0 +1,33 @@
+{% macro contentsList(items, options = {}) %}
+{#
+  Generates a contents list navigation component.
+
+  @param {array} items - Array of link objects
+    - text: Link text
+    - href: Link href (usually an anchor like "#section-id")
+    - children: (optional) Array of child link objects for nested lists
+  @param {object} options - Optional settings
+    - boldParents: If true, adds --parent modifier to make top-level links bold
+#}
+<div class="dfe-contents-container">
+  <nav class="dfe-contents-list">
+    <h2 class="dfe-contents-list__title">Contents</h2>
+    <ol class="dfe-contents-list__list">
+      {%- for item in items %}
+      <li class="dfe-contents-list__list-item{{ ' dfe-contents-list__list-item--parent' if options.boldParents }}">
+        <a class="dfe-contents-list__link" href="{{ item.href }}">{{ item.text }}</a>
+        {%- if item.children %}
+        <ol class="dfe-contents-list__nested-list">
+          {%- for child in item.children %}
+          <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+            <a class="dfe-contents-list__link" href="{{ child.href }}">{{ child.text }}</a>
+          </li>
+          {%- endfor %}
+        </ol>
+        {%- endif %}
+      </li>
+      {%- endfor %}
+    </ol>
+  </nav>
+</div>
+{% endmacro %}

@@ -1,0 +1,425 @@
+{% set pageData = pages['powerpages/getting-started/import-website-template/start-import'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+<div id="error-summary-container"></div>
+
+<form id="import-form" novalidate>
+  <div class="govuk-form-group" id="brand-group">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+        Website brand
+      </legend>
+      <div id="brand-error" class="govuk-error-message govuk-!-display-none">
+        <span class="govuk-visually-hidden">Error:</span> Select a website brand
+      </div>
+      <div class="govuk-radios" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="brand" name="brand" type="radio" value="govuk">
+          <label class="govuk-label govuk-radios__label" for="brand">
+            GOV.UK
+          </label>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="brand-2" name="brand" type="radio" value="dfe">
+          <label class="govuk-label govuk-radios__label" for="brand-2">
+            DfE
+          </label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="govuk-form-group" id="environmentUrl-group">
+    <label class="govuk-label govuk-label--s" for="environmentUrl">
+      Environment URL
+    </label>
+    <div class="govuk-hint" id="environmentUrl-hint">
+      Your Dynamics 365 environment URL, e.g. <code>https://org.crm11.dynamics.com</code>
+    </div>
+    <div id="environmentUrl-error" class="govuk-error-message govuk-!-display-none">
+      <span class="govuk-visually-hidden">Error:</span> <span class="error-text"></span>
+    </div>
+    <input class="govuk-input" id="environmentUrl" name="environmentUrl" type="text" aria-describedby="environmentUrl-hint">
+  </div>
+
+  <div class="govuk-form-group" id="clientId-group">
+    <label class="govuk-label govuk-label--s" for="clientId">
+      Client ID
+    </label>
+    <div class="govuk-hint" id="clientId-hint">
+      The Application (client) ID from your app registration
+    </div>
+    <div id="clientId-error" class="govuk-error-message govuk-!-display-none">
+      <span class="govuk-visually-hidden">Error:</span> Enter a Client ID
+    </div>
+    <input class="govuk-input" id="clientId" name="clientId" type="text" aria-describedby="clientId-hint">
+  </div>
+
+  <div class="govuk-form-group" id="clientSecret-group">
+    <label class="govuk-label govuk-label--s" for="clientSecret">
+      Client secret
+    </label>
+    <div class="govuk-hint" id="clientSecret-hint">
+      The secret value from your app registration
+    </div>
+    <div id="clientSecret-error" class="govuk-error-message govuk-!-display-none">
+      <span class="govuk-visually-hidden">Error:</span> Enter a Client secret
+    </div>
+    <div class="govuk-input__wrapper govuk-password-input__wrapper" data-module="govuk-password-input">
+      <input class="govuk-input govuk-password-input__input govuk-js-password-input-input" id="clientSecret" name="clientSecret" type="password" spellcheck="false" autocapitalize="none" aria-describedby="clientSecret-hint">
+      <button type="button" class="govuk-button govuk-button--secondary govuk-password-input__toggle govuk-js-password-input-toggle" data-module="govuk-button" aria-controls="clientSecret" aria-label="Show secret" hidden>
+        Show
+      </button>
+    </div>
+  </div>
+
+  <div class="govuk-inset-text">
+    The import workflow can take several minutes to complete. Please do not refresh or navigate away from this page after starting the import.
+  </div>
+
+  <button type="submit" class="govuk-button" id="submit-btn" data-module="govuk-button" data-prevent-double-click="true">
+    Start import
+  </button>
+</form>
+
+<div id="import-progress" class="dfe-loading-spinner" hidden>
+  <div class="dfe-loading-spinner__spinner" aria-live="polite" role="status"></div>
+  <div class="dfe-loading-spinner__content">
+    <h3 class="govuk-heading-s" id="loading-message">Starting import…</h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-1" id="loading-detail"></p>
+    <p class="govuk-body-s" id="loading-timer"></p>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+(function() {
+  const $form = document.getElementById('import-form');
+  const $errorContainer = document.getElementById('error-summary-container');
+  const $progress = document.getElementById('import-progress');
+  const $message = document.getElementById('loading-message');
+  const $detail = document.getElementById('loading-detail');
+  const $timer = document.getElementById('loading-timer');
+  const $submitBtn = document.getElementById('submit-btn');
+
+  const TIMEOUT_MS = 10 * 60 * 1000; // 10 minutes
+  const POLL_INTERVAL_MS = 5000; // 5 seconds
+
+  let pollTimeoutId = null;
+  let startTime = null;
+
+  // --- Validation ---
+  function validateForm() {
+    const errors = [];
+    clearAllErrors();
+
+    const brand = document.querySelector('input[name="brand"]:checked');
+    const environmentUrl = document.getElementById('environmentUrl').value.trim();
+    const clientId = document.getElementById('clientId').value.trim();
+    const clientSecret = document.getElementById('clientSecret').value.trim();
+
+    if (!brand) {
+      errors.push({ field: 'brand', message: 'Select a website brand' });
+      showFieldError('brand', 'Select a website brand');
+    }
+
+    if (!environmentUrl) {
+      errors.push({ field: 'environmentUrl', message: 'Enter an Environment URL' });
+      showFieldError('environmentUrl', 'Enter an Environment URL');
+    } else if (!environmentUrl.startsWith('https://')) {
+      errors.push({ field: 'environmentUrl', message: 'Environment URL must start with https://' });
+      showFieldError('environmentUrl', 'Environment URL must start with https://');
+    }
+
+    if (!clientId) {
+      errors.push({ field: 'clientId', message: 'Enter a Client ID' });
+      showFieldError('clientId', 'Enter a Client ID');
+    }
+
+    if (!clientSecret) {
+      errors.push({ field: 'clientSecret', message: 'Enter a Client secret' });
+      showFieldError('clientSecret', 'Enter a Client secret');
+    }
+
+    if (errors.length > 0) {
+      showErrorSummary(errors);
+      return false;
+    }
+
+    return true;
+  }
+
+  function showFieldError(fieldId, message) {
+    const group = document.getElementById(`${fieldId}-group`);
+    const errorEl = document.getElementById(`${fieldId}-error`);
+
+    if (group) group.classList.add('govuk-form-group--error');
+    if (errorEl) {
+      const textEl = errorEl.querySelector('.error-text');
+      if (textEl) {
+        textEl.textContent = message;
+      } else {
+        errorEl.innerHTML = `<span class="govuk-visually-hidden">Error:</span> ${message}`;
+      }
+      errorEl.classList.remove('govuk-!-display-none');
+    }
+
+    // Add error class to input
+    const input = document.getElementById(fieldId);
+    if (input) input.classList.add('govuk-input--error');
+  }
+
+  function clearAllErrors() {
+    document.querySelectorAll('.govuk-form-group--error').forEach(el => {
+      el.classList.remove('govuk-form-group--error');
+    });
+    document.querySelectorAll('.govuk-error-message').forEach(el => {
+      el.classList.add('govuk-!-display-none');
+    });
+    document.querySelectorAll('.govuk-input--error').forEach(el => {
+      el.classList.remove('govuk-input--error');
+    });
+    $errorContainer.innerHTML = '';
+  }
+
+  function showErrorSummary(errors) {
+    const errorLinks = errors.map(err =>
+      `<li><a href="#${err.field}">${err.message}</a></li>`
+    ).join('');
+
+    $errorContainer.innerHTML = `
+      <div class="govuk-error-summary" data-module="govuk-error-summary" tabindex="-1">
+        <div role="alert">
+          <h2 class="govuk-error-summary__title">There is a problem</h2>
+          <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+              ${errorLinks}
+            </ul>
+          </div>
+        </div>
+      </div>`;
+
+    $errorContainer.querySelector('.govuk-error-summary').focus();
+  }
+
+  function showApiError(message) {
+    $errorContainer.innerHTML = `
+      <div class="govuk-error-summary" data-module="govuk-error-summary" tabindex="-1">
+        <div role="alert">
+          <h2 class="govuk-error-summary__title">There is a problem</h2>
+          <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+              <li>${message}</li>
+            </ul>
+          </div>
+        </div>
+      </div>`;
+
+    $errorContainer.querySelector('.govuk-error-summary').focus();
+  }
+
+  // --- Progress UI ---
+  function showProgress() {
+    $form.style.display = 'none';
+    $progress.hidden = false;
+    startTime = Date.now();
+    updateTimer();
+  }
+
+  function hideProgress() {
+    $form.style.display = 'block';
+    $progress.hidden = true;
+    $submitBtn.disabled = false;
+  }
+
+  function updateMessage(msg, detail = '') {
+    $message.textContent = msg;
+    $detail.textContent = detail;
+  }
+
+  function updateTimer() {
+    if (!startTime) return;
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    const mins = Math.floor(elapsed / 60);
+    const secs = elapsed % 60;
+    $timer.textContent = `Elapsed: ${mins}:${secs.toString().padStart(2, '0')}`;
+  }
+
+  // --- Polling ---
+  async function pollForRun(dispatchTime) {
+    const timeoutAt = Date.now() + TIMEOUT_MS;
+
+    async function poll() {
+      updateTimer();
+
+      // Check timeout
+      if (Date.now() > timeoutAt) {
+        hideProgress();
+        showApiError('The import timed out. The workflow may still be running - check the <a href="https://github.com/DFE-Digital/d365-gds-powerpages/actions" target="_blank" class="govuk-link">GitHub Actions page</a> for status.');
+        return;
+      }
+
+      try {
+        // First, try to find the run
+        const findRes = await fetch(`/api/find-run?dispatchTime=${encodeURIComponent(dispatchTime)}`);
+
+        if (!findRes.ok) {
+          throw new Error(`Failed to check run status (${findRes.status})`);
+        }
+
+        const { run } = await findRes.json();
+
+        if (!run) {
+          updateMessage('Waiting for GitHub to start your import…', 'This can take up to a minute.');
+          pollTimeoutId = setTimeout(poll, POLL_INTERVAL_MS);
+          return;
+        }
+
+        // We found the run - now poll its status
+        await pollRunStatus(run.id, timeoutAt);
+
+      } catch (err) {
+        console.error('Poll error:', err);
+        // On network error, retry (don't give up immediately)
+        updateMessage('Connection interrupted, retrying…');
+        pollTimeoutId = setTimeout(poll, POLL_INTERVAL_MS * 2);
+      }
+    }
+
+    poll();
+  }
+
+  async function pollRunStatus(runId, timeoutAt) {
+    async function poll() {
+      updateTimer();
+
+      // Check timeout
+      if (Date.now() > timeoutAt) {
+        hideProgress();
+        showApiError('The import timed out. Check the <a href="https://github.com/DFE-Digital/d365-gds-powerpages/actions" target="_blank" class="govuk-link">GitHub Actions page</a> for the current status.');
+        return;
+      }
+
+      try {
+        const statusRes = await fetch(`/api/import-status?runId=${runId}`);
+
+        if (!statusRes.ok) {
+          throw new Error(`Failed to get status (${statusRes.status})`);
+        }
+
+        const { status, conclusion, htmlUrl } = await statusRes.json();
+
+        // Update UI based on status
+        switch (status) {
+          case 'queued':
+            updateMessage('Your import is queued…', 'Waiting for a runner to become available.');
+            break;
+          case 'in_progress':
+            updateMessage('Import in progress…', 'Installing website files to your environment.');
+            break;
+          case 'completed':
+            updateMessage('Finalising…');
+
+            const successUrl = "{{ pages['powerpages/getting-started/import-website-template/import-success'].url }}";
+            const failureUrl = "{{ pages['powerpages/getting-started/import-website-template/import-failed'].url }}";
+
+            if (conclusion === 'success') {
+              window.location.href = successUrl;
+            } else {
+              const params = new URLSearchParams({
+                status: conclusion || 'unknown',
+                runUrl: htmlUrl || ''
+              });
+              window.location.href = `${failureUrl}?${params.toString()}`;
+            }
+            return;
+          default:
+            updateMessage('Checking status…');
+        }
+
+        pollTimeoutId = setTimeout(poll, POLL_INTERVAL_MS);
+
+      } catch (err) {
+        console.error('Status poll error:', err);
+        updateMessage('Connection interrupted, retrying…');
+        pollTimeoutId = setTimeout(poll, POLL_INTERVAL_MS * 2);
+      }
+    }
+
+    poll();
+  }
+
+  // --- Form submission ---
+  $form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    $submitBtn.disabled = true;
+    clearAllErrors();
+
+    const data = {
+      brand: document.querySelector('input[name="brand"]:checked').value,
+      environmentUrl: document.getElementById('environmentUrl').value.trim(),
+      clientId: document.getElementById('clientId').value.trim(),
+      clientSecret: document.getElementById('clientSecret').value.trim()
+    };
+
+    try {
+      const res = await fetch('/api/trigger-import', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        $submitBtn.disabled = false;
+        showApiError(errData.error || `Failed to start import (${res.status})`);
+        return;
+      }
+
+      const result = await res.json();
+
+      // Show progress and start polling
+      showProgress();
+      updateMessage('Starting import…', 'Triggering GitHub workflow.');
+      pollForRun(result.dispatchTime);
+
+    } catch (err) {
+      console.error('Submit error:', err);
+      $submitBtn.disabled = false;
+      showApiError('Failed to connect to the server. Please check your connection and try again.');
+    }
+  });
+
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', function() {
+    if (pollTimeoutId) {
+      clearTimeout(pollTimeoutId);
+    }
+  });
+})();
+</script>
+{% endblock %}

@@ -14,8 +14,8 @@
     <link rel="apple-touch-icon" sizes="192x192" href="/assets/images/govuk-icon-192.png">
     <link rel="apple-touch-icon" sizes="512x512" href="/assets/images/govuk-icon-512.png">
     <link rel="manifest" href="/assets/manifest.json">
+    <link rel="stylesheet" href="/assets/css/github.css" >
     <link rel="stylesheet" href="/assets/css/app.css" >
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"/>
     {% block head %}{% endblock %}
 </head>
 
@@ -54,7 +54,7 @@
       </section>
     {% endif %}
 
-    {% if showSubNav %}
+    {% if showSubNav and showTitlePanel %}
       {% include "includes/_sub-nav.html" %}
     {% endif %}
 
@@ -75,6 +75,12 @@
 
     <script src="/assets/js/jquery.min.js"></script>
 
+    <!-- Syntax highlighting for code blocks (client-side for dynamic updates) -->
+    <script src="/assets/js/hljs-bundle.js"></script>
+
+    <!-- Copy code button for all code blocks -->
+    <script src="/assets/js/copy-code-button.js"></script>
+
     {% if showTitlePanel %}
     <script>
       $('.govuk-service-navigation').addClass('govuk-service-navigation--inverse');
@@ -88,14 +94,12 @@
     {% if showSubNav %}
     <script src="/assets/js/side-nav-toggle.js"></script>
     {% endif %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script type="module">
       import { initAll } from "/assets/js/govuk-frontend.min.js";
       import { DfEComponents } from "/assets/js/dfe-custom-components.js";
 
       initAll()
       DfEComponents.initAll()
-      hljs.highlightAll();
 
       window.addEventListener('scroll', function () {
         const link = document.getElementById('back-to-top');

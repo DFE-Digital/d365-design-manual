@@ -1,0 +1,73 @@
+{% set pageData = pages['powerpages/styles'] %}
+{% set showTitlePanel = true %}
+{% set showSubNav = true %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% from 'includes/_side-nav.html' import styles %}
+
+{% block content %}
+
+<p class="govuk-body-l">{{ pageData.description }}</p>
+
+<p class="govuk-body">Consistent styling helps users understand that your service is part of GOV.UK and builds trust. The styles in this section are based on the GOV.UK Design System and have been adapted to work seamlessly with Power Pages and Dynamics 365.</p>
+
+<p class="govuk-body">These styles are automatically included when you set up your portal using the base templates. You can use them to ensure your content is accessible and follows government design standards without additional configuration.</p>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<h2 class="govuk-heading-m">In this section</h2>
+
+<ul class="dfe-component-list">
+  {% for page in styles %}
+  {% if page.url != pageData.url %}
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="{{ page.url }}">{{ page.title }}</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ page.description }}</p>
+  </li>
+  {% endif %}
+  {% endfor %}
+</ul>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<h2 class="govuk-heading-m">Styles available on GOV.UK Design System</h2>
+
+<p class="govuk-body">The following styles from the GOV.UK Design System can be used directly in your Power Pages portal without modification.</p>
+
+<ul class="dfe-component-list">
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/styles/colour/" target="_blank">Colour</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Use the GOV.UK colour palette to style text, backgrounds and other elements.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/styles/images/" target="_blank">Images</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Guidance on using images accessibly in your service.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/styles/layout/" target="_blank">Layout</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Structure pages using the GOV.UK grid system and page width containers.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/styles/spacing/" target="_blank">Spacing</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Apply consistent spacing using the GOV.UK spacing scale.</p>
+  </li>
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="https://design-system.service.gov.uk/styles/typography/" target="_blank">Typography</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">Use the GDS Transport font and GOV.UK typography styles for headings, paragraphs and links.</p>
+  </li>
+</ul>
+
+{% endblock %}

@@ -32,7 +32,7 @@
 {% raw %}
 {% extends 'DfE/Layouts/2ColumnWideLeft' %}
 
-## Default page heading will display here instead (e.g. 'Personal information')
+<!-- Default page heading will display here instead (e.g. 'Personal information') -->
  
 {% block main %}
   <div class="govuk-form-group">
@@ -53,9 +53,9 @@
 {% endset %}
 
 {% macro patternsHeadingSingleExample () %}
-<pre><code>{{ headingSingleExample }}</code></pre>
+<pre><code class="language-django">{{ headingSingleExample }}</code></pre>
 {% endmacro %}
 
 {% macro patternsHeadingMultipleExample () %}
-<pre><code>{{ headingMultipleExample }}</code></pre>
+<pre><code class="language-django">{{ headingMultipleExample }}</code></pre>
 {% endmacro %}

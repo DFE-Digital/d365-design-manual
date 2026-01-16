@@ -1,0 +1,143 @@
+{# Component Template - renders any component from data #}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_exampleTabs.njk' import exampleTabs %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block content %}
+
+{# Page Title #}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ component.title }}</h1>
+
+{# Contents List - auto-generated from sections #}
+<div class="dfe-contents-container">
+  <nav class="dfe-contents-list">
+    <h2 class="dfe-contents-list__title">Contents</h2>
+    <ol class="dfe-contents-list__list">
+      {% for sectionId in component.sections %}
+        {% if sectionId == 'whenToUse' and component.whenToUse %}
+          <li class="dfe-contents-list__list-item">
+            <a class="dfe-contents-list__link" href="#when-to-use">{{ component.whenToUse.title }}</a>
+          </li>
+        {% elif sectionId == 'whenNotToUse' and component.whenNotToUse %}
+          <li class="dfe-contents-list__list-item">
+            <a class="dfe-contents-list__link" href="#when-not-to-use">{{ component.whenNotToUse.title }}</a>
+          </li>
+        {% elif sectionId == 'howItWorks' and component.howItWorks %}
+          <li class="dfe-contents-list__list-item">
+            <a class="dfe-contents-list__link" href="#how-it-works">{{ component.howItWorks.title }}</a>
+          </li>
+        {% elif sectionId == 'examples' and component.examples %}
+          <li class="dfe-contents-list__list-item">
+            <a class="dfe-contents-list__link" href="#examples">HTML examples</a>
+            {% if component.examples.length > 0 %}
+              <ol class="dfe-contents-list__nested-list">
+                {% for example in component.examples %}
+                  <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+                    <a class="dfe-contents-list__link" href="#{{ example.id }}">{{ example.title }}</a>
+                  </li>
+                {% endfor %}
+                {% if component.additionalExamples %}
+                  <li class="dfe-contents-list__list-item dfe-contents-list__list-item--dashed">
+                    <a class="dfe-contents-list__link" href="#additional-examples">{{ component.additionalExamples.title }}</a>
+                  </li>
+                {% endif %}
+              </ol>
+            {% endif %}
+          </li>
+        {% elif sectionId == 'errorMessages' and component.errorMessages %}
+          <li class="dfe-contents-list__list-item">
+            <a class="dfe-contents-list__link" href="#error-messages">{{ component.errorMessages.title }}</a>
+          </li>
+        {% elif sectionId == 'knownIssues' and component.knownIssues %}
+          <li class="dfe-contents-list__list-item">
+            <a class="dfe-contents-list__link" href="#known-issues">{{ component.knownIssues.title }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ol>
+  </nav>
+</div>
+
+{# Render sections in order #}
+{% for sectionId in component.sections %}
+
+  {# When to use #}
+  {% if sectionId == 'whenToUse' and component.whenToUse %}
+    <h2 class="govuk-heading-m" id="when-to-use">{{ component.whenToUse.title }}</h2>
+    {{ component.whenToUse.content | safe }}
+  {% endif %}
+
+  {# When not to use #}
+  {% if sectionId == 'whenNotToUse' and component.whenNotToUse %}
+    <h2 class="govuk-heading-m" id="when-not-to-use">{{ component.whenNotToUse.title }}</h2>
+    {{ component.whenNotToUse.content | safe }}
+  {% endif %}
+
+  {# How it works #}
+  {% if sectionId == 'howItWorks' and component.howItWorks %}
+    <h2 class="govuk-heading-m" id="how-it-works">{{ component.howItWorks.title }}</h2>
+    {{ component.howItWorks.content | safe }}
+  {% endif %}
+
+  {# Examples #}
+  {% if sectionId == 'examples' and component.examples %}
+    <h2 class="govuk-heading-m" id="examples">HTML examples</h2>
+    <p class="govuk-body">
+      Select the appropriate example from this page and directly integrate the HTML into your web template.
+      You can customise these examples to align with your specific requirements, as indicated below.
+      Refer to the <a class="govuk-link" href="/powerpages/styles/layout/">layouts</a> section for further guidance on structuring your web template.
+    </p>
+    <p class="govuk-body">
+      If the component requires submission to a CRM field, ensure to replace the placeholder <code>schema-name</code> text in the HTML example with the actual target field schema name.
+      Retain any prefixed or suffixed text related to the schema name.
+      For instance, if the id attribute reads <code>schema-name-hint</code> in the example, ensure the replacement maintains the <code>-hint</code> suffix (e.g. <code>dfe_field-hint</code>).
+    </p>
+    <p class="govuk-body">
+      This step is crucial for allowing the <a class="govuk-link" href="/powerpages/patterns/crm-helper-framework/">CRM helper framework</a> to validate and submit data to CRM.
+    </p>
+
+    {% for example in component.examples %}
+      <h3 class="govuk-heading-s" id="{{ example.id }}">{{ example.title }}</h3>
+      {{ example.description | safe }}
+      {{ exampleTabs(
+        example.title,
+        example.templatePath,
+        { showUpdateSchema: example.options.showUpdateSchema, index: loop.index, layout: example.options.layout }
+      ) }}
+    {% endfor %}
+
+    {# Additional examples #}
+    {% if component.additionalExamples %}
+      <h3 class="govuk-heading-s" id="additional-examples">{{ component.additionalExamples.title }}</h3>
+      <p class="govuk-body">{{ component.additionalExamples.intro }}</p>
+      <ul class="govuk-list">
+        {% for link in component.additionalExamples.links %}
+          <li><a class="govuk-link" href="{{ link.url }}" target="_blank">{{ link.text }}</a></li>
+        {% endfor %}
+      </ul>
+      <p class="govuk-body">{{ component.additionalExamples.outro }}</p>
+    {% endif %}
+  {% endif %}
+
+  {# Error messages #}
+  {% if sectionId == 'errorMessages' and component.errorMessages %}
+    <h2 class="govuk-heading-m" id="error-messages">{{ component.errorMessages.title }}</h2>
+    {{ component.errorMessages.content | safe }}
+  {% endif %}
+
+  {# Known issues #}
+  {% if sectionId == 'knownIssues' and component.knownIssues %}
+    <h2 class="govuk-heading-m" id="known-issues">{{ component.knownIssues.title }}</h2>
+    {{ component.knownIssues.content | safe }}
+  {% endif %}
+
+{% endfor %}
+
+<p class="govuk-body">If you would like any additional advice or guidance with using these examples on Power Pages, please contact the Solutions Delivery Team.</p>
+
+<script type="text/javascript" src="/assets/js/update-html-example.js"></script>
+
+{% endblock %}

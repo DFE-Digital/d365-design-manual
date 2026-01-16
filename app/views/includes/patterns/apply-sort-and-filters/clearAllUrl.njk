@@ -1,0 +1,39 @@
+{% raw %}
+{% comment %}
+  Build URL that clears all filter parameters
+
+  This preserves non-filter parameters like search keywords
+  while removing all filter parameters (status, topic, type, order, etc.)
+{% endcomment %}
+
+{% comment %}
+  Define which parameters are filters that should be cleared
+{% endcomment %}
+{% assign filter_params = 'status[],topic,type[],order,date_from[day],date_from[month],date_from[year],date_to[day],date_to[month],date_to[year]' | split: ',' %}
+
+{% comment %}
+  Build URL preserving only non-filter parameters (e.g., keywords)
+{% endcomment %}
+{% capture clear_all_url %}
+{{ page.url }}?{% for param in request.params %}{% unless filter_params contains param[0] %}{{ param[0] }}={{ param[1] | url_encode }}&{% endunless %}{% endfor %}
+{% endcapture %}
+
+{% comment %}
+  If you want to clear everything including keywords, simply use the base URL
+{% endcomment %}
+{% assign clear_everything_url = page.url %}
+
+{% comment %}
+  Usage in template:
+{% endcomment %}
+<a href="{{ clear_all_url | strip }}" class="govuk-link dfe-filter-summary__clear">
+  Clear all filters
+</a>
+
+{% comment %}
+  Or to clear everything including search:
+{% endcomment %}
+<a href="{{ clear_everything_url }}" class="govuk-link">
+  Clear all filters and search
+</a>
+{% endraw %}

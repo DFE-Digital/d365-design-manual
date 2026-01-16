@@ -1,0 +1,67 @@
+{% set pageData = pages['powerpages/patterns/phase-banner'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Switching between Alpha and Beta", href: "#switching-alpha-beta" },
+  { text: "Removing the phase banner", href: "#removing-phase-banner" },
+  { text: "Customising the banner content", href: "#customising-content" }
+]) }}
+
+<p class="govuk-body">The GOV.UK phase banner is included by default in the layout templates and displays a Beta label. You can override this to display Alpha instead, or customise the banner content.</p>
+
+<h2 class="govuk-heading-l" id="switching-alpha-beta">Switching between Alpha and Beta</h2>
+
+<p class="govuk-body">To change the phase, update the include statement in your layout templates.</p>
+
+<p class="govuk-body">Find this line:</p>
+<pre><code class="language-liquid">{% raw %}{% include 'DfE/Content/PhaseBanner/Beta' %}{% endraw %}</code></pre>
+
+<p class="govuk-body">Replace it with:</p>
+<pre><code class="language-liquid">{% raw %}{% include 'DfE/Content/PhaseBanner/Alpha' %}{% endraw %}</code></pre>
+
+<p class="govuk-body">Make this change in both layout templates:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>DfE/Layouts/2ColumnWideLeft</li>
+  <li>DfE/Layouts/1Column</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="removing-phase-banner">Removing the phase banner</h2>
+
+<p class="govuk-body">If your service is live and no longer in Alpha or Beta, you can remove the phase banner entirely.</p>
+
+<p class="govuk-body">Delete this line from both layout templates:</p>
+<pre><code class="language-liquid">{% raw %}{% include 'DfE/Content/PhaseBanner/Beta' %}{% endraw %}</code></pre>
+
+<h2 class="govuk-heading-l" id="customising-content">Customising the banner content</h2>
+
+<p class="govuk-body">To modify the banner message or feedback link, edit the phase banner web template directly:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>DfE/Content/PhaseBanner/Beta</li>
+  <li>DfE/Content/PhaseBanner/Alpha</li>
+</ul>
+
+<div class="govuk-inset-text">
+  The phase banner is part of the layout and should be consistent throughout your site. Once the layout is updated, the correct phase banner is applied to every page automatically.
+</div>
+
+<p class="govuk-body">For further details on how the phase banner should be used, refer to the <a href="https://design-system.service.gov.uk/components/phase-banner/" class="govuk-link" target="_blank">GOV.UK Design System phase banner guidance (opens in a new tab)</a>.</p>
+
+{% endblock %}

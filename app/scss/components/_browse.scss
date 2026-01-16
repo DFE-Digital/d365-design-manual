@@ -1,0 +1,57 @@
+// Page Browse Component
+// ======================
+
+.dfe-dfe-browse__breadcrumb-wrapper,
+.dfe-dfe-browse__header-wrapper {
+  background-color: #d2e2f1;
+}
+
+.dfe-dfe-browse__breadcrumb-wrapper {
+  overflow: auto;
+}
+
+.dfe-browse__header-wrapper {
+  padding-bottom: 40px;
+
+  @media (min-width: 40.0625em) {
+    padding-bottom: 50px;
+    padding-top: 30px;
+  }
+}
+
+.dfe-browse__section {
+  margin-bottom: 60px;
+
+  @media (min-width: 40.0625em) {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.dfe-browse__section--top-border {
+  border-top: 1px solid #b1b4b6;
+  padding-top: 15px;
+}
+
+.dfe-browse__list > .dfe-browse__list-item {
+  margin-bottom: 25px;
+}
+
+.dfe-browse__more-on-this-topic {
+  margin-top: 20px;
+
+  @media (min-width: 40.0625em) {
+    margin-top: 40px;
+    margin-bottom: 5px;
+  }
+}
+
+.dfe-browse__action-links {
+  border-bottom: 4px solid #1d70b8;
+  margin-bottom: 20px;
+
+  @media (min-width: 40.0625em) {
+    margin-bottom: 30px;
+  }
+}

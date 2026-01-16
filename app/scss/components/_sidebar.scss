@@ -1,0 +1,61 @@
+// Sidebar Component
+// ==================
+
+.dfe-sidebar {
+  color: $govuk-text-colour;
+  border-top: 2px solid $govuk-brand-colour;
+  margin-bottom: 60px;
+}
+
+.dfe-sidebar-section__main-heading {
+  font-family: $govuk-font-family;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.25;
+  margin-top: 15px;
+  margin-bottom: 10px;
+
+  @media (min-width: 40.0625em) {
+    font-size: 19px;
+    line-height: 1.3157894737;
+  }
+}
+
+.dfe-sidebar-section__content {
+  display: block;
+  margin-bottom: 30px;
+}
+
+.dfe-sidebar-section ul {
+  padding: 0;
+  margin: 0;
+}
+
+.dfe-sidebar-section__link {
+  margin-left: 0 !important;
+}
+
+.dfe-sidebar-section__list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  margin-bottom: 1.25em;
+}
+
+.dfe-sidebar-section__list-item {
+  list-style-type: none;
+  margin-top: 10px;
+  font-family: $govuk-font-family;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.45;
+
+  @media (min-width: 40.0625em) {
+    line-height: 1.28;
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,983 @@
+{% set pageData = pages['powerpages/patterns/crm-helper-framework'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_codeExample.njk' import codeExample %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5" id="introduction">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5" id="introduction">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Introduction", href: "#introduction" },
+  { text: "Quick reference", href: "#quick-reference" },
+  { text: "Validation data object", href: "#creating-validation-object", children: [
+    { text: "Base properties", href: "#base-properties" },
+    { text: "Additional properties by input type", href: "#additional-properties" }
+  ]},
+  { text: "Available functions", href: "#available-functions" },
+  { text: "Code examples", href: "#code-examples" },
+  { text: "Best practices", href: "#best-practices" }
+]) }}
+
+<p class="govuk-body">The CRM Helper Framework is a JavaScript library designed to simplify validation and data submission tasks in Power Pages, particularly for interacting with Dynamics 365. It provides a set of reusable functions to handle form validation, data submission to CRM entities, and user experience enhancements like error handling, button state management, and loading spinners. This framework is pre-installed with the base portal, making it readily available for you to use in your front-end development.</p>
+
+<p class="govuk-body">This page covers how to set up validation, use the framework's functions, and provides practical examples for common scenarios.</p>
+
+<h2 class="govuk-heading-l" id="quick-reference">Quick reference</h2>
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-visually-hidden">Quick reference of available functions</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Function</th>
+      <th scope="col" class="govuk-table__header">Description</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>ValidateData(inputObjArr)</code></td>
+      <td class="govuk-table__cell">Validates user input and displays error messages</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.ConstructData(inputsObj)</code></td>
+      <td class="govuk-table__cell">Constructs a data object for CRM submission</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.Update(recordId, entityName, dataObj)</code></td>
+      <td class="govuk-table__cell">Updates an existing CRM record</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.Create(entityName, dataObj)</code></td>
+      <td class="govuk-table__cell">Creates a new CRM record</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.Delete(recordId, entityName)</code></td>
+      <td class="govuk-table__cell">Deletes a CRM record</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.Retrieve(entityName, searchQuery)</code></td>
+      <td class="govuk-table__cell">Retrieves records from a CRM table</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.CallCloudFlow(flowApiId, data)</code></td>
+      <td class="govuk-table__cell">Calls a cloud flow and returns the response</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.UploadFile(inputName, entityName, entityId)</code></td>
+      <td class="govuk-table__cell">Uploads a file to a file column on a record</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.ProcessFileAndUploadToNotes(inputName, entityName, entityId)</code></td>
+      <td class="govuk-table__cell">Uploads a file as a note attachment</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>DisableButton(buttonID)</code> / <code>EnableButton(buttonID)</code></td>
+      <td class="govuk-table__cell">Disables or enables a button</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>ShowLoadingSpinner(spinnerID)</code> / <code>HideLoadingSpinner(spinnerID)</code></td>
+      <td class="govuk-table__cell">Shows or hides a loading spinner</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 class="govuk-heading-l" id="creating-validation-object">Creating your validation data object</h2>
+<p class="govuk-body">
+  Before using the framework's validation functions, you must create a validation data object.
+  This object is an array of input objects, where each object describes a form field to validate.
+  You can define a single input as <code>[{...}]</code> or multiple inputs as <code>[{...},{...},{...}]</code>.
+</p>
+
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m" id="base-properties">Base properties for all input types</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Key</th>
+      <th scope="col" class="govuk-table__header">Type</th>
+      <th scope="col" class="govuk-table__header">Description</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><code>identifier</code></th>
+      <td class="govuk-table__cell">String</td>
+      <td class="govuk-table__cell">The schema name of the target CRM field (e.g., <code>dfe_firstname</code>).</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><code>type</code></th>
+      <td class="govuk-table__cell">String</td>
+      <td class="govuk-table__cell">
+        The type of input displayed on the page. Supported types: <code>text</code>, <code>text-area</code>, <code>email</code>, <code>tel</code>, <code>number</code>, <code>whole-number</code>, <code>decimal-number</code>, <code>money</code>, <code>date</code>, <code>radio</code>, <code>checkbox</code>, <code>select</code>, <code>file</code>
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><code>friendlyName</code></th>
+      <td class="govuk-table__cell">String</td>
+      <td class="govuk-table__cell">A user-friendly name for the input, used in error messages.<br>
+        e.g. "your first name" will display as "Enter your first name".
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><code>required</code></th>
+      <td class="govuk-table__cell">Boolean</td>
+      <td class="govuk-table__cell"><code>true</code> if the field is required, <code>false</code> otherwise.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 class="govuk-heading-m" id="additional-properties">InputObj examples by input type</h3>
+<p class="govuk-body">Expand the sections below to see complete inputObj examples, when to use each configuration, and what the ConstructData function outputs.</p>
+
+<div class="govuk-accordion" data-module="govuk-accordion" id="accordion-input-types">
+
+  <div class="govuk-accordion__section">
+    <div class="govuk-accordion__section-header">
+      <h4 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-input-types-heading-text">Text input</span>
+      </h4>
+    </div>
+    <div id="accordion-input-types-content-text" class="govuk-accordion__section-content">
+      <p class="govuk-body govuk-!-font-weight-bold">Standard text input</p>
+      <p class="govuk-body">Use for single-line text fields like names, references, or short answers.</p>
+      <pre><code>{
+  identifier: "dfe_firstname",
+  type: "text",
+  friendlyName: "your first name",
+  required: true
+}</code></pre>
+      <p class="govuk-body">ConstructData output:</p>
+      <pre><code>{ "dfe_firstname": "John" }</code></pre>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <p class="govuk-body govuk-!-font-weight-bold">Text input for record search (lookup)</p>
+      <p class="govuk-body">Use when you need to search for a record by a text value (e.g. finding an application by reference number). The framework validates that the record exists and stores the record ID for submission.</p>
+      <pre><code>{
+  identifier: "dfe_applicationref",
+  type: "text",
+  friendlyName: "application reference",
+  required: true,
+  targetType: "lookup",
+  targetEntity: "dfe_applications",
+  targetEntityPrimaryKey: "dfe_applicationid",
+  targetEntitySearchField: "dfe_referencenumber"
+}</code></pre>
+      <p class="govuk-body">ConstructData output (creates an OData bind to the found record):</p>
+      <pre><code>{ "dfe_applicationref@odata.bind": "/dfe_applications(abc123-def456-...)" }</code></pre>
+    </div>
+  </div>
+
+  <div class="govuk-accordion__section">
+    <div class="govuk-accordion__section-header">
+      <h4 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-input-types-heading-textarea">Textarea</span>
+      </h4>
+    </div>
+    <div id="accordion-input-types-content-textarea" class="govuk-accordion__section-content">
+      <p class="govuk-body">Use for multi-line text fields. Supports character count and word count validation when used with the GOV.UK character count component.</p>
+      <pre><code>{
+  identifier: "dfe_description",
+  type: "text-area",
+  friendlyName: "a description",
+  required: true
+}</code></pre>
+      <p class="govuk-body">ConstructData output:</p>
+      <pre><code>{ "dfe_description": "This is the user's multi-line input..." }</code></pre>
+      <p class="govuk-body">If using with character count, add <code>data-maxlength</code> or <code>data-maxwords</code> to the <code>.govuk-character-count</code> container element.</p>
+    </div>
+  </div>
+
+  <div class="govuk-accordion__section">
+    <div class="govuk-accordion__section-header">
+      <h4 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-input-types-heading-email">Email input</span>
+      </h4>
+    </div>
+    <div id="accordion-input-types-content-email" class="govuk-accordion__section-content">
+      <p class="govuk-body">Use for email address fields. Validates email format automatically.</p>
+      <pre><code>{
+  identifier: "emailaddress1",
+  type: "email",
+  friendlyName: "your email address",
+  required: true
+}</code></pre>
+      <p class="govuk-body">ConstructData output:</p>
+      <pre><code>{ "emailaddress1": "user@example.com" }</code></pre>
+    </div>
+  </div>
+
+  <div class="govuk-accordion__section">
+    <div class="govuk-accordion__section-header">
+      <h4 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-input-types-heading-tel">Telephone input</span>
+      </h4>
+    </div>
+    <div id="accordion-input-types-content-tel" class="govuk-accordion__section-content">
+      <p class="govuk-body">Use for UK telephone numbers. Validates UK phone number formats including mobile, landline, and international (+44) formats.</p>
+      <pre><code>{
+  identifier: "telephone1",
+  type: "tel",
+  friendlyName: "your telephone number",
+  required: true
+}</code></pre>
+      <p class="govuk-body">ConstructData output:</p>
+      <pre><code>{ "telephone1": "07700 900 982" }</code></pre>
+    </div>
+  </div>
+
+  <div class="govuk-accordion__section">
+    <div class="govuk-accordion__section-header">
+      <h4 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-input-types-heading-number">Number inputs</span>
+      </h4>
+    </div>
+    <div id="accordion-input-types-content-number" class="govuk-accordion__section-content">
+      <p class="govuk-body govuk-!-font-weight-bold">Whole number</p>
+      <p class="govuk-body">Use for integer values. Validates that the input is a whole number without decimals.</p>
+      <pre><code>{
+  identifier: "dfe_quantity",
+  type: "whole-number",
+  friendlyName: "quantity",
+  required: true
+}</code></pre>
+      <p class="govuk-body">ConstructData output:</p>
+      <pre><code>{ "dfe_quantity": 5 }</code></pre>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <p class="govuk-body govuk-!-font-weight-bold">Decimal number</p>
+      <p class="govuk-body">Use for values that require decimal places.</p>
+      <pre><code>{
+  identifier: "dfe_percentage",
+  type: "decimal-number",
+  friendlyName: "percentage",
+  required: true
+}</code></pre>
+      <p class="govuk-body">ConstructData output:</p>
+      <pre><code>{ "dfe_percentage": 75.5 }</code></pre>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <p class="govuk-body govuk-!-font-weight-bold">Money</p>
+      <p class="govuk-body">Use for currency values. Similar to decimal-number but formats error messages with currency symbols.</p>
+      <pre><code>{
+  identifier: "dfe_amount",
+  type: "money",
+  friendlyName: "amount",
+  required: true
+}</code></pre>
+      <p class="govuk-body">ConstructData output:</p>
+      <pre><code>{ "dfe_amount": 1500.00 }</code></pre>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <p class="govuk-body govuk-!-font-weight-bold">Number (general)</p>
+      <p class="govuk-body">Use when you need basic number validation without whole/decimal restrictions.</p>
+      <pre><code>{
+  identifier: "dfe_value",
+  type: "number",
+  friendlyName: "value",
+  required: true
+}</code></pre>
+
+      <p class="govuk-body govuk-!-margin-top-4">You can add <code>minvalue</code>, <code>maxvalue</code>, <code>minchar</code>, and <code>maxchar</code> attributes to the HTML input element for additional validation.</p>
+    </div>
+  </div>
+
+  <div class="govuk-accordion__section">
+    <div class="govuk-accordion__section-header">
+      <h4 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-input-types-heading-date">Date input</span>
+      </h4>
+    </div>
+    <div id="accordion-input-types-content-date" class="govuk-accordion__section-content">
+      <p class="govuk-body govuk-!-font-weight-bold">Date to date/time field (default)</p>
+      <p class="govuk-body">Use when submitting to a CRM date/time field. Outputs ISO format.</p>
+      <pre><code>{
+  identifier: "dfe_dateofbirth",
+  type: "date",
+  friendlyName: "your date of birth",
+  required: true
+}</code></pre>
+      <p class="govuk-body">ConstructData output:</p>
+      <pre><code>{ "dfe_dateofbirth": "1990-05-15" }</code></pre>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <p class="govuk-body govuk-!-font-weight-bold">Date to text field</p>
+      <p class="govuk-body">Use when submitting to a CRM text field instead of a date/time field. Outputs DD/MM/YYYY format.</p>
+      <pre><code>{
+  identifier: "dfe_datetext",
+  type: "date",
+  friendlyName: "the date",
+  required: true,
+  targetType: "text"
+}</code></pre>
+      <p class="govuk-body">ConstructData output:</p>
+      <pre><code>{ "dfe_datetext": "15/05/1990" }</code></pre>
+    </div>
+  </div>
+
+  <div class="govuk-accordion__section">
+    <div class="govuk-accordion__section-header">
+      <h4 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-input-types-heading-radio">Radio inputs</span>
+      </h4>
+    </div>
+    <div id="accordion-input-types-content-radio" class="govuk-accordion__section-content">
+      <p class="govuk-body govuk-!-font-weight-bold">Radio to boolean field</p>
+      <p class="govuk-body">Use for Yes/No questions that map to a CRM Yes/No (boolean) field. Radio values should be <code>1</code> for Yes and <code>0</code> for No.</p>
+      <pre><code>{
+  identifier: "dfe_agreeterms",
+  type: "radio",
+  friendlyName: "if you agree to the terms",
+  required: true,
+  targetType: "bool"
+}</code></pre>
+      <p class="govuk-body">HTML:</p>
+      <pre><code>&lt;input type="radio" name="dfe_agreeterms" value="1"&gt; Yes
+&lt;input type="radio" name="dfe_agreeterms" value="0"&gt; No</code></pre>
+      <p class="govuk-body">ConstructData output:</p>
+      <pre><code>{ "dfe_agreeterms": true }</code></pre>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <p class="govuk-body govuk-!-font-weight-bold">Radio to choice column (option set)</p>
+      <p class="govuk-body">Use when mapping to a CRM choice column. Radio values should be the option set integer values.</p>
+      <pre><code>{
+  identifier: "dfe_contactpreference",
+  type: "radio",
+  friendlyName: "your contact preference",
+  required: true,
+  targetType: "select"
+}</code></pre>
+      <p class="govuk-body">HTML:</p>
+      <pre><code>&lt;input type="radio" name="dfe_contactpreference" value="100000000"&gt; Email
+&lt;input type="radio" name="dfe_contactpreference" value="100000001"&gt; Phone
+&lt;input type="radio" name="dfe_contactpreference" value="100000002"&gt; Post</code></pre>
+      <p class="govuk-body">ConstructData output:</p>
+      <pre><code>{ "dfe_contactpreference": 100000001 }</code></pre>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <p class="govuk-body govuk-!-font-weight-bold">Radio to lookup field</p>
+      <p class="govuk-body">Use when each radio option represents a different record in a related table. Radio values should be the GUIDs of the related records.</p>
+      <pre><code>{
+  identifier: "dfe_region",
+  type: "radio",
+  friendlyName: "your region",
+  required: true,
+  targetType: "lookup",
+  targetEntity: "dfe_regions"
+}</code></pre>
+      <p class="govuk-body">HTML:</p>
+      <pre><code>&lt;input type="radio" name="dfe_region" value="abc123-..."&gt; North
+&lt;input type="radio" name="dfe_region" value="def456-..."&gt; South</code></pre>
+      <p class="govuk-body">ConstructData output:</p>
+      <pre><code>{ "dfe_region@odata.bind": "/dfe_regions(abc123-...)" }</code></pre>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <p class="govuk-body govuk-!-font-weight-bold">Radio to text field</p>
+      <p class="govuk-body">Use when you want to store the label text of the selected option rather than a value.</p>
+      <pre><code>{
+  identifier: "dfe_selectedoption",
+  type: "radio",
+  friendlyName: "an option",
+  required: true,
+  targetType: "text"
+}</code></pre>
+      <p class="govuk-body">ConstructData output (stores the label text):</p>
+      <pre><code>{ "dfe_selectedoption": "Option A" }</code></pre>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <p class="govuk-body govuk-!-font-weight-bold">Radio to split fields</p>
+      <p class="govuk-body">Use when different radio selections should write to different CRM fields. The <code>id</code> attribute of each radio becomes the field name.</p>
+      <pre><code>{
+  identifier: "contact-method",
+  type: "radio",
+  friendlyName: "how to contact you",
+  required: true,
+  targetType: "split-field",
+  targetFieldType: "text"
+}</code></pre>
+      <p class="govuk-body">HTML:</p>
+      <pre><code>&lt;input type="radio" name="contact-method" id="dfe_emailaddress" value="user@example.com"&gt; Email
+&lt;input type="radio" name="contact-method" id="dfe_telephone" value="07700900123"&gt; Phone</code></pre>
+      <p class="govuk-body">ConstructData output (if Email selected):</p>
+      <pre><code>{ "dfe_emailaddress": "user@example.com" }</code></pre>
+      <p class="govuk-body">ConstructData output (if Phone selected):</p>
+      <pre><code>{ "dfe_telephone": "07700900123" }</code></pre>
+    </div>
+  </div>
+
+  <div class="govuk-accordion__section">
+    <div class="govuk-accordion__section-header">
+      <h4 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-input-types-heading-checkbox">Checkbox inputs</span>
+      </h4>
+    </div>
+    <div id="accordion-input-types-content-checkbox" class="govuk-accordion__section-content">
+      <p class="govuk-body govuk-!-font-weight-bold">Checkbox to boolean field</p>
+      <p class="govuk-body">Use for a single checkbox that maps to a Yes/No field. Checkbox value should be <code>1</code>.</p>
+      <pre><code>{
+  identifier: "dfe_marketingconsent",
+  type: "checkbox",
+  friendlyName: "if you consent to marketing",
+  required: true,
+  targetType: "bool"
+}</code></pre>
+      <p class="govuk-body">ConstructData output:</p>
+      <pre><code>{ "dfe_marketingconsent": true }</code></pre>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <p class="govuk-body govuk-!-font-weight-bold">Checkbox to choice column (single selection)</p>
+      <p class="govuk-body">Use for a single checkbox that sets a choice column value.</p>
+      <pre><code>{
+  identifier: "dfe_status",
+  type: "checkbox",
+  friendlyName: "the status",
+  required: true,
+  targetType: "select"
+}</code></pre>
+      <p class="govuk-body">ConstructData output:</p>
+      <pre><code>{ "dfe_status": 100000001 }</code></pre>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <p class="govuk-body govuk-!-font-weight-bold">Checkbox to multi-select choice column</p>
+      <p class="govuk-body">Use for multiple checkboxes that map to a multi-select choice column (choices). Values are submitted as a comma-separated string.</p>
+      <pre><code>{
+  identifier: "dfe_interests",
+  type: "checkbox",
+  friendlyName: "your interests",
+  required: true,
+  targetType: "multi-select"
+}</code></pre>
+      <p class="govuk-body">HTML:</p>
+      <pre><code>&lt;input type="checkbox" name="dfe_interests" value="100000000"&gt; Sports
+&lt;input type="checkbox" name="dfe_interests" value="100000001"&gt; Music
+&lt;input type="checkbox" name="dfe_interests" value="100000002"&gt; Travel</code></pre>
+      <p class="govuk-body">ConstructData output (multiple selected):</p>
+      <pre><code>{ "dfe_interests": "100000000,100000001" }</code></pre>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <p class="govuk-body govuk-!-font-weight-bold">Checkbox to text field</p>
+      <p class="govuk-body">Use when you want to store the label text of selected options.</p>
+      <pre><code>{
+  identifier: "dfe_selecteditems",
+  type: "checkbox",
+  friendlyName: "items",
+  required: true,
+  targetType: "text"
+}</code></pre>
+      <p class="govuk-body">ConstructData output (single selection):</p>
+      <pre><code>{ "dfe_selecteditems": "Sports" }</code></pre>
+      <p class="govuk-body">ConstructData output (multiple selections - returns array):</p>
+      <pre><code>{ "dfe_selecteditems": ["Sports", "Music"] }</code></pre>
+    </div>
+  </div>
+
+  <div class="govuk-accordion__section">
+    <div class="govuk-accordion__section-header">
+      <h4 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-input-types-heading-select">Select (dropdown) inputs</span>
+      </h4>
+    </div>
+    <div id="accordion-input-types-content-select" class="govuk-accordion__section-content">
+      <p class="govuk-body govuk-!-font-weight-bold">Select to choice column (option set)</p>
+      <p class="govuk-body">Use when mapping to a CRM choice column. Option values should be the option set integer values.</p>
+      <pre><code>{
+  identifier: "dfe_title",
+  type: "select",
+  friendlyName: "your title",
+  required: true,
+  targetType: "select"
+}</code></pre>
+      <p class="govuk-body">HTML:</p>
+      <pre><code>&lt;select id="dfe_title"&gt;
+  &lt;option value=""&gt;Select a title&lt;/option&gt;
+  &lt;option value="100000000"&gt;Mr&lt;/option&gt;
+  &lt;option value="100000001"&gt;Mrs&lt;/option&gt;
+  &lt;option value="100000002"&gt;Ms&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+      <p class="govuk-body">ConstructData output:</p>
+      <pre><code>{ "dfe_title": 100000000 }</code></pre>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <p class="govuk-body govuk-!-font-weight-bold">Select to lookup field</p>
+      <p class="govuk-body">Use when each option represents a record in a related table. Option values should be the GUIDs.</p>
+      <pre><code>{
+  identifier: "dfe_country",
+  type: "select",
+  friendlyName: "your country",
+  required: true,
+  targetType: "lookup",
+  targetEntity: "dfe_countries"
+}</code></pre>
+      <p class="govuk-body">ConstructData output:</p>
+      <pre><code>{ "dfe_country@odata.bind": "/dfe_countries(abc123-...)" }</code></pre>
+
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+      <p class="govuk-body govuk-!-font-weight-bold">Select to text field</p>
+      <p class="govuk-body">Use when you want to store the display text of the selected option.</p>
+      <pre><code>{
+  identifier: "dfe_selectedcountry",
+  type: "select",
+  friendlyName: "your country",
+  required: true,
+  targetType: "text"
+}</code></pre>
+      <p class="govuk-body">ConstructData output:</p>
+      <pre><code>{ "dfe_selectedcountry": "United Kingdom" }</code></pre>
+    </div>
+  </div>
+
+  <div class="govuk-accordion__section">
+    <div class="govuk-accordion__section-header">
+      <h4 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-input-types-heading-file">File input</span>
+      </h4>
+    </div>
+    <div id="accordion-input-types-content-file" class="govuk-accordion__section-content">
+      <p class="govuk-body">Use for file upload fields. Validates file extension, size, count, and performs virus scanning.</p>
+      <pre><code>{
+  identifier: "dfe_document",
+  type: "file",
+  friendlyName: "a document",
+  required: true,
+  allowedFileTypes: ["pdf", "doc", "docx"],
+  maxFileSize: 10,  // MB
+  fileLimit: 3      // maximum number of files
+}</code></pre>
+      <p class="govuk-body">File inputs are validated but not included in ConstructData output. After record creation, use one of the following functions to upload files:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li><code>DfEPortal.WebApi.UploadFile</code> - Use when uploading to a <strong>file column</strong> or <strong>image column</strong> directly on the entity record.</li>
+        <li><code>DfEPortal.WebApi.ProcessFileAndUploadToNotes</code> - Use when uploading files as <strong>note attachments</strong> (annotations) linked to the record.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<h2 class="govuk-heading-l" id="available-functions">Available functions</h2>
+<p class="govuk-body">The CRM Helper Framework provides core functions for validation and data submission, as well as helper functions for enhancing the user experience.</p>
+
+<h3 class="govuk-heading-m">DfEPortal.ValidateData(inputObjArr, errorContainer)</h3>
+<div class="govuk-inset-text">
+  Error messages on the page are handled within this function.
+</div>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Purpose</dt>
+    <dd class="govuk-summary-list__value">Validates user input data on the webpage</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Parameters</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li><code>inputObjArr</code>: Array - the validation data object array (see above).</li>
+        <li><code>errorContainer</code>: String (optional) - CSS selector for the error summary container. Defaults to <code>#error-summary-container</code>.</li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Returns</dt>
+    <dd class="govuk-summary-list__value">A boolean value (true or false) indicating whether data has passed validation.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Example scenarios</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Validating a contact form to ensure all required fields (e.g., first name, email) are filled correctly.</li>
+        <li>Checking a date input to confirm it's a valid date before submission.</li>
+        <li>Ensuring a search field matches a record in the CRM before proceeding (e.g., finding an application by reference number)</li>
+      </ul>
+    </dd>
+  </div>
+</dl>
+
+<h3 class="govuk-heading-m">DfEPortal.WebApi.ConstructData(inputsObj)</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Purpose</dt>
+    <dd class="govuk-summary-list__value">Constructs a data object for submission to the CRM via the Power Pages WebApi.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Parameters</dt>
+    <dd class="govuk-summary-list__value">Array of input objects - the validated input object array.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Returns</dt>
+    <dd class="govuk-summary-list__value">The constructed data object.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Example scenarios</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Preparing form data (e.g. first name, last name) for submission to a <code>contact</code> entity.</li>
+        <li>Formatting a date input into an ISO string for a CRM date/time field.</li>
+        <li>Mapping a radio input to a boolean value for a CRM field.</li>
+      </ul>
+    </dd>
+  </div>
+</dl>
+
+<h3 class="govuk-heading-m">DfEPortal.WebApi.Update(recordId, entityName, dataObj)</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Purpose</dt>
+    <dd class="govuk-summary-list__value">Updates an existing record in the CRM.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Parameters</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li><code>recordId</code>: String - The ID of the record to update.</li>
+        <li><code>entityName</code>: String - Schema name of the table to update (e.g. <code>contact</code>).</li>
+        <li><code>dataObj</code>: Object - Data object constructed by <code>DfEPortal.WebApi.ConstructData</code>.</li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Returns</dt>
+    <dd class="govuk-summary-list__value">A promise that resolves on success or rejects with an error.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Example scenarios</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Updating a contact's email address after the user edits their profile.</li>
+        <li>Modifying an application record with new details from a form submission.</li>
+      </ul>
+    </dd>
+  </div>
+</dl>
+
+<h3 class="govuk-heading-m">DfEPortal.WebApi.Create(entityName, dataObj)</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Purpose</dt>
+    <dd class="govuk-summary-list__value">Creates a new record in the CRM.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Parameters</dt>
+    <dd class="govuk-summary-list__value">
+    <ul class="govuk-list govuk-list--bullet">
+      <li><code>entityName</code>: String - Schema name of the table (e.g. <code>lead</code>).</li>
+      <li><code>dataObj</code>: Object - Data object constructed by <code>DfEPortal.WebApi.ConstructData</code>.</li>
+    </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Returns</dt>
+    <dd class="govuk-summary-list__value">A promise that returns the ID of the created record on success or rejects with an error.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Example scenarios</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Creating a new lead record when a user signs up.</li>
+        <li>Adding a new contact record from a "Contact Us" form submission.</li>
+      </ul>
+    </dd>
+  </div>
+</dl>
+
+<h3 class="govuk-heading-m">DfEPortal.WebApi.Delete(recordId, entityName)</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Purpose</dt>
+    <dd class="govuk-summary-list__value">Deletes a record from the CRM.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Parameters</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li><code>recordId</code>: String - ID of the record to delete.</li>
+        <li><code>entityName</code>: String - Schema name of the table.</li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Returns</dt>
+    <dd class="govuk-summary-list__value">A promise that resolves on success or rejects with an error.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Example scenarios</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Deleting a draft application record when a user cancels their submission.</li>
+        <li>Removing a contact record when a user requests account deletion.</li>
+      </ul>
+    </dd>
+  </div>
+</dl>
+
+<h3 class="govuk-heading-m">DfEPortal.WebApi.Retrieve(entityName, searchQuery)</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Purpose</dt>
+    <dd class="govuk-summary-list__value">Retrieves records from a CRM table using an OData query.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Parameters</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li><code>entityName</code>: String - Schema name of the table (e.g. <code>contacts</code>).</li>
+        <li><code>searchQuery</code>: String - OData query string (e.g. <code>?$select=firstname,lastname&$filter=emailaddress1 eq 'test@example.com'</code>).</li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Returns</dt>
+    <dd class="govuk-summary-list__value">A promise that returns the query results on success or rejects with an error.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Example scenarios</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Fetching a list of applications for the current user.</li>
+        <li>Checking if a record exists before creating a duplicate.</li>
+        <li>Populating a dropdown with data from a CRM table.</li>
+      </ul>
+    </dd>
+  </div>
+</dl>
+
+<h3 class="govuk-heading-m">DfEPortal.WebApi.CallCloudFlow(flowApiId, data)</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Purpose</dt>
+    <dd class="govuk-summary-list__value">Calls a Power Automate cloud flow and returns the response. Useful for complex business logic that cannot be performed client-side.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Parameters</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li><code>flowApiId</code>: String - The API ID of the cloud flow to call.</li>
+        <li><code>data</code>: Object - Data to pass to the cloud flow as input parameters.</li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Returns</dt>
+    <dd class="govuk-summary-list__value">A promise that returns the cloud flow's response object on success or rejects with an error.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Example scenarios</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Checking if an application already exists before allowing the user to proceed.</li>
+        <li>Performing complex validation that requires server-side data.</li>
+        <li>Triggering a workflow that sends notifications or creates related records.</li>
+      </ul>
+    </dd>
+  </div>
+</dl>
+
+<h3 class="govuk-heading-m">DfEPortal.WebApi.UploadFile(inputName, entityName, entityId)</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Purpose</dt>
+    <dd class="govuk-summary-list__value">Uploads a file to a file-type or image-type column directly on the entity record.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Parameters</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li><code>inputName</code>: String - The ID of the file input element (also used as the file column schema name).</li>
+        <li><code>entityName</code>: String - Schema name of the table (e.g. <code>dfe_applications</code>).</li>
+        <li><code>entityId</code>: String - The ID of the record to attach the file to.</li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Returns</dt>
+    <dd class="govuk-summary-list__value">A promise that resolves on success or rejects with an error.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">When to use</dt>
+    <dd class="govuk-summary-list__value">Use this function when your entity has a <strong>file column</strong> or <strong>image column</strong> and you want to store the file directly on the record. This is the modern approach using Dataverse file columns.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Example scenarios</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Uploading a profile photo to an image column on a contact record.</li>
+        <li>Attaching a PDF document to a file column on an application record.</li>
+      </ul>
+    </dd>
+  </div>
+</dl>
+
+<h3 class="govuk-heading-m">DfEPortal.WebApi.ProcessFileAndUploadToNotes(inputName, entityName, entityId)</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Purpose</dt>
+    <dd class="govuk-summary-list__value">Uploads a file as a note (annotation) attachment linked to the entity record.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Parameters</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li><code>inputName</code>: String - The ID of the file input element.</li>
+        <li><code>entityName</code>: String - Schema name of the table (e.g. <code>dfe_applications</code>).</li>
+        <li><code>entityId</code>: String - The ID of the record to attach the note to.</li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Returns</dt>
+    <dd class="govuk-summary-list__value">A promise that resolves with the file object on success or rejects with an error.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">When to use</dt>
+    <dd class="govuk-summary-list__value">Use this function when you want to store files as <strong>note attachments</strong> in the annotations table, linked to the parent record. This is the traditional approach and is useful when you need to attach multiple files to a single record or when file columns are not available.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Example scenarios</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Uploading multiple supporting documents to an application.</li>
+        <li>Attaching evidence files that need to be viewable in the CRM timeline.</li>
+      </ul>
+    </dd>
+  </div>
+</dl>
+
+<h3 class="govuk-heading-m">DfEPortal.DisableButton / EnableButton</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Purpose</dt>
+    <dd class="govuk-summary-list__value">Disables or enables a button on the page to prevent multiple submissions.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Parameters</dt>
+    <dd class="govuk-summary-list__value"><code>buttonID</code>: String - The ID of the button (e.g. <code>submit-btn</code>).</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Returns</dt>
+    <dd class="govuk-summary-list__value">None.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Example scenarios</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Disabling a submit button during form processing to prevent double submissions.</li>
+        <li>Re-enabling the button if an error occurs, allowing the user to retry.</li>
+      </ul>
+    </dd>
+  </div>
+</dl>
+
+<h3 class="govuk-heading-m">DfEPortal.ShowLoadingSpinner / HideLoadingSpinner</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Purpose</dt>
+    <dd class="govuk-summary-list__value">Shows or hides a loading spinner to indicate processing.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Parameters</dt>
+    <dd class="govuk-summary-list__value"><code>spinnerID</code>: String - The ID of the spinner element (e.g. <code>loading-spinner</code>).</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Returns</dt>
+    <dd class="govuk-summary-list__value">None.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Example scenarios</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Showing a spinner while submitting data to the CRM.</li>
+        <li>Hiding the spinner when submission completes or fails.</li>
+      </ul>
+    </dd>
+  </div>
+</dl>
+
+<h2 class="govuk-heading-l" id="code-examples">Code examples</h2>
+<p class="govuk-body">Below are practical examples demonstrating how to use the CRM Helper Framework in Power Pages. These examples assume the framework is included in your page (pre-installed with the base portal).</p>
+
+<h3 class="govuk-heading-m">Example 1: Updating a Contact record</h3>
+<p class="govuk-body">This example validates a form with first name and last name fields, then updates an existing contact record in the CRM.</p>
+
+{{ codeExample(
+  "Update contact record",
+  "includes/patterns/crm-helper-framework/updateContactRecordExample.njk",
+  { index: 1 }
+) }}
+
+<p class="govuk-body"><strong>Explanation</strong>:</p>
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+  <li>The <code>inputObj</code> array defines validation rules for the first name and last name fields.</li>
+  <li>The button is disabled, and a spinner is shown during processing.</li>
+  <li><code>ValidateData</code> checks that both fields are filled (since <code>required: true</code>).</li>
+  <li><code>ConstructData</code> prepares the data for submission to the CRM.</li>
+  <li><code>Update</code> submits the data to the <code>contact</code> entity. If successful, a success message is shown; otherwise, the framework displays an error, and the button/spinner are reset.</li>
+</ul>
+
+<h3 class="govuk-heading-m">Example 2: Creating a new Lead with email validation</h3>
+<p class="govuk-body">This example validates an email field and creates a new lead record in the CRM.</p>
+
+{{ codeExample(
+  "Create lead record",
+  "includes/patterns/crm-helper-framework/createLeadRecordExample.njk",
+  { index: 2 }
+) }}
+
+<p class="govuk-body"><strong>Explanation</strong>:</p>
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+  <li>The <code>inputObj</code> sets the validation rules for the email field</li>
+  <li><code>ValidateData</code> checks the email input ensuring it has a value and that the value is in a valid email format.</li>
+  <li><code>ConstructData</code> prepares the email for submission to the CRM.</li>
+  <li><code>Create</code> submits the data to the <code>lead</code> entity, returning the new record's ID.</li>
+  <li>The form is reset on success, and errors are handled with the button and spinner reset.</li>
+</ul>
+
+<h3 class="govuk-heading-m">Example 3: Calling a cloud flow with custom error handling</h3>
+<p class="govuk-body">This example calls a cloud flow to check if an application already exists, and displays a custom error message using the error helper functions if it does.</p>
+
+{{ codeExample(
+  "Call cloud flow",
+  "includes/patterns/crm-helper-framework/callCloudFlowExample.njk",
+  { index: 3 }
+) }}
+
+<p class="govuk-body"><strong>Explanation</strong>:</p>
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+  <li>The <code>queryData</code> object contains the parameters to pass to the cloud flow.</li>
+  <li><code>CallCloudFlow</code> sends the request to the specified cloud flow and awaits the response.</li>
+  <li>The response object contains properties returned by the cloud flow (e.g. <code>success</code>, <code>applicationexists</code>).</li>
+  <li>If the business logic check fails, custom error messages are displayed using <code>DfEPortal.Errors.ShowErrorSummary</code>, <code>AddErrorSummaryDetail</code>, and <code>FocusErrorSummary</code>.</li>
+  <li>This pattern is useful for server-side validation that cannot be performed in the browser.</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="best-practices">Best practices</h2>
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+  <li>Use <code>ValidateData</code> before calling <code>ConstructData</code> or any Web API functions to ensure data integrity.</li>
+  <li>Use try-catch blocks to handle errors, and leverage the framework's error display functions (<code>DfEPortal.Errors.ShowErrorSummary</code>).</li>
+  <li>Use <code>DisableButton</code> and <code>ShowLoadingSpinner</code> during processing to prevent multiple submissions and provide visual feedback.</li>
+  <li>Ensure your <code>inputObj</code> properties (e.g. <code>required</code>, <code>targetType</code>) match the form's requirements to avoid unexpected behavior.</li>
+  <li>Avoid logging sensitive data (e.g. email addresses) to the console in production.</li>
+</ul>
+
+
+{% endblock %}

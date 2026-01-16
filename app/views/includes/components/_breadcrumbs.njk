@@ -1,0 +1,47 @@
+{#
+  Breadcrumbs macro - automatically generates breadcrumb trail from page hierarchy
+
+  Usage: {{ breadcrumbs(pageData, pages) }}
+
+  Parameters:
+  - pageData: The current page's data object (must have 'parent' property)
+  - pages: The full pages registry object
+#}
+
+{% macro breadcrumbs(pageData, pages) %}
+  {% set crumbs = [] %}
+
+  {# Build breadcrumb trail by traversing up to 4 levels of parents #}
+  {% if pageData.parent and pages[pageData.parent] %}
+    {% set level1 = pages[pageData.parent] %}
+    {% set crumbs = [level1] %}
+
+    {% if level1.parent and pages[level1.parent] %}
+      {% set level2 = pages[level1.parent] %}
+      {% set crumbs = [level2, level1] %}
+
+      {% if level2.parent and pages[level2.parent] %}
+        {% set level3 = pages[level2.parent] %}
+        {% set crumbs = [level3, level2, level1] %}
+
+        {% if level3.parent and pages[level3.parent] %}
+          {% set level4 = pages[level3.parent] %}
+          {% set crumbs = [level4, level3, level2, level1] %}
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  {% endif %}
+
+  {# Only show breadcrumbs if there are parents to show #}
+  {% if crumbs | length > 0 %}
+  <nav class="govuk-breadcrumbs govuk-!-margin-top-4" aria-label="Breadcrumb">
+    <ol class="govuk-breadcrumbs__list">
+      {% for crumb in crumbs %}
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="{{ crumb.url }}">{{ crumb.title }}</a>
+      </li>
+      {% endfor %}
+    </ol>
+  </nav>
+  {% endif %}
+{% endmacro %}

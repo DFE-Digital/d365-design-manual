@@ -1,0 +1,30 @@
+// Component List
+// ==============
+// Two-column list for displaying components with descriptions (GOV.UK style)
+
+.dfe-component-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: govuk-spacing(4);
+
+  @include govuk-media-query($from: tablet) {
+    grid-template-columns: 1fr 1fr;
+    gap: govuk-spacing(6) govuk-spacing(4);
+  }
+}
+
+// Single column variant for narrower containers
+.dfe-component-list--single-column {
+  @include govuk-media-query($from: tablet) {
+    grid-template-columns: 1fr;
+    gap: govuk-spacing(4);
+  }
+}
+
+.dfe-component-list__item {
+  margin: 0;
+  padding: 0;
+}
