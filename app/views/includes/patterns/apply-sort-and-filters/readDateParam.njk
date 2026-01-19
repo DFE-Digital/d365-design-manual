@@ -1,0 +1,44 @@
+{% raw %}
+{% comment %}
+  Reading date parameters from URL
+
+  Date inputs use bracket notation: date_from[day], date_from[month], date_from[year]
+  Each component comes through as a separate parameter
+{% endcomment %}
+
+{% comment %} Read the individual date components {% endcomment %}
+{% assign date_from_day = request.params['date_from[day]'] %}
+{% assign date_from_month = request.params['date_from[month]'] %}
+{% assign date_from_year = request.params['date_from[year]'] %}
+
+{% assign date_to_day = request.params['date_to[day]'] %}
+{% assign date_to_month = request.params['date_to[month]'] %}
+{% assign date_to_year = request.params['date_to[year]'] %}
+
+{% comment %} Check if a complete date was provided {% endcomment %}
+{% assign has_date_from = false %}
+{% if date_from_day != blank and date_from_month != blank and date_from_year != blank %}
+  {% assign has_date_from = true %}
+{% endif %}
+
+{% assign has_date_to = false %}
+{% if date_to_day != blank and date_to_month != blank and date_to_year != blank %}
+  {% assign has_date_to = true %}
+{% endif %}
+
+{% comment %}
+  Build ISO date strings for FetchXML (YYYY-MM-DD format)
+  Pad day and month with leading zeros if needed
+{% endcomment %}
+{% if has_date_from %}
+  {% assign padded_day = date_from_day | prepend: '0' | slice: -2, 2 %}
+  {% assign padded_month = date_from_month | prepend: '0' | slice: -2, 2 %}
+  {% assign date_from_iso = date_from_year | append: '-' | append: padded_month | append: '-' | append: padded_day %}
+{% endif %}
+
+{% if has_date_to %}
+  {% assign padded_day = date_to_day | prepend: '0' | slice: -2, 2 %}
+  {% assign padded_month = date_to_month | prepend: '0' | slice: -2, 2 %}
+  {% assign date_to_iso = date_to_year | append: '-' | append: padded_month | append: '-' | append: padded_day %}
+{% endif %}
+{% endraw %}

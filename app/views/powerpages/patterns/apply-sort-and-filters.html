@@ -25,6 +25,7 @@
   { text: "How URL parameters work", href: "#url-parameters" },
   { text: "Reading URL parameters in Liquid", href: "#reading-params" },
   { text: "Building FetchXML queries", href: "#fetchxml-queries" },
+  { text: "Date filters", href: "#date-filters" },
   { text: "Rendering the filter summary", href: "#filter-summary" },
   { text: "Complete page example", href: "#complete-example" },
   { text: "JavaScript for the design manual", href: "#design-manual-js" }
@@ -144,6 +145,67 @@
   "Complete FetchXML query",
   "includes/patterns/apply-sort-and-filters/fetchxmlComplete.njk",
   { index: 9, language: "django" }
+) }}
+
+<h2 class="govuk-heading-l" id="date-filters">Date filters</h2>
+
+<p class="govuk-body">Date filters require special handling because the GOV.UK date input component uses three separate fields (day, month, year) which come through as separate URL parameters with bracket notation.</p>
+
+<h3 class="govuk-heading-m">How date parameters appear in the URL</h3>
+
+<p class="govuk-body">When a user enters a date, the URL will contain parameters like:</p>
+
+<pre><code>/search?date_from[day]=28&date_from[month]=2&date_from[year]=2024&date_to[day]=13&date_to[month]=12&date_to[year]=2025</code></pre>
+
+<h3 class="govuk-heading-m">Reading date parameters</h3>
+
+<p class="govuk-body">Read each date component separately and combine them into an ISO date format (YYYY-MM-DD) for use in FetchXML queries:</p>
+
+{{ codeExample(
+  "Reading date parameters",
+  "includes/patterns/apply-sort-and-filters/readDateParam.njk",
+  { index: 14, language: "django" }
+) }}
+
+<h3 class="govuk-heading-m">Pre-populating date inputs</h3>
+
+<p class="govuk-body">When the page loads with date parameters in the URL, populate each input field with its corresponding value:</p>
+
+{{ codeExample(
+  "Pre-selecting date inputs from URL params",
+  "includes/patterns/apply-sort-and-filters/preSelectDateInputs.njk",
+  { index: 15, language: "django" }
+) }}
+
+<h3 class="govuk-heading-m">FetchXML date conditions</h3>
+
+<p class="govuk-body">Use the <code>on-or-after</code> operator for "from" dates and <code>on-or-before</code> for "to" dates. The date value must be in ISO format (YYYY-MM-DD):</p>
+
+{{ codeExample(
+  "FetchXML with date conditions",
+  "includes/patterns/apply-sort-and-filters/fetchxmlDateFilters.njk",
+  { index: 16, language: "django" }
+) }}
+
+<div class="govuk-inset-text">
+  <p class="govuk-body">Common FetchXML date operators:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li><code>on-or-after</code> - date is on or after the specified value</li>
+    <li><code>on-or-before</code> - date is on or before the specified value</li>
+    <li><code>on</code> - date matches exactly</li>
+    <li><code>today</code> - date is today (no value needed)</li>
+    <li><code>last-x-days</code> - date is within the last X days</li>
+  </ul>
+</div>
+
+<h3 class="govuk-heading-m">Showing date filters in the summary</h3>
+
+<p class="govuk-body">Display applied date filters in a user-friendly format. When building the remove URL, exclude all three date components (day, month, year):</p>
+
+{{ codeExample(
+  "Date filter summary",
+  "includes/patterns/apply-sort-and-filters/dateSummaryHtml.njk",
+  { index: 17, language: "django" }
 ) }}
 
 <h2 class="govuk-heading-l" id="filter-summary">Rendering the filter summary</h2>

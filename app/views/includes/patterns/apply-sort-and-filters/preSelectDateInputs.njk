@@ -1,0 +1,53 @@
+{% raw %}
+{% comment %}
+  Pre-populate date inputs from URL parameters
+{% endcomment %}
+
+{% assign date_from_day = request.params['date_from[day]'] %}
+{% assign date_from_month = request.params['date_from[month]'] %}
+{% assign date_from_year = request.params['date_from[year]'] %}
+
+<div class="govuk-form-group">
+  <fieldset class="govuk-fieldset" role="group" aria-describedby="date-from-hint">
+    <legend class="govuk-fieldset__legend">Updated after</legend>
+    <div id="date-from-hint" class="govuk-hint govuk-!-margin-bottom-2">
+      For example, 28 2 2024
+    </div>
+    <div class="govuk-date-input" id="date-from">
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label for="date-from-day" class="govuk-label">Day</label>
+          <input class="govuk-input govuk-input--width-2"
+                 id="date-from-day"
+                 name="date_from[day]"
+                 type="text"
+                 inputmode="numeric"
+                 value="{{ date_from_day }}">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label for="date-from-month" class="govuk-label">Month</label>
+          <input class="govuk-input govuk-input--width-2"
+                 id="date-from-month"
+                 name="date_from[month]"
+                 type="text"
+                 inputmode="numeric"
+                 value="{{ date_from_month }}">
+        </div>
+      </div>
+      <div class="govuk-date-input__item">
+        <div class="govuk-form-group">
+          <label for="date-from-year" class="govuk-label">Year</label>
+          <input class="govuk-input govuk-input--width-4"
+                 id="date-from-year"
+                 name="date_from[year]"
+                 type="text"
+                 inputmode="numeric"
+                 value="{{ date_from_year }}">
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</div>
+{% endraw %}
