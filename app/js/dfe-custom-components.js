@@ -332,6 +332,14 @@ DfEComponents.FilterPanel = class {
       }
     });
 
+    // Listen for real-time changes on date inputs
+    this.$module.addEventListener('input', (event) => {
+      const $target = event.target;
+      if ($target.closest('.govuk-date-input')) {
+        this.updateSelectedFiltersRealTime();
+      }
+    });
+
     // On page load: read URL params, set form values, and show filter summary if filters exist
     this.initFromUrlParams();
   }
@@ -376,6 +384,31 @@ DfEComponents.FilterPanel = class {
       }
     });
 
+    // Set date input values from URL params
+    const $dateInputs = this.$module.querySelectorAll('.govuk-date-input');
+    DfEComponents.nodeListForEach($dateInputs, ($dateGroup) => {
+      const $dayInput = $dateGroup.querySelector('input[name$="[day]"]');
+      const $monthInput = $dateGroup.querySelector('input[name$="[month]"]');
+      const $yearInput = $dateGroup.querySelector('input[name$="[year]"]');
+
+      if ($dayInput && $monthInput && $yearInput) {
+        // Extract base name (e.g., "date_from" from "date_from[day]")
+        const baseName = $dayInput.getAttribute('name').replace('[day]', '');
+
+        const dayValue = urlParams.get(baseName + '[day]');
+        const monthValue = urlParams.get(baseName + '[month]');
+        const yearValue = urlParams.get(baseName + '[year]');
+
+        if (dayValue) $dayInput.value = dayValue;
+        if (monthValue) $monthInput.value = monthValue;
+        if (yearValue) $yearInput.value = yearValue;
+
+        if (dayValue || monthValue || yearValue) {
+          hasFilters = true;
+        }
+      }
+    });
+
     // If there are filters in URL, show the filter summary (collapsed view)
     if (hasFilters) {
       const filterGroups = this.getFilterGroups();
@@ -390,10 +423,14 @@ DfEComponents.FilterPanel = class {
 
     // Preserve non-filter params (like 'keywords')
     existingParams.forEach((value, key) => {
+      // Check for regular inputs, selects, and date inputs
+      const escapedKey = CSS.escape(key);
       const isFilterParam = this.$module.querySelector(
-        'input[name="' + key + '"], input[name="' + key + '[]"], select[name="' + key + '"], input[name="' + key.replace('[]', '') + '[]"]'
+        'input[name="' + escapedKey + '"], input[name="' + escapedKey + '[]"], select[name="' + escapedKey + '"], input[name="' + CSS.escape(key.replace('[]', '')) + '[]"]'
       );
-      if (!isFilterParam) {
+      // Also check if this is a date input param (e.g., date_from[day])
+      const isDateParam = key.match(/\[(day|month|year)\]$/);
+      if (!isFilterParam && !isDateParam) {
         params.append(key, value);
       }
     });
@@ -421,6 +458,24 @@ DfEComponents.FilterPanel = class {
     DfEComponents.nodeListForEach($selects, ($select) => {
       if ($select.value) {
         params.append($select.getAttribute('name'), $select.value);
+      }
+    });
+
+    // Add date input values
+    const $dateInputs = this.$module.querySelectorAll('.govuk-date-input');
+    DfEComponents.nodeListForEach($dateInputs, ($dateGroup) => {
+      const $dayInput = $dateGroup.querySelector('input[name$="[day]"]');
+      const $monthInput = $dateGroup.querySelector('input[name$="[month]"]');
+      const $yearInput = $dateGroup.querySelector('input[name$="[year]"]');
+
+      if ($dayInput && $dayInput.value) {
+        params.append($dayInput.getAttribute('name'), $dayInput.value);
+      }
+      if ($monthInput && $monthInput.value) {
+        params.append($monthInput.getAttribute('name'), $monthInput.value);
+      }
+      if ($yearInput && $yearInput.value) {
+        params.append($yearInput.getAttribute('name'), $yearInput.value);
       }
     });
 
@@ -557,6 +612,46 @@ DfEComponents.FilterPanel = class {
           filterGroups[categoryName] = [];
         }
         filterGroups[categoryName].push({ name, value: $select.value, label: labelText });
+      }
+    });
+
+    // Handle date input groups
+    const $dateInputGroups = this.$module.querySelectorAll('.govuk-date-input');
+    DfEComponents.nodeListForEach($dateInputGroups, ($dateGroup) => {
+      const $dayInput = $dateGroup.querySelector('input[name$="[day]"]');
+      const $monthInput = $dateGroup.querySelector('input[name$="[month]"]');
+      const $yearInput = $dateGroup.querySelector('input[name$="[year]"]');
+
+      if ($dayInput && $monthInput && $yearInput) {
+        const day = $dayInput.value;
+        const month = $monthInput.value;
+        const year = $yearInput.value;
+
+        if (day || month || year) {
+          // Extract base name (e.g., "date_from" from "date_from[day]")
+          const baseName = $dayInput.getAttribute('name').replace('[day]', '');
+          const dateString = [day, month, year].filter(Boolean).join('/');
+
+          // Get category name and legend text
+          const $details = $dateGroup.closest('details');
+          const $summary = $details ? $details.querySelector('.dfe-filter-section__summary-heading') : null;
+          const categoryName = $summary ? $summary.textContent.trim() : 'Date';
+
+          // Get the legend text for this specific date group (e.g., "Updated after" or "Updated before")
+          const $fieldset = $dateGroup.closest('fieldset');
+          const $legend = $fieldset ? $fieldset.querySelector('legend') : null;
+          const legendText = $legend ? $legend.textContent.trim() : baseName;
+
+          if (!filterGroups[categoryName]) {
+            filterGroups[categoryName] = [];
+          }
+          filterGroups[categoryName].push({
+            name: baseName,
+            value: dateString,
+            label: legendText + ': ' + dateString,
+            isDate: true
+          });
+        }
       }
     });
 
@@ -709,6 +804,17 @@ DfEComponents.FilterPanel = class {
       if ($select && $select.value === filterValue) {
         $select.value = '';
       }
+
+      // Handle date inputs (filterGroup is base name like "date_from")
+      const $dayInput = this.$module.querySelector('input[name="' + filterGroup + '[day]"]');
+      const $monthInput = this.$module.querySelector('input[name="' + filterGroup + '[month]"]');
+      const $yearInput = this.$module.querySelector('input[name="' + filterGroup + '[year]"]');
+
+      if ($dayInput || $monthInput || $yearInput) {
+        if ($dayInput) $dayInput.value = '';
+        if ($monthInput) $monthInput.value = '';
+        if ($yearInput) $yearInput.value = '';
+      }
     }
   }
 
@@ -743,6 +849,12 @@ DfEComponents.FilterPanel = class {
     const $selects = this.$module.querySelectorAll('select');
     DfEComponents.nodeListForEach($selects, ($select) => {
       $select.selectedIndex = 0;
+    });
+
+    // Clear date inputs
+    const $dateInputs = this.$module.querySelectorAll('.govuk-date-input input[type="text"]');
+    DfEComponents.nodeListForEach($dateInputs, ($input) => {
+      $input.value = '';
     });
 
     // Build URL params (will only have non-filter params like 'keywords') and reload

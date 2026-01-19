@@ -1,0 +1,53 @@
+{% raw %}
+{% comment %}
+  FetchXML with date filter conditions
+
+  Use 'on-or-after' for "from" dates and 'on-or-before' for "to" dates
+  Date values must be in ISO format (YYYY-MM-DD)
+{% endcomment %}
+
+{% comment %} Read and build date values (see readDateParam example) {% endcomment %}
+{% assign date_from_day = request.params['date_from[day]'] %}
+{% assign date_from_month = request.params['date_from[month]'] %}
+{% assign date_from_year = request.params['date_from[year]'] %}
+{% assign date_to_day = request.params['date_to[day]'] %}
+{% assign date_to_month = request.params['date_to[month]'] %}
+{% assign date_to_year = request.params['date_to[year]'] %}
+
+{% assign has_date_from = false %}
+{% if date_from_day != blank and date_from_month != blank and date_from_year != blank %}
+  {% assign has_date_from = true %}
+  {% assign padded_day = date_from_day | prepend: '0' | slice: -2, 2 %}
+  {% assign padded_month = date_from_month | prepend: '0' | slice: -2, 2 %}
+  {% assign date_from_iso = date_from_year | append: '-' | append: padded_month | append: '-' | append: padded_day %}
+{% endif %}
+
+{% assign has_date_to = false %}
+{% if date_to_day != blank and date_to_month != blank and date_to_year != blank %}
+  {% assign has_date_to = true %}
+  {% assign padded_day = date_to_day | prepend: '0' | slice: -2, 2 %}
+  {% assign padded_month = date_to_month | prepend: '0' | slice: -2, 2 %}
+  {% assign date_to_iso = date_to_year | append: '-' | append: padded_month | append: '-' | append: padded_day %}
+{% endif %}
+
+{% fetchxml records %}
+<fetch>
+  <entity name="dfe_record">
+    <attribute name="dfe_recordid" />
+    <attribute name="dfe_name" />
+    <attribute name="modifiedon" />
+    <order attribute="modifiedon" descending="true" />
+    {% if has_date_from or has_date_to %}
+    <filter type="and">
+      {% if has_date_from %}
+        <condition attribute="modifiedon" operator="on-or-after" value="{{ date_from_iso }}" />
+      {% endif %}
+      {% if has_date_to %}
+        <condition attribute="modifiedon" operator="on-or-before" value="{{ date_to_iso }}" />
+      {% endif %}
+    </filter>
+    {% endif %}
+  </entity>
+</fetch>
+{% endfetchxml %}
+{% endraw %}

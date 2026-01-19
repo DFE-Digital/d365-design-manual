@@ -1,0 +1,59 @@
+{% raw %}
+{% comment %}
+  Render date filters in the filter summary
+{% endcomment %}
+
+{% assign date_from_day = request.params['date_from[day]'] %}
+{% assign date_from_month = request.params['date_from[month]'] %}
+{% assign date_from_year = request.params['date_from[year]'] %}
+{% assign date_to_day = request.params['date_to[day]'] %}
+{% assign date_to_month = request.params['date_to[month]'] %}
+{% assign date_to_year = request.params['date_to[year]'] %}
+
+{% assign has_date_from = false %}
+{% if date_from_day != blank and date_from_month != blank and date_from_year != blank %}
+  {% assign has_date_from = true %}
+  {% assign date_from_display = date_from_day | append: '/' | append: date_from_month | append: '/' | append: date_from_year %}
+{% endif %}
+
+{% assign has_date_to = false %}
+{% if date_to_day != blank and date_to_month != blank and date_to_year != blank %}
+  {% assign has_date_to = true %}
+  {% assign date_to_display = date_to_day | append: '/' | append: date_to_month | append: '/' | append: date_to_year %}
+{% endif %}
+
+{% comment %}
+  Build URLs that remove date filters
+  We need to exclude all three date components (day, month, year)
+{% endcomment %}
+
+{% if has_date_from or has_date_to %}
+<ul class="dfe-filter-summary__list">
+  {% if has_date_from %}
+    {% capture remove_date_from_url %}{{ page.url }}?{% for param in request.params %}{% unless param[0] contains 'date_from' %}{{ param[0] }}={{ param[1] | url_encode }}&{% endunless %}{% endfor %}{% endcapture %}
+    <li class="dfe-filter-summary__tag">
+      <span class="dfe-filter-summary__tag-label">Updated after:</span>
+      <span class="dfe-filter-summary__tag-value">{{ date_from_display }}</span>
+      <a href="{{ remove_date_from_url | strip }}"
+         class="dfe-filter-summary__tag-remove">
+        <span class="govuk-visually-hidden">Remove updated after filter</span>
+        &times;
+      </a>
+    </li>
+  {% endif %}
+
+  {% if has_date_to %}
+    {% capture remove_date_to_url %}{{ page.url }}?{% for param in request.params %}{% unless param[0] contains 'date_to' %}{{ param[0] }}={{ param[1] | url_encode }}&{% endunless %}{% endfor %}{% endcapture %}
+    <li class="dfe-filter-summary__tag">
+      <span class="dfe-filter-summary__tag-label">Updated before:</span>
+      <span class="dfe-filter-summary__tag-value">{{ date_to_display }}</span>
+      <a href="{{ remove_date_to_url | strip }}"
+         class="dfe-filter-summary__tag-remove">
+        <span class="govuk-visually-hidden">Remove updated before filter</span>
+        &times;
+      </a>
+    </li>
+  {% endif %}
+</ul>
+{% endif %}
+{% endraw %}
