@@ -26,6 +26,11 @@ DfEComponents.initAll = function(options = {}) {
   DfEComponents.nodeListForEach($filterPanels, function($module) {
     new DfEComponents.FilterPanel($module);
   });
+
+  const $printLinks = scope.querySelectorAll('.dfe-print-link__button');
+  DfEComponents.nodeListForEach($printLinks, function($button) {
+    new DfEComponents.PrintLink($button);
+  });
 };
 
 DfEComponents.SortableTable = class {
@@ -923,6 +928,24 @@ DfEComponents.FilterPanel = class {
     if (!hasVisibleTags) {
       this.$selectedSection.hidden = true;
     }
+  }
+};
+
+DfEComponents.PrintLink = class {
+  constructor(button) {
+    this.$button = button;
+
+    if (this.$button.dataset.dfePrintLinkInitialised) {
+      return;
+    }
+
+    this.$button.dataset.dfePrintLinkInitialised = 'true';
+    this.$button.addEventListener('click', this.onClick.bind(this));
+  }
+
+  onClick(event) {
+    event.preventDefault();
+    window.print();
   }
 };
 

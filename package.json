@@ -23,7 +23,7 @@
     "dev": "npm run build && concurrently \"npm run watch:js\" \"npm run watch:css\" \"npm run watch:codetheme\" \"npm run watch:postcss\" \"npm run watch:images\" \"nodemon index.mjs\""
   },
   "nodemonConfig": {
-    "ext": "mjs,html"
+    "ext": "mjs,html,js"
   },
   "keywords": [],
   "author": "",

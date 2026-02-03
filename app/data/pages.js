@@ -133,6 +133,7 @@ const pages = {
       "powerpages/components/search",
       "powerpages/components/select",
       "powerpages/components/sidebar",
+      "powerpages/components/print-link",
       "powerpages/components/sortable-table",
       "powerpages/components/sub-navigation",
       "powerpages/components/telephone-input",
@@ -223,6 +224,13 @@ const pages = {
     url: "/powerpages/components/number-input/",
     description: "Use the number input component when you need to let a user enter either a whole number, a decimal number or either.",
     dataSource: "components",
+    parent: "powerpages/components"
+  },
+  "powerpages/components/print-link": {
+    title: "Print link",
+    url: "/powerpages/components/print-link/",
+    description: "Use the print link component to let users print the current page.",
+    template: "powerpages/components/print-link",
     parent: "powerpages/components"
   },
   "powerpages/components/radios": {
