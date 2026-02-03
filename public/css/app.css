@@ -67,6 +67,20 @@
   text-underline-offset: 0.1578em;
 }
 /*! Copyright (c) 2011 by Margaret Calvert & Henrik Kubel. All rights reserved. The font has been customised for exclusive use on gov.uk. This cut is not commercially available. */ /* stylelint-disable-line scss/comment-no-loud  */
+@font-face {
+  font-family: "GDS Transport";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/assets/fonts/light-94a07e06a1-v2.woff2") format("woff2"), url("/assets/fonts/light-f591b13f7d-v2.woff") format("woff");
+  font-display: fallback;
+}
+@font-face {
+  font-family: "GDS Transport";
+  font-style: normal;
+  font-weight: bold;
+  src: url("/assets/fonts/bold-b542beb274-v2.woff2") format("woff2"), url("/assets/fonts/bold-affa96571d-v2.woff") format("woff");
+  font-display: fallback;
+}
 @media print {
   .govuk-link {
     font-family: sans-serif;
@@ -8981,142 +8995,236 @@ dd code {
   }
 }
 
-.dfe-dashboard {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -15px;
-}
-
-.dfe-dashboard-date-range-container {
+.dfe-dashboard,
+.dfe-dashboard-dark,
+.dfe-dashboard-light,
+.dfe-dashboard-label,
+.dfe-dashboard-number,
+.dfe-dashboard-smaller,
+.dfe-dashboard-smallest,
+.dfe-dashboard-with-status {
   display: block;
 }
-@media (min-width: 40.0625em) {
-  .dfe-dashboard-date-range-container {
-    display: inline-block;
+
+.dfe-dashboard-number {
+  font-size: 32px;
+  font-size: clamp(2rem, 18cqi, 3rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+@media (max-width: 40.0525em) {
+  .dfe-dashboard-number {
+    font-size: 2rem;
   }
 }
 
-.dfe-dashboard-date-range-container__select {
-  width: 100%;
-}
-
-.dfe-dashboard-total-group {
-  margin-bottom: 30px;
-  padding: 0 15px 0 0 !important;
-}
-
-.dfe-dashboard-total-group__title {
-  color: #0b0c0c;
+.dfe-dashboard-label {
   font-family: "Inter", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-weight: 700;
-  font-size: 16px;
+  font-size: 1rem;
+  font-weight: 400;
   line-height: 1.25;
-  display: block;
-  margin-bottom: 5px;
+  padding-bottom: 10px;
 }
 @media print {
-  .dfe-dashboard-total-group__title {
-    color: #000;
+  .dfe-dashboard-label {
     font-family: sans-serif;
-    font-size: 14pt;
-    line-height: 1.15;
   }
 }
 @media (min-width: 40.0625em) {
-  .dfe-dashboard-total-group__title {
-    font-size: 19px;
+  .dfe-dashboard-label {
+    font-size: 1.1875rem;
     line-height: 1.3157894737;
   }
 }
-
-.dfe-dashboard-total-group__values {
-  display: flex;
-  position: relative;
-  margin: 0;
-  padding: 15px;
-  padding-left: 25px;
-  border: 2px solid #b1b4b6;
-  border-left: 0;
-  background-color: #f3f2f1;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: baseline;
-}
-.dfe-dashboard-total-group__values::before {
-  content: "";
-  position: absolute;
-  top: -1px;
-  bottom: -1px;
-  left: 0;
-  width: 0.625rem;
-  background-color: #0b0c0c;
-}
-.dfe-dashboard-total-group__values--red::before {
-  background-color: #d4351c;
-}
-.dfe-dashboard-total-group__values--blue::before {
-  background-color: #1d70b8;
-}
-
-.dfe-dashboard-total-group__count,
-.dfe-dashboard-total-group__amount {
-  font-family: "Inter", sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 1.1111111111;
-}
 @media print {
-  .dfe-dashboard-total-group__count,
-  .dfe-dashboard-total-group__amount {
-    font-family: sans-serif;
-    font-size: 18pt;
+  .dfe-dashboard-label {
+    font-size: 14pt;
     line-height: 1.15;
   }
 }
-@media (min-width: 40.0625em) {
-  .dfe-dashboard-total-group__count,
-  .dfe-dashboard-total-group__amount {
-    font-size: 24px;
-    line-height: 1.25;
+
+.pill .dfe-dashboard-number {
+  padding-left: 5px;
+}
+@media (min-width: 26.25em) {
+  .pill .dfe-dashboard-number {
+    padding-left: 10px;
   }
 }
 
-.dfe-dashboard-total-group__count {
-  float: left;
-  margin-left: 0;
+.dfe-dashboard-dark {
+  background: #0b0c0c;
+  color: #ffffff;
+  container-type: inline-size;
+  padding: 15px;
+  position: relative;
+}
+.dfe-dashboard-dark .dfe-dashboard-number {
+  font-size: 24px;
+  font-size: clamp(1.5rem, 18cqi, 2.25rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+@media (max-width: 40.0525em) {
+  .dfe-dashboard-dark .dfe-dashboard-number {
+    font-size: 1.5rem;
+  }
 }
 
-.dfe-dashboard-total-group__amount {
-  text-align: right;
-  flex: 1;
-  float: right;
+.dfe-dashboard-light {
+  background: #ffffff;
+  color: #0b0c0c;
+  border: 1px solid #0b0c0c;
+  container-type: inline-size;
+  padding: 15px;
+  position: relative;
+}
+.dfe-dashboard-light .dfe-dashboard-number {
+  font-size: 24px;
+  font-size: clamp(1.5rem, 18cqi, 2.25rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+@media (max-width: 40.0525em) {
+  .dfe-dashboard-light .dfe-dashboard-number {
+    font-size: 1.5rem;
+  }
 }
 
-.dfe-dashboard-total-explainer {
-  margin-top: 10px;
+.dfe-dashboard-smaller {
+  container-type: inline-size;
+}
+.dfe-dashboard-smaller .dfe-dashboard-number {
+  font-size: 24px;
+  font-size: clamp(1.5rem, 18cqi, 2.25rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+@media (max-width: 40.0525em) {
+  .dfe-dashboard-smaller .dfe-dashboard-number {
+    font-size: 1.5rem;
+  }
+}
+
+.dfe-dashboard-smallest {
+  container-type: inline-size;
+}
+.dfe-dashboard-smallest .dfe-dashboard-number {
+  font-size: 18px;
+  font-size: clamp(1.125rem, 18cqi, 1.5rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+@media (max-width: 40.0525em) {
+  .dfe-dashboard-smallest .dfe-dashboard-number {
+    font-size: 1.125rem;
+  }
+}
+
+.dfe-dashboard-with-status {
+  margin-bottom: 20px;
+  position: relative;
+}
+.dfe-dashboard-with-status .dfe-dashboard,
+.dfe-dashboard-with-status .dfe-dashboard-smaller {
+  background: #0b0c0c;
+  color: #ffffff;
+  padding: 15px;
+  position: relative;
+}
+.dfe-dashboard-with-status .dfe-dashboard-label {
+  padding-bottom: 0;
+}
+.dfe-dashboard-with-status .dfe-dashboard-label:link, .dfe-dashboard-with-status .dfe-dashboard-label:visited {
+  color: #1d70b8;
+}
+.dfe-dashboard-with-status .dfe-dashboard-link {
+  background: #1d70b8;
+  border: 2px solid #1d70b8;
+  display: block;
+  margin-bottom: 5px;
+  text-decoration: none;
+}
+.dfe-dashboard-with-status .dfe-dashboard-link:hover .dfe-dashboard-label {
+  text-decoration-skip-ink: none;
+  text-decoration-thickness: max(3px, 0.1875rem, 0.12em);
+  text-decoration-skip: none;
+}
+.dfe-dashboard-with-status .dfe-dashboard-link:active, .dfe-dashboard-with-status .dfe-dashboard-link:focus {
+  background: #ffdd00;
+  border: none;
+  box-shadow: inset 0 -4px #0b0c0c;
+  padding: 2px;
+}
+.dfe-dashboard-with-status .dfe-dashboard-link:active .dfe-dashboard-label,
+.dfe-dashboard-with-status .dfe-dashboard-link:active .dfe-dashboard-number,
+.dfe-dashboard-with-status .dfe-dashboard-link:active .dfe-dashboard-smaller, .dfe-dashboard-with-status .dfe-dashboard-link:focus .dfe-dashboard-label,
+.dfe-dashboard-with-status .dfe-dashboard-link:focus .dfe-dashboard-number,
+.dfe-dashboard-with-status .dfe-dashboard-link:focus .dfe-dashboard-smaller {
+  color: #0b0c0c;
+  text-decoration: none;
+}
+.dfe-dashboard-with-status .dfe-dashboard-link .dfe-dashboard,
+.dfe-dashboard-with-status .dfe-dashboard-link .dfe-dashboard-smaller {
+  background: transparent;
+}
+.dfe-dashboard-with-status .dfe-dashboard-link .dfe-dashboard-label {
+  text-decoration: underline;
+  text-decoration-thickness: max(1px, 0.0625rem);
+  text-underline-offset: 0.1578em;
+}
+.dfe-dashboard-with-status .dfe-dashboard-status,
+.dfe-dashboard-with-status .dfe-dashboard-status-failing {
   font-family: "Inter", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #00703c;
+  color: #ffffff;
+  display: block;
+  font-size: 1rem;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 1.1428571429;
+  line-height: 1.25;
+  padding: 15px;
 }
 @media print {
-  .dfe-dashboard-total-explainer {
+  .dfe-dashboard-with-status .dfe-dashboard-status,
+  .dfe-dashboard-with-status .dfe-dashboard-status-failing {
     font-family: sans-serif;
-    font-size: 14pt;
-    line-height: 1.2;
   }
 }
 @media (min-width: 40.0625em) {
-  .dfe-dashboard-total-explainer {
-    font-size: 16px;
-    line-height: 1.25;
+  .dfe-dashboard-with-status .dfe-dashboard-status,
+  .dfe-dashboard-with-status .dfe-dashboard-status-failing {
+    font-size: 1.1875rem;
+    line-height: 1.3157894737;
   }
+}
+@media print {
+  .dfe-dashboard-with-status .dfe-dashboard-status,
+  .dfe-dashboard-with-status .dfe-dashboard-status-failing {
+    font-size: 14pt;
+    line-height: 1.15;
+  }
+}
+.dfe-dashboard-with-status .dfe-dashboard-status--with-link {
+  padding: 0;
+}
+.dfe-dashboard-with-status .dfe-dashboard-status--with-link > .govuk-link {
+  display: block;
+  padding: 15px;
+}
+.dfe-dashboard-with-status .dfe-dashboard-status--with-link > .govuk-link:active, .dfe-dashboard-with-status .dfe-dashboard-status--with-link > .govuk-link:focus {
+  box-shadow: inset 0 -4px #0b0c0c;
+}
+.dfe-dashboard-with-status .dfe-dashboard-status--with-link > .govuk-link:active {
+  background-color: #ffdd00;
+  color: #0b0c0c;
+  text-decoration: none;
+}
+.dfe-dashboard-with-status .dfe-dashboard-status-failing {
+  background: #d4351c;
 }
 
 .dfe-attachment {
@@ -10580,6 +10688,47 @@ pre code.hljs {
 
 .dfe-chevron-card__link:focus::before {
   border-color: #b1b4b6;
+}
+
+.dfe-back-to-top {
+  display: none;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  padding: 0.75rem 1rem;
+  background-color: #ffffff;
+  border: 2px solid #1d70b8;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #1d70b8;
+}
+.dfe-back-to-top:hover {
+  background-color: #f3f2f1;
+  color: rgb(23.2, 89.6, 147.2);
+}
+.dfe-back-to-top:focus {
+  outline: 3px solid transparent;
+  background-color: #ffdd00;
+  box-shadow: 0 -2px #ffdd00, 0 4px #0b0c0c;
+  color: #0b0c0c;
+  border-color: #0b0c0c;
+}
+.dfe-back-to-top svg {
+  vertical-align: middle;
+  margin-right: 0.4em;
+  margin-top: -0.1em;
+}
+@media (max-width: 40.0625em) {
+  .dfe-back-to-top {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
 }
 
 /*# sourceMappingURL=app.css.map */

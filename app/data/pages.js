@@ -10,6 +10,15 @@ const pages = {
     children: ["powerpages", "crm"]
   },
 
+  // Accessibility Statement
+  "accessibility-statement": {
+    title: "Accessibility statement",
+    url: "/accessibility-statement/",
+    description: "Accessibility statement for the Dynamics 365 Design System website.",
+    template: "accessibility-statement",
+    parent: "home"
+  },
+
   // CRM Section
   "crm": {
     title: "CRM",

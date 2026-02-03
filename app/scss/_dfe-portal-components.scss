@@ -538,6 +538,356 @@
 }
 
 // =============================================================================
+// DFE DASHBOARD WITH STATUS COMPONENT
+// =============================================================================
+
+.dfe-dashboard-dark,
+.dfe-dashboard-light,
+.dfe-dashboard-label,
+.dfe-dashboard-number,
+.dfe-dashboard-smaller,
+.dfe-dashboard-smallest,
+.dfe-dashboard-with-status {
+  display: block;
+}
+
+.dfe-dashboard-number {
+  font-size: 32px;
+  font-size: clamp(2rem, 18cqi, 3rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+
+  @media (max-width: 40.0525em) {
+    font-size: 2rem;
+  }
+}
+
+.dfe-dashboard-label {
+  @include govuk-font($size: 19);
+  padding-bottom: 10px;
+}
+
+.pill .dfe-dashboard-number {
+  padding-left: 5px;
+
+  @media (min-width: 26.25em) {
+    padding-left: 10px;
+  }
+}
+
+.dfe-dashboard-dark {
+  background: govuk-colour("black");
+  color: govuk-colour("white");
+  container-type: inline-size;
+  padding: 15px;
+  position: relative;
+
+  .dfe-dashboard-number {
+    font-size: 24px;
+    font-size: clamp(1.5rem, 18cqi, 2.25rem);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+
+    @media (max-width: 40.0525em) {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.dfe-dashboard-light {
+  background: govuk-colour("white");
+  color: govuk-colour("black");
+  border: 1px solid govuk-colour("black");
+  container-type: inline-size;
+  padding: 15px;
+  position: relative;
+
+  .dfe-dashboard-number {
+    font-size: 24px;
+    font-size: clamp(1.5rem, 18cqi, 2.25rem);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+
+    @media (max-width: 40.0525em) {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.dfe-dashboard-smaller {
+  container-type: inline-size;
+
+  .dfe-dashboard-number {
+    font-size: 24px;
+    font-size: clamp(1.5rem, 18cqi, 2.25rem);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+
+    @media (max-width: 40.0525em) {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.dfe-dashboard-smallest {
+  container-type: inline-size;
+
+  .dfe-dashboard-number {
+    font-size: 18px;
+    font-size: clamp(1.125rem, 18cqi, 1.5rem);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+
+    @media (max-width: 40.0525em) {
+      font-size: 1.125rem;
+    }
+  }
+}
+
+.dfe-dashboard-with-status {
+  margin-bottom: 20px;
+  position: relative;
+
+  .dfe-dashboard,
+  .dfe-dashboard-smaller {
+    background: govuk-colour("black");
+    color: govuk-colour("white");
+    padding: 15px;
+    position: relative;
+  }
+
+  .dfe-dashboard-label {
+    padding-bottom: 0;
+
+    &:link,
+    &:visited {
+      color: $govuk-link-colour;
+    }
+  }
+
+  .dfe-dashboard-link {
+    background: $govuk-link-colour;
+    border: 2px solid $govuk-link-colour;
+    display: block;
+    margin-bottom: 5px;
+    text-decoration: none;
+
+    &:hover .dfe-dashboard-label {
+      text-decoration-skip-ink: none;
+      text-decoration-thickness: max(3px, .1875rem, .12em);
+      text-decoration-skip: none;
+    }
+
+    &:active,
+    &:focus {
+      background: govuk-colour("yellow");
+      border: none;
+      box-shadow: inset 0 -4px govuk-colour("black");
+      padding: 2px;
+
+      .dfe-dashboard-label,
+      .dfe-dashboard-number,
+      .dfe-dashboard-smaller {
+        color: govuk-colour("black");
+        text-decoration: none;
+      }
+    }
+
+    .dfe-dashboard,
+    .dfe-dashboard-smaller {
+      background: transparent;
+    }
+
+    .dfe-dashboard-label {
+      text-decoration: underline;
+      text-decoration-thickness: max(1px, .0625rem);
+      text-underline-offset: .1578em;
+    }
+  }
+
+  .dfe-dashboard-status,
+  .dfe-dashboard-status-failing {
+    @include govuk-font($size: 19);
+    background: govuk-colour("green");
+    color: govuk-colour("white");
+    display: block;
+    padding: 15px;
+  }
+
+  .dfe-dashboard-status--with-link {
+    padding: 0;
+
+    > .govuk-link {
+      display: block;
+      padding: 15px;
+
+      &:active,
+      &:focus {
+        box-shadow: inset 0 -4px govuk-colour("black");
+      }
+
+      &:active {
+        background-color: govuk-colour("yellow");
+        color: govuk-colour("black");
+        text-decoration: none;
+      }
+    }
+  }
+
+  .dfe-dashboard-status-failing {
+    background: govuk-colour("red");
+  }
+}
+
+// =============================================================================
+// DFE VERTICAL NAV COMPONENT
+// =============================================================================
+
+.dfe-vertical-nav {
+  padding-right: govuk-spacing(3);
+  @include govuk-font($size: 16);
+}
+
+.dfe-vertical-nav__section {
+  margin: 0 0 govuk-spacing(4);
+  padding: 0;
+  list-style-type: none;
+}
+
+.dfe-vertical-nav__link {
+  padding: 2px 0;
+}
+
+.dfe-vertical-nav__section-item {
+  margin-bottom: govuk-spacing(1);
+  padding-top: govuk-spacing(1);
+  padding-bottom: govuk-spacing(1);
+}
+
+.dfe-vertical-nav__section-item--current {
+  $_current-indicator-width: 4px;
+  margin-left: -(govuk-spacing(2) + $_current-indicator-width);
+  padding-left: govuk-spacing(2);
+  border-left: $_current-indicator-width solid govuk-colour("blue");
+  background-color: govuk-colour("white");
+
+  .dfe-vertical-nav__link {
+    font-weight: bold;
+  }
+}
+
+.dfe-vertical-nav__section--nested {
+  margin-top: govuk-spacing(2);
+  margin-bottom: 0;
+  padding-left: govuk-spacing(4);
+
+  .dfe-vertical-nav__section-item::before {
+    content: "—";
+    margin-left: -(govuk-spacing(4));
+    color: govuk-colour("dark-grey");
+  }
+
+  .dfe-vertical-nav__link {
+    padding-left: 0;
+    font-weight: normal;
+  }
+}
+
+.dfe-vertical-nav__theme {
+  @include govuk-font($size: 19);
+  margin: 0;
+  padding: govuk-spacing(2) govuk-spacing(3) govuk-spacing(2) 0;
+  color: govuk-colour("dark-grey");
+
+  &:first-of-type {
+    padding-top: 0;
+  }
+}
+
+.dfe-vertical-nav__toggle {
+  @include govuk-font($size: 19, $weight: bold);
+  display: inline-flex;
+  margin: govuk-spacing(4) 0;
+  margin-top: 0 !important;
+  padding: 0;
+  border: 0;
+  color: $govuk-link-colour;
+  background: none;
+  word-break: break-all;
+  cursor: pointer;
+  align-items: center;
+
+  &:focus {
+    @include govuk-focused-text;
+  }
+
+  &::after {
+    @include govuk-shape-arrow($direction: down, $base: 10px, $display: inline-block);
+    content: "";
+    margin-left: govuk-spacing(1);
+  }
+
+  &[aria-expanded="true"]::after {
+    @include govuk-shape-arrow($direction: up, $base: 10px, $display: inline-block);
+  }
+
+  &[hidden] {
+    display: none;
+  }
+
+  @include govuk-media-query($from: tablet) {
+    margin: govuk-spacing(2) 0;
+  }
+}
+
+// =============================================================================
+// DFE BACK TO TOP COMPONENT
+// =============================================================================
+
+.dfe-back-to-top {
+  display: none;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  padding: 0.75rem 1rem;
+  background-color: govuk-colour("white");
+  border: 2px solid $govuk-brand-colour;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 400;
+  color: $govuk-brand-colour;
+
+  &:hover {
+    background-color: govuk-colour("light-grey");
+    color: govuk-shade($govuk-brand-colour, 20%);
+  }
+
+  &:focus {
+    outline: 3px solid transparent;
+    background-color: $govuk-focus-colour;
+    box-shadow: 0 -2px $govuk-focus-colour, 0 4px $govuk-focus-text-colour;
+    color: $govuk-focus-text-colour;
+    border-color: $govuk-focus-text-colour;
+  }
+
+  svg {
+    vertical-align: middle;
+    margin-right: 0.4em;
+    margin-top: -0.1em;
+  }
+
+  @include govuk-media-query($until: tablet) {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+// =============================================================================
 // DFE SORTABLE TABLE COMPONENT
 // =============================================================================
 

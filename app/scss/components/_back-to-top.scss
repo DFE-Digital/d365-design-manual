@@ -1,0 +1,47 @@
+// Back to top button
+// ==================
+// Fixed position button that appears when scrolling down the page
+
+.dfe-back-to-top {
+  display: none;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  padding: 0.75rem 1rem;
+  background-color: govuk-colour("white");
+  border: 2px solid $govuk-brand-colour;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 400;
+  color: $govuk-brand-colour;
+
+  &:hover {
+    background-color: govuk-colour("light-grey");
+    color: govuk-shade($govuk-brand-colour, 20%);
+  }
+
+  &:focus {
+    outline: 3px solid transparent;
+    background-color: $govuk-focus-colour;
+    box-shadow: 0 -2px $govuk-focus-colour, 0 4px $govuk-focus-text-colour;
+    color: $govuk-focus-text-colour;
+    border-color: $govuk-focus-text-colour;
+  }
+
+  svg {
+    vertical-align: middle;
+    margin-right: 0.4em;
+    margin-top: -0.1em;
+  }
+
+  // Responsive adjustments for mobile
+  @media (max-width: 40.0625em) {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}

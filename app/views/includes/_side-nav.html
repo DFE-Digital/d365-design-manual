@@ -69,7 +69,7 @@
   <ul class="dfe-vertical-nav__section">
     {% for section in powerpages_sections %}
     <li class="dfe-vertical-nav__section-item {% if section.key == currentSection %}dfe-vertical-nav__section-item--current{% endif %}">
-      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ section.url }}">{{ section.title }}</a>
+      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ section.url }}"{% if section.key == currentSection %} aria-current="page"{% endif %}>{{ section.title }}</a>
     </li>
     {% endfor %}
   </ul>
@@ -81,8 +81,9 @@
   <h2 class="govuk-heading-s govuk-!-margin-bottom-2">In this section</h2>
   <ul class="dfe-vertical-nav__section" id="side-navigation">
     {% for page in getting_started %}
-    <li class="dfe-vertical-nav__section-item {% if currentPath | contains(page.url) %}dfe-vertical-nav__section-item--current{% endif %}">
-      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}">{{ page.title }}</a>
+    {% set isCurrentPage = currentPath | contains(page.url) %}
+    <li class="dfe-vertical-nav__section-item {% if isCurrentPage %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}"{% if isCurrentPage %} aria-current="page"{% endif %}>{{ page.title }}</a>
     </li>
     {% endfor %}
   </ul>
@@ -92,8 +93,9 @@
   <h2 class="govuk-heading-s govuk-!-margin-bottom-2">In this section</h2>
   <ul class="dfe-vertical-nav__section" id="side-navigation">
     {% for page in components %}
-    <li class="dfe-vertical-nav__section-item {% if currentPath | contains(page.url) %}dfe-vertical-nav__section-item--current{% endif %}">
-      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}">{{ page.title }}</a>
+    {% set isCurrentPage = currentPath | contains(page.url) %}
+    <li class="dfe-vertical-nav__section-item {% if isCurrentPage %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}"{% if isCurrentPage %} aria-current="page"{% endif %}>{{ page.title }}</a>
     </li>
     {% endfor %}
   </ul>
@@ -103,8 +105,9 @@
   <h2 class="govuk-heading-s govuk-!-margin-bottom-2">In this section</h2>
   <ul class="dfe-vertical-nav__section" id="side-navigation">
     {% for page in styles %}
-    <li class="dfe-vertical-nav__section-item {% if currentPath | contains(page.url) %}dfe-vertical-nav__section-item--current{% endif %}">
-      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}">{{ page.title }}</a>
+    {% set isCurrentPage = currentPath | contains(page.url) %}
+    <li class="dfe-vertical-nav__section-item {% if isCurrentPage %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}"{% if isCurrentPage %} aria-current="page"{% endif %}>{{ page.title }}</a>
     </li>
     {% endfor %}
   </ul>
@@ -114,8 +117,9 @@
   <h2 class="govuk-heading-s govuk-!-margin-bottom-2">In this section</h2>
   <ul class="dfe-vertical-nav__section" id="side-navigation">
     {% for page in patterns %}
-    <li class="dfe-vertical-nav__section-item {% if currentPath | contains(page.url) %}dfe-vertical-nav__section-item--current{% endif %}">
-      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}">{{ page.title }}</a>
+    {% set isCurrentPage = currentPath | contains(page.url) %}
+    <li class="dfe-vertical-nav__section-item {% if isCurrentPage %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}"{% if isCurrentPage %} aria-current="page"{% endif %}>{{ page.title }}</a>
     </li>
     {% endfor %}
   </ul>
