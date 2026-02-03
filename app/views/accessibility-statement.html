@@ -1,0 +1,111 @@
+{% set pageData = pages['accessibility-statement'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = false %}
+
+{% extends "layouts/_two-column-wide-left.html" %}
+
+{% block content %}
+
+<h1 class="govuk-heading-xl">Accessibility statement for the Dynamics 365 Design System</h1>
+
+<p class="govuk-body">This accessibility statement applies to the Dynamics 365 Design System website.</p>
+
+<p class="govuk-body">This website is run by the Department for Education. We want as many people as possible to be able to use this website. For example, that means you should be able to:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>change colours, contrast levels and fonts using browser or device settings</li>
+  <li>zoom in up to 400% without the text spilling off the screen</li>
+  <li>navigate most of the website using a keyboard or speech recognition software</li>
+  <li>listen to most of the website using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)</li>
+</ul>
+
+<p class="govuk-body">We've also made the website text as simple as possible to understand.</p>
+
+<p class="govuk-body"><a class="govuk-link" href="https://mcmw.abilitynet.org.uk/" target="_blank">AbilityNet</a> has advice on making your device easier to use if you have a disability.</p>
+
+<h2 class="govuk-heading-l">Feedback and contact information</h2>
+
+<p class="govuk-body">If you find any problems not listed on this page or think we're not meeting accessibility requirements, contact us:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>email: <a class="govuk-link" href="mailto:solutionsdevelopment.techdirectorate@education.gov.uk">solutionsdevelopment.techdirectorate@education.gov.uk</a></li>
+</ul>
+
+<p class="govuk-body">We'll consider your request and get back to you within 5 working days.</p>
+
+<h2 class="govuk-heading-l">Enforcement procedure</h2>
+
+<p class="govuk-body">The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the 'accessibility regulations').</p>
+
+<p class="govuk-body">If you're not happy with how we respond to your complaint, <a class="govuk-link" href="https://www.equalityadvisoryservice.com/" target="_blank">contact the Equality Advisory and Support Service (EASS)</a>.</p>
+
+<h2 class="govuk-heading-l">Technical information about this website's accessibility</h2>
+
+<p class="govuk-body">The Department for Education is committed to making its websites accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.</p>
+
+<h3 class="govuk-heading-m">Compliance status</h3>
+
+<p class="govuk-body">This website is fully compliant with the <a class="govuk-link" href="https://www.w3.org/TR/WCAG22/" target="_blank">Web Content Accessibility Guidelines version 2.2</a> AA standard.</p>
+
+<h2 class="govuk-heading-l">What we're doing to improve accessibility</h2>
+
+<p class="govuk-body">We are committed to continually improving the accessibility of this website. Our ongoing work includes:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>regular accessibility audits using automated tools and manual testing</li>
+  <li>testing with assistive technologies including screen readers</li>
+  <li>reviewing and updating components to meet WCAG 2.2 AA standards</li>
+  <li>ensuring all new content and features are accessible before release</li>
+</ul>
+
+<h2 class="govuk-heading-l">Preparation of this accessibility statement</h2>
+
+<p class="govuk-body">This statement was prepared on 19 January 2026. It was last reviewed on 19 January 2026.</p>
+
+<p class="govuk-body">This website was last tested on 19 January 2026. The test was carried out internally by the Solutions Delivery Team.</p>
+
+<p class="govuk-body">We tested:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>the home page</li>
+  <li>navigation menus and side navigation</li>
+  <li>component examples including filter panel, sortable table, and form inputs</li>
+  <li>pattern documentation pages</li>
+  <li>code examples with copy functionality</li>
+</ul>
+
+<p class="govuk-body">Testing included:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>automated testing using accessibility audit tools</li>
+  <li>manual keyboard navigation testing</li>
+  <li>testing with screen readers (NVDA, VoiceOver)</li>
+  <li>colour contrast checks</li>
+  <li>review of ARIA attributes and semantic HTML</li>
+</ul>
+
+{% endblock %}
+
+{% block sideContent %}
+<aside class="dfe-sidebar">
+  <div class="dfe-sidebar-section">
+    <h2 class="dfe-sidebar-section__main-heading">Related links</h2>
+    <div class="dfe-sidebar-section__content">
+      <ul class="dfe-sidebar-section__list">
+        <li class="dfe-sidebar-section__list-item">
+          <a class="govuk-link dfe-sidebar-section__link" href="https://accessibility.education.gov.uk/" target="_blank">DfE Accessibility guidance</a>
+        </li>
+        <li class="dfe-sidebar-section__list-item">
+          <a class="govuk-link dfe-sidebar-section__link" href="https://www.w3.org/TR/WCAG22/" target="_blank">WCAG 2.2 guidelines</a>
+        </li>
+        <li class="dfe-sidebar-section__list-item">
+          <a class="govuk-link dfe-sidebar-section__link" href="https://design-system.service.gov.uk/accessibility/" target="_blank">GOV.UK Design System accessibility</a>
+        </li>
+        <li class="dfe-sidebar-section__list-item">
+          <a class="govuk-link dfe-sidebar-section__link" href="https://accessibility-statements.education.gov.uk/" target="_blank">DfE Accessibility statement generator</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</aside>
+{% endblock %}

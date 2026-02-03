@@ -287,6 +287,7 @@ DfEComponents.FilterPanel = class {
     this.$applyButton = this.$module.querySelector('.dfe-filter-panel__action--submit');
     this.$selectedSection = null;
     this.$filterSummary = null;
+    this.$statusRegion = null;
 
     this.init();
   }
@@ -316,6 +317,9 @@ DfEComponents.FilterPanel = class {
     // Create filter summary section (shown below panel after Apply)
     this.ensureFilterSummary();
 
+    // Create status region for screen reader announcements
+    this.ensureStatusRegion();
+
     // Bind tag removal via event delegation (for tags inside panel)
     this.$module.addEventListener('click', (event) => {
       const $tag = event.target.closest('.dfe-filter-panel__tag');
@@ -337,6 +341,16 @@ DfEComponents.FilterPanel = class {
       const $target = event.target;
       if ($target.closest('.govuk-date-input')) {
         this.updateSelectedFiltersRealTime();
+      }
+    });
+
+    // Handle Escape key to close panel
+    this.$module.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && this.$content && !this.$content.hidden) {
+        this.collapseMainPanel();
+        if (this.$headerButton) {
+          this.$headerButton.focus();
+        }
       }
     });
 
@@ -571,6 +585,29 @@ DfEComponents.FilterPanel = class {
     }
   }
 
+  ensureStatusRegion() {
+    // Create a visually hidden live region for screen reader announcements
+    this.$statusRegion = this.$module.querySelector('.dfe-filter-panel__status');
+    if (!this.$statusRegion) {
+      this.$statusRegion = document.createElement('div');
+      this.$statusRegion.className = 'dfe-filter-panel__status govuk-visually-hidden';
+      this.$statusRegion.setAttribute('aria-live', 'polite');
+      this.$statusRegion.setAttribute('aria-atomic', 'true');
+      this.$statusRegion.setAttribute('role', 'status');
+      this.$module.appendChild(this.$statusRegion);
+    }
+  }
+
+  announceFilterChange(message) {
+    if (this.$statusRegion) {
+      // Clear and re-set to ensure announcement
+      this.$statusRegion.textContent = '';
+      setTimeout(() => {
+        this.$statusRegion.textContent = message;
+      }, 100);
+    }
+  }
+
   getFilterGroups() {
     // Get all checked checkboxes and selected radios
     const $inputs = this.$module.querySelectorAll('input[type="checkbox"]:checked, input[type="radio"]:checked');
@@ -663,12 +700,17 @@ DfEComponents.FilterPanel = class {
     const filterGroups = this.getFilterGroups();
     this.renderSelectedFilters(filterGroups);
 
-    // Update result count header
+    // Update result count header and announce to screen readers
     const $count = this.$module.querySelector('.dfe-filter-panel__count');
+    const totalFilters = Object.values(filterGroups).reduce((sum, arr) => sum + arr.length, 0);
+    const countText = totalFilters > 0 ? totalFilters + ' filter' + (totalFilters !== 1 ? 's' : '') + ' selected' : 'No filters selected';
+
     if ($count) {
-      const totalFilters = Object.values(filterGroups).reduce((sum, arr) => sum + arr.length, 0);
       $count.textContent = totalFilters > 0 ? totalFilters + ' filter' + (totalFilters !== 1 ? 's' : '') + ' selected' : '24 results';
     }
+
+    // Announce filter change to screen readers
+    this.announceFilterChange(countText);
   }
 
   applyFilters(event) {
