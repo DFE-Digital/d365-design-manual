@@ -8462,9 +8462,11 @@ dd code {
 }
 .dfe-card:hover a,
 .dfe-card:hover p,
-.dfe-card:hover .govuk-heading-m, .dfe-card:focus-within a,
+.dfe-card:hover .govuk-heading-m,
+.dfe-card:hover .govuk-list, .dfe-card:focus-within a,
 .dfe-card:focus-within p,
-.dfe-card:focus-within .govuk-heading-m {
+.dfe-card:focus-within .govuk-heading-m,
+.dfe-card:focus-within .govuk-list {
   color: #ffffff;
 }
 .dfe-card:focus-within {
