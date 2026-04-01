@@ -1,0 +1,34 @@
+{% set pageData = pages['crm/security'] %}
+{% set showTitlePanel = true %}
+{% set showSubNav = true %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% from 'includes/_side-nav.html' import security %}
+
+{% block content %}
+
+<p class="govuk-body-l">{{ pageData.title }}</p>
+
+<p class="govuk-body">This section explains the core concepts that control access, ownership and governance in Dynamics 365. It outlines how organisational structures and permissions work together to protect data and ensure users only have the access they need.</p>
+
+<p class="govuk-body">It introduces Business Units, which define how data is separated or shared, Security Roles which set the permissions Users and Teams have, which support shared access and record ownership. It also provides an overview of Auditing, which tracks key changes to data and configuration for compliance and troubleshooting.</p>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<h2 class="govuk-heading-m">In this section</h2>
+
+<ul class="dfe-component-list">
+  {% for page in security %}
+  {% if page.url != pageData.url %}
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="{{ page.url }}">{{ page.title }}</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ page.description }}</p>
+  </li>
+  {% endif %}
+  {% endfor %}
+</ul>
+
+{% endblock %}

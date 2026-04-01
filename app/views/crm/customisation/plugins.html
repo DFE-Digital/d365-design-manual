@@ -1,0 +1,175 @@
+{% set pageData = pages['crm/customisation/plugins'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "When to Use Plugins", href: "#use" },
+  { text: "Examples of When Plugins Are Suitable", href: "#when" },
+  { text: "Best Practice When Using Plugins", href: "#best-practice" },
+  { text: "Summary", href: "#summary" }
+]) }}
+
+
+
+<p class="govuk-body">Plugins are server‑side code that run within the Dataverse execution pipeline. They allow you to extend Dynamics 365 beyond what configuration and low‑code tools can offer. Plugins provide powerful, reliable and high‑performance automation for business‑critical scenarios.</p>
+
+<p class="govuk-body">This page explains when plugins should be used, how they differ from Power Automate flows, and the best practices to follow when building and deploying them as part of a Dynamics 365 solution.</p>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="use">When to Use Plugins</h2>
+
+<p class="govuk-body">Plugins should be used when the requirement is too complex, too performance‑critical, or requires synchronous execution in a way that configuration or Power Automate cannot support.</p>
+
+<h2 class="govuk-heading-m" id="appropriate">Plugins are appropriate for:</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Complex business logic with multiple conditions or branches</li>
+  <li>Synchronous validation that must run immediately before or during a save event</li>
+  <li>High‑performance automation where latency matters</li>
+  <li>Transactional operations and operations requiring rollback behaviour</li>
+  <li>Logic that must apply even if users bypass the UI</li>
+  <li>Advanced manipulation of related records</li>
+  <li>Controlling or overriding default platform behaviour (not typically recommended)</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="plugin-when">Use a plugin when:</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>The logic must run before or during a save (not afterwards)</li>
+  <li>The system must guarantee the logic runs every time or produce an error</li>
+  <li>Performance and scalability are important</li>
+  <li>Power Automate would be too slow, too fragile or too complex</li>
+  <li>The requirement involves deep Dataverse integration or multi‑step logic</li>
+</ul>
+
+
+
+
+<h2 class="govuk-heading-l" id="when">Examples of When Plugins Are Suitable</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Enforcing complex server-side validation rules before data is committed</li>
+  <li>Automatically creating or updating related records synchronously</li>
+  <li>Controlling record ownership, access or business process flows</li>
+  <li>Implementing custom calculation engines or scoring models</li>
+  <li>Enforcing cross‑table rules where timing and order matter</li>
+  <li>Creating advanced integration hand‑offs or routing logic</li>
+  <li>Applying business rules that must run even via bulk imports or APIs</li>
+</ul>
+
+<p class="govuk-body">These are patterns that low‑code tools often struggle with, in terms of either performance or reliability.</p>
+
+
+
+
+<h2 class="govuk-heading-l" id="best-practice">Best Practice When Using Plugins</h2>
+
+<p class="govuk-body">To ensure plugins are reliable, maintainable and follow DfE’s standards, follow these best practice points:</p>
+
+<h2 class="govuk-heading-m" id="modular">Keep plugins focused and modular</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Implement single‑responsibility classes</li>
+  <li>Avoid placing unrelated logic into large plugins</li>
+  <li>Break complex processes into multiple steps or handlers</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="standards">Follow coding standards</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use consistent naming conventions</li>
+  <li>Include comments, logging and clear error messages</li>
+  <li>Follow standard C# patterns and Dataverse SDK best practice</li>
+  <li>Version‑control all plugin code along with the solution</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="runs">Control when plugins run</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Register steps only on the required message and entity</li>
+  <li>Avoid unnecessary triggers that create performance load</li>
+  <li>Use filtering attributes to limit plugin execution to relevant fields</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="stages">Use Pre and Post operation stages appropriately</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use Pre‑operation for validation or modifying the target entity</li>
+  <li>Use Post‑operation for creating related records or calling external services</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="errors">Handle errors safely</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Ensure exceptions are descriptive and actionable</li>
+  <li>Avoid leaking sensitive information in error messages</li>
+  <li>Consider retry patterns for integrations</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="performance">Build for performance and scale</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Minimise Dataverse calls inside plugins</li>
+  <li>Use queries efficiently</li>
+  <li>Avoid processing more data than needed</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="managed">Deploy via managed solutions</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Always deploy plugins as part of a managed solution</li>
+  <li>Ensure assembly versions are updated and tracked</li>
+  <li>Use Azure DevOps pipelines to deploy consistently</li>
+</ul>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="summary">Summary</h2>
+
+<p class="govuk-body">Plugins provide a robust and high‑performance way to implement advanced business logic within Dynamics 365. They should be used when configuration or low‑code tools cannot meet the requirement, or when logic must run synchronously and efficiently at scale.</p>
+
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/customisation/power-automate'].url }}" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/customisation/power-automate'].title }}</span>
+    </a>
+  </div>
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/customisation/pro-code'].url }}" rel="next">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/customisation/pro-code'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+
+{% endblock %}

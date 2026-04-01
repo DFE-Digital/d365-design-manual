@@ -1,0 +1,142 @@
+{% set pageData = pages['crm/customisation/configuration-first'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Start with configuration (out‑of‑the‑box first)", href: "#config" },
+  { text: "Use low‑code only when configuration is not enough", href: "#low-code" },
+  { text: "Use pro‑code only when the platform cannot meet the need", href: "#pro-code" },
+  { text: "Summary", href: "#summary" }
+]) }}
+
+
+
+<p class="govuk-body">DfE follows a configuration‑first approach when building CRM services on Dynamics 365 and the Power Platform. This ensures solutions remain simple, maintainable and aligned with Microsoft best practice. Teams should always use the out‑of‑the‑box capabilities of the platform before considering customisation.</p>
+
+<p class="govuk-body">This tiered approach helps deliver changes quickly, reduces long‑term support needs and ensures solutions are easier to upgrade, test and operate across all environments.</p>
+
+
+
+
+<h2 class="govuk-heading-l" id="config">Start with configuration (out‑of‑the‑box first)</h2>
+
+<p class="govuk-body">Configuration is always the first option and should be used wherever the platform already provides the required behaviour.</p>
+
+<h2 class="govuk-heading-m" id="why-config">Why configuration comes first</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>It reduces complexity and speeds up delivery.</li>
+  <li>It avoids unnecessary custom logic that must be maintained long‑term.</li>
+  <li>It ensures solutions stay close to the Microsoft product roadmap.</li>
+  <li>It is easier to test, deploy and support across environments.</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="example-config">Examples of configuration</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Creating or modifying tables, columns, forms and views.</li>
+  <li>Configuring email templates, dashboards, and apps.</li>
+  <li>Using security roles, teams and business units.</li>
+  <li>Setting up queues, SLAs, routing rules, duplicate detection.</li>
+</ul>
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="low-code">Use low‑code only when configuration is not enough</h2>
+
+<p class="govuk-body">If configuration cannot meet a requirement, the next option is low‑code tools such as Business Rules, Power Automate and Power FX. These provide automation and logic without writing full code.</p>
+
+<h2 class="govuk-heading-m" id="why-lowcode">Why low‑code comes after configuration</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Low‑code offers flexibility but introduces more moving parts.</li>
+  <li>It must still be maintained and kept aligned with ALM practices.</li>
+  <li>Overuse can create performance issues or fragmented logic.</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="examples-lowcode">Examples of low‑code</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Business Rules for simple form-level logic (show/hide fields, set field values).</li>
+  <li>Power Automate flows for lightweight automation or simple integrations.</li>
+  <li>Power FX in command bar buttons or canvas apps.</li>
+</ul>
+
+<p class="govuk-body">Low‑code is powerful but should only be used when out‑of‑the‑box configuration cannot meet the requirement.</p>
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="pro-code">Use pro‑code only when the platform cannot meet the need</h2>
+
+<p class="govuk-body">Pro‑code represents the highest‑complexity option and should only be used when configuration and low‑code cannot deliver the required behaviour.</p>
+
+<h2 class="govuk-heading-m" id="why-procode">Why pro‑code is the final option</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>It requires specialist skills and increases long‑term support overhead.</li>
+  <li>It must be thoroughly tested and version‑controlled.</li>
+  <li>It adds deployment complexity and strict ALM requirements.</li>
+  <li>It risks introducing dependencies outside the core platform.</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="examples-procode">Examples of pro‑code</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Plugins for synchronous, complex or high‑performance server‑side logic.</li>
+  <li>JavaScript for more advanced client‑side scripting not possible with Business Rules.</li>
+  <li>Azure Functions / Logic Apps for bespoke integration or processing.</li>
+  <li>Custom PCF controls when no standard UI component meets the requirement.</li>
+</ul>
+
+<p class="govuk-body">Although pro‑code should be used only when configuration or low‑code cannot meet the requirement, there are cases where using a plugin for simple logic is appropriate. If a plugin provides a more efficient, scalable or predictable solution, particularly where synchronous execution or high performance is needed, it may be the preferred option.</p>
+
+<p class="govuk-body">Pro‑code is essential for certain scenarios but must be used sparingly, with clear justification and aligned to the solution design.</p>
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="summary">Summary</h2>
+
+<p class="govuk-body">Teams must always start with out‑of‑the‑box configuration, move to low‑code only when needed, and use pro‑code only for requirements that cannot be met by the platform. This tiered approach ensures Dynamics 365 and Power Platform solutions are consistent, maintainable and aligned with DfE’s design principles and long‑term CRM strategy.</p>
+
+
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/customisation/javascriptvsbusinessrules'].url }}" rel="next">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/customisation/javascriptvsbusinessrules'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+
+
+{% endblock %}

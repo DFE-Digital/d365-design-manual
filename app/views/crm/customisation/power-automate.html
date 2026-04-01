@@ -1,0 +1,158 @@
+{% set pageData = pages['crm/customisation/power-automate'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "When to Use Power Automate in Dynamics 365", href: "#when" },
+  { text: "Best Practice When Using Power Automate", href: "#best-practice" },
+  { text: "Summary", href: "#summary" }
+]) }}
+
+
+
+<p class="govuk-body">Power Automate is Microsoft’s low‑code automation service used to build workflows, integrate systems and automate routine tasks across Dynamics 365 and the wider Power Platform. Power Automate is widely used across DfE.</p>
+
+<p class="govuk-body">This page explains when Power Automate should be used within Dynamics 365 and outlines best practices to ensure flows are reliable, scalable and aligned with DfE standards.</p>
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="when">When to Use Power Automate in Dynamics 365</h2>
+
+<p class="govuk-body">Power Automate should be used for lightweight automation and very simple integration scenarios that do not require synchronous execution or complex business logic.</p>
+
+<p class="govuk-body">It is appropriate for:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Sending notifications or emails when records change</li>
+  <li>Simple “if‑this‑then‑that” logic</li>
+  <li>Moving or copying small sets of data between systems</li>
+  <li>Triggering follow‑up actions when records are created or updated</li>
+  <li>Creating records or updating related tables with straightforward logic</li>
+  <li>Calling APIs or connectors when latency is not critical</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="use-when">Use Power Automate when:</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>The logic can run asynchronously</li>
+  <li>The actions are simple and low‑risk</li>
+  <li>Performance is not business‑critical</li>
+  <li>You do not need tightly controlled transaction handling</li>
+  <li>The requirement does not justify a plugin or custom code</li>
+</ul>
+
+<p class="govuk-body">If the logic is complex, requires high performance, or must run synchronously (for example, validation before save), you should use a plugin instead.</p>
+
+
+
+
+<h2 class="govuk-heading-l" id="best-practice">Best Practice When Using Power Automate</h2>
+
+<p class="govuk-body">To ensure flows are robust and easy to support, follow these best practices:</p>
+
+
+<h2 class="govuk-heading-m" id="simple">Keep flows simple</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Avoid building large, complex flows with many branches</li>
+  <li>Break complex logic into smaller child flows where appropriate</li>
+  <li>Do not replicate logic already available in Dynamics 365 configuration</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="solution-aware">Use solution‑aware flows</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Always build flows inside the appropriate [Service name] Customisation solution</li>
+  <li>Ensure flows are exported and deployed via the solution using Azure DevOps pipelines</li>
+  <li>Only create flows in the Dev environment</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="triggers">Use proper triggers and filters</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use trigger conditions to avoid unnecessary runs</li>
+  <li>Apply OData filters when using “List Rows” actions</li>
+  <li>Reduce API calls to avoid throttling and improve performance</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="errors">Manage errors and run history</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Add error handling steps</li>
+  <li>Log failures clearly (using Dataverse tables, Application Insights or email alerts)</li>
+  <li>Avoid silent failures that are hard to monitor</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="connections">Handle connections correctly</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Re-use connection references where possible in each environment</li>
+  <li>Use service accounts or managed identities for authentication</li>
+  <li>Do not use personal accounts for owning flows</li>
+  <li>Check connection references into source control within the solution</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="supportability">Consider long‑term supportability</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Name flows clearly using a consistent naming convention</li>
+  <li>Add descriptions explaining purpose, triggers and expected behaviour</li>
+  <li>Review flows regularly to ensure they remain aligned with business processes</li>
+</ul>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="summary">Summary</h2>
+
+<p class="govuk-body">Power Automate is a strong option for simple, asynchronous automation and basic integrations within Dynamics 365. It enables fast development while reducing the need for custom code. However, complex or performance‑critical logic should be handled by plugins or configuration to maintain stability and consistency across environments.</p>
+
+<p class="govuk-body">Note: DfE is licenced to use Power Automate in relation to Dynamics 365. If Flows do not have a connection to Dynamics 365 then additional licencing may be required.</p>
+
+
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/customisation/javascriptvsbusinessrules'].url }}" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/customisation/javascriptvsbusinessrules'].title }}</span>
+    </a>
+  </div>
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/customisation/plugins'].url }}" rel="next">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/customisation/plugins'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+
+
+{% endblock %}

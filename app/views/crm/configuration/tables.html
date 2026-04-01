@@ -1,0 +1,205 @@
+{% set pageData = pages['crm/configuration/tables'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Use out‑of‑the‑box tables where possible", href: "#ootb-tables" },
+  { text: "Create tables that support reuse", href: "#re-use" },
+  { text: "Align tables to DfE’s corporate data models", href: "#corporate-models" },
+  { text: "Consistent naming conventions", href: "#naming" },
+  { text: "Table descriptions", href: "#descriptions" },
+  { text: "Table type and ownership model", href: "#ownership" },
+  { text: "Further reading", href: "#further-reading" }
+]) }}
+
+<p class="govuk-body">Well‑designed tables form the foundation of every Dynamics 365 or model‑driven app. Good table design ensures consistency, reusability and maintainability across DfE’s CRM landscape. The guidance below outlines how to structure tables so they align with Microsoft best practice and DfE data standards.</p>
+
+<h2 class="govuk-heading-l" id="ootb-tables">Use out‑of‑the‑box tables where possible</h2>
+
+<p class="govuk-body">Microsoft Dataverse provides a set of standard tables that are designed to support common business scenarios. Microsoft states that these out‑of‑the‑box (OOTB) tables are built “<i>in accordance with best practices, to capture the most common concepts and scenarios within an organisation</i>”.</p>
+
+<p class="govuk-body">Use these first before creating custom ones:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Account → represents organisations, businesses, schools, providers</li>
+  <li>Contact → represents people</li>
+  <li>Case → represents enquiries, interactions or case management processes</li>
+</ul>
+
+<p class="govuk-body">Using standard tables ensures:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Compatibility with OOTB Dynamics 365 and Power Platform features</li>
+  <li>Alignment with Microsoft's upcoming roadmap and new features</li>
+  <li>Reduced technical debt and easier upgrade paths</li>
+</ul>
+
+<p class="govuk-body">Avoid creating custom tables that duplicate the purpose of standard ones.</p>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="re-use">Create tables that support reuse</h2>
+
+<p class="govuk-body">DfE delivers shared CRM capabilities across multiple programmes and business areas. Tables should therefore be designed to be generic enough for reuse, not narrowly tied to a single team’s processes.</p>
+
+<p class="govuk-body"><b>Good example:</b></p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Application (generic across teams)
+</li>
+</ul>
+
+<p class="govuk-body"><b>Poor example:</b></p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Apprenticeship Provider Application (team‑specific, not reusable)
+</li>
+</ul>
+
+<p class="govuk-body">It's recommended to consider tables carefully as part of an overall data model that supports multiple apps and processes.</p>
+
+<p class="govuk-body">Before creating a new table:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Check if an existing table already captures the concept</li>
+  <li>Review other programmes’ needs to avoid duplicates</li>
+  <li>Confirm alignment with the DfE corporate data model</li>
+  <li>Consider whether extending an existing table (e.g. with extra columns) is sufficient</li>
+</ul>
+
+<p class="govuk-body">Reusable tables help:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Reduce duplication</li>
+  <li>Maintain consistent reporting</li>
+  <li>Simplify integration</li>
+  <li>Keep the overall system consistent</li>
+</ul>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="corporate-models">Align tables to DfE’s corporate data models</h2>
+
+<p class="govuk-body">DfE’s Data Directorate is producing organisation‑wide data standards, including:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Standard entity definitions</li>
+  <li>Data dictionaries</li>
+  <li>Naming and validation rules</li>
+</ul>
+
+<p class="govuk-body">Where these standards exist, table design must match the agreed patterns, particularly for repeatable tables such as:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Organisations</li>
+  <li>Contacts</li>
+  <li>Providers</li>
+  <li>Locations or regions</li>
+</ul>
+
+<p class="govuk-body">This ensures consistency across DfE systems and makes data easier to exchange, validate and process data.</p>
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="naming">Consistent naming conventions</h2>
+
+<p class="govuk-body">Clear naming conventions help developers and analysts understand the purpose of each table.</p>
+
+<p class="govuk-body"><b>Naming rules:</b></p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use singular display names (e.g. Provider, Funding Application)</li>
+  <li>Plural Name should be a natural plural for use in views and sitemaps</li>
+  <li>Table purpose should be clear and understandable from the name</li>
+  <li>Avoid programme‑specific abbreviations or internal jargon</li>
+</ul>
+
+<p class="govuk-body"><b>Schema name:</b></p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use the dfe_ prefix for the publisher unless a specific environment requires another prefix</li>
+  <li>Keep schema names lowercase, as recommended for easier API referencing</li>
+  <li>Avoid renaming display names after creation - the underlying schema name cannot be changed later and can become misaligned</li>
+</ul>
+
+
+
+
+<h2 class="govuk-heading-l" id="descriptions">Table descriptions</h2>
+
+<p class="govuk-body">Every table must have a meaningful description. Table descriptions are visible in the solution and help future developers understand purpose.</p>
+
+<p class="govuk-body">Data teams also use table metadata from solutions in order to generate a data dictionary for each application. Having meaningful table descriptions help data teams to understand the usage of each table.</p>
+
+
+
+
+<h2 class="govuk-heading-l" id="ownership">Table type and ownership model</h2>
+
+<p class="govuk-body">Table type and ownership settings cannot be changed after creation and should be considered carefully.</p>
+
+<p class="govuk-body">Guidance:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li><b>User/Team‑owned tables</b> → use when permissions vary by team or individual</li>
+  <li><b>Organisation‑owned tables</b> → use for reference data or configuration tables</li>
+  <li><b>Activity tables</b> → use only when modelling communication or timeline‑based events which will be displayed alongside other activity types</li>
+  <li>Generally, avoid virtual tables unless a specific integration scenario requires them as they often come with limitations</li>
+</ul>
+
+<p class="govuk-body">Choosing the right type and ownership model ensures security roles and permissions behave as expected.</p>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="further-reading">Further reading</h2>
+<p class="govuk-body">
+  <a class="govuk-link govuk-link--no-visited-state" href="https://learn.microsoft.com/en-us/power-apps/maker/data-platform/entity-overview" target="_blank">Tables in Dataverse (opens in a new tab)</a> is Microsoft’s primary guidance page for developers working with tables. </p>
+
+
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/configuration/sitemap'].url }}" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/configuration/sitemap'].title }}</span>
+    </a>
+  </div>
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/configuration/columns'].url }}" rel="next">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/configuration/columns'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+
+{% endblock %}

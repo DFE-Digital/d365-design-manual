@@ -1,0 +1,123 @@
+{% set pageData = pages['crm/configuration/model-driven-apps'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Use out‑of‑the‑box apps first", href: "#out-of-box-apps" },
+  { text: "When to use a custom model‑driven app", href: "#when-to-use-custom" },
+  { text: "Avoid creating duplicate apps", href: "#avoid-duplicates" },
+  { text: "Apps should reflect common capabilities", href: "#common-capabilities" },
+  { text: "Best practices", href: "#best-practices" },
+  { text: "Further reading", href: "#further-reading" }
+]) }}
+
+<p class="govuk-body">Model‑driven apps provide users with access to a set of related tables and functionality. They are a core part of how solutions are structured in Dynamics 365, and choosing the right type of app is important for long‑term flexibility, usability and maintainability.</p>
+
+<h2 class="govuk-heading-l" id="out-of-box-apps">Use out‑of‑the‑box apps first</h2>
+
+<p class="govuk-body">Start by considering whether an out‑of‑the‑box (OOTB) Dynamics 365 app already meets the user need. These apps include built‑in experiences such as the <b>Copilot Workspace</b> for multi‑session working or Dynamics 365 Contact Centre for telephony and webchat scenarios.</p>
+
+<p class="govuk-body">Using OOTB apps has several advantages:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>You get Microsoft’s supported multi‑session experience which cannot be achieved using a custom model driven app</li>
+  <li>New features and platform improvements are delivered directly by Microsoft without extra work</li>
+  <li>You avoid blocking or missing out on upcoming functionality by building a custom app that does not support it</li>
+</ul>
+
+<p class="govuk-body">If your use case aligns with a standard capability area, such as case management, contact centre operations or multi‑session workloads, then use the OOTB app unless there is a clear reason not to.</p>
+
+
+<h2 class="govuk-heading-l" id="when-to-use-custom">When to use a custom model‑driven app</h2>
+
+<p class="govuk-body">A custom model‑driven app is more suitable when users need a simple, single‑session interface with a streamlined UI. Custom apps give you:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>More control over navigation and screen layout</li>
+  <li>A clearer experience focused only on the tasks the user needs</li>
+  <li>Lower risk of unexpected changes when Microsoft releases new features</li>
+</ul>
+
+<p class="govuk-body">The trade‑off is that you take on more responsibility for ensuring users still benefit from platform improvements. The right choice depends on the complexity of the scenario and how much you rely on Microsoft’s multi‑session or advanced features.</p>
+
+
+<h2 class="govuk-heading-l" id="avoid-duplicates">Avoid creating duplicate apps
+</h2>
+
+<p class="govuk-body">Model‑driven apps should be aligned to functional capabilities, not individual teams. Where multiple teams work with the same tables and processes, they should use the same app.</p>
+
+<p class="govuk-body">Avoid creating several copies of an app just to give teams versions with team‑specific names or branding. This leads to fragmentation, duplication of effort and inconsistent user experiences. Instead:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Build the app once around a shared functional purpose</li>
+  <li>Use security roles to control what each team can see and do</li>
+  <li>Create tailored views or dashboards inside the shared app where needed</li>
+</ul>
+
+<p class="govuk-body">This keeps the system coherent and easier to maintain.</p>
+
+
+<h2 class="govuk-heading-l" id="common-capabilities">Apps should reflect common capabilities</h2>
+
+<p class="govuk-body">A model‑driven app provides users with access to a defined collection of tables/capabilities. When designing your app structure:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Group tables that belong to the same capability or business process</li>
+  <li>Avoid spreading a single capability across multiple apps</li>
+  <li>Review whether existing apps already expose the tables your solution uses</li>
+</ul>
+
+<p class="govuk-body">This ensures users have a logical, task‑focused user experience.</p>
+
+
+<h2 class="govuk-heading-l" id="best-practices">Best practices</h2>
+
+<p class="govuk-body"><b>Keep navigation simple</b><br>Use clear sitemaps with logical groupings, avoiding unnecessary areas or clutter.</p>
+
+<p class="govuk-body"><b>Reuse before creating new</b><br>Before building a new app, check whether an existing one already provides the functionality.</p>
+
+<p class="govuk-body"><b>Design apps for real user journeys</b><br>Structure navigation and forms around how users actually work, not how the data model is structured.</p>
+
+<p class="govuk-body"><b>Limit the number of apps in the environment</b><br>More apps mean more complexity, more maintenance effort and more training overhead.</p>
+
+<p class="govuk-body"><b>Align with Microsoft roadmap</b><br>When Microsoft is investing heavily in an area (such as multi‑session, case management or Copilot experiences), prefer OOTB apps to benefit from future updates.</p>
+
+
+
+<h2 class="govuk-heading-l" id="further-reading">Further reading</h2>
+<p class="govuk-body">
+  <a class="govuk-link govuk-link--no-visited-state" href="https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/best-practices/" target="_blank">Best practices and guidance for model-driven apps (opens in a new tab)</a> is Microsoft’s primary guidance page for developers working with model‑driven apps. It covers design considerations, customisation types, client scripting, patterns to avoid, and upgrade readiness.
+</p>
+
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/configuration/sitemap'].url }}" rel="next">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/configuration/sitemap'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+{% endblock %}

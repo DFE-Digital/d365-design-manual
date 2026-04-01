@@ -1,0 +1,220 @@
+{% set pageData = pages['crm/environments/solutions'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Unmanaged vs Managed Solutions", href: "#unmanagedVsManaged" },
+  { text: "Standard Solution Model", href: "#solution-model" },
+  { text: "Additional Guidance", href: "#guidance" }
+]) }}
+
+
+<h2 class="govuk-heading-l" id="unmanagedVsManaged">Unmanaged vs Managed Solutions</h2>
+
+<p class="govuk-body">Understanding when to use unmanaged and managed solutions is essential for maintaining a consistent deployment process using Azure DevOps pipelines.</p>
+
+<h2 class="govuk-heading-m" id="unmanaged">Unmanaged solutions</h2>
+
+<p class="govuk-body">Unmanaged solutions are only used in the Development environment. They allow developers to create, modify and extend components while building new functionality.</p>
+
+<p class="govuk-body">Key principles for unmanaged solutions:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li><b>Used exclusively in Dev.</b></li>
+  <li>All configuration changes, custom components and extensions must be made within unmanaged solutions.</li>
+  <li><b>Unmanaged solutions must be checked into source control</b> to allow the Dev environment to be rebuilt if needed.</li>
+  <li><b>No unmanaged customisations should ever be applied to Test, PreProd or Prod.</b></li>
+  <li>Developers must ensure that the unmanaged solutions remain the single source for all changes.</li>
+</ul>
+
+
+<h2 class="govuk-heading-m" id="managed">Managed solutions</h2>
+
+<p class="govuk-body">Managed solutions are the only solution type permitted in Test, PreProd and Production environments.</p>
+
+<p class="govuk-body">Key principles for managed solutions:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li><b>Used in Test, PreProd and Prod environments.</b></li>
+  <li>Must be created from the Dev environment by exporting an unmanaged solution as managed.</li>
+  <li>Ensure controlled, repeatable deployments through Azure DevOps pipelines.</li>
+  <li>Prevent accidental modifications in higher environments, supporting strong governance and auditability.</li>
+  <li>All changes must flow through the pipeline as managed solution updates – no direct edits or unmanaged components are allowed in these environments.</li>
+</ul>
+
+
+
+
+<h2 class="govuk-heading-l" id="solution-model">Standard Solution Model</h2>
+
+<p class="govuk-body">Dynamics 365 environments must follow a consistent solution structure across all stages of the ALM process. The structure varies slightly depending on whether the CRM hosts a <b>single service</b> or <b>multiple services</b>.</p>
+
+<h2 class="govuk-heading-m" id="single">Single‑Service CRM Environments</h2>
+
+<p class="govuk-body">If the CRM environment hosts <b>only one service</b>, follow the standard three‑solution model:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li><b>[Service name] Configuration</b></li>
+  <li><b>[Service name] Customisation</b></li>
+  <li><b>[Service name] Portal</b> (if applicable)</li>
+</ul>
+
+<p class="govuk-body">An example would be the ICA CRM which only hosts the ICA service:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>ICA Configuration</li>
+  <li>ICA Customisation</li>
+  <li>ICA Portal</li>
+</ul>
+
+<p class="govuk-body">This ensures a clean separation between service configuration, custom logic and portal components.</p>
+
+<p class="govuk-body">Solutions must follow this naming convention to ensure compatibility with our standard Azure DevOps pipeline model, which relies on consistent and predictable solution names.</p>
+
+
+
+<h2 class="govuk-heading-m" id="multiple">Multi‑Service CRM Environments</h2>
+
+<p class="govuk-body">If the CRM environment hosts <b>multiple services</b>, a shared core layer is required in addition to the service‑specific solutions. The solution structure should be:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li><b>[CRM name] Core</b></li>
+  <li><b>[Service name] Configuration</b></li>
+  <li><b>[Service name] Customisation</b></li>
+  <li><b>[Service name] Portal</b> (if applicable)</li>
+</ul>
+
+<p class="govuk-body">An example would be the APM CRM which will host all application & programme related services, one of which is Breakfast Clubs:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>APM Core</li>
+  <li>Breakfast Club Configuration</li>
+  <li>Breakfast Club Customisation</li>
+  <li>Breakfast Club Portal</li>
+</ul>
+
+<p class="govuk-body">In this scenario, use different publishers with a different prefix for the CRM and service specific solutions. For example, apm_ for the APM Core solution and bc_ for the Breakfast Club solutions.</p>
+
+<h2 class="govuk-heading-m" id="core">Purpose of the CRM Core Solution</h2>
+
+<p class="govuk-body">The [CRM name] Core solution contains components that are common across all services within the CRM. These are shared, generic components that must be developed independently of any specific service.</p>
+
+<p class="govuk-body">Core components include:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Core Apps</li>
+  <li>Shared Tables (i.e. Contacts, Cases)</li>
+  <li>Global Choices</li>
+  <li>Shared Security Roles</li>
+  <li>Reusable Web Resources</li>
+</ul>
+
+<p class="govuk-body">For example, Contacts and Cases are used by many DfE services and must always exist as generic, centrally‑owned components, not duplicated or modified differently per service.</p>
+
+<p class="govuk-body">Any service‑specific extensions or additional components must be added to the individual [Service name] solutions instead.</p>
+
+<p class="govuk-body">Solutions are layered in the order shown above. The [CRM name] Core solution forms the base layer, with each [Service name] solution layered on top. For example, the Contact table may include a generic form within the [CRM name] Core solution. If a specific service requires an additional field on the Contact table, that service‑specific field should be added within the corresponding [Service name] solution. When deployed, the [CRM name] Core solution is installed first, providing the shared components, followed by the [Service name] solutions, which apply the service‑specific extensions.</p>
+
+<p class="govuk-body">To avoid conflicts between two unmanaged solutions, you should also consider hosting the [CRM name] Core solution in a separate Development environment from the one used for the [Service name] solutions. This allows the [CRM name] Core solution to be developed and exported as a managed layer, which the service‑specific unmanaged solutions can then safely build upon in their own Dev environments. This approach would require two Dev environments.</p>
+
+
+
+
+<h2 class="govuk-heading-m" id="config">Configuration Solution</h2>
+
+<p class="govuk-body">The Configuration solution contains the core configuration items for each service.</p>
+
+<p class="govuk-body">It should include:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Apps</li>
+  <li>Choices</li>
+  <li>Dashboards</li>
+  <li>Email Templates</li>
+  <li>Security Roles</li>
+  <li>Sitemaps</li>
+  <li>Tables</li>
+  <li>Web Resources</li>
+</ul>
+
+
+
+
+<h2 class="govuk-heading-m" id="customisation">Customisation Solution</h2>
+
+<p class="govuk-body">The Customisation solution contains the service’s automation, logic and references.</p>
+
+<p class="govuk-body">It should include:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Power Automate Flows</li>
+  <li>Plugins</li>
+  <li>Classic Workflows (real‑time)</li>
+  <li>Environment Variables</li>
+  <li>Connection References</li>
+</ul>
+
+
+
+
+
+<h2 class="govuk-heading-m" id="portal">Portal Solution (If Applicable)</h2>
+
+<p class="govuk-body">If the service uses a Power Pages site, all portal assets must be captured in a dedicated Portal solution.</p>
+
+<p class="govuk-body">It must include:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Site</li>
+  <li>Site Components</li>
+  <li>Site Languages</li>
+  <li>Environment Variables</li>
+</ul>
+
+
+
+
+<h2 class="govuk-heading-l" id="guidance">Additional Guidance</h2>
+
+<p class="govuk-body">For additional guidance or confirmation on the correct approach, please contact the CRM Architect or Lead Developer.</p>
+
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/environments/environment-setup'].url }}" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/environments/environment-setup'].title }}</span>
+    </a>
+  </div>
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/environments/deployment-pipelines'].url }}" rel="next">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/environments/deployment-pipelines'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+
+
+{% endblock %}

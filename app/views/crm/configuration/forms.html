@@ -1,0 +1,196 @@
+{% set pageData = pages['crm/configuration/forms'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Use multiple forms for different roles", href: "#multiple-forms" },
+  { text: "Security roles to control form access", href: "#roles" },
+  { text: "Keep layouts clean, simple and task‑focused", href: "#layouts" },
+  { text: "Subgrids for related information", href: "#subgrids" },
+  { text: "Quick View forms for read‑only related data", href: "#quickview" },
+  { text: "Provide meaningful form names", href: "#naming" },
+  { text: "Consistent tab and section naming", href: "#tabs" },
+  { text: "Keep business rules and client logic efficient", href: "#script" },
+  { text: "Further reading", href: "#further-reading" }
+]) }}
+
+<p class="govuk-body">Forms are one of the most important parts of a model‑driven app. They define how users view and edit data, guide people through business processes, and shape the overall usability of the system. Good form design helps users complete tasks efficiently and keeps the user experience consistent across DfE solutions.</p>
+
+
+
+<h2 class="govuk-heading-l" id="multiple-forms">Use multiple forms for different roles</h2>
+
+<p class="govuk-body">Different teams and user roles may require tailored layouts. Dynamics 365 supports multiple form types (main forms, quick create forms, quick view forms, card forms) to suit different scenarios.</p>
+
+<p class="govuk-body">Best practice:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Create separate forms for different user groups when their needs vary significantly</li>
+  <li>Keep forms focused and avoid overloading one form with content for all teams</li>
+  <li>Use role‑based forms to simplify the interface for each user group</li>
+</ul>
+
+<p class="govuk-body">For example:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>A “Case Manager” form may show detailed case data</li>
+  <li>A “Contact Centre Agent” form may focus on key triage data and hide admin details</li>
+</ul>
+
+
+
+
+<h2 class="govuk-heading-l" id="roles">Security roles to control form access</h2>
+
+<p class="govuk-body">Security roles can restrict which forms users see. This helps ensure users only access information relevant to their job.</p>
+
+<p class="govuk-body">Best practice:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Assign forms to specific roles to deliver tailored layouts</li>
+  <li>Avoid exposing advanced or administrative options to all users</li>
+  <li>Test with real user accounts to confirm the right forms appear by default</li>
+</ul>
+
+<p class="govuk-body">This means that forms can be configured and limited by security role to ensure a relevant experience.</p>
+
+
+
+
+<h2 class="govuk-heading-l" id="layouts">Keep layouts clean, simple and task‑focused</h2>
+
+<p class="govuk-body">It's recommended to organise columns using tabs and sections to make information easy to find.</p>
+
+<p class="govuk-body">Best practice:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Place the most important columns (fields) at the top-left of the form</li>
+  <li>Ensure required columns for new records appear early in the form</li>
+  <li>Use tabs to separate major functional areas (e.g. “Details”, “History”, “Documents”)</li>
+  <li>Avoid long, scrolling forms - break content into logical sections</li>
+  <li>Avoid white-space or blank areas on the form</li>
+  <li>Maintain consistency with other forms in your CRM</li>
+</ul>
+
+<p class="govuk-body">A well‑structured form helps users complete tasks faster.</p>
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="subgrids">Subgrids for related information</h2>
+
+<p class="govuk-body">Subgrids allow users to view related records directly from the form (for example, viewing all cases linked to a contact).</p>
+
+<p class="govuk-body">Best practice:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use subgrids where users frequently need to see related lists</li>
+  <li>Avoid overcrowding forms - each subgrid should have a clear purpose</li>
+  <li>Use filters to show the most relevant subsets of related data</li>
+  <li>Place subgrids inside separate tabs if they take up considerable space</li>
+  <li>Avoid putting more than 5-6 subgrids on one tab due to performance and form load time</li>
+</ul>
+
+<p class="govuk-body">This approach emphasises using components like subgrids and Quick View forms to display related content effectively.</p>
+
+
+
+
+<h2 class="govuk-heading-l" id="quickview">Quick View forms for read‑only related data</h2>
+
+<p class="govuk-body">Quick View forms show information from a related table without requiring users to open the related record.</p>
+
+<p class="govuk-body">Benefits:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Reduces clicks</li>
+  <li>Helps users understand context quickly</li>
+  <li>Keeps references visible without duplicating data</li>
+</ul>
+
+
+
+<h2 class="govuk-heading-l" id="naming">Provide meaningful form names</h2>
+
+<p class="govuk-body">Good naming helps administrators and developers identify the purpose of each form.</p>
+
+<p class="govuk-body">Examples:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Case - Agent View</li>
+  <li>Case - Manager View</li>
+  <li>Application - External Advisor Form</li>
+  <li>Application - Admin Form</li>
+</ul>
+
+
+
+
+<h2 class="govuk-heading-l" id="tabs">Consistent tab and section naming</h2>
+
+<p class="govuk-body">Use clear names (e.g. Address, History, Funding) instead of Tab_2 or Section_3. This enhances maintainability and keeps the user experience consistent.</p>
+
+
+
+
+<h2 class="govuk-heading-l" id="script">Keep business rules and client logic efficient</h2>
+
+<p class="govuk-body">Forms can contain:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Business rules</li>
+  <li>JavaScript</li>
+  <li>PCF controls</li>
+  <li>Web resources</li>
+</ul>
+
+<p class="govuk-body">Keep logic lightweight to avoid slow form performance. Use the simplest method that meets the requirement (e.g. use Business Rules before JavaScript).</p>
+
+
+
+<h2 class="govuk-heading-l" id="further-reading">Further reading</h2>
+<p class="govuk-body">
+  <a class="govuk-link govuk-link--no-visited-state" href="https://learn.microsoft.com/en-us/power-apps/maker/model-driven-apps/create-design-forms" target="_blank">Create and design model-driven app forms (opens in a new tab)</a> is Microsoft’s primary guidance page for developers working with forms.
+</p>
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/configuration/columns'].url }}" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/configuration/columns'].title }}</span>
+    </a>
+  </div>
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/configuration/views'].url }}" rel="next">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/configuration/views'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+{% endblock %}

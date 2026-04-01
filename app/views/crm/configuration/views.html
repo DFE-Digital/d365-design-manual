@@ -1,0 +1,248 @@
+{% set pageData = pages['crm/configuration/views'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Public and personal views", href: "#public-personal" },
+  { text: "Sharing personal views", href: "#sharing" },
+  { text: "Use security roles to control visibility", href: "#restrict" },
+  { text: "Standardise column layouts", href: "#standardise" },
+  { text: "Default sorting and filters", href: "#filters" },
+  { text: "Configure Quick Find", href: "#single-question" },
+  { text: "Follow consistent naming conventions", href: "#naming" },
+  { text: "Keep views clean and uncluttered", href: "#clutter" },
+  { text: "Align views to the overall business process", href: "#process" },
+  { text: "Further reading", href: "#further-reading" }
+]) }}
+
+<p class="govuk-body">Views define how users browse and filter data in model‑driven apps. Well‑designed views help users quickly find information, support consistent reporting, and create a more predictable user experience across DfE CRM solutions. This page sets out guidance on creating clear, consistent and maintainable views.</p>
+
+
+<h2 class="govuk-heading-l" id="public-personal">Public and personal views</h2>
+
+<p class="govuk-body">There are two main types of views - public and personal.</p>
+
+<h2 class="govuk-heading-m" id="public-views">Public views</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Created and managed by developers</li>
+  <li>Visible to all users when added to an app</li>
+  <li>Used for core business scenarios</li>
+  <li>Suitable for consistent, standardised layouts</li>
+</ul>
+
+<p class="govuk-body">Public views should be used for:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Main operational lists</li>
+  <li>Dashboards</li>
+  <li>Subgrids on forms</li>
+  <li>App-wide reporting needs</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="personal-views">Personal views</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Created by individual users to meet their own needs</li>
+  <li>Only visible to the creator unless shared</li>
+  <li>Very useful for ad‑hoc filtering or analysis</li>
+</ul>
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="sharing">Sharing personal views</h2>
+
+<p class="govuk-body">Users can share personal views with individuals or teams. Although they are not solution components, shared personal views can be useful for:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Specialist teams</li>
+  <li>Temporary items</li>
+  <li>Investigation or triage tasks</li>
+</ul>
+
+<p class="govuk-body">However, personal views should not be used as a substitute for public views when the requirement is long‑term or intended for a broad group. In those cases, convert the logic into a managed public view.</p>
+
+<p class="govuk-body">Personal views are owned by the user who created them, so if that user leaves the organisation the view can no longer be updated and administrators cannot access it. If a view is needed for a specific team or long‑term use, developers should create and manage it using a service account rather than an individual user account.</p>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="restrict">Use security roles to control visibility</h2>
+
+<p class="govuk-body">Microsoft allows public view visibility to be restricted by security role if the environment has this feature enabled. Only users with the assigned roles see the view in the selector.</p>
+
+<p class="govuk-body">Use this when:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Different teams require different standard views</li>
+  <li>A view contains sensitive filtering logic</li>
+  <li>You want to reduce clutter in the view selector</li>
+</ul>
+
+<p class="govuk-body">This does not override row-level security - users only see records they have permissions for.</p>
+
+
+
+
+<h2 class="govuk-heading-l" id="standardise">Standardise column layouts</h2>
+
+<p class="govuk-body">Consistency across views improves usability and reduces confusion.</p>
+
+<p class="govuk-body">Best practice:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Apply the same column order and naming across similar views</li>
+  <li>For example, all Case views should display consistent columns such as:</li>
+  <ul>
+     <li>Case title</li>
+     <li>Case type</li>
+     <li>Contact</li>
+     <li>Organisation</li>
+     <li>Status Reason</li>
+     <li>Owner</li>
+     <li>Created On</li>
+  </ul>
+  <li>Avoid reordering columns differently across views unless there is a clear, user‑driven reason</li>
+</ul>
+
+<p class="govuk-body">Consistent layouts help users quickly recognise the information they need, particularly when switching between views.</p>
+
+
+
+
+<h2 class="govuk-heading-l" id="filters">Default sorting and filters</h2>
+
+<p class="govuk-body">Sorting and filtering have a major impact on how quickly users can work.</p>
+
+<p class="govuk-body">Best practice:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Sort by the most relevant column for the business process (e.g. Created On descending for triage teams)</li>
+  <li>Apply sensible default filters to remove noise (e.g. Open Cases rather than showing all historic cases)</li>
+  <li>Avoid mixing different default sorting patterns across views of the same table</li>
+</ul>
+
+<p class="govuk-body">A predictable pattern reduces the load on users and speeds up task completion.</p>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="single-question">Configure Quick Find</h2>
+
+<p class="govuk-body">The Quick Find view determines which fields are searched when users type into the global search for that table. </p>
+
+<p class="govuk-body">Best practice:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Include fields that users genuinely search for, for example:</li>
+    <ul>
+     <li>Case reference</li>
+     <li>Contact name</li>
+     <li>Organisation name</li>
+     <li>Email address</li>
+  </ul>
+  <li>Avoid including fields that produce excessive or irrelevant matches</li>
+  <li>Limit the number of searchable fields to less than 10 to maintain performance</li>
+  <li>Ensure that searchable fields align with DfE’s standard data models</li>
+</ul>
+
+<p class="govuk-body">Poorly configured Quick Find views often lead to confusion or missed records.</p>
+
+
+
+<h2 class="govuk-heading-l" id="naming">Follow consistent naming conventions</h2>
+
+<p class="govuk-body">Clear naming makes it easier for users to pick the correct list.</p>
+
+<p class="govuk-body">Recommended patterns:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>All Active Cases</li>
+  <li>My Active Cases</li>
+  <li>All Resolved Cases</li>
+  <li>My Resolved Cases</li>
+</ul>
+
+<p class="govuk-body">Recommended patterns:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Internal abbreviations</li>
+  <li>Programme‑specific shorthand</li>
+  <li>Overly technical names</li>
+</ul>
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="clutter">Keep views clean and uncluttered</h2>
+
+<p class="govuk-body">Avoid adding unnecessary columns. Only include columns users need for scanning lists or making decisions.</p>
+
+<p class="govuk-body">Best practice:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Keep views to 6–10 columns for readability</li>
+  <li>Avoid very wide columns unless essential</li>
+  <li>Do not add rarely used fields</li>
+  <li>Use appropriate column widths to avoid excessive scrolling</li>
+</ul>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="process">Align views to the overall business process</h2>
+
+<p class="govuk-body">Views should reflect the data people need for specific tasks, such as:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Triage</li>
+  <li>Complaints management</li>
+  <li>Application review</li>
+  <li>Quality assurance</li>
+</ul>
+
+<p class="govuk-body">Design views collaboratively with end users to make sure they match real‑world workflows.</p>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="further-reading">Further reading</h2>
+<p class="govuk-body">
+  <a class="govuk-link govuk-link--no-visited-state" href="https://learn.microsoft.com/en-us/power-apps/maker/model-driven-apps/create-edit-views" target="_blank">Understand model-driven app views (opens in a new tab)</a> is Microsoft’s primary guidance page for developers working with views. 
+</p>
+
+
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/configuration/forms'].url }}" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/configuration/forms'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+
+{% endblock %}

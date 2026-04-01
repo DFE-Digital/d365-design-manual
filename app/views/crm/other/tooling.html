@@ -1,0 +1,88 @@
+{% set pageData = pages['crm/other/tooling'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Core Tools", href: "#core-tools" }
+]) }}
+
+
+
+<p class="govuk-body">Developers working with Dynamics 365 and the Power Platform should use a standard set of tools to ensure consistent development practices across DfE. These tools support solution development, source control, plugin coding and application lifecycle management.</p>
+
+
+
+<h2 class="govuk-heading-l" id="core-tools">Core Tools</h2>
+
+<h2 class="govuk-heading-m" id="vscode">Visual Studio Code</h2>
+<p class="govuk-body">Used for inspecting solution files, working with Power Platform CLI, and editing configuration assets such as JSON files, web resources and environment settings.</p>
+
+<h2 class="govuk-heading-m" id="visualstudio">Visual Studio (2022 or later)</h2>
+<p class="govuk-body">Required for developing and debugging C# plugins, custom workflow activities and other pro‑code components. Includes support for solution‑aware build processes and NuGet package management.</p>
+
+<div class="govuk-inset-text">
+  Requires an appropriate Visual Studio licence
+</div>
+
+<h2 class="govuk-heading-m" id="cli">Power Platform CLI (PAC CLI)</h2>
+<p class="govuk-body">Command‑line tooling for exporting/importing solutions, managing environment connections, working with Power Pages, and interacting with Dataverse. This is the primary tool for solution extraction into source control.</p>
+
+<h2 class="govuk-heading-m" id="devops">Azure DevOps</h2>
+<p class="govuk-body">Used for source control, pull requests, work item tracking and running ALM pipelines that build and deploy managed solutions across environments.</p>
+
+<div class="govuk-inset-text">
+  Requires an Azure DevOps licence, assigned through DfE’s standard access request process
+</div>
+
+<h2 class="govuk-heading-m" id="plugin">Plugin Registration Tool</h2>
+<p class="govuk-body">Used for registering plugin steps during development (not in higher environments). Typically accessed via the Power Platform Tools extension.</p>
+
+<h2 class="govuk-heading-m" id="xrmtoolbox">XrmToolBox</h2>
+<p class="govuk-body">Optional but widely used for specialist tasks such as metadata exploration, data transporter, plugin trace viewing and bulk record management.</p>
+
+<h2 class="govuk-heading-m" id="notepad">Notepad++</h2>
+<p class="govuk-body">A quick and easy editor available for quick edits, viewing extracted solution files or checking configuration files without loading a full IDE.</p>
+
+<h2 class="govuk-heading-m" id="postman">Postman</h2>
+<p class="govuk-body">Useful for testing API requests, Dataverse Web API calls, custom connectors and integrations during development.</p>
+
+
+
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/other/licensing'].url }}" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/other/licensing'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+
+
+{% endblock %}

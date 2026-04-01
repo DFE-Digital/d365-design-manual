@@ -1,0 +1,148 @@
+{% set pageData = pages['crm/other/licensing'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Customer Service Enterprise", href: "#customer-service" },
+  { text: "Sales Enterprise", href: "#sales" },
+  { text: "Team Member", href: "#team-member" },
+  { text: "When Power Apps licences can be used instead", href: "#powerapps" },
+  { text: "Summary", href: "#summary" }
+]) }}
+
+
+<div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-visually-hidden">Warning</span>
+    Always check the licence guide on Microsoft's Dynamics 365 Pricing Overview page to validate any data shown below as Microsoft can change their approach at any time
+  </strong>
+</div>
+
+<p class="govuk-body">Dynamics 365 licensing changes frequently, and Microsoft publishes an updated licensing guide each month. The most up‑to‑date version is always available on the <a class="govuk-link govuk-link--no-visited-state" href="https://www.microsoft.com/en-gb/dynamics-365/pricing-overview" target="_blank">Dynamics 365 Pricing Overview (opens in a new tab)</a> page, so teams should refer to the latest source whenever designing new services.</p>
+
+<p class="govuk-body">Within DfE, there are three main licence types to consider when working with Dynamics 365, listed below. Choosing the correct licence ensures compliance with Microsoft rules while keeping costs under control.</p>
+
+
+
+
+<h2 class="govuk-heading-l" id="customer-service">Customer Service Enterprise</h2>
+
+<p class="govuk-body">This licence provides full access to Customer Service capabilities, including Case, Queue, Knowledge, SLA, Routing and other service‑related features.</p>
+
+<div class="govuk-inset-text">
+  Use this licence when users need to create, update, own or manage Case records, as Case is a restricted table that Team Member and Sales Enterprise licences cannot fully interact with.
+</div>
+
+<p class="govuk-body">It is generally the standard licence for most operational service teams within DfE.</p>
+
+
+
+<h2 class="govuk-heading-l" id="sales">Sales Enterprise</h2>
+
+<p class="govuk-body">This licence is suitable for users who work primarily with Contacts, Accounts, Activities, and other non‑restricted tables not tied to core Customer Service features.</p>
+
+<p class="govuk-body">Users with this licence can access much of the CRM but cannot work with restricted tables such as Case beyond very limited read capabilities (as defined in the latest licensing guide).</p>
+
+<div class="govuk-inset-text">
+  Use this licence for users working with sales‑related entities such as Leads, Opportunities, Quotes, Orders and Invoices, all of which are non‑restricted tables.
+</div>
+
+<p class="govuk-body">Sales Enterprise includes dedicated sales features that Customer Service does not provide, such as Lead management, Opportunity management, Quote management, Orders and invoices, Products and price lists.</p>
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="team-member">Team Member</h2>
+
+<p class="govuk-body">Team Member is a lightweight licence designed for users who only need basic interaction with CRM. They can work with a limited set of tables and have restricted create/update rights.</p>
+
+<p class="govuk-body">Team Member cannot interact with restricted tables (such as Case) beyond minimal read access allowed by Microsoft.</p>
+
+<div class="govuk-inset-text">
+  Use this licence for users who only need to view records, run reports, access dashboards, or make light updates to non‑restricted data.
+</div>
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="powerapps">When Power Apps licences can be used instead</h2>
+
+<p class="govuk-body">Power Apps licences can be used when users do not need access to any restricted Dynamics 365 tables or first‑party app functionality (such as the Sales Hub or Copilot Service workspace). They are suitable for users who only need to work with custom tables via custom apps or standard Dataverse tables that are not restricted.</p>
+
+<h2 class="govuk-heading-m" id="scenarios">Appropriate scenarios for Power Apps licences</h2>
+
+<p class="govuk-body">A Power Apps licence is appropriate when users:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Only work with custom-built model‑driven apps</li>
+  <li>Use custom Dataverse tables created for a DfE service</li>
+  <li>Use standard tables such as Account, Contact or Activity, as long as they are not restricted</li>
+  <li>Need basic create/read/update/delete access to tables that are not tied to Dynamics 365 apps</li>
+  <li>Do not need access to the Sales or Customer Service first‑party apps</li>
+  <li>Only need access to simple CRM-style apps without using restricted functionality like Case management</li>
+</ul>
+
+<p class="govuk-body">Power Apps licences can be a cost‑effective alternative when a service does not require the richer features of Dynamics 365 Sales or Customer Service.</p>
+
+<h2 class="govuk-heading-m" id="not-suitable">When Power Apps cannot be used</h2>
+
+<p class="govuk-body">Power Apps licences cannot be used when users need to work with:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Restricted tables, such as Case, Entitlement, Knowledge Article, and other Customer Service entities</li>
+  <li>Sales-specific capabilities, such as Leads, Opportunities, Quotes, Orders or access to the Sales Hub</li>
+  <li>Any activity that requires a Dynamics 365 first‑party app licence</li>
+  <li>Advanced processes that rely on Dynamics 365 native functionality or Sales/Service workflows</li>
+</ul>
+
+<p class="govuk-body">If a user needs to create, update or manage data in a restricted table, they must have the appropriate Dynamics 365 Customer Service or Sales licence.</p>
+
+<p class="govuk-body">Power Apps licences are suitable for lightweight or custom CRM scenarios that avoid restricted Dynamics tables. If a service uses Case management, Sales pipeline features, or any first‑party Dynamics app, then the relevant Dynamics 365 licence is required.</p>
+
+
+
+<h2 class="govuk-heading-l" id="summary">Summary</h2>
+
+<p class="govuk-body">When assigning licences, always check the latest Dynamics 365 Licensing Guide, as capabilities and restrictions change monthly. In DfE, the key consideration is whether users need access to restricted tables such as Case. If they do, they require a Customer Service Enterprise licence.</p>
+
+
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/other/tooling'].url }}" rel="next">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/other/tooling'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+
+{% endblock %}

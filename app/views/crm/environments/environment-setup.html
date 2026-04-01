@@ -1,0 +1,141 @@
+{% set pageData = pages['crm/environments/environment-setup'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Environment model", href: "#model" },
+  { text: "Consistency across environments", href: "#consistency" },
+  { text: "Setting up a new environment", href: "#setup" }
+]) }}
+
+
+<h2 class="govuk-heading-l" id="model">Environment model</h2>
+
+<p class="govuk-body">All CRM implementations across DfE should follow this standard environment model. Using a consistent structure ensures developers and delivery teams can work in a familiar, predictable way across different projects without needing to relearn environment setups or adapt to varying processes. The recommended model uses four environments:</p>
+
+<img src="/assets/images/crm/environments.png" alt="Environments model explaining Dev, Test, PreProd and Prod environments" class="govuk-!-width-full govuk-!-margin-bottom-6">
+
+<p class="govuk-body">Each environment should be aligned as closely as possible to avoid environment‑specific issues, with PreProd being a replica of Production where possible.</p>
+
+
+
+
+<h2 class="govuk-heading-m" id="dev">Development environment</h2>
+
+<p class="govuk-body">Dev is the only environment where configuration changes, custom components, and development work are performed. All solution updates and customisation happen here before being packaged and deployed downstream.</p>
+
+<p class="govuk-body">Best Practice:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Unmanaged solutions are used in development</li>
+  <li>Access restricted to developers only</li>
+  <li>Keep Dev aligned with Test and PreProd settings so deployments behave consistently</li>
+  <li>Only sample test data should be stored in development</li>
+</ul>
+
+
+
+
+
+<h2 class="govuk-heading-m" id="test">Test environment</h2>
+
+<p class="govuk-body">Test is the first controlled environment beyond development and is used for functional testing, integration testing, and defect validation by test analysts within the project teams.</p>
+
+<p class="govuk-body">Best Practice:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Only managed solutions are deployed</li>
+  <li>Testers own this environment and manage test cycles</li>
+  <li>Developers have access for defect investigation but otherwise should avoid using the environment</li>
+  <li>Keep configuration aligned with PreProd and Prod for accurate testing results</li>
+</ul>
+
+
+
+
+<h2 class="govuk-heading-m" id="preprod">PreProd environment</h2>
+
+<p class="govuk-body">PreProd is the final staging environment and should operate as a near‑production replica. It is used for UAT, OAT, regression testing, release rehearsals, and final verification before go‑live.</p>
+
+<p class="govuk-body">Best Practice:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Only managed solutions are deployed</li>
+  <li>Treat PreProd with the same control and governance as Production</li>
+  <li>Any change requires a formal change request</li>
+</ul>
+
+
+
+
+
+<h2 class="govuk-heading-m" id="prod">Production environment</h2>
+
+<p class="govuk-body">Prod is the live operational environment used by end users and must remain stable, secure, and tightly governed. Only approved changes should be deployed here through formal release processes.</p>
+
+<p class="govuk-body">Best Practice:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Only managed solutions are deployed</li>
+  <li>Generally, developers should not have admin access, standard user accounts only where required</li>
+  <li>Admin access limited to a small number of named individuals</li>
+  <li>Avoid using the service account to log in, restrict access to its credentials</li>
+  <li>Use named admin accounts where needed to ensure clear auditing and accountability</li>
+</ul>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="consistency">Consistency across environments</h2>
+
+<p class="govuk-body">All environments should follow a consistent configuration pattern, including system settings, solutions, security and integrations. To maintain predictable behaviour and reduce deployment issues, Test, PreProd, and Prod must all use ALM pipelines for deployments. Using automated pipelines ensures that changes are deployed in a controlled, repeatable, and traceable way, and guarantees that the same deployment process is used across all environments.</p>
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="setup">Setting up a new environment</h2>
+
+<p class="govuk-body">All Dynamics 365 environments must be created and managed through the Dynamics 365 Admin Centre. Within DfE, only users with the Dynamics 365 Administrator Azure role have the required permissions to provision environments. This role grants full administrative access to the Power Platform and Dynamics 365 Admin Centres, ensuring environments are created consistently and securely.</p>
+
+<p class="govuk-body"><b>Currently, Eddie Haynes, Steve Tam, and David Oliver are the only users with this role.</b></p>
+
+<p class="govuk-body">To maintain control and inconsistent environment creation, all requests for new environments must be made through one of these three administrators. This includes requests for new Dev, Test, PreProd, Prod or temporary sandboxes needed for project work.</p>
+
+
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/environments/solutions'].url }}" rel="next">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/environments/solutions'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+
+
+{% endblock %}

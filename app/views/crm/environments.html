@@ -1,0 +1,32 @@
+{% set pageData = pages['crm/environments'] %}
+{% set showTitlePanel = true %}
+{% set showSubNav = true %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% from 'includes/_side-nav.html' import environments %}
+
+{% block content %}
+
+<p class="govuk-body-l">{{ pageData.title }}</p>
+
+<p class="govuk-body">This section outlines DfE’s standard approach for managing Dynamics 365 environments, including the standard environment model covering Dev, Test, PreProd and Prod, guidance on maintaining consistent configuration and controlled ALM deployments, and the process for securely provisioning new environments through authorised administrators. It also describes how solutions should be structured and governed, including when to use unmanaged and managed solutions, required naming conventions, and how Azure DevOps pipelines are used to package and deploy solutions following DfE’s standard CRM deployment pattern.</p>
+
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+<h2 class="govuk-heading-m">In this section</h2>
+
+<ul class="dfe-component-list">
+  {% for page in environments %}
+  {% if page.url != pageData.url %}
+  <li class="dfe-component-list__item">
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
+      <a class="govuk-link govuk-link--no-visited-state" href="{{ page.url }}">{{ page.title }}</a>
+    </h3>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ page.description }}</p>
+  </li>
+  {% endif %}
+  {% endfor %}
+</ul>
+
+{% endblock %}

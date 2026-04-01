@@ -1,0 +1,166 @@
+{% set pageData = pages['crm/configuration/sitemap'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Group related tables into logical sections", href: "#groupings" },
+  { text: "Separate configuration tables", href: "#separate-tables" },
+  { text: "Provide clear and consistent names", href: "#naming" },
+  { text: "Use consistent and accessible icons", href: "#icons" },
+  { text: "Security roles to control visibility", href: "#security-roles" },
+  { text: "Further reading", href: "#further-reading" }
+]) }}
+
+<p class="govuk-body">A well‑designed sitemap helps users navigate your model‑driven app quickly and consistently. Good navigation design reduces training needs, supports reuse across teams and makes the app easier to maintain. The guidance below sets out best practice for configuring sitemaps.</p>
+
+
+<h2 class="govuk-heading-l" id="groupings">Group related tables into logical sections</h2>
+
+<p class="govuk-body">Sitemaps in model‑driven apps use three levels:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Areas</li>
+  <li>Groups</li>
+  <li>Subareas</li>
+</ul>
+
+
+
+
+<p class="govuk-body">Microsoft documentation states that areas contain groups and groups contain sub‑areas.</p>
+
+<p class="govuk-body">Best practice:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Group tables based on functional capability.</li>
+  <li>Keep group names short, meaningful and action‑oriented (for example: Contacts, Cases, Applications, Requests).</li>
+  <li>Avoid more than 5-7 items in a group and create additional groups only when necessary.</li>
+</ul>
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="separate-tables">Separate configuration tables</h2>
+
+<p class="govuk-body">Configuration tables should not sit alongside business data tables. To keep the main navigation simple:</p>
+
+<p class="govuk-body"><b>Option 1: Add a dedicated “Configuration” group</b><br>Add a group within an admin‑focused area, containing:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Lookup/reference tables</li>
+  <li>Settings tables</li>
+  <li>Rarely‑used tables that only administrators need</li>
+</ul>
+
+<p class="govuk-body"><b>Option 2: Create a separate configuration app</b><br>If you have a large number of configuration tables, or if you want to reduce clutter for business users, create a dedicated configuration model‑driven app that only administrators or support teams use.</p>
+
+<p class="govuk-body">This keeps the primary app focused, reduces confusion and avoids overwhelming end‑users.</p>
+
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="naming">Provide clear and consistent names</h2>
+
+<p class="govuk-body">A subarea name should be:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Short (ideally 1-2 words)</li>
+  <li>Plain English</li>
+  <li>Aligned to the language users use day-to-day</li>
+</ul>
+
+<p class="govuk-body">Avoid jargon, prefixes, abbreviations or internal project names. </p>
+
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="icons">Use consistent and accessible icons</h2>
+
+<p class="govuk-body">Every custom table added to the sitemap should have a custom SVG icon to match the style of Microsoft’s out‑of‑the‑box icons.</p>
+
+<p class="govuk-body">Best practice for custom icons:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use SVG format</li>
+  <li>Use single‑colour black or dark grey to blend with Microsoft OOTB icons</li>
+  <li>Use a simple wireframe/line style (not filled, not multi‑coloured)</li>
+  <li>Typical size: 32x32 px (Microsoft scales icons automatically, but this size ensures compatibility)</li>
+  <li>Avoid highly detailed shapes - ensure clarity at small sizes</li>
+</ul>
+
+<p class="govuk-body">This creates a consistent look across the app and avoids jarring visual differences.</p>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="security-roles">Security roles to control visibility</h2>
+
+<p class="govuk-body">Model‑driven app navigation dynamically hides sitemap items when users lack the required table permissions. Privileges on the underlying table determine what appears in the sitemap.</p>
+
+<p class="govuk-body">Best practice:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use security roles to hide admin‑only areas.</li>
+  <li>Do not create multiple apps just to hide navigation items - use roles instead.</li>
+  <li>Test with real user profiles to ensure the sitemap behaves as expected.</li>
+</ul>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="further-reading">Further reading</h2>
+<p class="govuk-body">
+  <a class="govuk-link govuk-link--no-visited-state" href="https://learn.microsoft.com/en-us/power-apps/maker/model-driven-apps/create-site-map-app" target="_blank">Create an app site map using the sitemap designer (opens in a new tab)</a> is Microsoft’s primary guidance page for developers working with sitemaps. It covers areas, groups and subareas, how navigation works and how the sitemap is structured in the modern app designer.</p>
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/configuration/model-driven-apps'].url }}" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/configuration/model-driven-apps'].title }}</span>
+    </a>
+  </div>
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/configuration/tables'].url }}" rel="next">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/configuration/tables'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+
+  {% endblock %}

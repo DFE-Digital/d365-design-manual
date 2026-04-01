@@ -1,0 +1,216 @@
+{% set pageData = pages['crm/configuration/columns'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Naming conventions", href: "#naming" },
+  { text: "Column descriptions", href: "#descriptions" },
+  { text: "Choosing the right column type", href: "#type" },
+  { text: "Choice columns vs lookup columns", href: "#choice-lookup" },
+  { text: "Relationships between tables", href: "#relationships" },
+  { text: "Additional best practices", href: "#best-practice" },
+  { text: "Further reading", href: "#further-reading" }
+]) }}
+
+<p class="govuk-body">Good column (field) design is essential for building a clear, maintainable, and consistent data model. Well‑named columns improve usability, reporting, integration, and long‑term support. This guidance explains how to define columns in a consistent way across DfE solutions.</p>
+
+
+
+<h2 class="govuk-heading-l" id="naming">Naming conventions</h2>
+
+<p class="govuk-body">Use consistent, meaningful names for all columns. Good naming helps users understand what a column is for and helps developers identify columns in code and integrations.</p>
+
+<p class="govuk-body">Best practice:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use plain English, clear and descriptive names (e.g. “Provider type” rather than “PType”)</li>
+  <li>Use singular names (e.g. Application Status, not Application Statuses)</li>
+  <li>Avoid abbreviations and internal programme jargon</li>
+  <li>Do not include the table name in the column name</li>
+  <li>Use consistent patterns (e.g. Start Date, End Date, Application Reference)</li>
+</ul>
+
+<p class="govuk-body">Technical schema name:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use the dfe_ publisher prefix unless there is a specific environment requirement</li>
+  <li>Schema names should be lowercase and meaningful</li>
+</ul>
+
+<p class="govuk-body">Microsoft guidance emphasises reviewing schema names to ensure they are clear and predictable for API or automation references.</p>
+
+
+
+<h2 class="govuk-heading-l" id="descriptions">Column descriptions</h2>
+
+<p class="govuk-body">Column descriptions help everyone understand the purpose of a column, especially when working across multiple teams or after long periods of time.</p>
+
+<p class="govuk-body">Best practice:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Provide a meaningful description for every non‑system column</li>
+  <li>Describe the columns purpose and how it should be used</li>
+  <li>Include any business rules or constraints users should be aware of</li>
+</ul>
+
+<p class="govuk-body">All columns should have a meaningful description to allow data dictionaries to be created and maintained.</p>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="type">Choosing the right column type</h2>
+
+<p class="govuk-body">Dataverse offers a range of column types. Choosing the correct one ensures the right behaviour and avoids future migrations.</p>
+
+<p class="govuk-body">Common column types and when to use them:</p>
+
+<h2 class="govuk-heading-m" id="text">Text (single or multiline)</h2>
+<p class="govuk-body">Use for free‑text information such as names, comments, references or descriptions.</p>
+
+<h2 class="govuk-heading-m" id="number">Number (whole, decimal, floating point)</h2>
+<p class="govuk-body">Use for numeric values such as counts, scores, or measurable attributes.</p>
+
+<h2 class="govuk-heading-m" id="datetime">Date/Time</h2>
+<p class="govuk-body">Use for any date or time‑based logic.</p>
+
+<h2 class="govuk-heading-m" id="boolean">Yes/No (Two‑options)</h2>
+<p class="govuk-body">Use for clear binary choices such as Is active? or Requires approval? Avoid using text columns for yes/no values.</p>
+
+<h2 class="govuk-heading-m" id="choice">Choice columns</h2>
+<p class="govuk-body">Use for small, finite sets of predefined options (e.g. Status, Application type). Ensure options are unambiguous and meaningful.</p>
+
+<h2 class="govuk-heading-m" id="lookup">Lookup columns</h2>
+<p class="govuk-body">Use for linking to another table (e.g. Provider, Person, Case). Lookups allow reuse of shared reference data and maintain data integrity.</p>
+
+<p class="govuk-body">Lookup columns are also sometimes used instead of Choice columns when values may change and there is a requirement to make it more configurable as reference data instead of a hardcoded set of values.</p>
+
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="choice-lookup">Choice columns vs lookup columns</h2>
+
+<p class="govuk-body">Choosing between a choice column and a lookup column affects reuse, relationships and reporting.</p>
+
+<p class="govuk-body">Use a choice column when:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>The list of options is small and fixed</li>
+  <li>Options do not require additional data</li>
+  <li>Options do not need to be shared across multiple tables</li>
+</ul>
+
+<p class="govuk-body">Use a lookup column when:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>The values may change over time</li>
+  <li>The value represents a real entity, such as an organisation, team, region or programme</li>
+  <li>The item has additional attributes (e.g. provider name, UKPRN, address)</li>
+  <li>You want to avoid duplicating values across the system</li>
+</ul>
+
+<p class="govuk-body">Lookup columns ensure data consistency and prevent hardcoding lists of values across different tables.</p>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="relationships">Relationships between tables</h2>
+
+<p class="govuk-body">Relationships define how data connects across the system. Microsoft’s Dataverse guidance highlights the importance of designing relationships as part of an overall structured data model.</p>
+
+<p class="govuk-body">Best practice:</p>
+
+<h2 class="govuk-heading-m" id="onetomany">1:N relationships</h2>
+<p class="govuk-body">Use when one record relates to many others (e.g. an Organisation with multiple Applications). This is the most common and recommended structure.</p>
+
+<h2 class="govuk-heading-m" id="manytomany">N:N relationships</h2>
+<p class="govuk-body">Use sparingly. Only use when both sides can relate to multiple items and no additional data exists on the link itself. This type of relationship does come with limitations around form design and can be confusing for users when searching data.</p>
+
+<h2 class="govuk-heading-m" id="config">Relationship configuration</h2>
+<p class="govuk-body">Choose the appropriate behaviour:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Parental → Child records are reassigned or deleted when the parent record is reassigned or deleted</li>
+  <li>Referential → Child records remain but the link clears</li>
+  <li>Restrict delete → Prevent deletion when related records exist</li>
+  <li>Cascade → Propagate changes such as owner or delete</li>
+</ul>
+
+<p class="govuk-body">Use and test cascade behaviours carefully - they can have unintended consequences with data being unintentionally deleted.</p>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="best-practice">Additional best practices</h2>
+
+<h2 class="govuk-heading-m" id="unnecessary">Avoid unnecessary columns</h2>
+<p class="govuk-body">Before creating a new column, check if an existing one already captures the same information.</p>
+
+<h2 class="govuk-heading-m" id="generic">Keep columns generic</h2>
+<p class="govuk-body">Avoid creating columns that only one team can use unless absolutely necessary.</p>
+
+<h2 class="govuk-heading-m" id="patterns">Use standard (OOTB) patterns</h2>
+<p class="govuk-body">Whenever possible, follow established Dynamics 365 design conventions (e.g. using “Status” and “Status Reason” columns).</p>
+
+<h2 class="govuk-heading-m" id="security">Review security</h2>
+<p class="govuk-body">Check whether the column contains sensitive information and whether additional permissions or column‑level security is needed.</p>
+
+<h2 class="govuk-heading-m" id="reporting">Consider reporting</h2>
+<p class="govuk-body">Consider how the column will be used in Power BI or exported reporting. Choice columns, for example, produce both text and numeric values which may impact reporting design.</p>
+
+
+
+<h2 class="govuk-heading-l" id="further-reading">Further reading</h2>
+<p class="govuk-body">
+  <a class="govuk-link govuk-link--no-visited-state" href="https://learn.microsoft.com/en-us/power-apps/maker/data-platform/fields-overview" target="_blank">Create new data columns in Dataverse (opens in a new tab)</a> is Microsoft’s primary guidance page for developers working with columns. </p>
+
+
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/configuration/tables'].url }}" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/configuration/tables'].title }}</span>
+    </a>
+  </div>
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/configuration/forms'].url }}" rel="next">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/configuration/forms'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+
+
+{% endblock %}
