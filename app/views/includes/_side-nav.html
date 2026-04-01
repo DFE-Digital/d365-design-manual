@@ -52,6 +52,60 @@
   pages["powerpages/patterns/crm-helper-framework"]
 ] %}
 
+
+{% set crm_sections = [
+  { title: "Overview", url: pages['crm'].url, key: "overview" },
+  { title: "Configuration", url: pages['crm/configuration'].url, key: "configuration" },
+  { title: "Customisation", url: pages['crm/customisation'].url, key: "customisation" },
+  { title: "Architecture", url: pages['crm/architecture'].url, key: "architecture" },
+  { title: "Environments", url: pages['crm/environments'].url, key: "environments" },
+  { title: "Security", url: pages['crm/security'].url, key: "security" },
+  { title: "Other", url: pages['crm/other'].url, key: "other" }
+] %}
+
+
+{% set configuration = [
+  pages["crm/configuration/model-driven-apps"],
+  pages["crm/configuration/sitemap"],
+  pages["crm/configuration/tables"],
+  pages["crm/configuration/columns"],
+  pages["crm/configuration/forms"],
+  pages["crm/configuration/views"]
+] %}
+
+{% set customisation = [
+  pages["crm/customisation/configuration-first"],
+  pages["crm/customisation/javascriptvsbusinessrules"],
+  pages["crm/customisation/power-automate"],
+  pages["crm/customisation/plugins"],
+  pages["crm/customisation/pro-code"]
+] %}
+
+{% set architecture = [
+  pages["crm/architecture/product-suite"],
+  pages["crm/architecture/design-principles"],
+  pages["crm/architecture/patterns-components"]
+] %}
+
+{% set environments = [
+  pages["crm/environments/environment-setup"],
+  pages["crm/environments/solutions"],
+  pages["crm/environments/deployment-pipelines"]
+] %}
+
+{% set security = [
+  pages["crm/security/business-units"],
+  pages["crm/security/security-roles"],
+  pages["crm/security/teams"],
+  pages["crm/security/auditing"]
+] %}
+
+{% set other = [
+  pages["crm/other/licensing"],
+  pages["crm/other/tooling"]
+] %}
+
+
 {# Determine which section is currently active #}
 {% set currentSection = "overview" %}
 {% if currentPath | contains(pages['powerpages/getting-started'].url) %}
@@ -62,9 +116,22 @@
   {% set currentSection = "components" %}
 {% elseif currentPath | contains(pages['powerpages/patterns'].url) %}
   {% set currentSection = "patterns" %}
+{% elseif currentPath | contains(pages['crm/configuration'].url) %}
+  {% set currentSection = "configuration" %}
+{% elseif currentPath | contains(pages['crm/customisation'].url) %}
+  {% set currentSection = "customisation" %}
+{% elseif currentPath | contains(pages['crm/architecture'].url) %}
+  {% set currentSection = "architecture" %}
+{% elseif currentPath | contains(pages['crm/environments'].url) %}
+  {% set currentSection = "environments" %}
+{% elseif currentPath | contains(pages['crm/security'].url) %}
+  {% set currentSection = "security" %}
+{% elseif currentPath | contains(pages['crm/other'].url) %}
+  {% set currentSection = "other" %}
 {% endif %}
 
 {# Power Pages Section Navigation - shown on all Power Pages pages with side nav #}
+{% if currentPath | contains(pages['powerpages/getting-started'].url) %}
 <nav aria-label="Power Pages sections" class="dfe-vertical-nav govuk-!-margin-bottom-6">
   <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Power Pages</h2>
   <ul class="dfe-vertical-nav__section">
@@ -75,6 +142,18 @@
     {% endfor %}
   </ul>
 </nav>
+{% elseif currentPath | contains(pages['crm'].url) %}
+<nav aria-label="Power Pages sections" class="dfe-vertical-nav govuk-!-margin-bottom-6">
+  <h2 class="govuk-heading-s govuk-!-margin-bottom-2">CRM</h2>
+  <ul class="dfe-vertical-nav__section">
+    {% for section in crm_sections %}
+    <li class="dfe-vertical-nav__section-item {% if section.key == currentSection %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ section.url }}"{% if section.key == currentSection %} aria-current="page"{% endif %}>{{ section.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
+{% endif %}
 
 {# Section-specific navigation - items within the current section #}
 {% if currentPath | contains(pages['powerpages/getting-started'].url) and currentPath != pages['powerpages/getting-started'].url %}
@@ -118,6 +197,78 @@
   <h2 class="govuk-heading-s govuk-!-margin-bottom-2">In this section</h2>
   <ul class="dfe-vertical-nav__section" id="side-navigation">
     {% for page in patterns %}
+    {% set isCurrentPage = currentPath | contains(page.url) %}
+    <li class="dfe-vertical-nav__section-item {% if isCurrentPage %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}"{% if isCurrentPage %} aria-current="page"{% endif %}>{{ page.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
+{% elseif currentPath | contains(pages['crm/configuration'].url) and currentPath != pages['crm/configuration'].url %}
+<nav aria-label="Configuration Menu" class="dfe-vertical-nav">
+  <h2 class="govuk-heading-s govuk-!-margin-bottom-2">In this section</h2>
+  <ul class="dfe-vertical-nav__section" id="side-navigation">
+    {% for page in configuration %}
+    {% set isCurrentPage = currentPath | contains(page.url) %}
+    <li class="dfe-vertical-nav__section-item {% if isCurrentPage %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}"{% if isCurrentPage %} aria-current="page"{% endif %}>{{ page.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
+{% elseif currentPath | contains(pages['crm/environments'].url) and currentPath != pages['crm/environments'].url %}
+<nav aria-label="Environments Menu" class="dfe-vertical-nav">
+  <h2 class="govuk-heading-s govuk-!-margin-bottom-2">In this section</h2>
+  <ul class="dfe-vertical-nav__section" id="side-navigation">
+    {% for page in environments %}
+    {% set isCurrentPage = currentPath | contains(page.url) %}
+    <li class="dfe-vertical-nav__section-item {% if isCurrentPage %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}"{% if isCurrentPage %} aria-current="page"{% endif %}>{{ page.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
+{% elseif currentPath | contains(pages['crm/customisation'].url) and currentPath != pages['crm/customisation'].url %}
+<nav aria-label="Customisation Menu" class="dfe-vertical-nav">
+  <h2 class="govuk-heading-s govuk-!-margin-bottom-2">In this section</h2>
+  <ul class="dfe-vertical-nav__section" id="side-navigation">
+    {% for page in customisation %}
+    {% set isCurrentPage = currentPath | contains(page.url) %}
+    <li class="dfe-vertical-nav__section-item {% if isCurrentPage %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}"{% if isCurrentPage %} aria-current="page"{% endif %}>{{ page.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
+{% elseif currentPath | contains(pages['crm/architecture'].url) and currentPath != pages['crm/architecture'].url %}
+<nav aria-label="Architecture Menu" class="dfe-vertical-nav">
+  <h2 class="govuk-heading-s govuk-!-margin-bottom-2">In this section</h2>
+  <ul class="dfe-vertical-nav__section" id="side-navigation">
+    {% for page in architecture %}
+    {% set isCurrentPage = currentPath | contains(page.url) %}
+    <li class="dfe-vertical-nav__section-item {% if isCurrentPage %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}"{% if isCurrentPage %} aria-current="page"{% endif %}>{{ page.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
+{% elseif currentPath | contains(pages['crm/security'].url) and currentPath != pages['crm/security'].url %}
+<nav aria-label="Security Menu" class="dfe-vertical-nav">
+  <h2 class="govuk-heading-s govuk-!-margin-bottom-2">In this section</h2>
+  <ul class="dfe-vertical-nav__section" id="side-navigation">
+    {% for page in security %}
+    {% set isCurrentPage = currentPath | contains(page.url) %}
+    <li class="dfe-vertical-nav__section-item {% if isCurrentPage %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}"{% if isCurrentPage %} aria-current="page"{% endif %}>{{ page.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
+{% elseif currentPath | contains(pages['crm/other'].url) and currentPath != pages['crm/other'].url %}
+<nav aria-label="Other Menu" class="dfe-vertical-nav">
+  <h2 class="govuk-heading-s govuk-!-margin-bottom-2">In this section</h2>
+  <ul class="dfe-vertical-nav__section" id="side-navigation">
+    {% for page in other %}
     {% set isCurrentPage = currentPath | contains(page.url) %}
     <li class="dfe-vertical-nav__section-item {% if isCurrentPage %}dfe-vertical-nav__section-item--current{% endif %}">
       <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}"{% if isCurrentPage %} aria-current="page"{% endif %}>{{ page.title }}</a>

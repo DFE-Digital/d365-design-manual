@@ -6,17 +6,20 @@
   pages['powerpages/patterns']
 ] %}
 
-{% set activeUrl = pages['powerpages'].url %}
-{% if currentPath %}
-  {% if currentPath | contains(pages['powerpages/getting-started'].url) %}
-    {% set activeUrl = pages['powerpages/getting-started'].url %}
-  {% elseif currentPath | contains(pages['powerpages/styles'].url) %}
-    {% set activeUrl = pages['powerpages/styles'].url %}
-  {% elseif currentPath | contains(pages['powerpages/components'].url) %}
-    {% set activeUrl = pages['powerpages/components'].url %}
-  {% elseif currentPath | contains(pages['powerpages/patterns'].url) %}
-    {% set activeUrl = pages['powerpages/patterns'].url %}
-  {% endif %}
+{% set crm = [
+  { title: "Overview", url: pages['crm'].url },
+  pages['crm/configuration'],
+  pages['crm/customisation'],
+  pages['crm/architecture'],
+  pages['crm/environments'],
+  pages['crm/security'],
+  pages['crm/other']
+] %}
+
+{% if currentPath | contains('/powerpages') %}
+  {% set menu = powerpages %}
+{% elseif currentPath | contains('/crm') %}
+  {% set menu = crm %}
 {% endif %}
 
 <div class="govuk-service-navigation {% if showTitlePanel %}govuk-service-navigation--inverse{% endif %}" {% if showTitlePanel %}style="padding-bottom: 20px;"{% endif %} {% if not showTitlePanel %}style="background: white;"{% endif %} data-module="govuk-service-navigation">
@@ -24,7 +27,7 @@
     <div class="govuk-service-navigation__container">
       <nav aria-label="Power Pages Menu" class="govuk-service-navigation__wrapper">
         <ul class="govuk-service-navigation__list" id="sub-navigation">
-          {% for page in powerpages %}
+          {% for page in menu %}
           <li class="govuk-service-navigation__item {% if page.url == activeUrl %}govuk-service-navigation__item--active{% endif %}">
             <a class="govuk-service-navigation__link" href="{{ page.url }}">
               {{ page.title }}
