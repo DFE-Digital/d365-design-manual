@@ -21,12 +21,66 @@
 {% endif %}
 
 {{ contentsList([
-  { text: "Name", href: "#reference" }
+  { text: "Core auditing requirements", href: "#core" },
+  { text: "Sensitive data and read-event auditing", href: "#read" },
+  { text: "Do's", href: "#dos" },
+  { text: "Don'ts", href: "#donts" },
+  { text: "Summary", href: "#summary" }
 ]) }}
 
 
 
-<p class="govuk-body">Coming soon...</p>
+<p class="govuk-body">
+Auditing in Dynamics 365 helps track data changes, understand user activity and meet compliance requirements. 
+</p>
+
+<h2 class="govuk-heading-l" id="core">Core auditing requirements</h2>
+
+<p class="govuk-body">
+All tables that store business data must have out-of-box auditing enabled. This includes auditing for:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Record creation</li>
+  <li>Record updates</li>
+  <li>Record deletion</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="read">Sensitive data and read-event auditing</h2>
+
+<p class="govuk-body">
+Auditing when data is viewed/read is not handled through Dynamics 365. If a service needs to track read access for sensitive information, Microsoft Purview should be used.
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use Purview for monitoring read events on high‑risk or sensitive data</li>
+  <li>Avoid enabling unnecessary auditing to reduce storage and overheads</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="dos">Do’s</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Enable auditing on all business data tables.</li>
+  <li>Agree with business owners on which fields should be audited.</li>
+  <li>Regularly review audit logs for anomalies or unusual changes.</li>
+  <li>Use Purview when read‑event tracking is required.</li>
+  <li>Document which tables are audited and why.</li>
+  <li>Keep audit logs for as long as needed and then delete.</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="donts">Don’ts</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Do not disable auditing on business data tables</li>
+  <li>Do not audit every field unnecessarily - focus on meaningful data as excessive field‑level auditing can affect performance and audit logs can grow quickly</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="summary">Summary</h2>
+
+<p class="govuk-body">
+Enable auditing for all business‑data tables, use Purview for sensitive read‑access tracking, and keep auditing focused and purposeful. This helps DfE maintain transparency, protect sensitive information and meet compliance standards.
+</p>
+
 
 
 

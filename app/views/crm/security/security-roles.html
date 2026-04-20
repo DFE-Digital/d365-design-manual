@@ -21,12 +21,81 @@
 {% endif %}
 
 {{ contentsList([
-  { text: "Name", href: "#reference" }
+  { text: "What good Security Role design looks like", href: "#good" },
+  { text: "Implications of how you design Security Roles", href: "#implications" },
+  { text: "Examples", href: "#examples" },
+  { text: "Summary", href: "#summary" }
 ]) }}
 
 
 
-<p class="govuk-body">Coming soon...</p>
+
+
+<p class="govuk-body">
+Security Roles in Dynamics 365 define what users and teams can see and do. Good Security Role design helps the Department for Education (DfE) keep systems secure, consistent and easier to maintain.
+</p>
+
+<h2 class="govuk-heading-l" id="good">What good Security Role design looks like</h2>
+
+<p class="govuk-body">
+Security Roles should be simple, predictable and reusable. Create Security Role based on what users need to do, not on who they are or where they sit.
+</p>
+
+<h2 class="govuk-heading-m">Do's</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Create Security Roles based on job responsibilities, not teams or individuals.</li>
+  <li>Assign Security Role to teams where possible, rather than directly to users.</li>
+  <li>Use the minimum privileges needed for a role to do its job (principle of least privilege).</li>
+  <li>Use organisation‑level permissions only when absolutely necessary.</li>
+  <li>Create small add-on Security Roles where discrete ah-doc permissions are required such as permissions to import/export data.</li>
+  <li>Document what each Security Role is for, especially when created for a specific service.</li>
+  <li>Regularly review Security Role to ensure they still match how DfE services operate.</li>
+</ul>
+
+<h2 class="govuk-heading-m">Don'ts</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Do not create a new Security Role every time a small change is needed.</li>
+  <li>Do not assign users multiple overlapping Security Role without checking combined permissions.</li>
+  <li>Do not copy and rename Security Role without understanding what they contain.</li>
+  <li>Do not give every user high‑privilege permissions “just in case”.</li>
+  <li>Do not work around poor Business Unit design by giving users overly broad Security Role access.</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="implications">Implications of how you design Security Roles</h2>
+
+<p class="govuk-body">Security Role design affects:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li><strong>Data access:</strong> Poorly scoped Security Roles can expose sensitive information to the wrong users.</li>
+  <li><strong>Maintenance:</strong> Too many similar Security Roles make troubleshooting and updates difficult.</li>
+  <li><strong>User experience:</strong> Over‑restricted permissions can break forms, views or app navigation.</li>
+  <li><strong>Onboarding:</strong> Well‑designed Security Roles make it easy to give new users the right access quickly.</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="examples">Examples</h2>
+
+<h3 class="govuk-heading-s">Example 1: Security Roles based on responsibility</h3>
+<p class="govuk-body">
+A “Case Worker” Security Role may include permissions to create, update and assign case records, but only read access to related financial data.
+</p>
+
+<h3 class="govuk-heading-s">Example 2: Using teams for flexible access</h3>
+<p class="govuk-body">
+A data analyst working across several DfE service areas can gain access through membership of teams, rather than being given multiple high‑privilege roles.
+</p>
+
+<h3 class="govuk-heading-s">Example 3: Avoiding unnecessary Security Roles</h3>
+<p class="govuk-body">
+Instead of creating separate Security Roles for each policy area (for example, Early Years Case Worker and FE Case Worker), create one Case Worker role and manage data access using Business Units and/or teams.
+</p>
+
+<h2 class="govuk-heading-l" id="summary">Summary</h2>
+
+<p class="govuk-body">
+Security Roles should be simple, clear and based on what users need to do. Assign Security Roles to teams where possible, avoid duplication, and review them regularly. Well‑designed roles support secure, scalable and maintainable Dynamics 365 services across DfE.
+</p>
 
 
 

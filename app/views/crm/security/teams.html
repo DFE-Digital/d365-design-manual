@@ -21,12 +21,113 @@
 {% endif %}
 
 {{ contentsList([
-  { text: "Name", href: "#reference" }
+  { text: "What Teams are used for", href: "#what" },
+  { text: "Types of Teams", href: "#types" },
+  { text: "Do's", href: "#dos" },
+  { text: "Don'ts", href: "#donts" },
+  { text: "Implications of using Teams", href: "#implications" },
+  { text: "Summary", href: "#summary" }
 ]) }}
 
 
 
-<p class="govuk-body">Coming soon...</p>
+
+<p class="govuk-body">
+Teams in Dynamics 365 provide flexible ways to manage access, share work and support collaboration across services. Teams can help DfE users give users the permissions they need without changing the Business Unit structure.
+</p>
+
+<h2 class="govuk-heading-l" id="what">What Teams are used for</h2>
+
+<p class="govuk-body">
+Teams allow groups of users to share ownership of records, inherit shared security roles and work together without needing to move users between Business Units.
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Assign and manage access for groups of users</li>
+  <li>Share or own records collectively</li>
+  <li>Support cross-service or cross-directorate collaboration</li>
+  <li>Simplify onboarding by giving a team security roles rather than each user</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="types">Types of Teams</h2>
+
+<p class="govuk-body">Dynamics 365 includes several types of teams, each working slightly differently.</p>
+
+<h3 class="govuk-heading-m">Owner Teams</h3>
+<p class="govuk-body">
+Owner Teams can own records. Any security roles assigned to the team give users the same privileges when acting on behalf of the team. This is the typical type of team commonly used.
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Useful for shared work queues</li>
+  <li>Can be used to control access across Business Units</li>
+  <li>Members inherit the team's security roles</li>
+</ul>
+
+<h3 class="govuk-heading-m">Access Teams</h3>
+<p class="govuk-body">
+Access Teams provide temporary or flexible access to individual records. They do not own records and do not have security roles.
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Used for collaboration on specific cases or tasks</li>
+  <li>Access is record-specific, not system-wide</li>
+  <li>Good for ad-hoc or changing groups of users</li>
+</ul>
+
+<h3 class="govuk-heading-m">Azure AD Group Teams</h3>
+<p class="govuk-body">
+These teams are linked to Microsoft 365 groups. Membership is managed in Azure Active Directory, and Dynamics 365 synchronises the team members automatically.
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Ideal for large or frequently changing teams</li>
+  <li>Security roles assigned once to the team apply to all group members</li>
+  <li>Reduces admin effort in CRM but does cause a reliance on other teams and raising service requests</li>
+</ul>
+
+<h3 class="govuk-heading-m">Owner Teams vs Access Teams</h3>
+<p class="govuk-body">
+Owner Teams affect record ownership and permissions. Access Teams affect access to specific records only. Choose based on whether shared ownership is needed.
+</p>
+
+<h2 class="govuk-heading-l" id="dos">Do's</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use teams to manage shared workloads rather than copying user permissions individually.</li>
+  <li>Assign security roles to teams, not users, whenever possible.</li>
+  <li>Use Owner Teams for shared queues or when multiple users manage the same records.</li>
+  <li>Use Access Teams for temporary or ad-hoc collaboration.</li>
+  <li>Use Azure AD Group Teams for large DfE groups or when membership changes frequently.</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="donts">Don'ts</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Do not create a new team for every permission scenario - reuse teams where practical.</li>
+  <li>Do not rely on access teams for system-wide permissions (they only apply to individual records).</li>
+  <li>Do not use teams to patch gaps in a poorly designed Business Unit structure.</li>
+  <li>Do not manually maintain membership if an Azure AD group exists - let it sync automatically.</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="implications">Implications of using Teams</h2>
+
+<p class="govuk-body">The way you use teams affects security, ownership and how users work together.</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li><strong>Security:</strong> Owner Teams can grant significant access, so assign roles carefully.</li>
+  <li><strong>Record ownership:</strong> Teams can own records, which affects who can see and update data.</li>
+  <li><strong>Collaboration:</strong> Teams allow users from multiple Business Units to work together without restructuring.</li>
+  <li><strong>Maintenance:</strong> Azure AD Group Teams reduce admin overhead and keep access controlled in one place.</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="summary">Summary</h2>
+
+<p class="govuk-body">
+Teams are a flexible and powerful tool in Dynamics 365. Use them to share access, manage workloads and support collaboration across DfE services. Choose the right type of team based on whether you need record ownership, temporary access or automatic membership management.
+</p>
+
+
 
 
 

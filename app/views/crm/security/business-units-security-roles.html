@@ -1,0 +1,174 @@
+{% set pageData = pages['crm/security/business-units-security-roles'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "What a Business Unit does", href: "#businessunit" },
+  { text: "What a Security Role does", href: "#role" },
+  { text: "How they work together", href: "#together" },
+  { text: "Assigning roles to Teams", href: "#teams" },
+  { text: "Key things to remember", href: "#key" },
+  { text: "Summary", href: "#summary" }
+]) }}
+
+
+
+
+<p class="govuk-body">Business Units and Security Roles work together to control what users can see and do in Dynamics 365. Understanding the relationship between them helps you design secure, predictable access for your organisation.</p>
+
+<h2 class="govuk-heading-l" id="businessunit">What a Business Unit does</h2>
+
+<p class="govuk-body">A Business Unit (BU):</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Groups users into a logical part of the organisation</li>
+  <li>Creates a boundary for data access</li>
+  <li>Sets the scope of many security permissions</li>
+</ul>
+
+<p class="govuk-body"><strong>Every user must belong to one Business Unit.</strong></p>
+
+<p class="govuk-body">Business Units are arranged in a hierarchy with a root Business Unit at the top.</p>
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="role">What a Security Role does</h2>
+
+<p class="govuk-body">A Security Role controls what a user or team is allowed to do, including reading, creating, updating and deleting records. It also defines how far those permissions reach across the Business Unit(s):</p>
+
+<p class="govuk-body">If considering the "read" permission, options are:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li><strong>User</strong> - can only read records owned by the user</li>
+  <li><strong>Business Unit</strong> - can read all records owned in the user’s Business Unit</li>
+  <li><strong>Parent: Child Business Unit</strong> - can read all records owned in the user’s Business Unit and any child Business Units beneath it</li>
+  <li><strong>Organisation</strong> - can read all records in the system</li>
+</ul>
+
+<p class="govuk-body">The scope always applies relative to the user’s Business Unit.</p>
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="together">How they work together</h2>
+
+<p class="govuk-body">A user’s Business Unit determines the scope of the permissions defined in their Security Roles.</p> 
+
+<p class="govuk-body">When a user moves to a new Business Unit, you could apply the same Security Role, but what they can access still changes because the scope is recalculated for the new Business Unit.</p>
+
+<h3 class="govuk-heading-m">Example 1: Business Unit–level access</h3>
+
+<p class="govuk-body">Scenario:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Sarah is in the Complaints Business Unit</li>
+  <li>Sarah has a Security Role that gives "Business Unit" read access for Cases</li>
+</ul>
+
+<p class="govuk-body">This means: Sarah can see all Cases owned by the Complaints Business Unit, but none owned by the Marketing Business Unit.</p>
+
+<h3 class="govuk-heading-m">Example 2: Parent/Child access</h3>
+
+<p class="govuk-body">Example Business Unit structure:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Root Business Unit</li>
+  <li>UK Business Unit (child of Root)</li>
+  <li>London Business Unit (child of UK Business Unit)</li>
+</ul>
+
+<p class="govuk-body">Scenario: John is in UK Business Unit and has a Security Role that gives "Parent/Child" access.</p>
+
+<p class="govuk-body">This means: John can see records in UK Business Unit and London Business Unit. John cannot see records in the Root Business Unit.</p>
+
+<h3 class="govuk-heading-m">Example 3: Organisation-level access</h3>
+
+<p class="govuk-body">Scenario: Robert is in Finance Business Unit and has a Security Role that gives organisation-level access to Claims.</p>
+
+<p class="govuk-body">This means: Robert can see all Claims across the organisation, regardless of Business Units.</p>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="teams">Assigning roles to Teams</h2>
+
+<p class="govuk-body">You can assign Security Roles to Teams as well as Users. A Team belongs to a Business Unit in the same way as a user, and any user who joins the Team inherits its Security Roles as well as their own (multiple Security Roles can work in combination to provide a total set of permissions). This is useful when users across different Business Units need shared access.</p>
+
+<h3 class="govuk-heading-m">Example 4: Cross-team working</h3>
+
+<p class="govuk-body">Scenario:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>The Escalations Team is in the Claims Business Unit</li>
+  <li>The Escalations Team has a Security Role which gives Business Unit level permissions to Case records</li>
+  <li>Daniel is in the Finance Business Unit and cannot see Case records</li>
+  <li>Daniel gets added to the Escalations Team</li>
+</ul>
+
+<p class="govuk-body"><strong>This means:</strong> Daniel gains access to Case records through the Team, without needing to move Business Units.</p>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="key">Key things to remember</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>A user can only belong to one Business Unit</li>
+  <li>A Security Role's scope always applies relative to the user's Business Unit</li>
+  <li>Adding users to Teams in another Business Unit can extend access without changing the users Business Unit</li>
+  <li>Organisation-level access gives access to everything</li>
+  <li>Moving users between Business Units changes the data they can see</li>
+</ul>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="summary">Summary</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Business Units define where a user sits</li>
+  <li>Security Roles define what a user can do</li>
+  <li>Teams can bridge the gaps for exception scenarios</li>
+  <li>Together, they determine what data they can access</li>
+</ul>
+
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/security/business-units'].url }}" rel="next">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/security/business-units'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+
+{% endblock %}

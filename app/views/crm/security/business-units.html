@@ -21,17 +21,111 @@
 {% endif %}
 
 {{ contentsList([
-  { text: "Name", href: "#reference" }
+  { text: "What good Business Unit design looks like", href: "#good" },
+  { text: "Implications of the Business Unit structure", href: "#implications" },
+  { text: "Examples", href: "#examples" },
+  { text: "Summary", href: "#summary" }
 ]) }}
 
 
 
-<p class="govuk-body">Coming soon...</p>
+
+
+<p class="govuk-body">
+Business Units in Dynamics 365 help the Department for Education (DfE) manage data access, security and organisational separation. A well‑designed Business Unit structure keeps systems simple, secure and easier to maintain.
+</p>
+
+<h2 class="govuk-heading-l" id="good">What good Business Unit design looks like</h2>
+
+<p class="govuk-body">For most DfE services, a simple and predictable Business Unit structure works best. Create Business Units only when there is a clear need for meaningful separation of data.</p>
+
+<h2 class="govuk-heading-m">Do's</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use Business Units to separate areas with different security needs or regulatory responsibilities.</li>
+  <li>Keep the Business Unit hierarchy as flat as possible to reduce complexity.</li>
+  <li>Place users in the Business Unit that reflects where they do most of their work.</li>
+  <li>Use Teams and Security Roles to provide some flexible access as exceptions without moving users between Business Units.</li>
+  <li>Use organisation‑owned tables for shared DfE data such as Organisations (schools) or reference data used in lookups.</li>
+  <li>Review the Business Unit design every time a new serivce in onboarded or teams change.</li>
+</ul>
+
+<h2 class="govuk-heading-m">Don'ts</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Do not create a Business Unit for every DfE team or department.</li>
+  <li>Do not mirror the HR organisational structure using Business Units.</li>
+  <li>Do not move users between Business Units frequently, as this affects data access and record ownership (not just for that user but others as well).</li>
+  <li>Do not rely on Business Units for reporting purposes - use raw data for filtering instead.</li>
+</ul>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="implications">Implications of the Business Unit structure</h2>
+
+<p class="govuk-body">The way you design Business Units affects:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li><strong>Security:</strong> Business Unit boundaries determine what users can see and do.</li>
+  <li><strong>Maintenance:</strong> More Business Units increase administrative overhead for managing roles and teams and can become excessively complex on large applications.</li>
+  <li><strong>Data ownership:</strong> User‑owned records remain within the user’s Business Unit unless explicitly reassigned.</li>
+  <li><strong>Scalability:</strong> A simpler structure makes it easier to onboard new teams, directorates or services.</li>
+</ul>
+
+
+
+
+<h2 class="govuk-heading-l" id="examples">Examples</h2>
+
+<h3 class="govuk-heading-s">Example 1: Service-level separation</h3>
+<p class="govuk-body">
+A service such as <em>Teacher Services</em> may operate within its own Business Unit because it manages sensitive teacher data that should not be visible to other DfE service areas.
+</p>
+<p class="govuk-body">
+Note, anyone in the Root Business Unit with a Security Role granting Organisation-level permissions would still see teacher data.
+</p>
+
+<h3 class="govuk-heading-s">Example 2: Shared access across the department</h3>
+<p class="govuk-body">
+Cross‑cutting roles, for example, data analysts or customer support teams - can access required data through Team membership rather than being placed in multiple Business Units.
+</p>
+
+<h3 class="govuk-heading-s">Example 3: Avoiding unnecessary complexity</h3>
+<p class="govuk-body">
+Instead of creating separate Business Units for areas such as Early Years, Further Education and Higher Education policy teams, use a single Business Unit and control access through Security Roles and record ownership.
+</p>
+
+
+
+
+<h2 class="govuk-heading-l" id="summary">Summary</h2>
+
+<p class="govuk-body">
+Use Business Units sparingly and intentionally. Keep the structure simple, use teams for flexible access, and only create new Business Units when there is a clear security or operational need. This helps DfE maintain secure, consistent and scalable Dynamics 365 services.
+</p>
+<p class="govuk-body">
+Avoid complexity where possible.
+</p>
+
 
 
 
 
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/security/business-units-security-roles'].url }}" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/security/business-units-security-roles'].title }}</span>
+    </a>
+  </div>
   <div class="govuk-pagination__next">
     <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/security/security-roles'].url }}" rel="next">
       <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
