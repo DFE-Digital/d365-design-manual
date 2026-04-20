@@ -558,11 +558,19 @@ const pages = {
     template: "crm/security",
     parent: "crm",
         children: [
+      "crm/security/business-units-security-roles",
       "crm/security/business-units",
       "crm/security/security-roles",
       "crm/security/teams",
       "crm/security/auditing"
     ]
+  },
+  "crm/security/business-units-security-roles": {
+    title: "How Business Units work with Security Roles",
+    url: "/crm/security/business-units-security-roles/",
+    description: "Explains how Business Units and Security Roles work together to control what users can see and do.",
+    template: "crm/security/business-units-security-roles",
+    parent: "crm/security"
   },
   "crm/security/business-units": {
     title: "Business Units",
@@ -595,7 +603,7 @@ const pages = {
   "crm/other": {
     title: "Other",
     url: "/crm/other/",
-    description: "Additional guidance and supporting information that sits outside the main architecture, security , configuration and customisation topics.",
+    description: "Additional guidance and supporting information that sits outside the main architecture, security, configuration and customisation topics.",
     template: "crm/other",
     parent: "crm",
     parent: "crm",
