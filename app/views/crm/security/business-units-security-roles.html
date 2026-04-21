@@ -77,36 +77,60 @@
 
 <p class="govuk-body">When a user moves to a new Business Unit, you could apply the same Security Role, but what they can access still changes because the scope is recalculated for the new Business Unit.</p>
 
-<h3 class="govuk-heading-m">Example 1: Business Unit–level access</h3>
+<h3 class="govuk-heading-m">Examples</h3>
+
+<p class="govuk-body">Consider the example Business Unit structure shown below:</p> 
+
+<img src="/assets/images/businessunit_example.png" alt="Example business unit structure">
+
+
+<h3 class="govuk-heading-s">Example 1: Business Unit–level access</h3>
 
 <p class="govuk-body">Scenario:</p>
 <ul class="govuk-list govuk-list--bullet">
-  <li>Sarah is in the Complaints Business Unit</li>
+  <li>Sarah is in the UK Business Unit</li>
   <li>Sarah has a Security Role that gives "Business Unit" read access for Cases</li>
 </ul>
 
-<p class="govuk-body">This means: Sarah can see all Cases owned by the Complaints Business Unit, but none owned by the Marketing Business Unit.</p>
+<p class="govuk-body">This means Sarah can only see Cases owned by the UK Business Unit, Sarah cannot see Cases owned by other Business Units (CRM, International, North or South).</p>
 
-<h3 class="govuk-heading-m">Example 2: Parent/Child access</h3>
 
-<p class="govuk-body">Example Business Unit structure:</p>
+<h3 class="govuk-heading-s">Example 2: Parent/Child access</h3>
+
+<p class="govuk-body">Scenario:</p>
 <ul class="govuk-list govuk-list--bullet">
-  <li>Root Business Unit</li>
-  <li>UK Business Unit (child of Root)</li>
-  <li>London Business Unit (child of UK Business Unit)</li>
+  <li>John is also in the UK Business Unit</li>
+  <li>John has a Security Role that gives "Parent/Child" access to Cases</li>
 </ul>
 
-<p class="govuk-body">Scenario: John is in UK Business Unit and has a Security Role that gives "Parent/Child" access.</p>
-
-<p class="govuk-body">This means: John can see records in UK Business Unit and London Business Unit. John cannot see records in the Root Business Unit.</p>
-
-<h3 class="govuk-heading-m">Example 3: Organisation-level access</h3>
-
-<p class="govuk-body">Scenario: Robert is in Finance Business Unit and has a Security Role that gives organisation-level access to Claims.</p>
-
-<p class="govuk-body">This means: Robert can see all Claims across the organisation, regardless of Business Units.</p>
+<p class="govuk-body">This means John can see Cases in the UK Business Unit plus North and South child Business Units. John cannot see Cases in the CRM or International Business Units.</p>
 
 
+<h3 class="govuk-heading-s">Example 3: Organisation-level access</h3>
+
+<p class="govuk-body">Scenario:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Robert is in the International Business Unit</li>
+  <li>Robert has a Security Role that gives "organisation-level" access to Claims</li>
+</ul>
+
+<p class="govuk-body">This means Robert can see all Claims across the organisation, regardless of Business Units.</p>
+
+
+<h3 class="govuk-heading-s">Example 4: Combination of the above (most common)</h3>
+
+<p class="govuk-body">Scenario:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Emma is in the UK Business Unit</li>
+  <li>Emma has a Security Role that gives:</li>
+     <ul>
+      <li>Organisation-level access to Contacts and Organisations</li>
+      <li>Parent/Child access to Cases</li>
+      <li>Business Unit access to Tasks</li>
+    </ul>
+</ul>
+
+<p class="govuk-body">This means Emma can see all Contacts and Organisations across the organisation, Cases within the UK, North and South Business Units, and Tasks within the UK Business Unit.</p>
 
 
 
@@ -114,17 +138,17 @@
 
 <p class="govuk-body">You can assign Security Roles to Teams as well as Users. A Team belongs to a Business Unit in the same way as a user, and any user who joins the Team inherits its Security Roles as well as their own (multiple Security Roles can work in combination to provide a total set of permissions). This is useful when users across different Business Units need shared access.</p>
 
-<h3 class="govuk-heading-m">Example 4: Cross-team working</h3>
+<h3 class="govuk-heading-s">Example 5: Cross-team working</h3>
 
 <p class="govuk-body">Scenario:</p>
 <ul class="govuk-list govuk-list--bullet">
-  <li>The Escalations Team is in the Claims Business Unit</li>
+  <li>The Escalations Team is in the UK Business Unit</li>
   <li>The Escalations Team has a Security Role which gives Business Unit level permissions to Case records</li>
-  <li>Daniel is in the Finance Business Unit and cannot see Case records</li>
+  <li>Daniel is in the International Business Unit and cannot see Case records in the UK Business Unit</li>
   <li>Daniel gets added to the Escalations Team</li>
 </ul>
 
-<p class="govuk-body"><strong>This means:</strong> Daniel gains access to Case records through the Team, without needing to move Business Units.</p>
+<p class="govuk-body"><strong>This means:</strong> Daniel inherits access to Case records in the UK Business Unit through the Team membership, without needing to move Business Units.</p>
 
 
 
