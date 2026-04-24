@@ -21,17 +21,63 @@
 {% endif %}
 
 {{ contentsList([
-  { text: "Name", href: "#reference" }
+  { text: "Why Re‑use Is Important", href: "#why" },
+  { text: "Re‑usable Design Patterns", href: "#design-patterns" },
+  { text: "Re‑usable Platform Components", href: "#components" },
+  { text: "Packaging, Ownership, and Governance", href: "#packaging" },
+  { text: "Designing for Re‑use from the Start", href: "#re-use" }
 ]) }}
 
 
 
-<p class="govuk-body">Coming soon...</p>
+
+<p class="govuk-body">Creating re‑usable patterns and components is a key principle for building scalable and consistent Dynamics 365 solutions. By designing solutions that can be reused across teams and projects, we reduce duplication, improve quality, and deliver value more quickly.</p>
+
+
+
+
+<h2 class="govuk-heading-m" id="why">Why Re‑use Is Important</h2>
+
+<p class="govuk-body">Re‑usable patterns and components help establish consistency across DfE's Dynamics 365 estate. Users should benefit from familiar experiences and behaviours, while project teams gain confidence from using proven, well‑understood components. Re‑use reduces rework, limits the introduction of defects, and lowers long‑term support and maintenance effort by minimising unnecessary variation.</p>
+
+
+
+
+
+<h2 class="govuk-heading-m" id="design-patterns">Re‑usable Design Patterns</h2>
+
+<p class="govuk-body">Standard design patterns should be defined and applied consistently across all Dynamics 365 solutions. These patterns might cover areas such as functionality, data modelling, security, automation, integration, and user experience.</p>
+
+<p class="govuk-body">Patterns should be documented, reviewed periodically, and evolved as platform capabilities and needs change.</p>
+
+
+
+<h2 class="govuk-heading-m" id="components">Re‑usable Platform Components</h2>
+
+<p class="govuk-body">Dynamics 365 and the Power Platform provide opportunities to create reusable components. Shared Dataverse tables, columns, common business rules, Power Automate flows, dashboards, and other components can often be designed once and reused many times. Components should be designed to be as generic and configurable as possible, avoiding solution‑specific logic or hard‑coded values.</p>
+
+
+
+
+<h2 class="govuk-heading-m" id="packaging">Packaging, Ownership, and Governance</h2>
+
+<p class="govuk-body">Reusable assets should be packaged and managed in a controlled way. Grouping shared components into core solutions helps promote reuse in a consistent way. Clear ownership should be established for shared components, with defined processes for change and versioning.</p>
+
+
+
+
+<h2 class="govuk-heading-m" id="re-use">Designing for Re‑use from the Start</h2>
+
+<p class="govuk-body">To be effective, re‑use must be designed in from the beginning. Components should be built with multiple consumers in mind, environment‑specific logic should be avoided, and intended usage should be clearly documented. Early consideration of re‑use ensures components remain flexible, valuable, and easy to adopt by other teams.</p>
+
+
+
+
 
 
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__prev">
-    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/architecture/design-principles'].url }}" rel="prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/architecture/product-suite'].url }}" rel="prev">
       <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
         <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
       </svg>
@@ -39,7 +85,7 @@
         Previous<span class="govuk-visually-hidden"> page</span>
       </span>
       <span class="govuk-visually-hidden">:</span>
-      <span class="govuk-pagination__link-label">{{ pages['crm/architecture/design-principles'].title }}</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/architecture/product-suite'].title }}</span>
     </a>
   </div>
 </nav>

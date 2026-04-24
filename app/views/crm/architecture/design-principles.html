@@ -21,30 +21,219 @@
 {% endif %}
 
 {{ contentsList([
-  { text: "Name", href: "#reference" }
+  { text: "Simplicity", href: "#simplicity" },
+  { text: "User-Centred Design", href: "#user-centred-design" },
+  { text: "Configure Before You Customise", href: "#configure-before-you-customise" },
+  { text: "Leverage the Wider Power Platform", href: "#leverage-the-wider-power-platform" },
+  { text: "Modularity", href: "#modularity" },
+  { text: "Consistency and Re-use", href: "#consistency-and-reuse" },
+  { text: "Separation of Concerns", href: "#separation-of-concerns" },
+  { text: "Single Responsibility Principle (SRP)", href: "#single-responsibility-principle" },
+  { text: "Loose Coupling", href: "#loose-coupling" },
+  { text: "Abstraction", href: "#abstraction" },
+  { text: "Scalability", href: "#scalability" },
+  { text: "Performance", href: "#performance" },
+  { text: "Resilience", href: "#resilience" },
+  { text: "Availability", href: "#availability" },
+  { text: "Secure by Design", href: "#secure-by-design" },
+  { text: "Maintainability", href: "#maintainability" }
 ]) }}
 
 
 
-<p class="govuk-body">Coming soon...</p>
+<p class="govuk-body">This page outlines the core architecture and design principles that guide how DfE design, implement, and extend Microsoft Dynamics 365 solutions. These principles aim to ensure our solutions are scalable, secure, maintainable, and aligned with both Microsoft best practice and organisational standards.</p>
+
+<p class="govuk-body">Dynamics 365 is a cloud platform built on Microsoft Dataverse and tightly integrated with the wider Power Platform and Microsoft 365 ecosystem. DfE's architectural approach leverages these native capabilities rather than recreating them through custom development.</p>
+
+<p class="govuk-body">All Dynamics 365 implementations should align with these principles unless a clear, documented exception has been approved.</p>
+
+
+
+<h2 class="govuk-heading-m" id="simplicity">Simplicity (KISS – Keep It Simple Stupid)</h2>
+<p class="govuk-body">
+KISS (Keep It Simple Stupid) is an architectural principle that promotes designing solutions that are as simple as possible while still meeting business needs. Simpler designs are easier to understand, build, test and support, and they reduce the risk of errors and long‑term technical debt.
+</p>
+<p class="govuk-body">
+In a software and Dynamics 365 context, KISS means favouring standard platform features and clear, straightforward logic over complex or over‑engineered custom solutions. Complexity should only be introduced where it is genuinely required and delivers clear value. 
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Utilise out of box platform features where suitable</li>
+  <li>Design for clarity and ease of understanding</li>
+  <li>Keep non-technical users in mind</li>
+  <li>Challenge unnecessary complex requirements and offer simple alternatives</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="user-centred-design">User-Centred Design</h2>
+<p class="govuk-body">
+User-centred design ensures that Dynamics 365 supports how users actually work, rather than forcing them to adapt to follow a technical driven design. This involves designing streamlined forms, intuitive processes and role-appropriate interfaces that minimise effort and reduce load. A strong focus on user needs increases adoption, improves data quality and reduces reliance on training and support.
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Design the UI based on the needs of user roles and responsibilities</li>
+  <li>Reduce unnecessary data entry forms, fields and manual steps</li>
+  <li>Validate designs through user feedback and testing</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="configure-before-you-customise">Configure Before You Customise</h2>
+<p class="govuk-body">
+Dynamics 365 provides a wide range of out-of-the-box (OOTB) configuration capabilities that are designed to meet common business requirements without the need for custom development. These include configurable forms, views, business rules, business process flows and security roles. Using configuration wherever possible ensures solutions remain aligned with Microsoft’s supported upgrade path, are easier to understand for admins, and reduce long-term technical debt. 
+</p>
+<p class="govuk-body">
+Customisation should only be introduced where configuration genuinely cannot meet business needs.
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use OOTB configuration features as the default approach</li>
+  <li>Reserve custom code for scenarios where configuration alone cannot meet a requirement</li>
+  <li>Prioritise supportability and maintainance over technical sophistication</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="leverage-the-wider-power-platform">Leverage the Wider Power Platform</h2>
+<p class="govuk-body">
+Dynamics 365 is part of the wider Power Platform ecosystem and should not be designed in isolation. Power Automate, Power Apps, Power BI and Dataverse each provide strengths that complement Dynamics capabilities. Architectures that utilise the platform are more flexible, easier to extend and better aligned with Microsoft's strategic direction.
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use Power Automate for automation, orchestration and lightweight integration</li>
+  <li>Use Power Apps to tailor user experiences where OOTB Dynamics 365 apps are not appropriate</li>
+  <li>Use Power Pages where simple data capture is required</li>
+  <li>Use Power BI for advanced analytics and insights</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="modularity">Modularity</h2>
+<p class="govuk-body">
+Modular solution design breaks large implementations into smaller, well-defined parts aligned to business capabilities. This approach enables independent development, clearer ownership and more controlled deployment across multiple environments.
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Organise functionality into logical solutions and functional modules</li>
+  <li>Align modules to business areas rather than technical implementations</li>
+  <li>Plan for independent changes and de-coupled deployments</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="consistency-and-reuse">Consistency and Re-use</h2>
+<p class="govuk-body">
+Consistency and reuse improve quality, predictability and development efficiency. Applying common patterns and components across Dynamics 365 environments reduces duplication and makes solutions easier to support.
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Develop generic re-usable functionality over service specific functionality</li>
+  <li>Package functionality into managed solutions that can be reused on other environments</li>
+  <li>Reuse shared plugins, flows and common tables</li>
+  <li>Apply consistent design and architecture patterns</li>
+  <li>Reuse standard approaches across teams and projects</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="separation-of-concerns">Separation of Concerns</h2>
+<p class="govuk-body">
+Separation of concerns ensures that different responsibilities within the solution are handled in appropriate layers. In Dynamics 365, this means keeping user interface logic, business logic, data validation and integrations distinct. Clear separation reduces complexity, simplifies troubleshooting and improves maintainability.
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Keep UI behaviour focused on user experience and simple form based validation</li>
+  <li>Implement core business logic and data validation server-side to ensure it also applies to bulk updates and data imports</li>
+  <li>Isolate integrations as distinct components</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="single-responsibility-principle">Single Responsibility Principle (SRP)</h2>
+<p class="govuk-body">
+The Single Responsibility Principle suggests that each component should have one clear purpose and a single reason to change. In Dynamics 365, this leads to smaller, more focused components and functionality that is easier to understand, test and modify in isolation without unintended side effects.
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Design components to handle a single event or business rules</li>
+  <li>Create Power Automate flows with a single clearly defined outcome</li>
+  <li>Avoid combining unrelated functionality in one component</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="loose-coupling">Loose Coupling</h2>
+<p class="govuk-body">
+Loose coupling minimises dependencies between components so that changes in one area have minimal impact elsewhere. In Dynamics 365, loosely coupled designs are more managable, easier to extend and better able to cope with change.
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use asynchronous processing to avoid one process waiting for another to complete</li>
+  <li>Message brokers and queues can decouple two integrated applications</li>
+  <li>Integrate using APIs and event-driven approaches</li>
+  <li>Design components to evolve independently</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="abstraction">Abstraction</h2>
+<p class="govuk-body">
+Abstraction hides an applications implementation details behind clear interfaces, allowing underlying logic to change without affecting consumers. External applications should be able to integrate with Dynamics 365 without having to understand or rely on the Dynamics 365 data model or business rules.
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Centralise common logic in shared services or custom APIs</li>
+  <li>Use configuration over customisation wherever possible</li>
+  <li>Avoid exposing internal implementation details to other applications and services</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="scalability">Scalability</h2>
+<p class="govuk-body">
+Scalability ensures a system can handle growth in users, data volume, and workload without requiring significant redesign. A scalable solution continues to perform effectively as demand increases, supporting both planned expansion and unexpected spikes in usage.
+</p>
+<p class="govuk-body">
+In a software and Dynamics 365 context, scalability involves designing efficient ways of displaying data, minimising synchronous processing, and using asynchronous or event-driven approaches where appropriate. It also means considering integrations, automation, and reporting so that increased volumes do not degrade user experience or system performance.
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use asynchronous processing for long-running operations</li>
+  <li>Design efficient queries by reducing the number of related lookup columns in views</li>
+  <li>Plan for growth in both users and data</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="performance">Performance</h2>
+<p class="govuk-body">
+Performance directly impacts user productivity and confidence in the system. Efficient Dynamics 365 designs minimise unnecessary processing, reduce load on the platform and ensure responsive user experiences.
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Limit synchronous logic on frequently used events</li>
+  <li>Reduce data loaded on forms, views and dashboards</li>
+  <li>Consider performance during initial design, not at the point where performance is compromised</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="resilience">Resilience</h2>
+<p class="govuk-body">
+Resilient focuses on a system's ability to cope with failures and continue to operate in a controlled and predictable way. A resilient solution anticipates that things will go wrong, such as temporary service outages, integration failures, or unexpected data, and is designed to handle these situations without services failing. In a Dynamics 365 context, resilience means designing processes and integrations that fail gracefully. 
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Handle errors by logging/alerting appropriately and continuing to function where possible</li>
+  <li>Use automatic retries and asynchronous processing where appropriate</li>
+  <li>Ensure errors and retries are logged and visible</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="availability">Availability</h2>
+<p class="govuk-body">
+Availability ensures that business-critical functionality is online and available when users need it. Architectural decisions should align with Microsoft's service availability and avoid introducing any custom dependencies that reduce overall system uptime.
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Design integrations to tolerate temporary outages and re-process events once services are back online</li>
+  <li>Avoid introducing single points of failure</li>
+  <li>Align expectations with platform service levels, especially when working with SaaS solutions and other vendors</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="secure-by-design">Secure by Design</h2>
+<p class="govuk-body">
+Security must be built into Dynamics 365 solutions from the start. Making full use of the platform's security/RBAC (role based access control) model reduces risk, supports compliance and protects data.
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Apply the principle of least privilege</li>
+  <li>Use role-based and business unit security controls</li>
+  <li>Secure integrations and automations appropriately</li>
+  <li>Ensure service accounts and application users have only the permissions required</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="maintainability">Maintainability</h2>
+<p class="govuk-body">
+Maintainable solutions can be easily supported and adapted as business needs and the platform evolves over time. This is especially important given the regular update cadence of Dynamics 365 changes deployed by Microsoft.
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Design with future changes in mind</li>
+  <li>Only use Microsoft supported methods to develop Dynamics 365</li>
+  <li>Use out of box functionality where possible</li>
+  <li>Document key architectural decisions</li>
+</ul>
+
+
+
+
 
 
 
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
-  <div class="govuk-pagination__prev">
-    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/architecture/product-suite'].url }}" rel="prev">
-      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
-        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
-      </svg>
-      <span class="govuk-pagination__link-title">
-        Previous<span class="govuk-visually-hidden"> page</span>
-      </span>
-      <span class="govuk-visually-hidden">:</span>
-      <span class="govuk-pagination__link-label">{{ pages['crm/architecture/product-suite'].title }}</span>
-    </a>
-  </div>
   <div class="govuk-pagination__next">
-    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/architecture/patterns-components'].url }}" rel="next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/architecture/integration'].url }}" rel="next">
       <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
         <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
       </svg>
@@ -52,7 +241,7 @@
         Next<span class="govuk-visually-hidden"> page</span>
       </span>
       <span class="govuk-visually-hidden">:</span>
-      <span class="govuk-pagination__link-label">{{ pages['crm/architecture/patterns-components'].title }}</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/architecture/integration'].title }}</span>
     </a>
   </div>
 </nav>

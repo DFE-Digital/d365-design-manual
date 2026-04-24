@@ -1,0 +1,363 @@
+{% set pageData = pages['crm/architecture/integration'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Common Integration Patterns", href: "#common-integration-patterns" },
+  { text: "Synchronous Request (API‑Based)", href: "#synchronous-request-response" },
+  { text: "Asynchronous Messaging", href: "#asynchronous-messaging" },
+  { text: "Publish and Subscribe (Event‑Driven Integration)", href: "#publish-subscribe" },
+  { text: "Batch Integration", href: "#batch-integration" },
+  { text: "File‑Based Integration", href: "#file-based-integration" },
+  { text: "Integration Technologies", href: "#integration-technologies" },
+  { text: "Power Platform", href: "#power-platform" },
+  { text: "Azure Integration Services", href: "#azure-integration-services" },
+  { text: "Integration Technology Decision Matrix", href: "#matrix" },
+  { text: "Summary", href: "#summary" }
+]) }}
+
+
+
+
+<p class="govuk-body">
+  Integrating Microsoft Dynamics 365 with other systems is a common requirement. Dynamics 365 typically sits at the centre of business processes and must integrate data with ERPs, finance systems, data warehouses, legacy platforms, third‑party products, and custom applications. Choosing the right integration pattern and technology is critical to achieving scalability, resilience, security, and maintainability.
+</p>
+
+<p class="govuk-body">
+  This page summarises common integration patterns used with Dynamics 365, examples of when to use them, the key Power Platform and Azure integration technologies available, and recommended best practices.
+</p>
+
+<h1 class="govuk-heading-l" id="common-integration-patterns">
+  Common Integration Patterns
+</h1>
+
+<h2 class="govuk-heading-m" id="synchronous-request-response">
+  1. Synchronous Request (API-Based)
+</h2>
+
+<p class="govuk-body">
+The API-based integration pattern is a synchronous request-response approach where one system calls an API exposed by another system and waits for an immediate response. In Dynamics 365, this is typically implemented using the Dataverse Web API, allowing external systems to create, read, update, or delete records and invoke custom actions in real time. This pattern is well suited to scenarios where instant feedback is required for the user, such as creating a Case and returning a reference number to give to a customer over the phone.
+</p>
+<p class="govuk-body">
+While this is a simple approach, it potentially introduces a dependency between systems. Performance and availability of the calling system are directly affected by Dynamics 365 response times, API limits, and failures. For this reason, API-based integration should only be used for genuinely real-time requirements, with asynchronous or event-driven patterns preferred for high-volume, background, or non-critical processes.
+</p>
+
+<p class="govuk-body">When to use:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Real-time validations</li>
+  <li>User-driven actions</li>
+  <li>Scenarios where an immediate outcome is required</li>
+</ul>
+
+<p class="govuk-body">Examples:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>An external service creating a Case record in Dynamics 365 and immediately displaying the reference number to the user</li>
+  <li>Validating organisation details in real time before an application is submitted</li>
+</ul>
+
+
+<h2 class="govuk-heading-m" id="asynchronous-messaging">
+  2. Asynchronous Messaging
+</h2>
+
+<p class="govuk-body">
+  The asynchronous messaging integration pattern enables systems to communicate by sending messages that are processed independently and at a later time, without requiring the sender to wait for an immediate response. In Dynamics 365, this pattern is commonly used alongside messaging or event technologies, allowing changes in data to be published as messages for downstream systems to consume. This approach is well suited to background processing, high-volume updates, and scenarios where immediate user feedback is not required.
+</p>
+<p class="govuk-body">
+  By decoupling the sender and receiver, asynchronous messaging improves scalability, resilience, and exception handling. If Dynamics 365 or a downstream system is temporarily unavailable, messages can be retried or processed once service is restored. However, this pattern typically requires careful design around message formats, ordering, retries, and idempotency, as outcomes are not immediate and failures may surface later meaning messages may need to be re-processed in a different order.
+</p>
+
+<p class="govuk-body">When to use:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Non-blocking operations where systems are decoupled</li>
+  <li>High-volume background processing</li>
+  <li>Improved resilience and scalability</li>
+</ul>
+
+<p class="govuk-body">Examples:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Publishing a message when an organisation record is updated for downstream synchronisation</li>
+  <li>Sending case updates to another system without impacting user experience</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="publish-subscribe">
+  3. Publish and Subscribe (Event-Driven Integration)
+</h2>
+
+<p class="govuk-body">
+  The publish and subscribe integration pattern is an event-driven approach where Dynamics 365 publishes events and one or more subscribing systems react to them independently. The publishing system has no awareness of who consumes the event, which enables one-to-many integrations and loose coupling. This pattern is well suited to scenarios where multiple downstream systems need to respond to the same business change, such as an update to a contact record which is used in multiple applications.
+</p>
+<p class="govuk-body">
+  This approach improves scalability and extensibility, allowing new subscribers to be added without impacting Dynamics 365 or existing integrations. However, this means consumers must handle the design for elements such as retries and idempotency. This pattern is ideal for broadcasting data, but less suitable where immediate confirmation or guaranteed processing is required.
+</p>
+
+<p class="govuk-body">When to use:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>One-to-many integrations broadcasting data</li>
+  <li>Event-driven architectures</li>
+  <li>Near real-time data propagation to multiple systems</li>
+</ul>
+
+<p class="govuk-body">Examples:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>An grant approval event triggering updates to finance, compliance, and analytics systems</li>
+  <li>Multiple downstream services reacting to the same business event</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="batch-integration">
+  4. Batch Integration
+</h2>
+
+<p class="govuk-body">
+  Batch integration is a pattern where data is exchanged in bulk at scheduled intervals, rather than processed continuously or in real time. It is commonly used for large data volumes, reporting, reconciliation, or reference data updates, such as nightly exports to a data warehouse or periodic imports from external systems. While efficient and simple to operate, batch integration introduces delayed availability of data and is not suitable for time‑critical scenarios.
+</p>
+
+<p class="govuk-body">When to use:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Large data volumes</li>
+  <li>Reporting and reconciliation</li>
+  <li>Non-time-critical scenarios</li>
+</ul>
+
+<p class="govuk-body">Examples:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Nightly export of transactional data to a data warehouse</li>
+  <li>Scheduled import of price lists or reference data</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="file-based-integration">
+  5. File-Based Integration
+</h2>
+
+<p class="govuk-body">
+  File-based integration involves systems exchanging data using files such as CSV, XML, or JSON, typically transferred via secure mechanisms like SFTP or shared storage. This pattern is often used when integrating with legacy or third-party systems that do not support modern APIs.
+</p>
+<p class="govuk-body">
+  While file-based integration is relatively simple and widely supported, it tends to introduce higher latency and weaker validation, as errors are often detected only after file processing. It is best suited to low-frequency, non-time-critical scenarios such as bulk data imports or exports. It should generally be avoided in favour of other integration patterns.
+</p>
+
+<p class="govuk-body">When to use:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Legacy systems with limited API capability</li>
+  <li>Batch-oriented integrations</li>
+</ul>
+
+<p class="govuk-body">Examples:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Importing contacts via CSV</li>
+  <li>Exporting data to SFTP for external partners</li>
+</ul>
+
+
+
+
+
+
+<h1 class="govuk-heading-l" id="integration-technologies">
+  Integration Technologies
+</h1>
+
+<h2 class="govuk-heading-m" id="power-platform">
+  Power Platform Integration Technologies
+</h2>
+
+<p class="govuk-body">
+  Power Platform provides low-code integration technologies that allow Dynamics 365 to integrate with other systems quickly, consistently, and with minimal custom development. Central to this capability is Power Automate, which enables lightweight integrations to be built. Power Automate uses pre-built standard connectors for Microsoft services (such as Dynamics 365, Dataverse, SharePoint, and Outlook) and many third‑party SaaS platforms, allowing integrations to be created by configuring actions and triggers rather than writing bespoke code.
+</p>
+<p class="govuk-body">
+  For systems that do not have an existing connector, custom connectors can be created to expose external APIs in a reusable and governed way. This allows low-code flows to interact with bespoke or legacy services while still enforcing consistency, security, and authentication standards. Power Platform integration technologies are best suited to low complexity scenarios, such as event-driven workflows, simple data synchronisation, approvals, and notifications. They are not suitable for high-volume processing, complex integrations, or advanced transformation scenarios where Azure integration services are better suited.
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Triggering processes on record CRUD operations</li>
+  <li>Simple synchronisation with Microsoft and third-party SaaS applications</li>
+  <li>Rapid delivery with minimal infrastructure management</li>
+  <li>Custom Connectors allow external APIs to be exposed consistently to Dynamics 365 and Power Apps</li>
+</ul>
+
+
+<h2 class="govuk-heading-m" id="azure-integration-services">
+  Azure Integration Technologies
+</h2>
+
+<p class="govuk-body">
+  Azure provides enterprise-grade integration technologies that complement Dynamics 365 by supporting high-volume, complex, and scalable integration scenarios. Services such as Azure Logic Apps, Azure Functions, Azure Service Bus, and Azure Event Grid are commonly used to implement asynchronous, event-driven integrations. These services enable robust message handling, custom transformations, and reliable communication between Dynamics 365 and other internal or external systems, as well as functionality to better handle failures and reprocessing events.
+</p>
+<p class="govuk-body">
+  Azure integration technologies are best suited to code-first approaches where greater control, performance, and extensibility are required. They support advanced patterns such as publish and subscribe, guaranteed delivery, and long-running processes, making them ideal for complex environments with multiple systems and complex dependencies. They require more technical expertise and operational management than Power Platform solutions, but Azure services provide the resilience, scalability, and flexibility needed for business critical Dynamics 365 integrations.
+</p>
+
+
+
+<p class="govuk-body">
+  <strong>Azure Logic Apps</strong> – A low-code integration and workflow application for orchestrating multi-step, long-running integrations between Dynamics 365 and other systems.
+</p>
+
+<p class="govuk-body">
+  <strong>Azure Functions</strong> – A serverless compute service used to run pro-code bespoke logic, such as data transformation or validation, in response to events or API calls.
+</p>
+
+<p class="govuk-body">
+  <strong>Azure Service Bus</strong> – A reliable messaging service using queues and topics to support asynchronous, decoupled, and resilient integrations with Dynamics 365 and other systems.
+</p>
+
+<p class="govuk-body">
+  <strong>Azure Event Grid</strong> – A lightweight event routing service used to publish and distribute events from Dynamics 365 and other systems to multiple subscribers in near real time.
+</p>
+
+
+
+
+<h1 class="govuk-heading-l" id="matrix">
+  Integration Technology Decision Matrix
+</h1>
+
+<p class="govuk-body">
+  This decision matrix provides a high-level comparison of integration technologies available for Dynamics 365, helping choose the most appropriate option based on integration style, complexity, scalability, and delivery approach.
+</p>
+
+
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Capability / Requirement</th>
+      <th scope="col" class="govuk-table__header">Power Automate</th>
+      <th scope="col" class="govuk-table__header">Azure Logic Apps</th>
+      <th scope="col" class="govuk-table__header">Azure Functions</th>
+      <th scope="col" class="govuk-table__header">Azure Service Bus</th>
+      <th scope="col" class="govuk-table__header">Azure Event Grid</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Integration style</th>
+      <td class="govuk-table__cell">Low‑code workflows</td>
+      <td class="govuk-table__cell">Orchestrated workflows</td>
+      <td class="govuk-table__cell">Code‑based processing</td>
+      <td class="govuk-table__cell">Messaging</td>
+      <td class="govuk-table__cell">Event routing</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Best suited for</th>
+      <td class="govuk-table__cell">Lightweight event driven integrations</td>
+      <td class="govuk-table__cell">Enterprise orchestration</td>
+      <td class="govuk-table__cell">Custom logic and transformations</td>
+      <td class="govuk-table__cell">Reliable async integration</td>
+      <td class="govuk-table__cell">Publish and subscribe scenarios</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Low-code support</th>
+      <td class="govuk-table__cell">Yes</td>
+      <td class="govuk-table__cell">Yes</td>
+      <td class="govuk-table__cell">No</td>
+      <td class="govuk-table__cell">No</td>
+      <td class="govuk-table__cell">No</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Built-in connectors</th>
+      <td class="govuk-table__cell">Microsoft and third-party</td>
+      <td class="govuk-table__cell">Microsoft and third-party</td>
+      <td class="govuk-table__cell">None</td>
+      <td class="govuk-table__cell">None</td>
+      <td class="govuk-table__cell">None</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Asynchronous processing</th>
+      <td class="govuk-table__cell">Yes</td>
+      <td class="govuk-table__cell">Yes</td>
+      <td class="govuk-table__cell">Yes</td>
+      <td class="govuk-table__cell">Yes</td>
+      <td class="govuk-table__cell">Yes</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">High-volume handling</th>
+      <td class="govuk-table__cell">Limited</td>
+      <td class="govuk-table__cell">Moderate</td>
+      <td class="govuk-table__cell">Strong</td>
+      <td class="govuk-table__cell">Strong</td>
+      <td class="govuk-table__cell">Strong</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Guaranteed delivery</th>
+      <td class="govuk-table__cell">Limited</td>
+      <td class="govuk-table__cell">Yes</td>
+      <td class="govuk-table__cell">Bespoke</td>
+      <td class="govuk-table__cell">Yes</td>
+      <td class="govuk-table__cell">No</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Typical use cases</th>
+      <td class="govuk-table__cell">Notifications, approvals, simple events</td>
+      <td class="govuk-table__cell">Complex business processes</td>
+      <td class="govuk-table__cell">Performing complex validation or enrichment </td>
+      <td class="govuk-table__cell">Delivering events reliably to another application</td>
+      <td class="govuk-table__cell">Business event broadcasting</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+<h1 class="govuk-heading-l" id="summary">
+  Summary
+</h1>
+
+<p class="govuk-body">
+  Dynamics 365 supports a wide range of integration patterns from simple synchronous APIs to fully event-driven architectures. Power Platform enables lightweight low-code integration, while Azure services provide enterprise-grade scalability and resilience. 
+</p>
+
+
+
+
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/architecture/design-principles'].url }}" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/architecture/design-principles'].title }}</span>
+    </a>
+  </div>
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/architecture/product-suite'].url }}" rel="next">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/architecture/product-suite'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+
+{% endblock %}
