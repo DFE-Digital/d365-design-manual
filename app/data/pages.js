@@ -494,7 +494,8 @@ const pages = {
     children: [
       "crm/architecture/product-suite",
       "crm/architecture/design-principles",
-      "crm/architecture/patterns-components"
+      "crm/architecture/patterns-components",
+      "crm/architecture/integration"
     ]
   },
   "crm/architecture/product-suite": {
@@ -516,6 +517,13 @@ const pages = {
     url: "/crm/architecture/patterns-components/",
     description: "Reusable architectural patterns and shared components that support standardisation and repeatable delivery across multiple services.",
     template: "crm/architecture/patterns-components",
+    parent: "crm/architecture"
+  },
+  "crm/architecture/integration": {
+    title: "Integration Patterns",
+    url: "/crm/architecture/integration/",
+    description: "Recommended integration patterns for Dynamics 365, outlining how to connect Dynamics 365 with other systems in a secure, scalable and maintainable way using the Power Platform and supported Microsoft technologies.",
+    template: "crm/architecture/integration",
     parent: "crm/architecture"
   },
   "crm/environments": {
