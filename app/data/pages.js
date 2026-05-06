@@ -492,11 +492,19 @@ const pages = {
     template: "crm/architecture",
     parent: "crm",
     children: [
+      "crm/architecture/strategy",
       "crm/architecture/product-suite",
       "crm/architecture/design-principles",
       "crm/architecture/patterns-components",
       "crm/architecture/integration"
     ]
+  },
+  "crm/architecture/strategy": {
+    title: "CRM Strategy",
+    url: "/crm/architecture/strategy/",
+    description: "Sets out the guard rails, principles and long-term vision for how DfE will use CRM to create consistent, scalable and maintainable applications across the organisation.",
+    template: "crm/architecture/strategy",
+    parent: "crm/architecture"
   },
   "crm/architecture/product-suite": {
     title: "Dynamics 365 & Power Platform Product Suite",
