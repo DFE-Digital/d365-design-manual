@@ -1,0 +1,275 @@
+{% set pageData = pages['crm/architecture/document-management'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Use SharePoint Instead of Storing Files in Dynamics 365", href: "#why-use-sharepoint" },
+  { text: "Recommended Configuration and Best Practices", href: "#configuration-and-best-practices" },
+  { text: "Security Considerations", href: "#security-considerations" },
+  { text: "Summary", href: "#summary" }
+]) }}
+
+
+
+
+
+<p class="govuk-body">
+  As part of our CRM standards, Dynamics 365 should use the out-of-the-box (OOTB) integration with SharePoint Online as the default and preferred approach for storing documents and files related to records stored in Dynamics 365.
+</p>
+
+<p class="govuk-body">
+  Dynamics 365 is optimised for structured data and process automation, not large-scale file storage. SharePoint Online is Microsoft's strategic platform for document management and collaboration. Using the OOTB integration aligns with Microsoft best practice and provides a scalable, secure and supportable solution.
+</p>
+
+<h2 class="govuk-heading-l" id="why-use-sharepoint">
+  Use SharePoint Instead of Storing Files in Dynamics 365
+</h2>
+
+<h2 class="govuk-heading-m" id="platform-alignment">
+  Platform Alignment and Supportability
+</h2>
+
+<p class="govuk-body">
+  Microsoft designs Dynamics 365 and SharePoint to work together. The out-of-the-box integration:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Is fully supported by Microsoft</li>
+  <li>Requires no custom code to maintain</li>
+  <li>Continues to benefit from Microsoft product updates</li>
+</ul>
+
+<p class="govuk-body">
+  Avoiding custom document storage solutions reduces technical debt and upgrade risk.
+</p>
+
+<h2 class="govuk-heading-m" id="performance-and-costs">
+  Improved Performance and Reduced Dataverse Storage Costs
+</h2>
+
+<p class="govuk-body">
+  Storing files directly in Dataverse:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Consumes Dataverse file storage, which is limited and chargeable</li>
+  <li>Can negatively impact form load times and API performance</li>
+</ul>
+
+<p class="govuk-body">
+  Using SharePoint:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Keeps Dataverse lean and performant</li>
+  <li>Leverages significantly cheaper and more scalable storage</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="document-management-capabilities">
+  Rich Document Management Capabilities
+</h2>
+
+<p class="govuk-body">
+  SharePoint provides features that Dynamics does not natively offer, including:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Document versioning and history</li>
+  <li>Check-in and check-out</li>
+  <li>Co-authoring in Office documents</li>
+  <li>Metadata, views and search</li>
+  <li>Retention labels and records management</li>
+</ul>
+
+<p class="govuk-body">
+  These capabilities are available immediately with the out-of-the-box integration.
+</p>
+
+<h2 class="govuk-heading-m" id="user-experience">
+  Seamless User Experience in Dynamics
+</h2>
+
+<p class="govuk-body">
+  With the integration enabled:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Each record automatically links to a corresponding SharePoint folder</li>
+  <li>Documents are surfaced directly in the Dynamics timeline or Documents tab</li>
+  <li>Users do not need to manually navigate to SharePoint</li>
+</ul>
+
+<p class="govuk-body">
+  This provides the benefits of SharePoint without compromising the Dynamics user experience.
+</p>
+
+
+
+
+<h2 class="govuk-heading-l" id="configuration-and-best-practices">
+  Recommended Configuration and Best Practices
+</h2>
+
+<h2 class="govuk-heading-m" id="enable-integration">
+  Enable and Configure the Out-of-the-Box Integration
+</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use the standard Dynamics 365 SharePoint Online integration wizard</li>
+  <li>Use SharePoint Online rather than on-premises SharePoint</li>
+  <li>Configure one parent SharePoint site per environment unless there is a strong business reason not to</li>
+</ul>
+
+<p class="govuk-body">
+  Avoid custom folder logic unless absolutely required.
+</p>
+
+<h2 class="govuk-heading-m" id="folder-structure">
+  Folder Structure
+</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use the default folder-per-record model</li>
+  <li>Avoid deep or highly customised folder hierarchies</li>
+  <li>Allow Dynamics to manage folder creation automatically</li>
+</ul>
+
+<p class="govuk-body">
+  Over-customisation increases complexity and makes permissions harder to manage.
+</p>
+
+<h2 class="govuk-heading-m" id="file-standards">
+  File and Naming Standards
+</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Encourage meaningful file names and rely on versioning rather than duplicating files</li>
+  <li>Avoid storing emails or system-generated files unless there is a clear business need</li>
+  <li>Use SharePoint metadata only where there is a defined reporting or governance requirement</li>
+</ul>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="security-considerations">
+  Security Considerations 
+</h2>
+
+<p class="govuk-body">
+  Dynamics 365 security roles and record-level permissions are <strong>not replicated to SharePoint</strong> out of the box. This must be explicitly considered as part of solution design.
+</p>
+
+<h2 class="govuk-heading-m" id="baseline-security-model">
+  Baseline Security Model (Recommended Standard)
+</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Secure access primarily at the SharePoint site or document library level</li>
+  <li>Grant access to the SharePoint site only to users who are authorised to access documents in Dynamics</li>
+  <li>Avoid relying on folder-level or item-level security wherever possible</li>
+</ul>
+
+<p class="govuk-body">
+  This model is simpler, easier to audit, and more performant.
+</p>
+
+<h2 class="govuk-heading-m" id="site-permissions">
+  Using SharePoint Site Permissions
+</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use Azure AD security groups to control site or library access</li>
+  <li>Map these groups to user roles such as Customer Service Agent</li>
+  <li>Manage group membership outside of Dynamics</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="folder-security">
+  Folder-Level Security (Use with Caution)
+</h2>
+
+<p class="govuk-body">
+  Folder-level permissions may be used where there is a genuine regulatory or confidentiality requirement and where only a small number of records require restricted access.
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Automate permission assignment where possible</li>
+  <li>Avoid breaking inheritance at scale</li>
+  <li>Document the approach clearly for support teams</li>
+</ul>
+
+<p class="govuk-body">
+  Heavy use of folder-level permissions can cause performance and manageability issues.
+</p>
+
+<h2 class="govuk-heading-m" id="sensitive-documents">
+  Highly Sensitive Documents
+</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use separate SharePoint sites for highly restricted content</li>
+  <li>Apply sensitivity labels, retention policies and Conditional Access</li>
+  <li>Avoid storing such documents against standard Dynamics records</li>
+</ul>
+
+<p class="govuk-body">
+  Dynamics should link to the document location rather than hosting the file directly.
+</p>
+
+<h2 class="govuk-heading-m" id="what-we-avoid">
+  What We Avoid as a Standard
+</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Storing large volumes of files directly in Dataverse</li>
+  <li>Custom document storage solutions</li>
+  <li>Custom security synchronisation between Dynamics and SharePoint</li>
+  <li>Over‑customised folder structures or permission models</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="summary">Summary</h2>
+
+<p class="govuk-body">
+  Using the out-of-the-box Dynamics 365 and SharePoint Online integration is the standard approach for document storage. It delivers better performance, lower cost, richer document management and a secure, supportable architecture when security is deliberately designed in SharePoint.
+</p>
+
+
+
+
+
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/architecture/patterns-components'].url }}" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/architecture/patterns-components'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+{% endblock %}
