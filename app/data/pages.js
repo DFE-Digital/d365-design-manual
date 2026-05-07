@@ -496,7 +496,8 @@ const pages = {
       "crm/architecture/product-suite",
       "crm/architecture/design-principles",
       "crm/architecture/patterns-components",
-      "crm/architecture/integration"
+      "crm/architecture/integration",
+      "crm/architecture/document-management"
     ]
   },
   "crm/architecture/strategy": {
@@ -532,6 +533,13 @@ const pages = {
     url: "/crm/architecture/integration/",
     description: "Recommended integration patterns for Dynamics 365, outlining how to connect Dynamics 365 with other systems in a secure, scalable and maintainable way using the Power Platform and supported Microsoft technologies.",
     template: "crm/architecture/integration",
+    parent: "crm/architecture"
+  },
+  "crm/architecture/document-management": {
+    title: "SharePoint Integration for Document Storage",
+    url: "/crm/architecture/document-management/",
+    description: "Defines the standard approach for storing documents in Dynamics 365 using the out-of-the-box SharePoint integration, including configuration, best practice and security considerations.",
+    template: "crm/architecture/document-management",
     parent: "crm/architecture"
   },
   "crm/environments": {
