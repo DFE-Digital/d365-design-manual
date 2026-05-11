@@ -497,7 +497,9 @@ const pages = {
       "crm/architecture/design-principles",
       "crm/architecture/patterns-components",
       "crm/architecture/integration",
-      "crm/architecture/document-management"
+      "crm/architecture/document-management",
+      "crm/architecture/email-integration",
+      "crm/architecture/reporting"
     ]
   },
   "crm/architecture/strategy": {
@@ -536,10 +538,24 @@ const pages = {
     parent: "crm/architecture"
   },
   "crm/architecture/document-management": {
-    title: "SharePoint Integration for Document Storage",
+    title: "SharePoint Document Storage",
     url: "/crm/architecture/document-management/",
     description: "Defines the standard approach for storing documents in Dynamics 365 using the out-of-the-box SharePoint integration, including configuration, best practice and security considerations.",
     template: "crm/architecture/document-management",
+    parent: "crm/architecture"
+  },
+  "crm/architecture/email-integration": {
+    title: "Email Integration",
+    url: "/crm/architecture/email-integration/",
+    description: "Dynamics 365 uses server-side synchronisation with Exchange Online as the standard approach for all email integration to ensure a secure, reliable and centrally managed service.",
+    template: "crm/architecture/email-integration",
+    parent: "crm/architecture"
+  },
+  "crm/architecture/reporting": {
+    title: "Reporting and Analytics",
+    url: "/crm/architecture/reporting/",
+    description: "Dynamics 365 reporting uses out-of-the-box capabilities where appropriate, with Power BI as the standard tool for advanced reporting and Azure Synapse Link and Data Lake used for large datasets to protect production performance.",
+    template: "crm/architecture/reporting",
     parent: "crm/architecture"
   },
   "crm/environments": {
