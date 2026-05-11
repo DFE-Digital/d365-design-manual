@@ -21,12 +21,127 @@
 {% endif %}
 
 {{ contentsList([
-  { text: "Name", href: "#reference" }
+  { text: "Why Azure DevOps", href: "#why-azure-devops" },
+  { text: "Source Control Standard", href: "#source-control" },
+  { text: "Best Practice Guidelines", href: "#best-practice-guidelines" },
+  { text: "What This Standard Avoids", href: "#what-this-standard-avoids" },
+  { text: "Standardised Pipeline Approach", href: "#standardised-pipelines" }
 ]) }}
 
 
 
-<p class="govuk-body">Coming soon...</p>
+
+
+<p class="govuk-body">
+All deployments to DfE's Dynamics 365 environments should be performed using automated Azure DevOps pipelines. This includes the deployment of Dynamics 365 solutions, Power Pages portals and associated reference data. Manual deployments are avoided to ensure consistency, repeatability and control across all environments.
+</p>
+
+<p class="govuk-body">
+Application source code, configuration and deployment assets must be stored in Azure DevOps repositories. 
+</p>
+
+<h2 class="govuk-heading-l" id="why-azure-devops">
+Why Azure DevOps 
+</h2>
+
+<p class="govuk-body">
+Azure DevOps gives an integrated platform for source control, build and release management, and auditing. Using Azure DevOps pipelines aligns with Microsoft best practice for Dynamics 365 DevOps.
+</p>
+
+<p class="govuk-body">
+Azure DevOps provides:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Automated and repeatable deployments</li>
+  <li>Clear audit trails and deployment history</li>
+  <li>Reduced deployment risk caused by manual changes</li>
+  <li>Consistent promotion across environments</li>
+  <li>Integrates natively with Microsoft Power Platform and Azure</li>
+</ul>
+
+<p class="govuk-body">
+Azure DevOps pipelines are used to deploy the following components:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Dynamics 365 managed and unmanaged solutions</li>
+  <li>Power Pages (portal) configuration and content</li>
+  <li>Reference and configuration data required by solutions</li>
+</ul>
+
+
+<h2 class="govuk-heading-l" id="source-control">
+Source Control Standard
+</h2>
+
+<p class="govuk-body">
+All Dynamics 365 solution source, portal configuration and deployment scripts must be stored in Azure DevOps repositories. This ensures:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Version control of all changes</li>
+  <li>Clear history of who changed what and when</li>
+  <li>Ability to review and approve changes before deployment</li>
+  <li>Consistency between environments</li>
+</ul>
+
+<p class="govuk-body">
+Configuration and reference data required for deployments should be defined and included in source control alongside solution assets.
+</p>
+
+<h2 class="govuk-heading-l" id="best-practice-guidelines">
+Best Practice Guidelines
+</h2>
+
+<p class="govuk-body">
+The following best practices apply to Dynamics 365 deployments:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>All deployments must be executed via Azure DevOps pipelines</li>
+  <li>No manual solution imports to test or production environments</li>
+  <li>Source repositories must be hosted in Azure DevOps</li>
+  <li>Pipelines should be parameterised to support multiple environments</li>
+  <li>Reference data deployments should be automated and repeatable</li>
+  <li>Production deployments should be controlled and auditable</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="what-this-standard-avoids">
+What This Standard Avoids
+</h2>
+
+<p class="govuk-body">
+This standard deliberately avoids:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Manual deployments and ad hoc environment changes</li>
+  <li>Untracked solution changes made directly in target environments</li>
+  <li>Source code stored outside of Azure DevOps</li>
+  <li>Inconsistent deployment approaches across teams or services</li>
+</ul>
+
+
+
+<h2 class="govuk-heading-l" id="standardised-pipelines">
+Standardised Pipeline Approach
+</h2>
+
+<p class="govuk-body">
+An SDT standardised approach to Azure DevOps pipelines for Dynamics 365 deployments is available and must be used wherever possible. This approach provides a consistent, reusable pipeline structure for deploying Dynamics solutions, Power Pages (portals) and reference data across environments, along with AI generated release notes.
+</p>
+
+<p class="govuk-body">
+The standard pipelines are designed to promote best practice, reduce duplication and ensure deployments are secure, auditable and repeatable.
+</p>
+
+<p class="govuk-body">
+Documentation, guidance and example pipeline templates are maintained on the Azure DevOps wiki. Teams should refer to the DevOps wiki for the latest standards, usage guidance and implementation details before creating or modifying deployment pipelines.
+</p>
+
+
+
 
 
 
