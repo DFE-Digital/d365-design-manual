@@ -1,0 +1,139 @@
+{% set pageData = pages['crm/architecture/email-integration'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Why We Use Server-Side Synchronisation", href: "#why-we-use-sss" },
+  { text: "What Server-Side Synchronisation Is Used For", href: "#what-sss-is-used-for" },
+  { text: "Best Practice Guidelines", href: "#best-practice-guidelines" },
+  { text: "What This Standard Avoids", href: "#what-this-standard-avoids" }
+]) }}
+
+
+
+
+<p class="govuk-body">
+All email integration between Microsoft Dynamics 365 and Microsoft Exchange Online is implemented using Server-Side Synchronisation as the DfE approved method. This approach ensures a secure, scalable and supportable integration that aligns with Microsoft best practice and reduces reliance on desktop-based components or custom integrations.
+</p>
+
+<p class="govuk-body">
+Server-Side Synchronisation enables Dynamics 365 to send and receive emails directly with Exchange Online, rather than through individual user devices or Outlook clients.
+</p>
+
+<h2 class="govuk-heading-l" id="why-we-use-sss">Why We Use Server-Side Synchronisation</h2>
+
+<p class="govuk-body">
+Server-Side Synchronisation is Microsoft’s recommended email integration approach for Dynamics 365 when using Exchange Online. It is designed for cloud environments and is fully supported by Microsoft across Dynamics 365 Online and Microsoft 365 tenants.
+</p>
+
+<p class="govuk-body">
+Because synchronisation occurs between Microsoft services, email processing is not dependent on users being online, Outlook being open, or local add-ins.
+</p>
+
+<p class="govuk-body">
+Server-Side Synchronisation also improves security and compliance by using secure authentication, avoiding the storage of credential, and supporting better auditing and monitoring.
+</p>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="what-sss-is-used-for">What Server-Side Synchronisation Is Used For</h2>
+
+<p class="govuk-body">
+Server-Side Synchronisation is used for the following within Dynamics 365:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Sending emails from Dynamics 365 email activities</li>
+  <li>Receiving incoming emails into Dynamics 365 mailboxes</li>
+  <li>Automatically tracking emails against Dynamics 365 records where configured</li>
+  <li>Processing email attachments in line with CRM policies</li>
+  <li>Supporting shared and queue mailboxes</li>
+</ul>
+
+
+
+<h2 class="govuk-heading-l" id="best-practice-guidelines">Best Practice Guidelines</h2>
+
+<p class="govuk-body">
+The following best practices apply to the use of Server-Side Synchronisation with Exchange Online:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Server-Side Synchronisation is the only DfE approved method for Dynamics 365 email integration</li>
+  <li>All CRM integrated mailboxes must be hosted in Exchange Online</li>
+  <li>Dynamics 365 mailboxes should be centrally managed</li>
+  <li>Mailbox alerts, warnings and synchronisation errors should be proactively reviewed</li>
+  <li>Automatic email tracking rules should be carefully designed to avoid over-tracking</li>
+  <li>Tracking should focus on relevant business correspondence rather than all inbound email</li>
+  <li>Shared mailboxes should be used for team-based communications and access to a central mailbox</li>
+  <li>Email volume, attachment sizes and retention should be monitored regularly</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="what-this-standard-avoids">What This Standard Avoids</h2>
+
+<p class="govuk-body">
+This standard deliberately avoids the following approaches:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Client-side dependencies on Outlook or user devices</li>
+  <li>Per-user configuration for email integration</li>
+  <li>Legacy email routers or deprecated Microsoft technologies</li>
+  <li>Inconsistent or unmanaged email tracking behaviour</li>
+</ul>
+
+
+
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/architecture/document-management'].url }}" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/architecture/document-management'].title }}</span>
+    </a>
+  </div>
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/architecture/reporting'].url }}" rel="next">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/architecture/reporting'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+
+
+
+{% endblock %}

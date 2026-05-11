@@ -1,0 +1,133 @@
+{% set pageData = pages['crm/architecture/reporting'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "Reporting Approach", href: "#reporting-approach" },
+  { text: "Why Power BI Is the Standard Tool", href: "#why-power-bi" },
+  { text: "Reporting on Large Data Sets", href: "#large-datasets" },
+  { text: "Use of Azure Synapse Link", href: "#synapse-link" },
+  { text: "Best Practice Guidelines", href: "#best-practice-guidelines" }
+]) }}
+
+
+
+
+
+
+<p class="govuk-body">
+Dynamics 365 provides a range of out-of-the-box reporting and analytics capabilities that support day-to-day operational reporting, such as views, charts, dashboards and basic analytics available directly within the application.
+</p>
+
+<p class="govuk-body">
+Where reporting requirements extend beyond these native capabilities, Microsoft Power BI is the standard, DfE approved tool for reporting and analytics. This approach ensures reporting remains scalable, performant and aligned with Microsoft and DfE data and analytics standards.
+</p>
+
+<h2 class="govuk-heading-l" id="reporting-approach">Reporting Approach</h2>
+
+<p class="govuk-body">
+Reporting requirements should be assessed based on complexity, data volume and performance impact. Simple, operational reporting should be delivered using Dynamics 365 native tools wherever feasible and where there is no known impact.
+</p>
+
+<p class="govuk-body">
+For more complex, high volumne, analytical or cross-system reporting needs, Power BI should be used. Power BI provides advanced modelling, visualisation and sharing capabilities while maintaining strong security and governance controls.
+</p>
+
+<h2 class="govuk-heading-l" id="why-power-bi">Why Power BI Is the Standard Tool</h2>
+
+<p class="govuk-body">
+Power BI is Power Platforms reporting and analytics tool and is tightly integrated with both Dynamics 365 and the wider Microsoft Azure ecosystem. It enables consistent reporting approaches across services and teams.
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Supports advanced visualisations and interactive reporting</li>
+  <li>Enables reusable datasets and semantic models</li>
+  <li>Scales to support organisational-wide reporting needs</li>
+  <li>Provides robust security, access control and auditing</li>
+  <li>Reduces reliance on custom reporting solutions within Dynamics 365</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="large-datasets">Reporting on Large Data Sets</h2>
+
+<p class="govuk-body">
+Dynamics 365 is a transactional system and should not be used as a primary data source for large-scale analytics or high-volume reporting. Running complex queries directly against production environments can negatively impact performance and user experience.
+</p>
+
+<p class="govuk-body">
+Where reporting involves large data sets, historical analysis, or intensive data processing, data must be moved out of Dynamics 365 to avoid impacts on production services.
+</p>
+
+<h2 class="govuk-heading-l" id="synapse-link">Use of Azure Synapse Link</h2>
+
+<p class="govuk-body">
+Azure Synapse Link for Dataverse is the supported method for exporting Dynamics 365 data to Azure Data Lake. This provides a near real-time, read-only copy of data optimised for analytics workloads.
+</p>
+
+<p class="govuk-body">
+Once data is available in Data Lake, Power BI should connect directly to the Data Lake rather than querying Dynamics 365. This ensures reporting performance is separated from operational workloads.
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Minimises performance impact on Dynamics 365 environments</li>
+  <li>Supports large-scale and historical reporting</li>
+  <li>Enables integration with other data sources</li>
+  <li>Aligns with enterprise data architecture principles</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="best-practice-guidelines">Best Practice Guidelines</h2>
+
+<p class="govuk-body">
+The following best practices apply to reporting in Dynamics 365:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use native Dynamics 365 reporting for simple, operational needs</li>
+  <li>Use Power BI where reporting requirements exceed out-of-the-box capabilities</li>
+  <li>Avoid heavy or complex reporting directly against production environments</li>
+  <li>Use Azure Synapse Link to move data to Data Lake for large or complex datasets</li>
+  <li>Connect Power BI to Data Lake rather than Dynamics 365 for high-volume reporting</li>
+  <li>Ensure reports align with data governance, security and retention policies</li>
+</ul>
+
+
+
+
+
+
+
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/architecture/email-integration'].url }}" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/architecture/email-integration'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+{% endblock %}
