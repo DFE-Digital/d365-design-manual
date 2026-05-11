@@ -55,9 +55,9 @@
 
 {% set crm_sections = [
   { title: "Overview", url: pages['crm'].url, key: "overview" },
+  { title: "Architecture", url: pages['crm/architecture'].url, key: "architecture" },
   { title: "Configuration", url: pages['crm/configuration'].url, key: "configuration" },
   { title: "Customisation", url: pages['crm/customisation'].url, key: "customisation" },
-  { title: "Architecture", url: pages['crm/architecture'].url, key: "architecture" },
   { title: "Environments", url: pages['crm/environments'].url, key: "environments" },
   { title: "Security", url: pages['crm/security'].url, key: "security" },
   { title: "Other", url: pages['crm/other'].url, key: "other" }
@@ -87,7 +87,9 @@
   pages["crm/architecture/design-principles"],
   pages["crm/architecture/integration"],
   pages["crm/architecture/patterns-components"],
-  pages["crm/architecture/document-management"]
+  pages["crm/architecture/document-management"],
+  pages["crm/architecture/email-integration"],
+  pages["crm/architecture/reporting"]
 ] %}
 
 {% set environments = [
