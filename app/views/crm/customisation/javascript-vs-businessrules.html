@@ -1,0 +1,165 @@
+{% set pageData = pages['crm/customisation/javascript-vs-businessrules'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+{% if showTitlePanel == false %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+{% else %}
+  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
+{% endif %}
+
+{{ contentsList([
+  { text: "When to use Business Rules", href: "#business-rules" },
+  { text: "When to use JavaScript", href: "#javascript" },
+  { text: "Complex Business Rules may not be efficient", href: "#complex-rules" },
+  { text: "Summary", href: "#summary" }
+]) }}
+
+
+
+<p class="govuk-body">Dynamics 365 provides two main options for implementing client‑side logic on forms - Business Rules and JavaScript. Both can support field validation, visibility, defaulting values and enforcing simple behaviour.</p>
+
+<p class="govuk-body">This page explains when each option should be used, why it matters, and the limitations and considerations to be aware of.</p>
+
+
+
+
+<h2 class="govuk-heading-l" id="business-rules">When to use Business Rules</h2>
+
+<p class="govuk-body">Business Rules should be the default choice for simple logic that does not require complex conditions. They are easy to configure, update and deploy, and do not require any coding skills.</p>
+
+<h2 class="govuk-heading-m" id="suitable_br">Business Rules are suitable for:</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Showing or hiding fields</li>
+  <li>Setting field values</li>
+  <li>Clearing field values</li>
+  <li>Validating data with simple conditions</li>
+  <li>Locking or unlocking fields</li>
+  <li>Applying straightforward multi‑step conditions</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="why_br">Why choose Business Rules</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>They are easier to maintain and understand</li>
+  <li>They are visible directly on the table and form, improving transparency</li>
+  <li>They reduce the amount of custom code within a solution</li>
+  <li>They work across both the web client and mobile app automatically</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="considerations-br">Key considerations</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Business Rules can become inefficient when conditions are very complex</li>
+  <li>They are harder to debug when multiple rules overlap</li>
+  <li>They run on the client side, so intensive logic can impact form performance</li>
+</ul>
+
+<p class="govuk-body">Note: If a requirement can be met cleanly using a Business Rule, it should be used before considering JavaScript.</p>
+
+
+
+
+
+
+<h2 class="govuk-heading-l" id="javascript">When to use JavaScript</h2>
+
+<p class="govuk-body">JavaScript should be used when the requirement is too advanced or too performance‑critical for Business Rules. JavaScript allows complete control over the client‑side experience and supports more granular, dynamic behaviour.</p>
+
+<h2 class="govuk-heading-m" id="examples-procode">JavaScript is suitable for:</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Advanced form logic with complex branching</li>
+  <li>Dynamic control over fields, tabs or sections</li>
+  <li>Real‑time calculations or logic that must run immediately</li>
+  <li>Interacting with the form context</li>
+  <li>Calling APIs or running asynchronous client‑side operations</li>
+  <li>Situations where performance is important and Business Rules become too slow or layered</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="why-js">Why choose JavaScript</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>It provides full control over the form behaviour</li>
+  <li>It can handle complex logic more efficiently than multiple Business Rules</li>
+  <li>It can deliver better performance in scenarios where many Business Rules would run sequentially</li>
+</ul>
+
+<h2 class="govuk-heading-m" id="considerations-js">Key considerations</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>JavaScript must be version‑controlled, code‑reviewed and tested</li>
+  <li>It increases long‑term maintenance overhead</li>
+  <li>It requires developer skills</li>
+</ul>
+
+
+
+
+<h2 class="govuk-heading-l" id="complex-rules">Complex Business Rules may not be efficient</h2>
+
+<p class="govuk-body">While Business Rules can handle multi‑step conditions and branching logic, they are not always efficient. A complex Business Rule that tries to do too much can slow down form load times, clash with other rules, or be harder to understand and maintain.</p>
+
+<p class="govuk-body">In these cases, a small, well‑written JavaScript function can provide:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>Better performance</li>
+  <li>Clearer logic flow</li>
+  <li>Easier debugging</li>
+  <li>More predictable behaviour during form events</li>
+</ul>
+
+<p class="govuk-body">Choosing JavaScript for these scenarios is acceptable, as long as configuration and simpler Business Rules have been considered first and ruled out.</p>
+
+
+
+
+
+<h2 class="govuk-heading-l" id="summary">Summary</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use Business Rules first for simple logic on forms</li>
+  <li>Use JavaScript when behaviour becomes complex or performance‑sensitive</li>
+  <li>Avoid overly complex Business Rules that reduce performance when JavaScript may be more efficient</li>
+  <li>Always choose the approach that delivers the requirement with the least complexity, while staying maintainable and aligned with DfE’s CRM standards</li>
+</ul>
+
+
+
+
+<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
+  <div class="govuk-pagination__prev">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/customisation/configuration-first'].url }}" rel="prev">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Previous<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/customisation/configuration-first'].title }}</span>
+    </a>
+  </div>
+  <div class="govuk-pagination__next">
+    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/customisation/power-automate'].url }}" rel="next">
+      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+      </svg>
+      <span class="govuk-pagination__link-title">
+        Next<span class="govuk-visually-hidden"> page</span>
+      </span>
+      <span class="govuk-visually-hidden">:</span>
+      <span class="govuk-pagination__link-label">{{ pages['crm/customisation/power-automate'].title }}</span>
+    </a>
+  </div>
+</nav>
+
+
+
+{% endblock %}
