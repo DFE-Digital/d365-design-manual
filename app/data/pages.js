@@ -444,7 +444,7 @@ const pages = {
     parent: "crm",
         children: [
       "crm/customisation/configuration-first",
-      "crm/customisation/javascriptvsbusinessrules",
+      "crm/customisation/javascript-vs-businessrules",
       "crm/customisation/plugins",
       "crm/customisation/power-automate",
       "crm/customisation/pro-code"
@@ -457,11 +457,11 @@ const pages = {
     template: "crm/customisation/configuration-first",
     parent: "crm/customisation"
   },
-  "crm/customisation/javascriptvsbusinessrules": {
+  "crm/customisation/javascript-vs-businessrules": {
     title: "JavaScript vs Business Rules",
-    url: "/crm/customisation/javascriptvsbusinessrules/",
+    url: "/crm/customisation/javascript-vs-businessrules/",
     description: "When to use Business Rules for simple client‑side logic and validation, and use JavaScript where more advanced or conditional behaviour is required.",
-    template: "crm/customisation/javascriptvsbusinessrules",
+    template: "crm/customisation/javascript-vs-businessrules",
     parent: "crm/customisation"
   },
   "crm/customisation/plugins": {
