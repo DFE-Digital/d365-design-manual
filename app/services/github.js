@@ -1,20 +1,13 @@
 import { Octokit } from '@octokit/rest';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-import fs from 'fs';
-import path from 'path';
 
 const OWNER = 'DFE-DIGITAL';
 const REPO = 'd365-gds-powerpages';
 const WORKFLOW_TIMEOUT_MS = 10 * 60 * 1000; // 10 minutes max wait
 
-// Load private key from environment or file
-const privateKeyPath = process.env.GH_PRIVATE_KEY_PATH || path.join(process.cwd(), 'd365-powerpages-importer.2025-06-29.private-key.pem');
-let privateKey = null;
-
-try {
-  privateKey = process.env.GH_PRIVATE_KEY || fs.readFileSync(privateKeyPath, 'utf8');
-} catch (err) {
+const privateKey = process.env.GH_APP_PRIVATE_KEY;
+if (!privateKey) {
   console.warn('GitHub App private key not found - GitHub integration will be unavailable');
 }
 
@@ -29,7 +22,7 @@ export function generateCorrelationId() {
  * Check if GitHub integration is available
  */
 export function isAvailable() {
-  return privateKey !== null && process.env.GH_APP_ID && process.env.GH_APP_INSTALL_ID;
+  return Boolean(privateKey) && Boolean(process.env.GH_APP_ID) && Boolean(process.env.GH_APP_INSTALL_ID);
 }
 
 /**
