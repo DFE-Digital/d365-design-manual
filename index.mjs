@@ -130,6 +130,11 @@ app.set('view engine', 'html'); // Set the default view engine to 'html'
 app.locals.serviceName = 'Dynamics 365 Design Manual';
 
 // Set up static file serving for the app's assets
+app.use('/assets/js/sdt-toolkit.js', (req, res, next) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Cross-Origin-Resource-Policy', 'cross-origin');
+  next();
+});
 app.use('/assets', express.static(path.join(__dirname, 'public/')));
 
 // Adds a Link header with a canonical URL to the response for URLs that end with a trailing slash (/). Useful for search engine optimization (SEO)
