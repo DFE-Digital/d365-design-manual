@@ -11,7 +11,7 @@
   'use strict';
 
   var PANEL_ID = 'sdt-d365-toolkit-panel';
-  var VERSION = 'v1.24';
+  var VERSION = 'v1.30';
   var API_VERSION = 'v9.2';
   var MARK = 'data-sdt-highlight';
   var WRAP = 'data-sdt-wrap';
@@ -652,99 +652,41 @@
     return { names: names, highlighted: highlighted };
   }
 
-  // Display names for every column on the table. Metadata shape varies between
-  // client versions, so several access patterns are tried before giving up and
-  // letting the caller fall back to logical names.
-  // The attribute list has to be passed in. Called without it, the Attributes
-  // collection comes back unpopulated, which is why display names previously
-  // only appeared for columns that happened to be on the form.
-  function attributeDisplayNames(xrm, table, logicalNames) {
-    var request = (logicalNames && logicalNames.length)
-      ? xrm.Utility.getEntityMetadata(table, logicalNames)
-        .then(null, function () { return xrm.Utility.getEntityMetadata(table); })
-      : xrm.Utility.getEntityMetadata(table);
-
-    return request.then(function (meta) {
-      var names = {};
-      var list = [];
-      var attributes = meta && meta.Attributes;
-      try {
-        if (attributes && typeof attributes.getAll === 'function') list = attributes.getAll();
-        else if (attributes && attributes.length !== undefined) list = attributes;
-        else if (attributes) {
-          list = Object.keys(attributes).map(function (k) { return attributes[k]; });
-        }
-      } catch (e) { list = []; }
-
-      list.forEach(function (a) {
-        if (!a || !a.LogicalName) return;
-        var label = a.DisplayName;
-        if (label && label.UserLocalizedLabel && label.UserLocalizedLabel.Label) {
-          label = label.UserLocalizedLabel.Label;
-        }
-        if (typeof label === 'string' && label) names[a.LogicalName] = label;
-      });
-      return names;
-    }, function () {
-      return {};
-    });
-  }
-
-  // Original labels of the fields that happen to be on the form. Used to fill
-  // gaps if the metadata call gives nothing back.
-  function formLabelMap(xrm, store) {
-    var labels = {};
-    try {
-      eachControl(xrm, function (c) {
-        var a = c.getAttribute && c.getAttribute();
-        if (!a) return;
-        var stored = store.labels[c.getName()];
-        labels[a.getName()] = stored !== undefined ? stored : c.getLabel();
-      });
-    } catch (e) { /* no form loaded */ }
-    return labels;
-  }
-
   var ANNOTATION = '@OData.Community.Display.V1.FormattedValue';
 
-  // Every column on the record, not just the ones on the form. Retrieving with
-  // no $select returns them all, and the formatted value annotations resolve
-  // option sets, lookups and dates for us.
   // Lookups come back as _fieldname_value.
   function logicalNameOf(key) {
     return /^_.+_value$/.test(key) ? key.slice(1, -6) : key;
   }
 
-  function allRecordValues(xrm, record, store) {
-    return xrm.WebApi.retrieveRecord(record.table, record.id).then(function (row) {
-      var columns = Object.keys(row).filter(function (key) { return key.indexOf('@') === -1; });
-      var logicals = columns.map(logicalNameOf);
+  // Every field on the table with the value this record holds for it. The
+  // metadata call supplies the complete field list - a record retrieve alone
+  // omits columns that are null, so it cannot tell you a field exists at all.
+  function allFields(xrm, record) {
+    return Promise.all([
+      tableSchema(xrm, record.table),
+      xrm.WebApi.retrieveRecord(record.table, record.id)
+    ]).then(function (results) {
+      var schema = results[0];
+      var row = results[1];
 
-      return attributeDisplayNames(xrm, record.table, logicals).then(function (names) {
-        var fallback = formLabelMap(xrm, store);
-        var out = [];
+      var values = {};
+      Object.keys(row).forEach(function (key) {
+        if (key.indexOf('@') > -1) return;
+        var formatted = row[key + ANNOTATION];
+        var value = formatted !== undefined ? formatted : row[key];
+        if (value === null || value === undefined || value === '') return;
+        if (typeof value === 'boolean') value = value ? 'Yes' : 'No';
+        values[logicalNameOf(key)] = String(value);
+      });
 
-        columns.forEach(function (key) {
-          var logical = logicalNameOf(key);
-          var display = names[logical] || fallback[logical] || null;
-
-          var formatted = row[key + ANNOTATION];
-          var value = formatted !== undefined ? formatted : row[key];
-          if (value === null || value === undefined || value === '') value = '(empty)';
-          else if (typeof value === 'boolean') value = value ? 'Yes' : 'No';
-
-          // Display name with the schema name alongside it. Where no display
-          // name is available the schema name stands alone rather than being
-          // repeated twice.
-          out.push({
-            sort: (display || logical).toLowerCase(),
-            label: display ? display + '  [' + logical + ']' : logical,
-            value: String(value)
-          });
-        });
-
-        out.sort(function (x, y) { return x.sort.localeCompare(y.sort); });
-        return out.map(function (r) { return [r.label, r.value]; });
+      return schema.map(function (field) {
+        var value = values[field.logical];
+        return {
+          logical: field.logical,
+          display: field.display,
+          value: value === undefined ? null : value
+        };
       });
     });
   }
@@ -866,6 +808,68 @@
     }
     return retrieve('name,statecode,formid').then(null, function () {
       return retrieve('name,statecode');
+    });
+  }
+
+  // Xrm.Utility.getEntityMetadata only returns attributes you already know the
+  // names of, and a record retrieve omits columns that are null, so neither can
+  // list a whole table. The metadata endpoint can. Same origin, same session.
+  function readLabel(displayName) {
+    if (!displayName) return '';
+    var user = displayName.UserLocalizedLabel;
+    if (user && user.Label) return user.Label;
+
+    // Fall back to any label that exists. UserLocalizedLabel is only populated
+    // when the label has been defined in the user's own language, so custom
+    // fields labelled in one language only come back empty without this.
+    var all = displayName.LocalizedLabels;
+    if (all && all.length) {
+      for (var i = 0; i < all.length; i++) {
+        if (all[i] && all[i].Label) return all[i].Label;
+      }
+    }
+    return '';
+  }
+
+  function tableSchema(xrm, table) {
+    var request = (typeof fetch === 'function') ? fetch : null;
+    if (!request) {
+      return Promise.reject(new Error('this browser does not support the metadata request'));
+    }
+
+    var url = xrm.Utility.getGlobalContext().getClientUrl() +
+      '/api/data/' + API_VERSION +
+      "/EntityDefinitions(LogicalName='" + table + "')/Attributes" +
+      '?$select=LogicalName,DisplayName';
+
+    return request(url, {
+      method: 'GET',
+      credentials: 'same-origin',
+      headers: {
+        Accept: 'application/json',
+        'OData-MaxVersion': '4.0',
+        'OData-Version': '4.0'
+      }
+    }).then(function (response) {
+      if (!response.ok) {
+        throw new Error('metadata request returned ' + response.status);
+      }
+      return response.json();
+    }).then(function (data) {
+      var out = [];
+      (data.value || []).forEach(function (attribute) {
+        var logical = attribute.LogicalName;
+        if (!logical) return;
+        out.push({
+          logical: logical,
+          display: readLabel(attribute.DisplayName)
+        });
+      });
+      out.sort(function (x, y) {
+        return String(x.display || x.logical).toLowerCase()
+          .localeCompare(String(y.display || y.logical).toLowerCase());
+      });
+      return out;
     });
   }
 
@@ -1008,6 +1012,8 @@
     events: ['M9.1 2.2L4.4 9.1h3.3l-.6 4.7L11.9 7H8.6z'],
     // list with a tick
     options: ['M3 4.6h6.4', 'M3 8h6.4', 'M3 11.4h4', 'M10.4 11.9l1.6 1.6 3-3.4'],
+    // table
+    table: ['M2.5 3.5h11v9h-11z', 'M2.5 6.5h11', 'M6.6 6.5v6'],
     // external link
     external: ['M9.4 3.2h3.4v3.4', 'M12.8 3.2L7.5 8.5', 'M12.2 9.4v3a1.4 1.4 0 0 1-1.4 1.4H3.9a1.4 1.4 0 0 1-1.4-1.4V5.5a1.4 1.4 0 0 1 1.4-1.4h3']
   };
@@ -1257,6 +1263,72 @@
     return grid;
   }
 
+  // Sliding two-state switch with a label either side. Clicking anywhere on it
+  // moves the knob to the other end and calls back with true when it lands on
+  // the right hand option.
+  function addSwitch(doc, parent, leftLabel, rightLabel, onChange) {
+    var right = false;
+
+    var wrap = el(doc, 'button', {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '9px',
+      padding: '5px 10px',
+      background: 'transparent',
+      color: T.text,
+      border: '1px solid ' + T.line,
+      borderRadius: '999px',
+      cursor: 'pointer',
+      font: T.font
+    });
+
+    var left = el(doc, 'span', { fontWeight: '600' }, leftLabel);
+
+    var track = el(doc, 'span', {
+      position: 'relative',
+      display: 'inline-block',
+      flexShrink: '0',
+      width: '38px',
+      height: '20px',
+      borderRadius: '999px',
+      background: T.button
+    });
+    var knob = el(doc, 'span', {
+      position: 'absolute',
+      top: '3px',
+      left: '3px',
+      width: '14px',
+      height: '14px',
+      borderRadius: '50%',
+      background: T.text,
+      transition: 'left 0.15s ease'
+    });
+    track.appendChild(knob);
+
+    var rightText = el(doc, 'span', { fontWeight: '600' }, rightLabel);
+
+    wrap.appendChild(left);
+    wrap.appendChild(track);
+    wrap.appendChild(rightText);
+
+    function paint() {
+      knob.style.left = right ? '21px' : '3px';
+      left.style.opacity = right ? '0.55' : '1';
+      rightText.style.opacity = right ? '1' : '0.55';
+      wrap.title = 'Showing ' + (right ? rightLabel : leftLabel);
+    }
+
+    wrap.onclick = function () {
+      right = !right;
+      paint();
+      onChange(right);
+    };
+
+    paint();
+    parent.appendChild(wrap);
+    return { element: wrap, isRight: function () { return right; } };
+  }
+
   function addAction(ui, grid, label, icon, handler, wide) {
     var b = el(ui.doc, 'button', {
       display: 'flex',
@@ -1411,6 +1483,159 @@
         ui.output.appendChild(row);
       });
     });
+  }
+
+  // Output meant to be read here or taken elsewhere. The list view is laid out
+  // like the other listings - label left, value right - and the JSON view is
+  // for pasting into code. Copy takes whichever view is showing.
+  function fieldLabel(item) {
+    return item.display ? item.display + '  [' + item.logical + ']' : item.logical;
+  }
+
+  function fieldList(items) {
+    return items.map(function (i) {
+      return fieldLabel(i) + ' = ' + (i.value === null ? '(empty)' : i.value);
+    }).join('\n');
+  }
+
+  function fieldJson(items) {
+    var map = {};
+    items.forEach(function (i) {
+      map[i.logical] = { displayName: i.display || null, value: i.value };
+    });
+    return JSON.stringify(map, null, 2);
+  }
+
+  function copyableList(ui, items, table, win) {
+    ui.output.textContent = '';
+
+    var format = 'list';
+
+    function text() {
+      return format === 'json' ? fieldJson(items) : fieldList(items);
+    }
+
+    var withValues = items.filter(function (i) { return i.value !== null; }).length;
+
+    // Heading and explanation get the full width on their own rows, so neither
+    // is squeezed against the controls.
+    var top = el(ui.doc, 'div', { marginBottom: '10px' });
+    var headingNode = el(ui.doc, 'div', { fontWeight: '600' }, '');
+    top.appendChild(headingNode);
+    top.appendChild(el(ui.doc, 'div', {
+      marginTop: '4px',
+      fontSize: '12.5px',
+      lineHeight: '1.45',
+      opacity: '0.8'
+    }, 'Every field on the table is listed, not only the fields on the form. Fields the record has no value for are shown as empty.'));
+
+    var controls = el(ui.doc, 'div', {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+      gap: '8px',
+      marginBottom: '12px'
+    });
+
+    function smallButton(label, icon) {
+      var b = el(ui.doc, 'button', {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '6px',
+        padding: '6px 10px',
+        background: T.button,
+        color: T.text,
+        border: '1px solid transparent',
+        borderRadius: '6px',
+        cursor: 'pointer',
+        font: T.font,
+        fontWeight: '600'
+      });
+      if (icon) {
+        var glyph = svg(ui.doc, icon);
+        glyph.style.flexShrink = '0';
+        b.appendChild(glyph);
+      }
+      var span = el(ui.doc, 'span', {}, label);
+      b.appendChild(span);
+      b.labelNode = span;
+      hover(b, T.button, T.buttonHover);
+      controls.appendChild(b);
+      return b;
+    }
+
+    var formatSwitch = addSwitch(ui.doc, controls, 'List', 'JSON', function (right) {
+      format = right ? 'json' : 'list';
+      render();
+    });
+    var copyButton = smallButton('Copy', ICON.copy);
+
+    var body = el(ui.doc, 'div', {});
+
+    function renderBody() {
+      body.textContent = '';
+      var list = items;
+
+      if (!list.length) {
+        body.appendChild(el(ui.doc, 'div', {}, 'Nothing to show.'));
+        return;
+      }
+
+      if (format === 'json') {
+        body.appendChild(el(ui.doc, 'div', {
+          font: T.font,
+          lineHeight: '1.5',
+          whiteSpace: 'pre-wrap',
+          wordBreak: 'break-word',
+          userSelect: 'text'
+        }, text()));
+        return;
+      }
+
+      list.forEach(function (item) {
+        var row = el(ui.doc, 'div', {
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: '16px',
+          padding: '6px 0',
+          borderBottom: '1px solid ' + T.line
+        });
+        row.appendChild(el(ui.doc, 'div', {
+          flexShrink: '0',
+          maxWidth: '55%',
+          wordBreak: 'break-word'
+        }, fieldLabel(item)));
+        row.appendChild(el(ui.doc, 'div', {
+          textAlign: 'right',
+          wordBreak: 'break-word',
+          opacity: item.value === null ? '0.65' : '1'
+        }, item.value === null ? '(empty)' : item.value));
+        body.appendChild(row);
+      });
+      if (body.lastChild) body.lastChild.style.borderBottom = '0';
+    }
+
+    function render() {
+      headingNode.textContent = items.length + ' fields on ' + table +
+        ' - ' + withValues + ' hold a value';
+      copyButton.labelNode.textContent = 'Copy';
+      renderBody();
+    }
+    copyButton.onclick = function () {
+      try {
+        win.navigator.clipboard.writeText(text()).then(
+          function () { copyButton.labelNode.textContent = 'Copied'; },
+          function () { copyButton.labelNode.textContent = 'Blocked'; }
+        );
+      } catch (e) {
+        copyButton.labelNode.textContent = 'Blocked';
+      }
+    };
+
+    ui.output.appendChild(top);
+    ui.output.appendChild(controls);
+    ui.output.appendChild(body);
+    render();
   }
 
   /* ---------------------------------------------------------------- boot --- */
@@ -1582,7 +1807,11 @@
         : notAFormMessage(fw.Xrm));
       return;
     }
-    fn(fw.Xrm);
+    try {
+      fn(fw.Xrm);
+    } catch (e) {
+      fail(ui, 'Failed: ' + (e && e.message ? e.message : 'unknown error'));
+    }
   }
 
   function failed(prefix) {
@@ -1636,7 +1865,7 @@
   // while active. The hover pair is swapped too, so hovering an active button
   // does not drop it back to the inactive colour.
   function setToggle(button, on, onLabel, offLabel) {
-    if (onLabel) button.labelNode.textContent = on ? onLabel : offLabel;
+    if (onLabel && button.labelNode) button.labelNode.textContent = on ? onLabel : offLabel;
     button.style.background = on ? T.buttonActive : T.button;
     button.style.borderColor = on ? T.buttonActiveBorder : 'transparent';
     hover(button,
@@ -1781,14 +2010,14 @@
       });
     });
 
-  addDisplayAction(ui, recordGroup, 'Display all values', 'Hide all values',
-    ACTION_ICON.values, function (active) {
+  addDisplayAction(ui, recordGroup, 'Show all fields', 'Hide all fields',
+    ACTION_ICON.table, function (active) {
       withApi(function (xrm) {
-        say(ui, 'Loading all field values...');
-        allRecordValues(xrm, record, store).then(function (values) {
+        say(ui, 'Reading fields and values...');
+        allFields(xrm, record).then(function (items) {
           if (!active()) return;
-          rows(ui, values, 'All ' + values.length + ' columns on this record, not just those on the form');
-        }, function (e) { if (active()) failed('Could not read the record')(e); });
+          copyableList(ui, items, record.table, win);
+        }, function (e) { if (active()) failed('Could not read the fields')(e); });
       });
     });
 
