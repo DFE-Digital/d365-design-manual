@@ -22,23 +22,57 @@
 
 {{ contentsList([
   { text: "Introduction", href: "#introduction" },
+  { text: "Before you start", href: "#before-you-start" },
   { text: "Quick reference", href: "#quick-reference" },
   { text: "Validation data object", href: "#creating-validation-object", children: [
     { text: "Base properties", href: "#base-properties" },
+    { text: "Limits set in the HTML", href: "#html-attributes" },
     { text: "Additional properties by input type", href: "#additional-properties" }
   ]},
-  { text: "Available functions", href: "#available-functions" },
+  { text: "Available functions", href: "#available-functions", children: [
+    { text: "Validation", href: "#functions-validation" },
+    { text: "Web API", href: "#functions-web-api" },
+    { text: "Files", href: "#functions-files" },
+    { text: "Errors", href: "#functions-errors" },
+    { text: "Buttons and spinners", href: "#functions-buttons" },
+    { text: "Cookies and page feedback", href: "#functions-cookies" },
+    { text: "Lower-level validation helpers", href: "#functions-validation-helper" }
+  ]},
+  { text: "Error messages", href: "#error-messages" },
   { text: "Code examples", href: "#code-examples" },
   { text: "Best practices", href: "#best-practices" }
 ]) }}
 
 <p class="govuk-body">The CRM Helper Framework is a JavaScript library designed to simplify validation and data submission tasks in Power Pages, particularly for interacting with Dynamics 365. It provides a set of reusable functions to handle form validation, data submission to CRM entities, and user experience enhancements like error handling, button state management, and loading spinners. This framework is pre-installed with the base portal, making it readily available for you to use in your front-end development.</p>
 
-<p class="govuk-body">This page covers how to set up validation, use the framework's functions, and provides practical examples for common scenarios.</p>
+<p class="govuk-body">This page describes version 03 of the framework. To find out which version your site uses and what's changed, see <a class="govuk-link" href="{{ pages['powerpages/getting-started/framework-versions'].url }}">framework versions</a>.</p>
+
+<p class="govuk-body">Some work can't be done safely in the browser, such as virus scanning files or calling a service that needs a key. For that, use <a class="govuk-link" href="{{ pages['powerpages/server-logic'].url }}">server logic</a>.</p>
+
+<h2 class="govuk-heading-l" id="before-you-start">Before you start</h2>
+
+<p class="govuk-body">The base portal sets up everything the framework needs. If you're using your own layouts, make sure every page has:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>jQuery, loaded before the framework</li>
+  <li>GOV.UK Frontend, started with <code>initAll()</code></li>
+  <li>a call to <code>DfEPortal.WebApi.Init()</code>, which sets up <code>webapi.safeAjax</code> with the site's anti-forgery token. The base portal's footer template does this.</li>
+  <li>an empty <code>&lt;div id="error-summary-container"&gt;&lt;/div&gt;</code> where the error summary should appear. The base portal's layouts include it.</li>
+</ul>
+
+<p class="govuk-body">Your HTML also needs to follow these conventions, which the component pages' examples already do:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>each field is inside a <code>govuk-form-group</code></li>
+  <li>a field's <code>id</code> is its column's logical name, which you also use as its <code>identifier</code></li>
+  <li>radios and checkboxes share a <code>name</code> equal to the identifier</li>
+  <li>a date input's day, month and year fields share a <code>name</code> equal to the identifier, and their <code>id</code>s contain <code>-day</code>, <code>-month</code> and <code>-year</code></li>
+  <li>the main submit button has the <code>id</code> <code>submit-btn</code>, because the framework's general error links to it</li>
+</ul>
 
 <h2 class="govuk-heading-l" id="quick-reference">Quick reference</h2>
 <table class="govuk-table">
-  <caption class="govuk-table__caption govuk-visually-hidden">Quick reference of available functions</caption>
+  <caption class="govuk-table__caption govuk-table__caption--m">Validation and page helpers</caption>
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th scope="col" class="govuk-table__header">Function</th>
@@ -47,40 +81,12 @@
   </thead>
   <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
-      <td class="govuk-table__cell"><code>ValidateData(inputObjArr)</code></td>
-      <td class="govuk-table__cell">Validates user input and displays error messages</td>
+      <td class="govuk-table__cell"><code>ValidateData(inputObjArr, errorContainer)</code></td>
+      <td class="govuk-table__cell">Validates the inputs, shows error messages and resolves with <code>true</code> or <code>false</code></td>
     </tr>
     <tr class="govuk-table__row">
-      <td class="govuk-table__cell"><code>WebApi.ConstructData(inputsObj)</code></td>
-      <td class="govuk-table__cell">Constructs a data object for CRM submission</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell"><code>WebApi.Update(recordId, entityName, dataObj)</code></td>
-      <td class="govuk-table__cell">Updates an existing CRM record</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell"><code>WebApi.Create(entityName, dataObj)</code></td>
-      <td class="govuk-table__cell">Creates a new CRM record</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell"><code>WebApi.Delete(recordId, entityName)</code></td>
-      <td class="govuk-table__cell">Deletes a CRM record</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell"><code>WebApi.Retrieve(entityName, searchQuery)</code></td>
-      <td class="govuk-table__cell">Retrieves records from a CRM table</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell"><code>WebApi.CallCloudFlow(flowApiId, data)</code></td>
-      <td class="govuk-table__cell">Calls a cloud flow and returns the response</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell"><code>WebApi.UploadFile(inputName, entityName, entityId)</code></td>
-      <td class="govuk-table__cell">Uploads a file to a file column on a record</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell"><code>WebApi.ProcessFileAndUploadToNotes(inputName, entityName, entityId)</code></td>
-      <td class="govuk-table__cell">Uploads a file as a note attachment</td>
+      <td class="govuk-table__cell"><code>GetFileContent(identifier, format)</code></td>
+      <td class="govuk-table__cell">Reads the selected files as base64 or binary</td>
     </tr>
     <tr class="govuk-table__row">
       <td class="govuk-table__cell"><code>DisableButton(buttonID)</code> / <code>EnableButton(buttonID)</code></td>
@@ -89,6 +95,102 @@
     <tr class="govuk-table__row">
       <td class="govuk-table__cell"><code>ShowLoadingSpinner(spinnerID)</code> / <code>HideLoadingSpinner(spinnerID)</code></td>
       <td class="govuk-table__cell">Shows or hides a loading spinner</td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m">DfEPortal.WebApi</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Function</th>
+      <th scope="col" class="govuk-table__header">Description</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.ConstructData(inputsObj)</code></td>
+      <td class="govuk-table__cell">Builds the data object to send to CRM from the inputs</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.Create(entitySetName, dataObj)</code></td>
+      <td class="govuk-table__cell">Creates a record and resolves with its ID</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.Update(recordId, entitySetName, dataObj)</code></td>
+      <td class="govuk-table__cell">Updates a record</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.Retrieve(entitySetName, searchQuery)</code></td>
+      <td class="govuk-table__cell">Retrieves records with an OData query</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.Delete(recordId, entitySetName)</code></td>
+      <td class="govuk-table__cell">Deletes a record</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.Associate(recordId, entitySetName, relationshipName, dataObj)</code></td>
+      <td class="govuk-table__cell">Links two records through a relationship</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.Disassociate(recordId, entitySetName, relationshipName, relatedId)</code></td>
+      <td class="govuk-table__cell">Removes the link between two records</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.CallCloudFlow(flowApiId, data)</code></td>
+      <td class="govuk-table__cell">Calls a cloud flow and resolves with its response</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.UploadFile(identifier, entitySetName, recordId)</code></td>
+      <td class="govuk-table__cell">Uploads the selected file to a file or image column</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.ProcessFileAndUploadToNotes(identifier, logicalName, recordId)</code></td>
+      <td class="govuk-table__cell">Uploads the selected file as a note attachment</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>WebApi.DeleteFile(columnName, recordId, entitySetName)</code></td>
+      <td class="govuk-table__cell">Deletes the file in a file or image column</td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m">DfEPortal.Errors, Cookies and PageFeedback</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Function</th>
+      <th scope="col" class="govuk-table__header">Description</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>Errors.ShowInputError</code> / <code>Errors.ClearInputError</code></td>
+      <td class="govuk-table__cell">Shows or clears the error message on a field</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>Errors.ShowErrorSummary</code> / <code>Errors.HideErrorSummary</code></td>
+      <td class="govuk-table__cell">Adds or removes the error summary</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>Errors.AddErrorSummaryDetail</code> / <code>Errors.RemoveErrorSummaryDetail</code></td>
+      <td class="govuk-table__cell">Adds or removes a link in the error summary</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>Errors.FocusErrorSummary</code></td>
+      <td class="govuk-table__cell">Scrolls to the error summary and moves focus to it</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>Errors.ShowWebApiError</code></td>
+      <td class="govuk-table__cell">Adds the general "problem submitting your information" error</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>Cookies.*</code></td>
+      <td class="govuk-table__cell">Reads, sets and removes cookies, and shows or hides the cookie banner</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>PageFeedback.ShowSuccess()</code></td>
+      <td class="govuk-table__cell">Shows the feedback component's thank-you message</td>
     </tr>
   </tbody>
 </table>
@@ -132,10 +234,55 @@
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header"><code>required</code></th>
       <td class="govuk-table__cell">Boolean</td>
-      <td class="govuk-table__cell"><code>true</code> if the field is required, <code>false</code> otherwise.</td>
+      <td class="govuk-table__cell"><code>true</code> if the field must be answered. If it's <code>false</code> and the field is empty, the framework skips its other checks. If the user has entered something, it's still checked.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><code>description</code></th>
+      <td class="govuk-table__cell">String (optional)</td>
+      <td class="govuk-table__cell">Text added to the end of a length or value limit error, for example to explain the limit. Leave it out unless you need it.</td>
     </tr>
   </tbody>
 </table>
+
+<p class="govuk-body">Some input types use more properties, such as <code>targetType</code> for radios, checkboxes and selects, and the file properties for file inputs. They're shown in the examples by input type.</p>
+
+<h3 class="govuk-heading-m" id="html-attributes">Limits set in the HTML</h3>
+
+<p class="govuk-body">Set length and value limits as attributes on the input itself, not in the validation data object.</p>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Attribute</th>
+      <th scope="col" class="govuk-table__header">Where</th>
+      <th scope="col" class="govuk-table__header">What it checks</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>minchar</code>, <code>maxchar</code></td>
+      <td class="govuk-table__cell">Text, textarea, email and whole number inputs</td>
+      <td class="govuk-table__cell">The number of characters</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>minvalue</code>, <code>maxvalue</code></td>
+      <td class="govuk-table__cell">Number inputs</td>
+      <td class="govuk-table__cell">The value. The limits are read as whole numbers.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>data-maxlength</code></td>
+      <td class="govuk-table__cell">The <code>govuk-character-count</code> container around a textarea</td>
+      <td class="govuk-table__cell">The number of characters</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>data-maxwords</code></td>
+      <td class="govuk-table__cell">The <code>govuk-character-count</code> container around a textarea</td>
+      <td class="govuk-table__cell">The number of words</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="govuk-body">The framework doesn't check <code>mindate</code> or <code>maxdate</code> in version 03. If a date must be in a range, check it in your own code.</p>
 
 <h3 class="govuk-heading-m" id="additional-properties">InputObj examples by input type</h3>
 <p class="govuk-body">Expand the sections below to see complete inputObj examples, when to use each configuration, and what the ConstructData function outputs.</p>
@@ -176,6 +323,7 @@
 }</code></pre>
       <p class="govuk-body">ConstructData output (creates an OData bind to the found record):</p>
       <pre><code>{ "dfe_applicationref@odata.bind": "/dfe_applications(abc123-def456-...)" }</code></pre>
+      <p class="govuk-body"><code>ValidateData</code> searches <code>targetEntity</code> for a record whose <code>targetEntitySearchField</code> matches the value, and saves its ID on the input object as <code>targetEntityId</code>. If nothing matches, the user sees "[friendlyName] cannot be found". Always call <code>ValidateData</code> before <code>ConstructData</code> for lookups: without a <code>targetEntityId</code>, <code>ConstructData</code> sets the column to <code>null</code>.</p>
     </div>
   </div>
 
@@ -195,7 +343,18 @@
 }</code></pre>
       <p class="govuk-body">ConstructData output:</p>
       <pre><code>{ "dfe_description": "This is the user's multi-line input..." }</code></pre>
-      <p class="govuk-body">If using with character count, add <code>data-maxlength</code> or <code>data-maxwords</code> to the <code>.govuk-character-count</code> container element.</p>
+      <p class="govuk-body">If using with character count, add <code>data-maxlength</code> (characters) or <code>data-maxwords</code> (words) to the <code>.govuk-character-count</code> container element.</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Characters: every character counts, including spaces and line breaks.</li>
+        <li>Words: anything separated by spaces or line breaks counts as a word. Blank lines and paragraph breaks don't count as words.</li>
+      </ul>
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-visually-hidden">Warning</span>
+          For a word limit, use <code>data-maxwords</code>, not GOV.UK Frontend 6.6's <code>data-maxlength</code> with <code>data-count-type="words"</code>. The framework doesn't support the newer markup yet: it would treat the limit as characters and wouldn't check the number of words.
+        </strong>
+      </div>
     </div>
   </div>
 
@@ -292,7 +451,12 @@
   required: true
 }</code></pre>
 
-      <p class="govuk-body govuk-!-margin-top-4">You can add <code>minvalue</code>, <code>maxvalue</code>, <code>minchar</code>, and <code>maxchar</code> attributes to the HTML input element for additional validation.</p>
+      <p class="govuk-body govuk-!-margin-top-4">You can add <code>minvalue</code> and <code>maxvalue</code> attributes to the HTML input element to limit the value, and <code>minchar</code> and <code>maxchar</code> to limit the number of characters of a whole number. See <a class="govuk-link" href="#html-attributes">limits set in the HTML</a>.</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li><code>ConstructData</code> only converts the value to a number if the input has <code>inputmode="numeric"</code>. Otherwise it sends the value as text.</li>
+        <li><code>decimal-number</code> expects a decimal point: "75" fails with "[friendlyName] must be a decimal number". Use <code>money</code> or <code>number</code> if whole amounts are allowed.</li>
+        <li><code>number</code> is only checked when <code>required</code> is <code>true</code>.</li>
+      </ul>
     </div>
   </div>
 
@@ -327,6 +491,7 @@
 }</code></pre>
       <p class="govuk-body">ConstructData output:</p>
       <pre><code>{ "dfe_datetext": "15/05/1990" }</code></pre>
+      <p class="govuk-body">If none of the date fields are filled in, <code>ConstructData</code> sends <code>null</code>. The framework checks that the date is complete and real, including leap years, but doesn't check <code>mindate</code> or <code>maxdate</code> in version 03.</p>
     </div>
   </div>
 
@@ -351,6 +516,7 @@
 &lt;input type="radio" name="dfe_agreeterms" value="0"&gt; No</code></pre>
       <p class="govuk-body">ConstructData output:</p>
       <pre><code>{ "dfe_agreeterms": true }</code></pre>
+      <p class="govuk-body">If no option is selected, <code>ConstructData</code> sends <code>false</code>. On a page the user can save before answering, such as with "Save and return", leave unanswered Yes/No questions out of the inputs you pass to <code>ConstructData</code>, or they'll be saved as No.</p>
 
       <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
@@ -557,59 +723,71 @@
       </h4>
     </div>
     <div id="accordion-input-types-content-file" class="govuk-accordion__section-content">
-      <p class="govuk-body">Use for file upload fields. Validates file extension, size, count, and performs virus scanning.</p>
+      <p class="govuk-body">Use for file upload fields, with either the plain file input or GOV.UK's improved file upload component. See the <a class="govuk-link" href="{{ pages['powerpages/components/file-upload'].url }}">file upload component</a> for the HTML.</p>
       <pre><code>{
   identifier: "dfe_document",
   type: "file",
   friendlyName: "a document",
   required: true,
   allowedFileTypes: ["pdf", "doc", "docx"],
-  maxFileSize: 10,  // MB
+  maxFileSize: 3,   // MB
   fileLimit: 3      // maximum number of files
 }</code></pre>
-      <p class="govuk-body">File inputs are validated but not included in ConstructData output. After record creation, use one of the following functions to upload files:</p>
+      <p class="govuk-body"><code>ValidateData</code> checks each file's extension, the number of files and each file's size, in that order, then sends the files to be virus scanned. Set all 3 properties on every file input:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li><code>allowedFileTypes</code>: extensions in lowercase, without the dot</li>
+        <li><code>maxFileSize</code>: the largest file, in megabytes</li>
+        <li><code>fileLimit</code>: how many files can be selected at once</li>
+      </ul>
+      <p class="govuk-body">Virus scanning needs the <code>VirusScan</code> server logic on your site. See <a class="govuk-link" href="{{ pages['powerpages/patterns/scan-uploaded-files'].url }}">scanning uploaded files for viruses</a>, including the largest files that can be scanned. If the input is optional and no file is selected, all the checks, including the scan, are skipped.</p>
+      <p class="govuk-body">File inputs are validated but not included in ConstructData output. After the record is saved, use one of these to upload the file:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li><code>DfEPortal.WebApi.UploadFile</code> - Use when uploading to a <strong>file column</strong> or <strong>image column</strong> directly on the entity record.</li>
         <li><code>DfEPortal.WebApi.ProcessFileAndUploadToNotes</code> - Use when uploading files as <strong>note attachments</strong> (annotations) linked to the record.</li>
       </ul>
+      <p class="govuk-body">Both only upload the first file selected in the input.</p>
+      <div class="govuk-inset-text">
+        In version 02 and earlier, the framework doesn't work with the improved file upload component: the virus scan passes without scanning and nothing is uploaded. Use the plain file input until your site is on version 03.
+      </div>
     </div>
   </div>
 
 </div>
 
 <h2 class="govuk-heading-l" id="available-functions">Available functions</h2>
-<p class="govuk-body">The CRM Helper Framework provides core functions for validation and data submission, as well as helper functions for enhancing the user experience.</p>
+<p class="govuk-body">Most functions are asynchronous: they return a promise, so call them with <code>await</code> inside an <code>async</code> function. Where a Web API call fails, the framework also adds a general error to the error summary for you.</p>
 
-<h3 class="govuk-heading-m">DfEPortal.ValidateData(inputObjArr, errorContainer)</h3>
+<p class="govuk-body">Web API functions take the table's <strong>entity set name</strong>, which is usually its logical name in the plural, for example <code>contacts</code> or <code>dfe_applications</code>. Check it in the table's properties. The one exception is <code>ProcessFileAndUploadToNotes</code>, which takes the logical name.</p>
+
+<h3 class="govuk-heading-m" id="functions-validation">DfEPortal.ValidateData(inputObjArr, errorContainer)</h3>
 <div class="govuk-inset-text">
-  Error messages on the page are handled within this function.
+  Error messages on the page are handled within this function. It doesn't stop your code when validation fails: check the value it resolves with.
 </div>
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Purpose</dt>
-    <dd class="govuk-summary-list__value">Validates user input data on the webpage</dd>
+    <dd class="govuk-summary-list__value">Validates every input, shows an error on each field that fails, and shows and focuses the error summary.</dd>
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Parameters</dt>
     <dd class="govuk-summary-list__value">
       <ul class="govuk-list govuk-list--bullet">
         <li><code>inputObjArr</code>: Array - the validation data object array (see above).</li>
-        <li><code>errorContainer</code>: String (optional) - CSS selector for the error summary container. Defaults to <code>#error-summary-container</code>.</li>
+        <li><code>errorContainer</code>: String or jQuery object (optional) - the error summary container. Defaults to <code>#error-summary-container</code>. See <a class="govuk-link" href="{{ pages['powerpages/patterns/custom-errors'].url }}">displaying custom errors</a>.</li>
       </ul>
     </dd>
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Returns</dt>
-    <dd class="govuk-summary-list__value">A boolean value (true or false) indicating whether data has passed validation.</dd>
+    <dd class="govuk-summary-list__value">A promise that resolves with <code>true</code> if every input passed, or <code>false</code> if any failed. It throws if the error container isn't on the page.</dd>
   </div>
   <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Example scenarios</dt>
+    <dt class="govuk-summary-list__key">Example</dt>
     <dd class="govuk-summary-list__value">
-      <ul class="govuk-list govuk-list--bullet">
-        <li>Validating a contact form to ensure all required fields (e.g., first name, email) are filled correctly.</li>
-        <li>Checking a date input to confirm it's a valid date before submission.</li>
-        <li>Ensuring a search field matches a record in the CRM before proceeding (e.g., finding an application by reference number)</li>
-      </ul>
+      <pre><code class="language-javascript">const isValid = await DfEPortal.ValidateData(inputObj);
+if (!isValid) {
+  return;
+}</code></pre>
     </dd>
   </div>
 </dl>
@@ -618,60 +796,29 @@
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Purpose</dt>
-    <dd class="govuk-summary-list__value">Constructs a data object for submission to the CRM via the Power Pages WebApi.</dd>
+    <dd class="govuk-summary-list__value">Reads the value of each input from the page and builds the data object to send to CRM, using each input's <code>type</code> and <code>targetType</code>.</dd>
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Parameters</dt>
-    <dd class="govuk-summary-list__value">Array of input objects - the validated input object array.</dd>
+    <dd class="govuk-summary-list__value"><code>inputsObj</code>: Array - the validated input object array.</dd>
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Returns</dt>
-    <dd class="govuk-summary-list__value">The constructed data object.</dd>
+    <dd class="govuk-summary-list__value">A promise that resolves with the data object. It rejects, and shows a general error, if an input's <code>targetType</code> is missing or not valid for its type.</dd>
   </div>
   <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Example scenarios</dt>
+    <dt class="govuk-summary-list__key">Things to know</dt>
     <dd class="govuk-summary-list__value">
       <ul class="govuk-list govuk-list--bullet">
-        <li>Preparing form data (e.g. first name, last name) for submission to a <code>contact</code> entity.</li>
-        <li>Formatting a date input into an ISO string for a CRM date/time field.</li>
-        <li>Mapping a radio input to a boolean value for a CRM field.</li>
+        <li>File inputs are left out of the data object.</li>
+        <li>If the data object would be empty, for example because the only input is a file, it waits for 30 seconds and then rejects. Don't call it with only file inputs.</li>
+        <li>Call <code>ValidateData</code> first. Lookup text inputs need the record ID it finds.</li>
       </ul>
     </dd>
   </div>
 </dl>
 
-<h3 class="govuk-heading-m">DfEPortal.WebApi.Update(recordId, entityName, dataObj)</h3>
-<dl class="govuk-summary-list">
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Purpose</dt>
-    <dd class="govuk-summary-list__value">Updates an existing record in the CRM.</dd>
-  </div>
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Parameters</dt>
-    <dd class="govuk-summary-list__value">
-      <ul class="govuk-list govuk-list--bullet">
-        <li><code>recordId</code>: String - The ID of the record to update.</li>
-        <li><code>entityName</code>: String - Schema name of the table to update (e.g. <code>contact</code>).</li>
-        <li><code>dataObj</code>: Object - Data object constructed by <code>DfEPortal.WebApi.ConstructData</code>.</li>
-      </ul>
-    </dd>
-  </div>
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Returns</dt>
-    <dd class="govuk-summary-list__value">A promise that resolves on success or rejects with an error.</dd>
-  </div>
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Example scenarios</dt>
-    <dd class="govuk-summary-list__value">
-      <ul class="govuk-list govuk-list--bullet">
-        <li>Updating a contact's email address after the user edits their profile.</li>
-        <li>Modifying an application record with new details from a form submission.</li>
-      </ul>
-    </dd>
-  </div>
-</dl>
-
-<h3 class="govuk-heading-m">DfEPortal.WebApi.Create(entityName, dataObj)</h3>
+<h3 class="govuk-heading-m" id="functions-web-api">DfEPortal.WebApi.Create(entitySetName, dataObj)</h3>
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Purpose</dt>
@@ -680,58 +827,41 @@
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Parameters</dt>
     <dd class="govuk-summary-list__value">
-    <ul class="govuk-list govuk-list--bullet">
-      <li><code>entityName</code>: String - Schema name of the table (e.g. <code>lead</code>).</li>
-      <li><code>dataObj</code>: Object - Data object constructed by <code>DfEPortal.WebApi.ConstructData</code>.</li>
-    </ul>
+      <ul class="govuk-list govuk-list--bullet">
+        <li><code>entitySetName</code>: String - the table's entity set name (e.g. <code>leads</code>).</li>
+        <li><code>dataObj</code>: Object - data object constructed by <code>DfEPortal.WebApi.ConstructData</code>.</li>
+      </ul>
     </dd>
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Returns</dt>
-    <dd class="govuk-summary-list__value">A promise that returns the ID of the created record on success or rejects with an error.</dd>
-  </div>
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Example scenarios</dt>
-    <dd class="govuk-summary-list__value">
-      <ul class="govuk-list govuk-list--bullet">
-        <li>Creating a new lead record when a user signs up.</li>
-        <li>Adding a new contact record from a "Contact Us" form submission.</li>
-      </ul>
-    </dd>
+    <dd class="govuk-summary-list__value">A promise that resolves with the ID of the new record, or rejects with <code>{ status, statusText, responseText, error }</code>.</dd>
   </div>
 </dl>
 
-<h3 class="govuk-heading-m">DfEPortal.WebApi.Delete(recordId, entityName)</h3>
+<h3 class="govuk-heading-m">DfEPortal.WebApi.Update(recordId, entitySetName, dataObj)</h3>
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Purpose</dt>
-    <dd class="govuk-summary-list__value">Deletes a record from the CRM.</dd>
+    <dd class="govuk-summary-list__value">Updates an existing record in the CRM. Only the columns in <code>dataObj</code> change.</dd>
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Parameters</dt>
     <dd class="govuk-summary-list__value">
       <ul class="govuk-list govuk-list--bullet">
-        <li><code>recordId</code>: String - ID of the record to delete.</li>
-        <li><code>entityName</code>: String - Schema name of the table.</li>
+        <li><code>recordId</code>: String - the ID of the record to update.</li>
+        <li><code>entitySetName</code>: String - the table's entity set name (e.g. <code>contacts</code>).</li>
+        <li><code>dataObj</code>: Object - data object constructed by <code>DfEPortal.WebApi.ConstructData</code>, or your own object of column names and values.</li>
       </ul>
     </dd>
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Returns</dt>
-    <dd class="govuk-summary-list__value">A promise that resolves on success or rejects with an error.</dd>
-  </div>
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Example scenarios</dt>
-    <dd class="govuk-summary-list__value">
-      <ul class="govuk-list govuk-list--bullet">
-        <li>Deleting a draft application record when a user cancels their submission.</li>
-        <li>Removing a contact record when a user requests account deletion.</li>
-      </ul>
-    </dd>
+    <dd class="govuk-summary-list__value">A promise that resolves when the record is updated, or rejects with <code>{ status, statusText, responseText, error }</code>.</dd>
   </div>
 </dl>
 
-<h3 class="govuk-heading-m">DfEPortal.WebApi.Retrieve(entityName, searchQuery)</h3>
+<h3 class="govuk-heading-m">DfEPortal.WebApi.Retrieve(entitySetName, searchQuery)</h3>
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Purpose</dt>
@@ -741,24 +871,79 @@
     <dt class="govuk-summary-list__key">Parameters</dt>
     <dd class="govuk-summary-list__value">
       <ul class="govuk-list govuk-list--bullet">
-        <li><code>entityName</code>: String - Schema name of the table (e.g. <code>contacts</code>).</li>
-        <li><code>searchQuery</code>: String - OData query string (e.g. <code>?$select=firstname,lastname&$filter=emailaddress1 eq 'test@example.com'</code>).</li>
+        <li><code>entitySetName</code>: String - the table's entity set name (e.g. <code>contacts</code>).</li>
+        <li><code>searchQuery</code>: String - the OData query, starting with <code>?</code> (e.g. <code>?$select=firstname,lastname&amp;$filter=emailaddress1 eq 'test@example.com'</code>). It's added straight after the entity set name, so it can also be a record ID in brackets, such as <code>(00000000-0000-0000-0000-000000000000)?$select=firstname</code>.</li>
       </ul>
     </dd>
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Returns</dt>
-    <dd class="govuk-summary-list__value">A promise that returns the query results on success or rejects with an error.</dd>
+    <dd class="govuk-summary-list__value">A promise that resolves with the Web API's response. For a query, the records are in its <code>value</code> property.</dd>
+  </div>
+</dl>
+
+<h3 class="govuk-heading-m">DfEPortal.WebApi.Delete(recordId, entitySetName)</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Purpose</dt>
+    <dd class="govuk-summary-list__value">Deletes a record from the CRM.</dd>
   </div>
   <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Example scenarios</dt>
+    <dt class="govuk-summary-list__key">Parameters</dt>
     <dd class="govuk-summary-list__value">
       <ul class="govuk-list govuk-list--bullet">
-        <li>Fetching a list of applications for the current user.</li>
-        <li>Checking if a record exists before creating a duplicate.</li>
-        <li>Populating a dropdown with data from a CRM table.</li>
+        <li><code>recordId</code>: String - the ID of the record to delete.</li>
+        <li><code>entitySetName</code>: String - the table's entity set name.</li>
       </ul>
     </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Returns</dt>
+    <dd class="govuk-summary-list__value">A promise that resolves when the record is deleted, or rejects with an error.</dd>
+  </div>
+</dl>
+
+<h3 class="govuk-heading-m">DfEPortal.WebApi.Associate(recordId, entitySetName, relationshipName, dataObj)</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Purpose</dt>
+    <dd class="govuk-summary-list__value">Links two records through a relationship, for example a many-to-many relationship behind a set of checkboxes.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Parameters</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li><code>recordId</code>: String - the ID of the record you're starting from.</li>
+        <li><code>entitySetName</code>: String - its table's entity set name.</li>
+        <li><code>relationshipName</code>: String - the relationship's navigation property name.</li>
+        <li><code>dataObj</code>: Object - the record to link to, as an OData reference: <code>{ "@odata.id": "/dfe_regions(00000000-0000-0000-0000-000000000000)" }</code>.</li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Returns</dt>
+    <dd class="govuk-summary-list__value">A promise that resolves when the records are linked, or rejects with an error.</dd>
+  </div>
+</dl>
+
+<h3 class="govuk-heading-m">DfEPortal.WebApi.Disassociate(recordId, entitySetName, relationshipName, relatedId)</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Purpose</dt>
+    <dd class="govuk-summary-list__value">Removes the link between two records. Neither record is deleted.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Parameters</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li><code>recordId</code>, <code>entitySetName</code>, <code>relationshipName</code>: as for <code>Associate</code>.</li>
+        <li><code>relatedId</code>: String - the ID of the linked record to remove.</li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Returns</dt>
+    <dd class="govuk-summary-list__value">A promise that resolves when the link is removed, or rejects with an error.</dd>
   </div>
 </dl>
 
@@ -766,125 +951,179 @@
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Purpose</dt>
-    <dd class="govuk-summary-list__value">Calls a Power Automate cloud flow and returns the response. Useful for complex business logic that cannot be performed client-side.</dd>
+    <dd class="govuk-summary-list__value">Calls a Power Automate cloud flow and returns its response.</dd>
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Parameters</dt>
     <dd class="govuk-summary-list__value">
       <ul class="govuk-list govuk-list--bullet">
-        <li><code>flowApiId</code>: String - The API ID of the cloud flow to call.</li>
-        <li><code>data</code>: Object - Data to pass to the cloud flow as input parameters.</li>
+        <li><code>flowApiId</code>: String - the API ID of the cloud flow.</li>
+        <li><code>data</code>: Object - the flow's input. It's sent as a JSON string in <code>eventData</code>.</li>
       </ul>
     </dd>
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Returns</dt>
-    <dd class="govuk-summary-list__value">A promise that returns the cloud flow's response object on success or rejects with an error.</dd>
-  </div>
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Example scenarios</dt>
-    <dd class="govuk-summary-list__value">
-      <ul class="govuk-list govuk-list--bullet">
-        <li>Checking if an application already exists before allowing the user to proceed.</li>
-        <li>Performing complex validation that requires server-side data.</li>
-        <li>Triggering a workflow that sends notifications or creates related records.</li>
-      </ul>
-    </dd>
-  </div>
-</dl>
-
-<h3 class="govuk-heading-m">DfEPortal.WebApi.UploadFile(inputName, entityName, entityId)</h3>
-<dl class="govuk-summary-list">
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Purpose</dt>
-    <dd class="govuk-summary-list__value">Uploads a file to a file-type or image-type column directly on the entity record.</dd>
-  </div>
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Parameters</dt>
-    <dd class="govuk-summary-list__value">
-      <ul class="govuk-list govuk-list--bullet">
-        <li><code>inputName</code>: String - The ID of the file input element (also used as the file column schema name).</li>
-        <li><code>entityName</code>: String - Schema name of the table (e.g. <code>dfe_applications</code>).</li>
-        <li><code>entityId</code>: String - The ID of the record to attach the file to.</li>
-      </ul>
-    </dd>
-  </div>
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Returns</dt>
-    <dd class="govuk-summary-list__value">A promise that resolves on success or rejects with an error.</dd>
+    <dd class="govuk-summary-list__value">A promise that resolves with the flow's response, parsed from JSON, or rejects with an error. Unlike the other Web API functions, it doesn't add an error to the summary for you.</dd>
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">When to use</dt>
-    <dd class="govuk-summary-list__value">Use this function when your entity has a <strong>file column</strong> or <strong>image column</strong> and you want to store the file directly on the record. This is the modern approach using Dataverse file columns.</dd>
-  </div>
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Example scenarios</dt>
-    <dd class="govuk-summary-list__value">
-      <ul class="govuk-list govuk-list--bullet">
-        <li>Uploading a profile photo to an image column on a contact record.</li>
-        <li>Attaching a PDF document to a file column on an application record.</li>
-      </ul>
-    </dd>
+    <dd class="govuk-summary-list__value">For calls to another service, or work that needs a key or secret, consider <a class="govuk-link" href="{{ pages['powerpages/server-logic'].url }}">server logic</a> instead. It's quicker and runs as the signed-in user.</dd>
   </div>
 </dl>
 
-<h3 class="govuk-heading-m">DfEPortal.WebApi.ProcessFileAndUploadToNotes(inputName, entityName, entityId)</h3>
+<h3 class="govuk-heading-m" id="functions-files">DfEPortal.WebApi.UploadFile(identifier, entitySetName, recordId)</h3>
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Purpose</dt>
-    <dd class="govuk-summary-list__value">Uploads a file as a note (annotation) attachment linked to the entity record.</dd>
+    <dd class="govuk-summary-list__value">Uploads the selected file to a file or image column on a record.</dd>
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Parameters</dt>
     <dd class="govuk-summary-list__value">
       <ul class="govuk-list govuk-list--bullet">
-        <li><code>inputName</code>: String - The ID of the file input element.</li>
-        <li><code>entityName</code>: String - Schema name of the table (e.g. <code>dfe_applications</code>).</li>
-        <li><code>entityId</code>: String - The ID of the record to attach the note to.</li>
+        <li><code>identifier</code>: String - the file input's identifier, which is also the file column's logical name.</li>
+        <li><code>entitySetName</code>: String - the table's entity set name (e.g. <code>dfe_applications</code>).</li>
+        <li><code>recordId</code>: String - the ID of the record to upload the file to.</li>
       </ul>
     </dd>
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Returns</dt>
-    <dd class="govuk-summary-list__value">A promise that resolves with the file object on success or rejects with an error.</dd>
+    <dd class="govuk-summary-list__value">A promise that resolves with <code>{ input, resolve: true, fileName }</code> when the file is uploaded, or rejects and shows a general error.</dd>
   </div>
   <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">When to use</dt>
-    <dd class="govuk-summary-list__value">Use this function when you want to store files as <strong>note attachments</strong> in the annotations table, linked to the parent record. This is the traditional approach and is useful when you need to attach multiple files to a single record or when file columns are not available.</dd>
-  </div>
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Example scenarios</dt>
+    <dt class="govuk-summary-list__key">Things to know</dt>
     <dd class="govuk-summary-list__value">
       <ul class="govuk-list govuk-list--bullet">
-        <li>Uploading multiple supporting documents to an application.</li>
-        <li>Attaching evidence files that need to be viewable in the CRM timeline.</li>
+        <li>If no file is selected, it does nothing and resolves with <code>undefined</code>, so you don't need to check first.</li>
+        <li>It only uploads the first selected file.</li>
+        <li>It works with both the plain file input and the improved file upload component.</li>
       </ul>
     </dd>
   </div>
 </dl>
 
-<h3 class="govuk-heading-m">DfEPortal.DisableButton / EnableButton</h3>
+<h3 class="govuk-heading-m">DfEPortal.WebApi.ProcessFileAndUploadToNotes(identifier, logicalName, recordId)</h3>
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Purpose</dt>
-    <dd class="govuk-summary-list__value">Disables or enables a button on the page to prevent multiple submissions.</dd>
+    <dd class="govuk-summary-list__value">Uploads the selected file as a note (annotation) attachment linked to the record. The note's text is <code>*WEB*</code>.</dd>
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Parameters</dt>
-    <dd class="govuk-summary-list__value"><code>buttonID</code>: String - The ID of the button (e.g. <code>submit-btn</code>).</dd>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li><code>identifier</code>: String - the file input's identifier.</li>
+        <li><code>logicalName</code>: String - the table's logical name (e.g. <code>dfe_application</code>), not its entity set name.</li>
+        <li><code>recordId</code>: String - the ID of the record to attach the note to.</li>
+      </ul>
+    </dd>
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Returns</dt>
-    <dd class="govuk-summary-list__value">None.</dd>
+    <dd class="govuk-summary-list__value">A promise that resolves with <code>{ input, fileName }</code>, or rejects with an error.</dd>
   </div>
   <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Example scenarios</dt>
+    <dt class="govuk-summary-list__key">Things to know</dt>
     <dd class="govuk-summary-list__value">
       <ul class="govuk-list govuk-list--bullet">
-        <li>Disabling a submit button during form processing to prevent double submissions.</li>
-        <li>Re-enabling the button if an error occurs, allowing the user to retry.</li>
+        <li>If no file is selected, it rejects, so check first or only call it after validating a required file input.</li>
+        <li>It only uploads the first selected file.</li>
+        <li>It finds the table by adding "s" to the logical name, so it doesn't work for tables whose entity set name is different.</li>
       </ul>
     </dd>
+  </div>
+</dl>
+
+<h3 class="govuk-heading-m">DfEPortal.WebApi.DeleteFile(columnName, recordId, entitySetName)</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Purpose</dt>
+    <dd class="govuk-summary-list__value">Deletes the file in a file or image column, for example when the user removes or replaces a file.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Returns</dt>
+    <dd class="govuk-summary-list__value">A promise that resolves with the column name, or rejects with an error. Note the order of the parameters, which is different from <code>UploadFile</code>.</dd>
+  </div>
+</dl>
+
+<h3 class="govuk-heading-m">DfEPortal.GetFileContent(identifier, format)</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Purpose</dt>
+    <dd class="govuk-summary-list__value">Reads every file selected in a file input, for example to send it to server logic.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Parameters</dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list govuk-list--bullet">
+        <li><code>identifier</code>: String - the file input's identifier.</li>
+        <li><code>format</code>: String (optional) - <code>"base64"</code> (the default) or <code>"binary"</code> for an <code>ArrayBuffer</code>.</li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Returns</dt>
+    <dd class="govuk-summary-list__value">A promise that resolves with an array of <code>{ fileName, mimeType, fileSize, fileExtension, fileContent }</code>, one for each file. If no file is selected, it shows an error on the field and rejects.</dd>
+  </div>
+</dl>
+
+<h3 class="govuk-heading-m" id="functions-errors">DfEPortal.Errors</h3>
+<p class="govuk-body">Use these to show errors that don't come from <code>ValidateData</code>, for example after a failed Web API call. <a class="govuk-link" href="{{ pages['powerpages/patterns/custom-errors'].url }}">Displaying custom errors</a> has examples.</p>
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Function</th>
+      <th scope="col" class="govuk-table__header">What it does</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>ShowInputError(identifier, type, message)</code></td>
+      <td class="govuk-table__cell">Adds an error message to a field, with the error styles, and links it with <code>aria-describedby</code>. Use the same <code>type</code> as in the validation data object.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>ClearInputError(identifier, type)</code></td>
+      <td class="govuk-table__cell">Removes a field's error message and styles.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>ShowErrorSummary(container)</code></td>
+      <td class="govuk-table__cell">Adds an empty error summary to the container, if there isn't one already.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>AddErrorSummaryDetail(identifier, message, container)</code></td>
+      <td class="govuk-table__cell">Adds a link to the error summary, creating the summary if needed. The link goes to <code>#[identifier]-error</code>, the field's error message. Pass an empty identifier for an error that isn't about a field.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>RemoveErrorSummaryDetail(identifier, container)</code></td>
+      <td class="govuk-table__cell">Removes a field's link from the error summary.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>FocusErrorSummary(scrollOptions, container)</code></td>
+      <td class="govuk-table__cell">Scrolls to the error summary and moves focus to it. <code>scrollOptions</code> is <code>{ offset, duration }</code>: pass <code>{}</code> for the defaults. The container is the second parameter.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>HideErrorSummary(container)</code></td>
+      <td class="govuk-table__cell">Removes the error summary.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>ShowWebApiError(container)</code></td>
+      <td class="govuk-table__cell">Adds "There has been a problem submitting your information. Please contact the DfE." to the summary, linked to <code>submit-btn</code>.</td>
+    </tr>
+  </tbody>
+</table>
+<p class="govuk-body"><code>container</code> is optional in every function and defaults to <code>#error-summary-container</code>.</p>
+
+<h3 class="govuk-heading-m" id="functions-buttons">DfEPortal.DisableButton / EnableButton</h3>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Purpose</dt>
+    <dd class="govuk-summary-list__value">Disables or enables a button, adding or removing the <code>disabled</code> attribute and the <code>govuk-button--disabled</code> class. Disable it while you save, so users can't submit twice.</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Parameters</dt>
+    <dd class="govuk-summary-list__value"><code>buttonID</code>: String - the ID of the button (e.g. <code>submit-btn</code>).</dd>
   </div>
 </dl>
 
@@ -892,26 +1131,92 @@
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Purpose</dt>
-    <dd class="govuk-summary-list__value">Shows or hides a loading spinner to indicate processing.</dd>
+    <dd class="govuk-summary-list__value">Shows or hides a <a class="govuk-link" href="{{ pages['powerpages/components/loading-spinner'].url }}">loading spinner</a>, by removing or adding the <code>govuk-visually-hidden</code> class.</dd>
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Parameters</dt>
-    <dd class="govuk-summary-list__value"><code>spinnerID</code>: String - The ID of the spinner element (e.g. <code>loading-spinner</code>).</dd>
-  </div>
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Returns</dt>
-    <dd class="govuk-summary-list__value">None.</dd>
-  </div>
-  <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">Example scenarios</dt>
-    <dd class="govuk-summary-list__value">
-      <ul class="govuk-list govuk-list--bullet">
-        <li>Showing a spinner while submitting data to the CRM.</li>
-        <li>Hiding the spinner when submission completes or fails.</li>
-      </ul>
-    </dd>
+    <dd class="govuk-summary-list__value"><code>spinnerID</code>: String - the ID of the spinner element (e.g. <code>loading-spinner</code>).</dd>
   </div>
 </dl>
+
+<h3 class="govuk-heading-m" id="functions-cookies">DfEPortal.Cookies and DfEPortal.PageFeedback</h3>
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Function</th>
+      <th scope="col" class="govuk-table__header">What it does</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>Cookies.CheckCookieExists(name)</code></td>
+      <td class="govuk-table__cell">Resolves with <code>true</code> or <code>false</code>.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>Cookies.GetCookieValue(name)</code></td>
+      <td class="govuk-table__cell">Resolves with the cookie's value, or rejects if it doesn't exist.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>Cookies.SetCookie(name, value, days)</code></td>
+      <td class="govuk-table__cell">Sets a cookie for the whole site that expires after the number of days.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>Cookies.RefreshCookieExpiry(name, days)</code></td>
+      <td class="govuk-table__cell">Sets the cookie again with a new expiry. Resolves with <code>false</code> if it doesn't exist.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>Cookies.RemoveCookie(name)</code></td>
+      <td class="govuk-table__cell">Removes a cookie.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>Cookies.ShowCookiesBanner()</code> / <code>Cookies.HideCookiesBanner()</code></td>
+      <td class="govuk-table__cell">Shows or hides the <code>govuk-cookie-banner</code>.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>PageFeedback.ShowSuccess()</code></td>
+      <td class="govuk-table__cell">Hides the <a class="govuk-link" href="{{ pages['powerpages/components/feedback'].url }}">feedback component</a>'s questions and form, and shows its thank-you message.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 class="govuk-heading-m" id="functions-validation-helper">Lower-level validation helpers</h3>
+<p class="govuk-body"><code>ValidateData</code> uses the functions in <code>DfEPortal.ValidationHelper</code>, such as <code>IsEmail</code>, <code>IsTelephone</code>, <code>IsDateValid</code>, <code>FileSizeCheck</code> and <code>VirusCheck</code>. You can call them yourself for a custom check. Each returns <code>{ identifier, value, errorMessage }</code>, where <code>value</code> is <code>true</code> if the check passed, except <code>VirusCheck</code> and <code>TextInputSearchValidation</code>, which return a promise of the same thing.</p>
+<p class="govuk-body">Don't use <code>DfEPortal._FileHelpers</code>. It's internal to the framework and may change between versions.</p>
+
+<h2 class="govuk-heading-l" id="error-messages">Error messages</h2>
+<p class="govuk-body"><code>ValidateData</code> shows these messages. <code>[friendlyName]</code> is the input's <code>friendlyName</code>, and is given a capital letter where it starts the message.</p>
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">When</th>
+      <th scope="col" class="govuk-table__header">Message</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row"><td class="govuk-table__cell">A required text, number, email, telephone, textarea or date input is empty</td><td class="govuk-table__cell">Enter [friendlyName]</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">A required radio or checkbox isn't selected</td><td class="govuk-table__cell">Select [friendlyName]</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">A required select has no option chosen</td><td class="govuk-table__cell">Choose [friendlyName]</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">A required file isn't selected</td><td class="govuk-table__cell">Select a file</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">Part of a date is missing</td><td class="govuk-table__cell">[friendlyName] must contain a day (or month, year, or a combination such as "day and year")</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">Part of a date isn't valid</td><td class="govuk-table__cell">[friendlyName] must contain a valid day (or month or year)</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">The date doesn't exist</td><td class="govuk-table__cell">[friendlyName] must be a real date</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">The value isn't a number, whole number or decimal number</td><td class="govuk-table__cell">[friendlyName] must be a number (or a whole number, or a decimal number)</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">The value is outside <code>minchar</code>, <code>maxchar</code>, <code>minvalue</code> or <code>maxvalue</code></td><td class="govuk-table__cell">[friendlyName] must be [number] characters or less (or more), or [friendlyName] must be [value] or fewer (or more), followed by the input's <code>description</code>. For <code>money</code> inputs, the value is shown in pounds, such as £1,000.00, and "or less" is used.</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">The text is over the character count's limit</td><td class="govuk-table__cell">[friendlyName] must be [number] characters or less</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">The text is over the word limit</td><td class="govuk-table__cell">[friendlyName] must be [number] words or less</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">The email address isn't valid</td><td class="govuk-table__cell">Enter a valid email address</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">The telephone number isn't a valid UK number</td><td class="govuk-table__cell">Enter a telephone number in the correct format, like 01632 960 001, 07700 900 982 or +44 808 157 0192</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">A lookup text input doesn't match a record</td><td class="govuk-table__cell">[friendlyName] cannot be found</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">A file is the wrong type</td><td class="govuk-table__cell">The selected file '[file name]' must be a [types]</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">A file is too big</td><td class="govuk-table__cell">The selected file "[file name]" must be smaller than [size]MB</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">Too many files are selected</td><td class="govuk-table__cell">You can only select up to [number] files at the same time.</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">A file has a virus, or couldn't be scanned</td><td class="govuk-table__cell">Virus detected in file '[file name]'</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">The virus scan failed</td><td class="govuk-table__cell">An error occurred. Please try again.</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">An identifier doesn't match anything on the page</td><td class="govuk-table__cell">'[identifier]' identifier cannot be found</td></tr>
+    <tr class="govuk-table__row"><td class="govuk-table__cell">A Web API call fails</td><td class="govuk-table__cell">There has been a problem submitting your information. Please contact the DfE.</td></tr>
+  </tbody>
+</table>
+<p class="govuk-body">The last 2 aren't messages for users. If users see them, there's a problem in the page's code or set-up.</p>
 
 <h2 class="govuk-heading-l" id="code-examples">Code examples</h2>
 <p class="govuk-body">Below are practical examples demonstrating how to use the CRM Helper Framework in Power Pages. These examples assume the framework is included in your page (pre-installed with the base portal).</p>
@@ -929,9 +1234,9 @@
 <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li>The <code>inputObj</code> array defines validation rules for the first name and last name fields.</li>
   <li>The button is disabled, and a spinner is shown during processing.</li>
-  <li><code>ValidateData</code> checks that both fields are filled (since <code>required: true</code>).</li>
+  <li><code>ValidateData</code> checks that both fields are filled (since <code>required: true</code>). If it resolves with <code>false</code>, the code stops and the user sees the errors.</li>
   <li><code>ConstructData</code> prepares the data for submission to the CRM.</li>
-  <li><code>Update</code> submits the data to the <code>contact</code> entity. If successful, a success message is shown; otherwise, the framework displays an error, and the button/spinner are reset.</li>
+  <li><code>Update</code> submits the data to the <code>contacts</code> entity set. If it fails, the framework displays an error, and the button and spinner are reset.</li>
 </ul>
 
 <h3 class="govuk-heading-m">Example 2: Creating a new Lead with email validation</h3>
@@ -945,11 +1250,10 @@
 
 <p class="govuk-body"><strong>Explanation</strong>:</p>
 <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
-  <li>The <code>inputObj</code> sets the validation rules for the email field</li>
-  <li><code>ValidateData</code> checks the email input ensuring it has a value and that the value is in a valid email format.</li>
+  <li>The <code>inputObj</code> sets the validation rules for the email field.</li>
+  <li><code>ValidateData</code> checks the email input has a value and that it's a valid email address.</li>
   <li><code>ConstructData</code> prepares the email for submission to the CRM.</li>
-  <li><code>Create</code> submits the data to the <code>lead</code> entity, returning the new record's ID.</li>
-  <li>The form is reset on success, and errors are handled with the button and spinner reset.</li>
+  <li><code>Create</code> submits the data to the <code>leads</code> entity set, returning the new record's ID.</li>
 </ul>
 
 <h3 class="govuk-heading-m">Example 3: Calling a cloud flow with custom error handling</h3>
@@ -967,15 +1271,51 @@
   <li><code>CallCloudFlow</code> sends the request to the specified cloud flow and awaits the response.</li>
   <li>The response object contains properties returned by the cloud flow (e.g. <code>success</code>, <code>applicationexists</code>).</li>
   <li>If the business logic check fails, custom error messages are displayed using <code>DfEPortal.Errors.ShowErrorSummary</code>, <code>AddErrorSummaryDetail</code>, and <code>FocusErrorSummary</code>.</li>
-  <li>This pattern is useful for server-side validation that cannot be performed in the browser.</li>
+</ul>
+
+<h3 class="govuk-heading-m">Example 4: Save and continue, or save and return</h3>
+<p class="govuk-body">Question pages often have 2 buttons. "Save and continue" checks every answer is given. "Save and return" lets users save what they've done so far and come back later, so answers aren't required, but anything they've entered is still checked.</p>
+
+{{ codeExample(
+  "Save and continue or save and return",
+  "includes/patterns/crm-helper-framework/saveAndReturnExample.njk",
+  { index: 4 }
+) }}
+
+<p class="govuk-body"><strong>Explanation</strong>:</p>
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+  <li>Both buttons use the same inputs. <code>required</code> is set to <code>true</code> for "Save and continue" and <code>false</code> for "Save and return".</li>
+  <li>With <code>required: false</code>, empty fields pass, but a badly formatted email address still fails.</li>
+  <li>For "Save and return", only the answered inputs are passed to <code>ConstructData</code>, so an unanswered Yes/No question isn't saved as No.</li>
+  <li>GOV.UK Frontend shows and hides conditional questions. Leave hidden questions out of the inputs, so they aren't required or saved.</li>
+</ul>
+
+<h3 class="govuk-heading-m">Example 5: Uploading a file</h3>
+<p class="govuk-body">This example validates and virus scans a file, saves the record, then uploads the file to a file column on it.</p>
+
+{{ codeExample(
+  "Upload a file",
+  "includes/patterns/crm-helper-framework/uploadFileExample.njk",
+  { index: 5 }
+) }}
+
+<p class="govuk-body"><strong>Explanation</strong>:</p>
+<ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+  <li>The file input uses the improved file upload component. The plain file input works in the same way.</li>
+  <li><code>ValidateData</code> checks the file and sends it to the <code>VirusScan</code> server logic. See <a class="govuk-link" href="{{ pages['powerpages/patterns/scan-uploaded-files'].url }}">scanning uploaded files for viruses</a>.</li>
+  <li>The other answers are saved first, then <code>UploadFile</code> uploads the file to the <code>dfe_evidencefile</code> column.</li>
+  <li><code>ConstructData</code> is only given the text input, because it can't build data from a file input on its own.</li>
 </ul>
 
 <h2 class="govuk-heading-l" id="best-practices">Best practices</h2>
 <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
-  <li>Use <code>ValidateData</code> before calling <code>ConstructData</code> or any Web API functions to ensure data integrity.</li>
-  <li>Use try-catch blocks to handle errors, and leverage the framework's error display functions (<code>DfEPortal.Errors.ShowErrorSummary</code>).</li>
+  <li>Always check the value <code>ValidateData</code> resolves with, and stop if it's <code>false</code>.</li>
+  <li>Use <code>await</code> with <code>ValidateData</code>, <code>ConstructData</code> and the Web API functions, inside an <code>async</code> function.</li>
+  <li>Use entity set names, such as <code>contacts</code>, with the Web API functions, except <code>ProcessFileAndUploadToNotes</code>.</li>
+  <li>Use try-catch blocks to handle errors, and re-enable the button and hide the spinner if something fails.</li>
   <li>Use <code>DisableButton</code> and <code>ShowLoadingSpinner</code> during processing to prevent multiple submissions and provide visual feedback.</li>
-  <li>Ensure your <code>inputObj</code> properties (e.g. <code>required</code>, <code>targetType</code>) match the form's requirements to avoid unexpected behavior.</li>
+  <li>Ensure your <code>inputObj</code> properties (e.g. <code>required</code>, <code>targetType</code>) match the form's requirements to avoid unexpected behaviour.</li>
+  <li>Keep any check users mustn't be able to get around, and anything that needs a key, in <a class="govuk-link" href="{{ pages['powerpages/server-logic'].url }}">server logic</a>. Code in the browser can be changed by the user.</li>
   <li>Avoid logging sensitive data (e.g. email addresses) to the console in production.</li>
 </ul>
 

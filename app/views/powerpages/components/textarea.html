@@ -31,6 +31,15 @@
 <h2 class="govuk-heading-l" id="how-it-works">How it works</h2>
 <p class="govuk-body">Read the <a class="govuk-link" href="https://design-system.service.gov.uk/components/textarea/#how-it-works" target="_blank">GOV.UK Design System guidance on textareas (opens in a new tab)</a> for information on labels, sizing, and accessibility considerations.</p>
 <p class="govuk-body">If you need to limit the number of characters users can enter, use the <a class="govuk-link" href="https://design-system.service.gov.uk/components/character-count/" target="_blank">character count component (opens in a new tab)</a> which shows users how many characters they have remaining as they type.</p>
+<p class="govuk-body">The <a class="govuk-link" href="{{ pages['powerpages/patterns/crm-helper-framework'].url }}">CRM helper framework</a> checks the limit you set on the character count's container: <code>data-maxlength</code> for a number of characters, or <code>data-maxwords</code> for a number of words.</p>
+
+<div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-visually-hidden">Warning</span>
+    Use <code>data-maxwords</code> for a word limit, not GOV.UK Frontend 6.6's newer <code>data-maxlength</code> with <code>data-count-type="words"</code>. The framework doesn't support the newer markup yet: it would treat the limit as characters and wouldn't check the number of words.
+  </strong>
+</div>
 
 <h2 class="govuk-heading-l" id="html-examples">HTML examples</h2>
 <p class="govuk-body">
@@ -81,6 +90,8 @@
 <p class="govuk-body">'Enter [whatever it is]'. For example, 'Enter your feedback'.</p>
 <p class="govuk-body govuk-!-font-weight-bold">If the input is too long</p>
 <p class="govuk-body">'[whatever it is] must be [number] characters or less'. For example, 'Your feedback must be 500 characters or less'.</p>
+<p class="govuk-body govuk-!-font-weight-bold">If the input has too many words</p>
+<p class="govuk-body">'[whatever it is] must be [number] words or less'. For example, 'Your feedback must be 150 words or less'. Blank lines and paragraph breaks aren't counted as words.</p>
 <p class="govuk-body govuk-!-font-weight-bold">If the input is too short</p>
 <p class="govuk-body">'[whatever it is] must be [number] characters or more'. For example, 'Your feedback must be 10 characters or more'.</p>
 

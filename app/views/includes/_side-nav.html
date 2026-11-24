@@ -3,13 +3,15 @@
   { title: "Getting started", url: pages['powerpages/getting-started'].url, key: "getting-started" },
   { title: "Styles", url: pages['powerpages/styles'].url, key: "styles" },
   { title: "Components", url: pages['powerpages/components'].url, key: "components" },
-  { title: "Patterns", url: pages['powerpages/patterns'].url, key: "patterns" }
+  { title: "Patterns", url: pages['powerpages/patterns'].url, key: "patterns" },
+  { title: "Server logic", url: pages['powerpages/server-logic'].url, key: "server-logic" }
 ] %}
 
 {% set getting_started = [
   pages["powerpages/getting-started/branding-standards"],
   pages["powerpages/getting-started/pre-requisites"],
-  pages["powerpages/getting-started/import-website-template"]
+  pages["powerpages/getting-started/import-website-template"],
+  pages["powerpages/getting-started/framework-versions"]
 ] %}
 
 {% set components = [
@@ -22,6 +24,7 @@
   pages["powerpages/components/date-input"],
   pages["powerpages/components/email-input"],
   pages["powerpages/components/feedback"],
+  pages["powerpages/components/file-upload"],
   pages["powerpages/components/filter-panel"],
   pages["powerpages/components/loading-spinner"],
   pages["powerpages/components/number-input"],
@@ -49,7 +52,13 @@
   pages["powerpages/patterns/phase-banner"],
   pages["powerpages/patterns/page-heading"],
   pages["powerpages/patterns/caption-page-heading"],
-  pages["powerpages/patterns/crm-helper-framework"]
+  pages["powerpages/patterns/crm-helper-framework"],
+  pages["powerpages/patterns/scan-uploaded-files"]
+] %}
+
+{% set server_logic = [
+  pages["powerpages/server-logic/setting-up"],
+  pages["powerpages/server-logic/behaviour-and-limitations"]
 ] %}
 
 
@@ -122,6 +131,8 @@
   {% set currentSection = "components" %}
 {% elseif currentPath | contains(pages['powerpages/patterns'].url) %}
   {% set currentSection = "patterns" %}
+{% elseif currentPath | contains(pages['powerpages/server-logic'].url) %}
+  {% set currentSection = "server-logic" %}
 {% elseif currentPath | contains(pages['crm/configuration'].url) %}
   {% set currentSection = "configuration" %}
 {% elseif currentPath | contains(pages['crm/customisation'].url) %}
@@ -203,6 +214,18 @@
   <h2 class="govuk-heading-s govuk-!-margin-bottom-2">In this section</h2>
   <ul class="dfe-vertical-nav__section" id="side-navigation">
     {% for page in patterns %}
+    {% set isCurrentPage = currentPath | contains(page.url) %}
+    <li class="dfe-vertical-nav__section-item {% if isCurrentPage %}dfe-vertical-nav__section-item--current{% endif %}">
+      <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}"{% if isCurrentPage %} aria-current="page"{% endif %}>{{ page.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
+{% elseif currentPath | contains(pages['powerpages/server-logic'].url) and currentPath != pages['powerpages/server-logic'].url %}
+<nav aria-label="Server Logic Menu" class="dfe-vertical-nav">
+  <h2 class="govuk-heading-s govuk-!-margin-bottom-2">In this section</h2>
+  <ul class="dfe-vertical-nav__section" id="side-navigation">
+    {% for page in server_logic %}
     {% set isCurrentPage = currentPath | contains(page.url) %}
     <li class="dfe-vertical-nav__section-item {% if isCurrentPage %}dfe-vertical-nav__section-item--current{% endif %}">
       <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}"{% if isCurrentPage %} aria-current="page"{% endif %}>{{ page.title }}</a>

@@ -1,0 +1,310 @@
+{% set pageData = pages['powerpages/patterns/scan-uploaded-files'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+
+{{ contentsList([
+  { text: "How it works", href: "#how-it-works" },
+  { text: "Before you start", href: "#before-you-start" },
+  { text: "Check whether your site already has it", href: "#check-your-site" },
+  { text: "Set up the VirusScan server logic", href: "#set-up", children: [
+    { text: "Site settings", href: "#site-settings" },
+    { text: "Environment variables", href: "#environment-variables" },
+    { text: "Server logic record", href: "#server-logic-record" },
+    { text: "Server logic code", href: "#server-logic-code" }
+  ]},
+  { text: "Scan files on your page", href: "#scan-files" },
+  { text: "What users see", href: "#what-users-see" },
+  { text: "File sizes", href: "#file-sizes" },
+  { text: "Updating an older VirusScan", href: "#updating" },
+  { text: "Request and response", href: "#contract" }
+]) }}
+
+<p class="govuk-body">Scan every file users upload before you save it to CRM. The <a class="govuk-link" href="{{ pages['powerpages/patterns/crm-helper-framework'].url }}">CRM helper framework</a> does this for you when it validates a file input, as long as your site has the <code>VirusScan</code> server logic.</p>
+
+<h2 class="govuk-heading-l" id="how-it-works">How it works</h2>
+
+<ol class="govuk-list govuk-list--number">
+  <li>The user selects a file and submits the page.</li>
+  <li><code>DfEPortal.ValidateData</code> checks the file's type, number and size, then sends it to the <code>VirusScan</code> server logic.</li>
+  <li>The server logic passes the file to the DfE virus scanning service and returns the result.</li>
+  <li>If any file isn't clean, the framework shows an error and the page stops.</li>
+  <li>If every file is clean, your page saves the record and uploads the file.</li>
+</ol>
+
+<p class="govuk-body">The scanning service's address and key stay on the server, so they're never sent to the browser.</p>
+
+<h2 class="govuk-heading-l" id="before-you-start">Before you start</h2>
+
+<p class="govuk-body">You need:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>version 03 or later of the framework, for files larger than about 750 KB (see <a class="govuk-link" href="{{ pages['powerpages/getting-started/framework-versions'].url }}">framework versions</a>)</li>
+  <li>the address and key of the DfE virus scanning service for each of your environments</li>
+</ul>
+
+<div class="govuk-inset-text">
+  To get access to the virus scanning service, email Eddie Haynes or Steve Tam in the Solutions Delivery Team. Tell them your service's name and which environments you need.
+</div>
+
+<h2 class="govuk-heading-l" id="check-your-site">Check whether your site already has it</h2>
+
+<p class="govuk-body">Sites created from the <a class="govuk-link" href="{{ pages['powerpages/getting-started/import-website-template'].url }}">website import tool</a> include the <code>VirusScan</code> server logic. To check, open your site in Power Pages design studio, go to <strong>Set up</strong>, then <strong>Server logic</strong>, and look for <code>VirusScan</code>.</p>
+
+<p class="govuk-body">If it's there, check it against the steps on this page, in particular the site settings and <a class="govuk-link" href="#updating">updating an older VirusScan</a>. If it isn't, for example because your site was built before it was added, set it up yourself.</p>
+
+<h2 class="govuk-heading-l" id="set-up">Set up the VirusScan server logic</h2>
+
+<p class="govuk-body">If you haven't used server logic before, read <a class="govuk-link" href="{{ pages['powerpages/server-logic/setting-up'].url }}">setting up server logic</a> first.</p>
+
+<h3 class="govuk-heading-m" id="site-settings">Site settings</h3>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Name</th>
+      <th scope="col" class="govuk-table__header">Value</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>ServerLogic/Enabled</code></td>
+      <td class="govuk-table__cell"><code>true</code></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"><code>ServerLogic/MaxMemoryUsageInBytes</code></td>
+      <td class="govuk-table__cell"><code>41943040</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="govuk-body">Without the memory setting, files over about 2 MB fail with "An error occurred. Please try again.". Type its name exactly: Power Pages ignores other spellings without telling you.</p>
+
+<h3 class="govuk-heading-m" id="environment-variables">Environment variables</h3>
+
+<p class="govuk-body">Create 2 environment variables in your solution, using your publisher prefix in place of <code>dfe_</code>:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li><code>dfe_virusscanurl</code>: the virus scanning service's address</li>
+  <li><code>dfe_virusscankey</code>: its key, as a secret environment variable backed by Azure Key Vault</li>
+</ul>
+
+<p class="govuk-body">Set a value for each environment. Don't type the address or key into the server logic code: code is exported with your site, so it would end up in solution files and source control.</p>
+
+<h3 class="govuk-heading-m" id="server-logic-record">Server logic record</h3>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li><strong>Name:</strong> <code>VirusScan</code>, exactly. The framework calls <code>/_api/serverlogics/VirusScan</code>.</li>
+  <li><strong>Description:</strong> Sends uploaded files to the DfE virus scanning service and returns whether each one is clean.</li>
+  <li><strong>Web roles:</strong> every web role whose users upload files.</li>
+  <li><strong>Table permissions:</strong> none. The script doesn't read or write Dataverse.</li>
+</ul>
+
+<h3 class="govuk-heading-m" id="server-logic-code">Server logic code</h3>
+
+<pre><code class="language-javascript">const VIRUS_SCAN_URL = Server.EnvironmentVariable.get("dfe_virusscanurl");
+const VIRUS_SCAN_KEY = Server.EnvironmentVariable.get("dfe_virusscankey");
+
+async function post() {
+  try {
+    // Forwarded as it is, without parsing, to keep memory use down for large files.
+    // The scanning service checks the body.
+    const raw = Server.Context.Body || "";
+
+    if (raw.indexOf('"files"') === -1) {
+      throw new Error("Missing files array");
+    }
+
+    const response = await Server.Connector.HttpClient.PostAsync(
+      VIRUS_SCAN_URL,
+      raw,
+      { "x-functions-key": VIRUS_SCAN_KEY },
+      "application/json"
+    );
+
+    const parsed = typeof response === "string" ? JSON.parse(response) : response;
+
+    if (!parsed.IsSuccessStatusCode) {
+      throw new Error("Virus scan service returned " + parsed.StatusCode + ": " + (parsed.ServerErrorMessage || parsed.Body));
+    }
+
+    const inner = typeof parsed.Body === "string" ? JSON.parse(parsed.Body) : parsed.Body;
+
+    return JSON.stringify({
+      status: "success",
+      results: inner.results
+    });
+
+  } catch (err) {
+    Server.Logger.Error("VirusScan failed: " + err.message);
+    return JSON.stringify({
+      status: "error",
+      message: err.message
+    });
+  }
+}</code></pre>
+
+<p class="govuk-body">The script doesn't parse the files or log them. Holding a large file in memory more than once can stop the script with the platform's generic error, which your <code>catch</code> can't handle. See <a class="govuk-link" href="{{ pages['powerpages/server-logic/behaviour-and-limitations'].url }}#memory-limit">the memory limit</a>.</p>
+
+<h2 class="govuk-heading-l" id="scan-files">Scan files on your page</h2>
+
+<p class="govuk-body">Add a file input to your web template, using either the plain GOV.UK file input or the improved file upload component. Both work with the framework from version 03. See the <a class="govuk-link" href="{{ pages['powerpages/components/file-upload'].url }}">file upload component</a> for the HTML.</p>
+
+<p class="govuk-body">Include the file input in your validation data object. The framework scans the file when you call <code>ValidateData</code>.</p>
+
+<pre><code class="language-javascript">const inputs = [
+  {
+    identifier: "dfe_evidencefile",
+    type: "file",
+    friendlyName: "your evidence",
+    required: true,
+    allowedFileTypes: ["pdf", "docx", "csv"],
+    maxFileSize: 3,
+    fileLimit: 1
+  }
+];
+
+$("#submit-btn").on("click", async function (e) {
+  e.preventDefault();
+  DfEPortal.DisableButton("submit-btn");
+  DfEPortal.ShowLoadingSpinner("loading-spinner");
+
+  try {
+    // Checks the type, number and size of files, then scans them
+    const isValid = await DfEPortal.ValidateData(inputs);
+    if (!isValid) {
+      return;
+    }
+
+    // Save the record first, then upload the file to it
+    await DfEPortal.WebApi.Update(recordId, "dfe_applications", dataObj);
+    await DfEPortal.WebApi.UploadFile("dfe_evidencefile", "dfe_applications", recordId);
+  } finally {
+    DfEPortal.HideLoadingSpinner("loading-spinner");
+    DfEPortal.EnableButton("submit-btn");
+  }
+});</code></pre>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Write <code>allowedFileTypes</code> in lowercase, without the dot.</li>
+  <li><code>maxFileSize</code> is in megabytes. Keep it within the sizes in <a class="govuk-link" href="#file-sizes">file sizes</a>.</li>
+  <li>If the file input is optional and the user hasn't selected a file, the framework skips the checks and the scan. Only call <code>UploadFile</code> when a file was selected.</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="what-users-see">What users see</h2>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">When</th>
+      <th scope="col" class="govuk-table__header">Error message</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">The scanning service finds a virus, or can't scan the file</td>
+      <td class="govuk-table__cell">Virus detected in file '[file name]'</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">The server logic or the scanning service fails</td>
+      <td class="govuk-table__cell">An error occurred. Please try again.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="govuk-body">A file the scanning service can't scan is treated as unsafe, so users see "Virus detected" for it too. The service's own error is in the response, in each result's <code>error</code> property, if you need to tell the two apart.</p>
+
+<h2 class="govuk-heading-l" id="file-sizes">File sizes</h2>
+
+<p class="govuk-body">Files are sent to the server logic as base64, which is about a third bigger than the file. Every file the user selects for one input is sent in the same request.</p>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Set-up</th>
+      <th scope="col" class="govuk-table__header">Largest file that works</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">Framework version 02 or earlier</td>
+      <td class="govuk-table__cell">About 750 KB</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">Version 03, without the memory setting</td>
+      <td class="govuk-table__cell">About 2 MB</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">Version 03, with <code>ServerLogic/MaxMemoryUsageInBytes</code> set to 40 MB</td>
+      <td class="govuk-table__cell">At least 3.5 MB (the largest we've tested)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="govuk-body">Test the largest file your service expects in each environment before you go live.</p>
+
+<h2 class="govuk-heading-l" id="updating">Updating an older VirusScan</h2>
+
+<p class="govuk-body">Older versions of the <code>VirusScan</code> server logic parse the request and build it again before sending it on. They work for small files, but can run out of memory with large ones. Replace the code with the <a class="govuk-link" href="#server-logic-code">current version</a> if yours:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>calls <code>JSON.parse(Server.Context.Body)</code> and then <code>JSON.stringify</code> before <code>PostAsync</code></li>
+  <li>has the scanning service's address or key typed into the code</li>
+  <li>parses <code>parsed.Body</code> before checking <code>IsSuccessStatusCode</code></li>
+</ul>
+
+<p class="govuk-body">If a key has been typed into the code, ask for a new one when you move it to an environment variable, because the old one will be in your solution files and source control.</p>
+
+<h2 class="govuk-heading-l" id="contract">Request and response</h2>
+
+<p class="govuk-body">You only need this if you're writing your own client or server logic.</p>
+
+<h3 class="govuk-heading-m">Request from the browser</h3>
+
+<p class="govuk-body"><code>POST /_api/serverlogics/VirusScan</code>, sent as <code>text/plain; charset=utf-8</code>, with a JSON body:</p>
+
+<pre><code class="language-javascript">{
+  "files": [
+    {
+      "fileName": "evidence.pdf",
+      "mimeType": "application/pdf",
+      "fileContent": "JVBERi0xLjcKJ..."
+    }
+  ]
+}</code></pre>
+
+<p class="govuk-body"><code>fileContent</code> is the file as base64, without a <code>data:</code> prefix.</p>
+
+<h3 class="govuk-heading-m">Response from the server logic</h3>
+
+<pre><code class="language-javascript">// Scanned
+{
+  "status": "success",
+  "results": [
+    { "fileName": "evidence.pdf", "clean": true, "error": null }
+  ]
+}
+
+// The server logic or the scanning service failed
+{
+  "status": "error",
+  "message": "Virus scan service returned 401: ..."
+}</code></pre>
+
+<p class="govuk-body">This is returned inside the <code>data</code> property of the server logic envelope. The framework treats any result with <code>clean: false</code> as a virus, and any <code>status</code> other than <code>success</code> as an error.</p>
+
+<p class="govuk-body">If you would like any additional advice or guidance with virus scanning, email Eddie Haynes or Steve Tam in the Solutions Delivery Team.</p>
+
+{% endblock %}
