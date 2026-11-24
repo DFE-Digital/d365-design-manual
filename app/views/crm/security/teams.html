@@ -61,9 +61,9 @@ Access Teams provide temporary or flexible access to individual records. They do
   <li>Good for ad-hoc or changing groups of users</li>
 </ul>
 
-<h3 class="govuk-heading-m">Azure AD group teams</h3>
+<h3 class="govuk-heading-m">Microsoft Entra group teams</h3>
 <p class="govuk-body">
-These teams are linked to Microsoft 365 groups. Membership is managed in Azure Active Directory, and Dynamics 365 synchronises the team members automatically.
+These teams are linked to a Microsoft Entra security group or Microsoft 365 group. Membership is managed in Microsoft Entra ID, and Dynamics 365 synchronises the team members automatically.
 </p>
 
 <ul class="govuk-list govuk-list--bullet">
@@ -84,7 +84,7 @@ Owner Teams affect record ownership and permissions. Access Teams affect access 
   <li>Assign security roles to teams, not users, whenever possible.</li>
   <li>Use Owner Teams for shared queues or when multiple users manage the same records.</li>
   <li>Use Access Teams for temporary or ad-hoc collaboration.</li>
-  <li>Use Azure AD Group Teams for large DfE groups or when membership changes frequently.</li>
+  <li>Use Microsoft Entra group teams for large DfE groups or when membership changes frequently.</li>
 </ul>
 
 <h2 class="govuk-heading-l" id="donts">Don'ts</h2>
@@ -93,7 +93,7 @@ Owner Teams affect record ownership and permissions. Access Teams affect access 
   <li>Do not create a new team for every permission scenario - reuse teams where practical.</li>
   <li>Do not rely on access teams for system-wide permissions (they only apply to individual records).</li>
   <li>Do not use teams to patch gaps in a poorly designed Business Unit structure.</li>
-  <li>Do not manually maintain membership if an Azure AD group exists - let it sync automatically.</li>
+  <li>Do not manually maintain membership if a Microsoft Entra group exists - let it sync automatically.</li>
 </ul>
 
 <h2 class="govuk-heading-l" id="implications">Implications of using Teams</h2>
@@ -104,7 +104,7 @@ Owner Teams affect record ownership and permissions. Access Teams affect access 
   <li><strong>Security:</strong> Owner Teams can grant significant access, so assign roles carefully.</li>
   <li><strong>Record ownership:</strong> Teams can own records, which affects who can see and update data.</li>
   <li><strong>Collaboration:</strong> Teams allow users from multiple Business Units to work together without restructuring.</li>
-  <li><strong>Maintenance:</strong> Azure AD Group Teams reduce admin overhead and keep access controlled in one place.</li>
+  <li><strong>Maintenance:</strong> Microsoft Entra group teams reduce admin overhead and keep access controlled in one place.</li>
 </ul>
 
 <h2 class="govuk-heading-l" id="summary">Summary</h2>

@@ -46,7 +46,7 @@
 <ul class="govuk-list govuk-list--bullet">
   <li>Business Rules can become inefficient when conditions are very complex</li>
   <li>They are harder to debug when multiple rules overlap</li>
-  <li>They run on the client side, so intensive logic can impact form performance</li>
+  <li>Rules scoped to a form run in the browser, so complex logic can slow the form down. Rules scoped to Entity also run on the server, so they apply when records are saved through imports, flows or the API</li>
 </ul>
 
 <p class="govuk-body">Note: If a requirement can be met cleanly using a Business Rule, it should be used before considering JavaScript.</p>

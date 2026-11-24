@@ -68,7 +68,7 @@ Customisation should only be introduced where configuration genuinely cannot mee
 <ul class="govuk-list govuk-list--bullet">
   <li>Use OOTB configuration features as the default approach</li>
   <li>Reserve custom code for scenarios where configuration alone cannot meet a requirement</li>
-  <li>Prioritise supportability and maintainance over technical sophistication</li>
+  <li>Prioritise supportability and maintenance over technical sophistication</li>
 </ul>
 
 <h2 class="govuk-heading-l" id="leverage-the-wider-power-platform">Use the wider Power Platform</h2>
@@ -78,7 +78,7 @@ Dynamics 365 is part of the wider Power Platform ecosystem and should not be des
 <ul class="govuk-list govuk-list--bullet">
   <li>Use Power Automate for automation, orchestration and lightweight integration</li>
   <li>Use Power Apps to tailor user experiences where OOTB Dynamics 365 apps are not appropriate</li>
-  <li>Use Power Pages where simple data capture is required</li>
+  <li>Use Power Pages for external-facing services, built on the DfE Power Pages framework and its reusable features, so business users can manage content without a developer</li>
   <li>Use Power BI for advanced analytics and insights</li>
 </ul>
 
@@ -126,7 +126,7 @@ The Single Responsibility Principle suggests that each component should have one
 
 <h2 class="govuk-heading-l" id="loose-coupling">Loose coupling</h2>
 <p class="govuk-body">
-Loose coupling minimises dependencies between components so that changes in one area have minimal impact elsewhere. In Dynamics 365, loosely coupled designs are more managable, easier to extend and better able to cope with change.
+Loose coupling minimises dependencies between components so that changes in one area have minimal impact elsewhere. In Dynamics 365, loosely coupled designs are more manageable, easier to extend and better able to cope with change.
 </p>
 <ul class="govuk-list govuk-list--bullet">
   <li>Use asynchronous processing to avoid one process waiting for another to complete</li>
@@ -137,7 +137,7 @@ Loose coupling minimises dependencies between components so that changes in one 
 
 <h2 class="govuk-heading-l" id="abstraction">Abstraction</h2>
 <p class="govuk-body">
-Abstraction hides an applications implementation details behind clear interfaces, allowing underlying logic to change without affecting consumers. External applications should be able to integrate with Dynamics 365 without having to understand or rely on the Dynamics 365 data model or business rules.
+Abstraction hides an application&#39;s implementation details behind clear interfaces, allowing underlying logic to change without affecting consumers. External applications should be able to integrate with Dynamics 365 without having to understand or rely on the Dynamics 365 data model or business rules.
 </p>
 <ul class="govuk-list govuk-list--bullet">
   <li>Centralise common logic in shared services or custom APIs</li>
@@ -170,7 +170,7 @@ Performance directly impacts user productivity and confidence in the system. Eff
 
 <h2 class="govuk-heading-l" id="resilience">Resilience</h2>
 <p class="govuk-body">
-Resilient focuses on a system's ability to cope with failures and continue to operate in a controlled and predictable way. A resilient solution anticipates that things will go wrong, such as temporary service outages, integration failures, or unexpected data, and is designed to handle these situations without services failing. In a Dynamics 365 context, resilience means designing processes and integrations that fail gracefully. 
+Resilience focuses on a system's ability to cope with failures and continue to operate in a controlled and predictable way. A resilient solution anticipates that things will go wrong, such as temporary service outages, integration failures, or unexpected data, and is designed to handle these situations without services failing. In a Dynamics 365 context, resilience means designing processes and integrations that fail gracefully. 
 </p>
 <ul class="govuk-list govuk-list--bullet">
   <li>Handle errors by logging/alerting appropriately and continuing to function where possible</li>
