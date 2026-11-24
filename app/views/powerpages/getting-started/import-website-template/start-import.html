@@ -88,9 +88,9 @@
 </form>
 
 <div id="import-progress" class="dfe-loading-spinner" hidden>
-  <div class="dfe-loading-spinner__spinner" aria-live="polite" role="status"></div>
-  <div class="dfe-loading-spinner__content">
-    <h2 class="govuk-heading-l" id="loading-message">Starting import…</h2>
+  <div class="dfe-loading-spinner__spinner"></div>
+  <div class="dfe-loading-spinner__content" role="status" aria-live="polite">
+    <p class="govuk-body-l govuk-!-font-weight-bold" id="loading-message">Starting import…</p>
     <p class="govuk-body-s govuk-!-margin-bottom-1" id="loading-detail"></p>
     <p class="govuk-body-s" id="loading-timer"></p>
   </div>
@@ -262,7 +262,7 @@
       // Check timeout
       if (Date.now() > timeoutAt) {
         hideProgress();
-        showApiError('The import timed out. The workflow may still be running - check the <a href="https://github.com/DFE-Digital/d365-gds-powerpages/actions" target="_blank" class="govuk-link">GitHub Actions page</a> for status.');
+        showApiError('The import timed out. The workflow may still be running - check the <a href="https://github.com/DFE-Digital/d365-gds-powerpages/actions" target="_blank" class="govuk-link">GitHub Actions page (opens in a new tab)</a> for status.');
         return;
       }
 
@@ -303,7 +303,7 @@
       // Check timeout
       if (Date.now() > timeoutAt) {
         hideProgress();
-        showApiError('The import timed out. Check the <a href="https://github.com/DFE-Digital/d365-gds-powerpages/actions" target="_blank" class="govuk-link">GitHub Actions page</a> for the current status.');
+        showApiError('The import timed out. Check the <a href="https://github.com/DFE-Digital/d365-gds-powerpages/actions" target="_blank" class="govuk-link">GitHub Actions page (opens in a new tab)</a> for the current status.');
         return;
       }
 

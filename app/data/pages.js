@@ -561,14 +561,14 @@ const pages = {
     ]
   },
   "crm/architecture/strategy": {
-    title: "CRM Strategy",
+    title: "CRM strategy",
     url: "/crm/architecture/strategy/",
     description: "Sets out the guard rails, principles and long-term vision for how DfE will use CRM to create consistent, scalable and maintainable applications across the organisation.",
     template: "crm/architecture/strategy",
     parent: "crm/architecture"
   },
   "crm/architecture/product-suite": {
-    title: "Dynamics 365 & Power Platform Product Suite",
+    title: "Dynamics 365 and Power Platform product suite",
     url: "/crm/architecture/product-suite/",
     description: "An overview of the Dynamics 365 and Power Platform tools, services and capabilities adopted across DfE to deliver CRM solutions.",
     template: "crm/architecture/product-suite",

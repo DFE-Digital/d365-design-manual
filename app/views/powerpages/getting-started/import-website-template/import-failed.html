@@ -17,7 +17,7 @@
 
 {% if query.runUrl %}
 <p class="govuk-body">
-  <a class="govuk-link" href="{{ query.runUrl }}" target="_blank">View the workflow logs on GitHub (opens in new tab)</a> for more details about what went wrong.
+  <a class="govuk-link" href="{{ query.runUrl }}" target="_blank">View the workflow logs on GitHub (opens in a new tab)</a> for more details about what went wrong.
 </p>
 {% endif %}
 
@@ -45,7 +45,7 @@
 <h2 class="govuk-heading-l">What to do next</h2>
 
 <ol class="govuk-list govuk-list--number">
-  <li>{% if query.runUrl %}Review the <a class="govuk-link" href="{{ query.runUrl }}" target="_blank">workflow logs</a> to identify the specific error.{% else %}Check the <a class="govuk-link" href="https://github.com/DFE-Digital/d365-gds-powerpages/actions" target="_blank">GitHub Actions page</a> for your workflow run.{% endif %}</li>
+  <li>{% if query.runUrl %}Review the <a class="govuk-link" href="{{ query.runUrl }}" target="_blank">workflow logs (opens in a new tab)</a> to identify the specific error.{% else %}Check the <a class="govuk-link" href="https://github.com/DFE-Digital/d365-gds-powerpages/actions" target="_blank">GitHub Actions page (opens in a new tab)</a> for your workflow run.{% endif %}</li>
   <li>Verify your <a class="govuk-link" href="{{ pages['powerpages/getting-started/pre-requisites'].url }}">pre-requisites</a> are correctly configured.</li>
   <li>Check that your Client Secret has not expired in the Azure Portal.</li>
   <li>Ensure the app registration has the <code>user_impersonation</code> permission for Dynamics CRM.</li>
