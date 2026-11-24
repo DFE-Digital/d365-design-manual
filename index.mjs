@@ -131,7 +131,7 @@ nunjucksEnv.addFilter('getPageDescription', (url) => {
 app.engine('html', nunjucks.render); // Tell Express to use Nunjucks for .html files
 app.set('view engine', 'html'); // Set the default view engine to 'html'
 
-app.locals.serviceName = 'Dynamics 365 Design Manual';
+app.locals.serviceName = 'Dynamics 365 and Power Pages manual';
 
 // Set up static file serving for the app's assets
 app.use('/assets/js/sdt-toolkit.js', (req, res, next) => {

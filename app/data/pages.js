@@ -5,7 +5,7 @@ const pages = {
   "home": {
     title: "Home",
     url: "/",
-    description: "Principles, guidance, and standards to support people delivering joined-up, effective, user-centred outcomes for people who use Department for Education Dynamics 365 services.",
+    description: "Principles, guidance, and standards to support people delivering joined-up, effective, user-centred outcomes for people who use Department for Education Dynamics 365 and Power Pages services.",
     template: "index",
     children: ["powerpages", "crm"]
   },
@@ -14,7 +14,7 @@ const pages = {
   "accessibility-statement": {
     title: "Accessibility statement",
     url: "/accessibility-statement/",
-    description: "Accessibility statement for the Dynamics 365 Design System website.",
+    description: "Accessibility statement for the Dynamics 365 and Power Pages manual website.",
     template: "accessibility-statement",
     parent: "home"
   },

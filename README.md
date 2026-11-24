@@ -1,8 +1,8 @@
-# Department for Education - Dynamics 365 Design Manual
+# Department for Education - Dynamics 365 and Power Pages manual
 
-Principles, guidance, and standards to support people delivering joined-up, effective, user-centred outcomes for people who use Department for Education Dynamics 365 services.
+Principles, guidance, and standards to support people delivering joined-up, effective, user-centred outcomes for people who use Department for Education Dynamics 365 and Power Pages services.
 
-[Access the Dynamics 365 Design Manual](https://d365-design-manual-8523de7fad90.herokuapp.com/)
+[Access the Dynamics 365 and Power Pages manual](https://d365-design-manual-8523de7fad90.herokuapp.com/)
 
 ## About
 
