@@ -2,9 +2,13 @@
 // =================
 
 // DfE logo in the Generic header
+// Keep the logo inline, as the Generic header expects. Making it a block inside
+// the homepage link adds an empty line above and below it
+// The width gives a 40px high logo, and it scales down on narrow screens
 .dfe-header__logo {
-  display: block;
-  height: 40px;
+  width: 368px;
+  max-width: 100%;
+  height: auto;
 }
 
 // The header is black, so switch to the black logo on the yellow focus state

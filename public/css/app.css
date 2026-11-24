@@ -7537,8 +7537,9 @@ dd code {
 }
 
 .dfe-header__logo {
-  display: block;
-  height: 40px;
+  width: 368px;
+  max-width: 100%;
+  height: auto;
 }
 
 .govuk-generic-header__homepage-link:focus .dfe-header__logo {
@@ -7577,102 +7578,6 @@ dd code {
 
 .dfe-manual-top-nav__link {
   color: #ffffff;
-}
-
-.dfe-homepage-header-panel {
-  background-color: var(--govuk-brand-colour, #1d70b8);
-  padding-bottom: 28px;
-  padding-top: 15px;
-  font-family: "Inter", sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-@media print {
-  .dfe-homepage-header-panel {
-    font-family: sans-serif;
-  }
-}
-@media (max-width: 40.0525em) {
-  .dfe-homepage-header-panel {
-    padding-left: 9px;
-    padding-right: 9px;
-  }
-}
-@media (min-width: 40.0625em) {
-  .dfe-homepage-header-panel {
-    padding-top: 30px;
-  }
-}
-@media (min-width: 48.0625em) {
-  .dfe-homepage-header-panel {
-    padding-bottom: 40px;
-  }
-}
-@media (min-width: 1281px) {
-  .dfe-homepage-header-panel {
-    padding-bottom: 60px;
-  }
-}
-
-.dfe-homepage-header-panel__title {
-  font-weight: 700;
-  color: #fff;
-  font-size: 2.5rem;
-  line-height: 1.2;
-  margin: 0;
-  margin-bottom: 30px;
-}
-@media (min-width: 40.0625em) {
-  .dfe-homepage-header-panel__title {
-    font-size: 3.125rem;
-    margin-bottom: 40px;
-  }
-}
-@media (min-width: 48.0625em) {
-  .dfe-homepage-header-panel__title {
-    font-size: 3.4375rem;
-  }
-}
-@media (min-width: 1281px) {
-  .dfe-homepage-header-panel__title {
-    font-size: 4rem;
-  }
-}
-
-@media (min-width: 48.0625em) {
-  .dfe-homepage-header-panel__title-container {
-    max-width: 80%;
-  }
-}
-
-.dfe-homepage-header-panel__intro {
-  font-weight: 700;
-  font-size: 1.1875rem;
-  color: #ffffff;
-  margin: 0;
-  line-height: 1.07;
-  display: block;
-  text-wrap: balance;
-}
-@media (min-width: 1281px) {
-  .dfe-homepage-header-panel__intro {
-    font-size: 1.5rem;
-    line-height: 1.25;
-  }
-}
-
-@media (min-width: 20em) {
-  .dfe-homepage-header-panel__search {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 0 15px;
-  }
-}
-@media (min-width: 20em) and (min-width: 40.0625em) {
-  .dfe-homepage-header-panel__search {
-    width: 66.6666666667%;
-    float: left;
-  }
 }
 
 .dfe-dfe-browse__breadcrumb-wrapper,
