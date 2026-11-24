@@ -64,25 +64,25 @@
 
   {# When to use #}
   {% if sectionId == 'whenToUse' and component.whenToUse %}
-    <h2 class="govuk-heading-m" id="when-to-use">{{ component.whenToUse.title }}</h2>
+    <h2 class="govuk-heading-l" id="when-to-use">{{ component.whenToUse.title }}</h2>
     {{ component.whenToUse.content | safe }}
   {% endif %}
 
   {# When not to use #}
   {% if sectionId == 'whenNotToUse' and component.whenNotToUse %}
-    <h2 class="govuk-heading-m" id="when-not-to-use">{{ component.whenNotToUse.title }}</h2>
+    <h2 class="govuk-heading-l" id="when-not-to-use">{{ component.whenNotToUse.title }}</h2>
     {{ component.whenNotToUse.content | safe }}
   {% endif %}
 
   {# How it works #}
   {% if sectionId == 'howItWorks' and component.howItWorks %}
-    <h2 class="govuk-heading-m" id="how-it-works">{{ component.howItWorks.title }}</h2>
+    <h2 class="govuk-heading-l" id="how-it-works">{{ component.howItWorks.title }}</h2>
     {{ component.howItWorks.content | safe }}
   {% endif %}
 
   {# Examples #}
   {% if sectionId == 'examples' and component.examples %}
-    <h2 class="govuk-heading-m" id="examples">HTML examples</h2>
+    <h2 class="govuk-heading-l" id="examples">HTML examples</h2>
     <p class="govuk-body">
       Select the appropriate example from this page and directly integrate the HTML into your web template.
       You can customise these examples to align with your specific requirements, as indicated below.
@@ -98,7 +98,7 @@
     </p>
 
     {% for example in component.examples %}
-      <h3 class="govuk-heading-s" id="{{ example.id }}">{{ example.title }}</h3>
+      <h3 class="govuk-heading-m" id="{{ example.id }}">{{ example.title }}</h3>
       {{ example.description | safe }}
       {{ exampleTabs(
         example.title,
@@ -109,7 +109,7 @@
 
     {# Additional examples #}
     {% if component.additionalExamples %}
-      <h3 class="govuk-heading-s" id="additional-examples">{{ component.additionalExamples.title }}</h3>
+      <h3 class="govuk-heading-m" id="additional-examples">{{ component.additionalExamples.title }}</h3>
       <p class="govuk-body">{{ component.additionalExamples.intro }}</p>
       <ul class="govuk-list">
         {% for link in component.additionalExamples.links %}
@@ -122,13 +122,13 @@
 
   {# Error messages #}
   {% if sectionId == 'errorMessages' and component.errorMessages %}
-    <h2 class="govuk-heading-m" id="error-messages">{{ component.errorMessages.title }}</h2>
+    <h2 class="govuk-heading-l" id="error-messages">{{ component.errorMessages.title }}</h2>
     {{ component.errorMessages.content | safe }}
   {% endif %}
 
   {# Known issues #}
   {% if sectionId == 'knownIssues' and component.knownIssues %}
-    <h2 class="govuk-heading-m" id="known-issues">{{ component.knownIssues.title }}</h2>
+    <h2 class="govuk-heading-l" id="known-issues">{{ component.knownIssues.title }}</h2>
     {{ component.knownIssues.content | safe }}
   {% endif %}
 

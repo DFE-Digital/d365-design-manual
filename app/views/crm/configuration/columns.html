@@ -61,22 +61,22 @@
 
 <p class="govuk-body">Common column types and when to use them:</p>
 
-<h2 class="govuk-heading-m" id="text">Text (single or multiline)</h2>
+<h3 class="govuk-heading-m" id="text">Text (single or multiline)</h3>
 <p class="govuk-body">Use for free‑text information such as names, comments, references or descriptions.</p>
 
-<h2 class="govuk-heading-m" id="number">Number (whole, decimal, floating point)</h2>
+<h3 class="govuk-heading-m" id="number">Number (whole, decimal, floating point)</h3>
 <p class="govuk-body">Use for numeric values such as counts, scores, or measurable attributes.</p>
 
-<h2 class="govuk-heading-m" id="datetime">Date/Time</h2>
+<h3 class="govuk-heading-m" id="datetime">Date/Time</h3>
 <p class="govuk-body">Use for any date or time‑based logic.</p>
 
-<h2 class="govuk-heading-m" id="boolean">Yes/No (Two‑options)</h2>
+<h3 class="govuk-heading-m" id="boolean">Yes/No (Two‑options)</h3>
 <p class="govuk-body">Use for clear binary choices such as Is active? or Requires approval? Avoid using text columns for yes/no values.</p>
 
-<h2 class="govuk-heading-m" id="choice">Choice columns</h2>
+<h3 class="govuk-heading-m" id="choice">Choice columns</h3>
 <p class="govuk-body">Use for small, finite sets of predefined options (e.g. Status, Application type). Ensure options are unambiguous and meaningful.</p>
 
-<h2 class="govuk-heading-m" id="lookup">Lookup columns</h2>
+<h3 class="govuk-heading-m" id="lookup">Lookup columns</h3>
 <p class="govuk-body">Use for linking to another table (e.g. Provider, Person, Case). Lookups allow reuse of shared reference data and maintain data integrity.</p>
 
 <p class="govuk-body">Lookup columns are also sometimes used instead of Choice columns when values may change and there is a requirement to make it more configurable as reference data instead of a hardcoded set of values.</p>
@@ -108,13 +108,13 @@
 
 <p class="govuk-body">Best practice:</p>
 
-<h2 class="govuk-heading-m" id="onetomany">1:N relationships</h2>
+<h3 class="govuk-heading-m" id="onetomany">1:N relationships</h3>
 <p class="govuk-body">Use when one record relates to many others (e.g. an Organisation with multiple Applications). This is the most common and recommended structure.</p>
 
-<h2 class="govuk-heading-m" id="manytomany">N:N relationships</h2>
+<h3 class="govuk-heading-m" id="manytomany">N:N relationships</h3>
 <p class="govuk-body">Use sparingly. Only use when both sides can relate to multiple items and no additional data exists on the link itself. This type of relationship does come with limitations around form design and can be confusing for users when searching data.</p>
 
-<h2 class="govuk-heading-m" id="config">Relationship configuration</h2>
+<h3 class="govuk-heading-m" id="config">Relationship configuration</h3>
 <p class="govuk-body">Choose the appropriate behaviour:</p>
 <ul class="govuk-list govuk-list--bullet">
   <li>Parental → Child records are reassigned or deleted when the parent record is reassigned or deleted</li>
@@ -127,19 +127,19 @@
 
 <h2 class="govuk-heading-l" id="best-practice">Additional best practices</h2>
 
-<h2 class="govuk-heading-m" id="unnecessary">Avoid unnecessary columns</h2>
+<h3 class="govuk-heading-m" id="unnecessary">Avoid unnecessary columns</h3>
 <p class="govuk-body">Before creating a new column, check if an existing one already captures the same information.</p>
 
-<h2 class="govuk-heading-m" id="generic">Keep columns generic</h2>
+<h3 class="govuk-heading-m" id="generic">Keep columns generic</h3>
 <p class="govuk-body">Avoid creating columns that only one team can use unless absolutely necessary.</p>
 
-<h2 class="govuk-heading-m" id="patterns">Use standard (OOTB) patterns</h2>
+<h3 class="govuk-heading-m" id="patterns">Use standard (OOTB) patterns</h3>
 <p class="govuk-body">Whenever possible, follow established Dynamics 365 design conventions (e.g. using “Status” and “Status Reason” columns).</p>
 
-<h2 class="govuk-heading-m" id="security">Review security</h2>
+<h3 class="govuk-heading-m" id="security">Review security</h3>
 <p class="govuk-body">Check whether the column contains sensitive information and whether additional permissions or column‑level security is needed.</p>
 
-<h2 class="govuk-heading-m" id="reporting">Consider reporting</h2>
+<h3 class="govuk-heading-m" id="reporting">Consider reporting</h3>
 <p class="govuk-body">Consider how the column will be used in Power BI or exported reporting. Choice columns, for example, produce both text and numeric values which may impact reporting design.</p>
 
 <h2 class="govuk-heading-l" id="further-reading">Further reading</h2>

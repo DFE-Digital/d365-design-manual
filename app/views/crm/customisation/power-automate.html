@@ -10,8 +10,8 @@
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
-  { text: "When to Use Power Automate in Dynamics 365", href: "#when" },
-  { text: "Best Practice When Using Power Automate", href: "#best-practice" },
+  { text: "When to use Power Automate in Dynamics 365", href: "#when" },
+  { text: "Best practice when using Power Automate", href: "#best-practice" },
   { text: "Summary", href: "#summary" }
 ]) }}
 
@@ -19,7 +19,7 @@
 
 <p class="govuk-body">This page explains when Power Automate should be used within Dynamics 365 and outlines best practices to ensure flows are reliable, scalable and aligned with DfE standards.</p>
 
-<h2 class="govuk-heading-l" id="when">When to Use Power Automate in Dynamics 365</h2>
+<h2 class="govuk-heading-l" id="when">When to use Power Automate in Dynamics 365</h2>
 
 <p class="govuk-body">Power Automate should be used for lightweight automation and very simple integration scenarios that do not require synchronous execution or complex business logic.</p>
 
@@ -33,7 +33,7 @@
   <li>Calling APIs or connectors when latency is not critical</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="use-when">Use Power Automate when:</h2>
+<h3 class="govuk-heading-m" id="use-when">Use Power Automate when:</h3>
 <ul class="govuk-list govuk-list--bullet">
   <li>The logic can run asynchronously</li>
   <li>The actions are simple and low‑risk</li>
@@ -44,39 +44,39 @@
 
 <p class="govuk-body">If the logic is complex, requires high performance, or must run synchronously (for example, validation before save), you should use a plugin instead.</p>
 
-<h2 class="govuk-heading-l" id="best-practice">Best Practice When Using Power Automate</h2>
+<h2 class="govuk-heading-l" id="best-practice">Best practice when using Power Automate</h2>
 
 <p class="govuk-body">To ensure flows are robust and easy to support, follow these best practices:</p>
 
-<h2 class="govuk-heading-m" id="simple">Keep flows simple</h2>
+<h3 class="govuk-heading-m" id="simple">Keep flows simple</h3>
 <ul class="govuk-list govuk-list--bullet">
   <li>Avoid building large, complex flows with many branches</li>
   <li>Break complex logic into smaller child flows where appropriate</li>
   <li>Do not replicate logic already available in Dynamics 365 configuration</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="solution-aware">Use solution‑aware flows</h2>
+<h3 class="govuk-heading-m" id="solution-aware">Use solution‑aware flows</h3>
 <ul class="govuk-list govuk-list--bullet">
   <li>Always build flows inside the appropriate [Service name] Customisation solution</li>
   <li>Ensure flows are exported and deployed via the solution using Azure DevOps pipelines</li>
   <li>Only create flows in the Dev environment</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="triggers">Use proper triggers and filters</h2>
+<h3 class="govuk-heading-m" id="triggers">Use proper triggers and filters</h3>
 <ul class="govuk-list govuk-list--bullet">
   <li>Use trigger conditions to avoid unnecessary runs</li>
   <li>Apply OData filters when using “List Rows” actions</li>
   <li>Reduce API calls to avoid throttling and improve performance</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="errors">Manage errors and run history</h2>
+<h3 class="govuk-heading-m" id="errors">Manage errors and run history</h3>
 <ul class="govuk-list govuk-list--bullet">
   <li>Add error handling steps</li>
   <li>Log failures clearly (using Dataverse tables, Application Insights or email alerts)</li>
   <li>Avoid silent failures that are hard to monitor</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="connections">Handle connections correctly</h2>
+<h3 class="govuk-heading-m" id="connections">Handle connections correctly</h3>
 <ul class="govuk-list govuk-list--bullet">
   <li>Re-use connection references where possible in each environment</li>
   <li>Use service accounts or managed identities for authentication</li>
@@ -84,7 +84,7 @@
   <li>Check connection references into source control within the solution</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="supportability">Consider long‑term supportability</h2>
+<h3 class="govuk-heading-m" id="supportability">Consider long‑term supportability</h3>
 <ul class="govuk-list govuk-list--bullet">
   <li>Name flows clearly using a consistent naming convention</li>
   <li>Add descriptions explaining purpose, triggers and expected behaviour</li>

@@ -10,8 +10,8 @@
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
-  { text: "What good Business Unit design looks like", href: "#good" },
-  { text: "Implications of the Business Unit structure", href: "#implications" },
+  { text: "What good business unit design looks like", href: "#good" },
+  { text: "Implications of the business unit structure", href: "#implications" },
   { text: "Examples", href: "#examples" },
   { text: "Summary", href: "#summary" }
 ]) }}
@@ -20,11 +20,11 @@
 Business Units in Dynamics 365 help the Department for Education (DfE) manage data access, security and organisational separation. A well‑designed Business Unit structure keeps systems simple, secure and easier to maintain.
 </p>
 
-<h2 class="govuk-heading-l" id="good">What good Business Unit design looks like</h2>
+<h2 class="govuk-heading-l" id="good">What good business unit design looks like</h2>
 
 <p class="govuk-body">For most DfE services, a simple and predictable Business Unit structure works best. Create Business Units only when there is a clear need for meaningful separation of data.</p>
 
-<h2 class="govuk-heading-m">Do's</h2>
+<h3 class="govuk-heading-m">Do's</h3>
 
 <ul class="govuk-list govuk-list--bullet">
   <li>Use Business Units to separate areas with different security needs or regulatory responsibilities.</li>
@@ -35,7 +35,7 @@ Business Units in Dynamics 365 help the Department for Education (DfE) manage da
   <li>Review the Business Unit design every time a new serivce in onboarded or teams change.</li>
 </ul>
 
-<h2 class="govuk-heading-m">Don'ts</h2>
+<h3 class="govuk-heading-m">Don'ts</h3>
 
 <ul class="govuk-list govuk-list--bullet">
   <li>Do not create a Business Unit for every DfE team or department.</li>
@@ -44,7 +44,7 @@ Business Units in Dynamics 365 help the Department for Education (DfE) manage da
   <li>Do not rely on Business Units for reporting purposes - use raw data for filtering instead.</li>
 </ul>
 
-<h2 class="govuk-heading-l" id="implications">Implications of the Business Unit structure</h2>
+<h2 class="govuk-heading-l" id="implications">Implications of the business unit structure</h2>
 
 <p class="govuk-body">The way you design Business Units affects:</p>
 
@@ -57,7 +57,7 @@ Business Units in Dynamics 365 help the Department for Education (DfE) manage da
 
 <h2 class="govuk-heading-l" id="examples">Examples</h2>
 
-<h3 class="govuk-heading-s">Example 1: Service-level separation</h3>
+<h3 class="govuk-heading-m">Example 1: Service-level separation</h3>
 <p class="govuk-body">
 A service such as <em>Teacher Services</em> may operate within its own Business Unit because it manages sensitive teacher data that should not be visible to other DfE service areas.
 </p>
@@ -65,12 +65,12 @@ A service such as <em>Teacher Services</em> may operate within its own Business 
 Note, anyone in the Root Business Unit with a Security Role granting Organisation-level permissions would still see teacher data.
 </p>
 
-<h3 class="govuk-heading-s">Example 2: Shared access across the department</h3>
+<h3 class="govuk-heading-m">Example 2: Shared access across the department</h3>
 <p class="govuk-body">
 Cross‑cutting roles, for example, data analysts or customer support teams - can access required data through Team membership rather than being placed in multiple Business Units.
 </p>
 
-<h3 class="govuk-heading-s">Example 3: Avoiding unnecessary complexity</h3>
+<h3 class="govuk-heading-m">Example 3: Avoiding unnecessary complexity</h3>
 <p class="govuk-body">
 Instead of creating separate Business Units for areas such as Early Years, Further Education and Higher Education policy teams, use a single Business Unit and control access through Security Roles and record ownership.
 </p>

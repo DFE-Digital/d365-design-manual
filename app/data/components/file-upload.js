@@ -25,15 +25,15 @@ export default {
     content: `
       <p class="govuk-body">Read the <a class="govuk-link" href="https://design-system.service.gov.uk/components/file-upload/" target="_blank">GOV.UK Design System guidance on file upload (opens in a new tab)</a> for advice on labels, hint text and accessibility.</p>
 
-      <h3 class="govuk-heading-s">Improved file upload or plain file input</h3>
+      <h3 class="govuk-heading-m">Improved file upload or plain file input</h3>
       <p class="govuk-body">Use GOV.UK's improved file upload component. It's easier to use: users can drag and drop files, and it shows the name of the file they've chosen. To use it, wrap the file input in a <code>&lt;div&gt;</code> with the <code>govuk-file-upload-wrapper</code> class and <code>data-module="govuk-file-upload"</code>. The base portal's layouts already start GOV.UK Frontend, which turns it into the improved component.</p>
       <p class="govuk-body">The <a class="govuk-link" href="/powerpages/developer-guides/crm-helper-framework/">CRM helper framework</a> works with the improved component from version 03. On a site still using version 02 or earlier, use the plain file input. See <a class="govuk-link" href="/powerpages/getting-started/framework-versions/">framework versions</a>.</p>
       <p class="govuk-body">Use the <code>govuk-file-upload-wrapper</code> class, not <code>govuk-drop-zone</code>. <code>govuk-drop-zone</code> is deprecated, and will be removed in GOV.UK Frontend 7.</p>
 
-      <h3 class="govuk-heading-s">Tell users what files they can upload</h3>
+      <h3 class="govuk-heading-m">Tell users what files they can upload</h3>
       <p class="govuk-body">Use hint text to tell users which file types they can upload and how big they can be. Match it to the limits you set in the framework.</p>
 
-      <h3 class="govuk-heading-s">Validate and scan the file</h3>
+      <h3 class="govuk-heading-m">Validate and scan the file</h3>
       <p class="govuk-body">Use the file column's logical name as the input's <code>id</code> and <code>name</code>, and as the <code>identifier</code> in your validation data object. Keep the same identifier if you change from the plain input to the improved component.</p>
       <pre><code class="language-javascript">const inputs = [
   {
@@ -55,7 +55,7 @@ const isValid = await DfEPortal.ValidateData(inputs);</code></pre>
       </ul>
       <p class="govuk-body"><code>ValidateData</code> checks the files' type, number and size, then sends them to be scanned for viruses. Your site needs the <code>VirusScan</code> server logic for this. See <a class="govuk-link" href="/powerpages/developer-guides/scan-uploaded-files/">scanning uploaded files for viruses</a>, including the largest files that can be scanned.</p>
 
-      <h3 class="govuk-heading-s">Save the file</h3>
+      <h3 class="govuk-heading-m">Save the file</h3>
       <p class="govuk-body">Save the record first, then upload the file to it:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li><code>DfEPortal.WebApi.UploadFile(identifier, entitySetName, recordId)</code> saves the file to a file or image column on the record. It does nothing if the user hasn't selected a file, so you don't need to check first.</li>

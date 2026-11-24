@@ -11,16 +11,16 @@
 
 {{ contentsList([
   { text: "Purpose", href: "#purpose" },
-  { text: "CRM Vision", href: "#vision" },
+  { text: "CRM vision", href: "#vision" },
   { text: "Scope", href: "#scope" },
-  { text: "Current CRM Landscape and Direction", href: "#landscape" },
-  { text: "Design Principles", href: "#design" },
-  { text: "Shared Capabilities and Reuse", href: "#reuse" },
-  { text: "Data and Information Management", href: "#data" },
-  { text: "Security and Access", href: "#security" },
-  { text: "Governance and Design Authority", href: "#governance-and-design" },
-  { text: "Delivery and Onboarding", href: "#delivery" },
-  { text: "Continuous Improvement and Evolution", href: "#improvement" }
+  { text: "Current CRM landscape and direction", href: "#landscape" },
+  { text: "Design principles", href: "#design" },
+  { text: "Shared capabilities and reuse", href: "#reuse" },
+  { text: "Data and information management", href: "#data" },
+  { text: "Security and access", href: "#security" },
+  { text: "Governance and design authority", href: "#governance-and-design" },
+  { text: "Delivery and onboarding", href: "#delivery" },
+  { text: "Continuous improvement and evolution", href: "#improvement" }
 ]) }}
 
 <h2 class="govuk-heading-l" id="purpose">Purpose</h2>
@@ -34,7 +34,7 @@ DfE currently operates a large number of CRM solutions to support a wide range o
 This strategy will be reviewed periodically to ensure it remains aligned to departmental priorities and platform evolution. 
 </p>
 
-<h2 class="govuk-heading-l" id="vision">CRM Vision</h2>
+<h2 class="govuk-heading-l" id="vision">CRM vision</h2>
 <p class="govuk-body">
 DfE’s CRM platforms will provide a coherent set of shared capabilities that enable services to operate effectively and efficiently at scale. 
 </p>
@@ -82,7 +82,7 @@ This strategy applies to:
   <li>Data models, integrations and shared capabilities associated with CRM platforms </li>
 </ul>
 
-<h2 class="govuk-heading-l" id="landscape">Current CRM Landscape and Direction </h2>
+<h2 class="govuk-heading-l" id="landscape">Current CRM landscape and direction </h2>
 <p class="govuk-body">
 DfE currently operates approximately 28 CRM systems, the majority built using Microsoft Dynamics 365 Customer Service, with a small number using Dynamics 365 Sales and Customer Insights. Around half of these platforms are already supported and maintained by the Solutions Delivery Team (SDT), with the remainder expected to transition under SDT ownership over time. 
 </p>
@@ -93,22 +93,22 @@ A CRM consolidation workstream is in progress to address duplication, improve co
 At the heart of this consolidation approach are four strategic CRM platforms, each aligned to a distinct service pattern: 
 </p>
 
-<h2 class="govuk-heading-m" id="dcass">DCASS (DfE Customer Advice and Support Service) </h2>
+<h3 class="govuk-heading-m" id="dcass">DCASS (DfE Customer Advice and Support Service) </h3>
 <p class="govuk-body">
 DCASS is intended to be DfE's core platform for enquiry management. It uses a secure but open data model designed to provide visibility of contacts, organisations and their enquiries being received across the Department. Where services are primarily focused on handling and responding to enquiries, DCASS is the default strategic platform. 
 </p>
 
-<h2 class="govuk-heading-m" id="rds">RDS (Restricted Data Services) </h2>
+<h3 class="govuk-heading-m" id="rds">RDS (Restricted Data Services) </h3>
 <p class="govuk-body">
 RDS is a highly secure CRM platform designed to handle sensitive and restricted data. It operates with very tightly controlled access and restricted functionality. Services with strong security or data segregation requirements that cannot be met by other platforms should be aligned to RDS.
 </p>
 
-<h2 class="govuk-heading-m" id="apm">APM (Application and Programme Management) </h2>
+<h3 class="govuk-heading-m" id="apm">APM (Application and Programme Management) </h3>
 <p class="govuk-body">
 APM supports services that follow an application-based model, such as programmes, grants, funding and application processing. It provides structured capabilities for managing applications, assessments, decisions and ongoing programme activity.
 </p>
 
-<h2 class="govuk-heading-m" id="caseflow">CaseFlow </h2>
+<h3 class="govuk-heading-m" id="caseflow">CaseFlow </h3>
 <p class="govuk-body">
 CaseFlow is designed for process-driven services that require CRM functionality to support defined workflows. It enables consistency of process, tracking and reporting across services that operate according to structured operational steps.
 </p><br></br>
@@ -119,7 +119,7 @@ These platforms form the strategic foundation for future CRM delivery at DfE. Ne
 Exceptions may be permitted where a service cannot reasonably be supported by one of these platforms due to specific constraints or requirements. In such cases, there must be clear, documented justification agreed with the SDT CRM Design Authority. 
 </p>
 
-<h2 class="govuk-heading-l" id="design">Design Principles</h2>
+<h2 class="govuk-heading-l" id="design">Design principles</h2>
 <p class="govuk-body">
 Design principles set the guardrails for how CRM platforms are designed, extended and evolved across DfE. They are intended to encourage consistency, reuse and sustainability, while still allowing services to meet their specific needs. 
 </p>
@@ -127,12 +127,12 @@ Design principles set the guardrails for how CRM platforms are designed, extende
 All DfE CRM solutions must adhere to the following principles. 
 </p>
 
-<h2 class="govuk-heading-m" id="platform">Platform-led, not service-led</h2>
+<h3 class="govuk-heading-m" id="platform">Platform-led, not service-led</h3>
 <p class="govuk-body">
 CRM solutions should be designed around shared, strategic platforms rather than individual services. Services should onboard to an existing CRM platform wherever possible, using configuration and extension rather than creating new CRM instances. 
 </p>
 
-<h2 class="govuk-heading-m" id="prefer">Prefer out-of-the-box Dynamics 365 functionality</h2>
+<h3 class="govuk-heading-m" id="prefer">Prefer out-of-the-box Dynamics 365 functionality</h3>
 <p class="govuk-body">
 Standard Dynamics 365 capabilities should always be considered first. Custom development should only be used where there is a clear and evidenced gap that cannot be met through configuration or supported extensions. 
 </p>
@@ -140,7 +140,7 @@ Standard Dynamics 365 capabilities should always be considered first. Custom dev
 Aligning closely to out-of-the-box functionality reduces technical debt, simplifies support and maintenance and enables easier adoption of new Microsoft features, including future AI-enabled capabilities. 
 </p>
 
-<h2 class="govuk-heading-m" id="config">Configuration over customisation </h2>
+<h3 class="govuk-heading-m" id="config">Configuration over customisation </h3>
 <p class="govuk-body">
 Where change is required, configuration is the default approach. Custom code is a last resort and must be clearly justified and approved. 
 </p>
@@ -148,17 +148,17 @@ Where change is required, configuration is the default approach. Custom code is 
 This principle supports faster onboarding, easier upgrades and consistency across CRM platforms. 
 </p>
 
-<h2 class="govuk-heading-m" id="consolidation">Designed for consolidation and onboarding </h2>
+<h3 class="govuk-heading-m" id="consolidation">Designed for consolidation and onboarding </h3>
 <p class="govuk-body">
 CRM solutions should be designed with the expectation that additional services will onboard over time. Designs should avoid assumptions that tie functionality to a single service, user group or operating model wherever possible. 
 </p>
 
-<h2 class="govuk-heading-m" id="aligned">Aligned to SDT standards and governance </h2>
+<h3 class="govuk-heading-m" id="aligned">Aligned to SDT standards and governance </h3>
 <p class="govuk-body">
 All CRM solutions must align with SDT delivery standards, architectural guidance and governance processes. Deviations from these principles require agreement through the SDT CRM Design Authority and must be documented. 
 </p>
 
-<h2 class="govuk-heading-l" id="reuse">Shared Capabilities and Reuse </h2>
+<h2 class="govuk-heading-l" id="reuse">Shared capabilities and reuse </h2>
 <p class="govuk-body">
 A key aim of the strategy is to build reusable CRM capabilities that can be shared across platforms and services. 
 </p>
@@ -175,7 +175,7 @@ This includes:
 Reuse is the default expectation. New functionality should only be built where existing capabilities cannot meet the need. 
 </p>
 
-<h2 class="govuk-heading-l" id="data">Data and Information Management </h2>
+<h2 class="govuk-heading-l" id="data">Data and information management </h2>
 <p class="govuk-body">
 Data held within DfE CRM platforms is a shared departmental asset and must be managed consistently, securely and in line with policy. CRM data should support service delivery and operational insight while respecting legal, security and sensitivity requirements. 
 </p>
@@ -183,17 +183,17 @@ Data held within DfE CRM platforms is a shared departmental asset and must be ma
 Key expectations are: 
 </p>
 
-<h2 class="govuk-heading-m" id="accountability">Clear ownership and accountability </h2>
+<h3 class="govuk-heading-m" id="accountability">Clear ownership and accountability </h3>
 <p class="govuk-body">
 All CRM data must have defined business ownership, with agreed sources of truth where similar data exists across multiple platforms.
 </p>
 
-<h2 class="govuk-heading-m" id="models">Common data models</h2>
+<h3 class="govuk-heading-m" id="models">Common data models</h3>
 <p class="govuk-body">
 Shared data models for core entities, such as organisations and contacts, should be used across CRM platforms to enable reuse, consolidation and consistent reporting.
 </p>
 
-<h2 class="govuk-heading-m" id="sensitivity">Proportionate handling of sensitive data</h2>
+<h3 class="govuk-heading-m" id="sensitivity">Proportionate handling of sensitive data</h3>
 <p class="govuk-body">
 CRM platforms must reflect the sensitivity of the data they hold: 
 </p>
@@ -202,12 +202,12 @@ CRM platforms must reflect the sensitivity of the data they hold:
   <li>Platforms such as RDS operate with tightly restricted access and closed data models due to the nature of the data they hold. </li>
 </ul>
 
-<h2 class="govuk-heading-m" id="quality">Data quality and lifecycle management</h2>
+<h3 class="govuk-heading-m" id="quality">Data quality and lifecycle management</h3>
 <p class="govuk-body">
 Data quality, retention and disposal must be built in from the start and applied consistently. Shared approaches to validation, retention and disposal should be reused wherever possible.
 </p>
 
-<h2 class="govuk-heading-l" id="security">Security and Access</h2>
+<h2 class="govuk-heading-l" id="security">Security and access</h2>
 <p class="govuk-body">
 DfE CRM platforms handle a wide range of information, from general enquiries to highly sensitive and restricted data. Security and access controls must therefore be embedded by default and applied consistently across the CRM estate. 
 </p>
@@ -218,17 +218,17 @@ Security requirements are mandatory and apply regardless of whether a CRM platfo
 Key expectations are: 
 </p>
 
-<h2 class="govuk-heading-m" id="consistency">Consistent identity and access management </h2>
+<h3 class="govuk-heading-m" id="consistency">Consistent identity and access management </h3>
 <p class="govuk-body">
 All CRM platforms must use DfE-approved identity and access management approaches, with authentication and authorisation centrally managed.
 </p>
 
-<h2 class="govuk-heading-m" id="rolebased">Role-based and least-privilege access</h2>
+<h3 class="govuk-heading-m" id="rolebased">Role-based and least-privilege access</h3>
 <p class="govuk-body">
 Access to CRM data and functionality must be role-based and limited to what users need to perform their role. Elevated or privileged access must be tightly controlled and regularly reviewed.
 </p>
 
-<h2 class="govuk-heading-m" id="segregation">Appropriate segregation of data and users</h2>
+<h3 class="govuk-heading-m" id="segregation">Appropriate segregation of data and users</h3>
 <p class="govuk-body">
 CRM platforms must enforce appropriate separation between:
 </p>
@@ -238,17 +238,17 @@ CRM platforms must enforce appropriate separation between:
   <li>Platforms handling sensitive or restricted data (such as RDS) must apply additional controls and restrictions by design. </li>
 </ul>
 
-<h2 class="govuk-heading-m" id="environments">Secure environment management </h2>
+<h3 class="govuk-heading-m" id="environments">Secure environment management </h3>
 <p class="govuk-body">
 Development, test and production environments must be clearly separated, with controlled access and promotion of changes through approved release processes.
 </p>
 
-<h2 class="govuk-heading-m" id="audit">Auditability and compliance</h2>
+<h3 class="govuk-heading-m" id="audit">Auditability and compliance</h3>
 <p class="govuk-body">
 CRM platforms must support auditing, monitoring and logging appropriate to the sensitivity of the data held, enabling investigation, assurance and compliance with departmental policies.
 </p>
 
-<h2 class="govuk-heading-l" id="governance-and-design">Governance and Design Authority</h2>
+<h2 class="govuk-heading-l" id="governance-and-design">Governance and design authority</h2>
 <p class="govuk-body">
 Strong governance is essential to ensure DfE's CRM platforms are used effectively, consistently and in line with this strategy. An SDT CRM Design Authority will provide oversight across the CRM estate.  
 </p>
@@ -265,7 +265,7 @@ Its role is to:
 All CRM platforms supported by SDT, and those transitioning into SDT support, are expected to operate within this governance model. Governance is intended to enable faster, better decision-making rather than create unnecessary barriers to delivery. 
 </p>
 
-<h2 class="govuk-heading-l" id="delivery">Delivery and Onboarding </h2>
+<h2 class="govuk-heading-l" id="delivery">Delivery and onboarding </h2>
 <p class="govuk-body">
 DfE CRM platforms are delivered and evolved as shared products, not one-off solutions. The default approach for new services is onboarding to an existing strategic CRM platform aligned to their service model. 
 </p>
@@ -281,7 +281,7 @@ Delivery should:
 This approach reduces duplication, enables faster onboarding of services, and supports the long-term consolidation of the CRM estate. 
 </p>
 
-<h2 class="govuk-heading-l" id="improvement">Continuous Improvement and Evolution </h2>
+<h2 class="govuk-heading-l" id="improvement">Continuous improvement and evolution </h2>
 <p class="govuk-body">
 DfE’s CRM estate will continue to evolve as services change and Microsoft Dynamics 365 capabilities develop. Continuous improvement is essential to reduce complexity, increase reuse and realise the benefits of consolidation over time. 
 </p>

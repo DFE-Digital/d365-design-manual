@@ -10,16 +10,16 @@
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
-  { text: "Common Integration Patterns", href: "#common-integration-patterns" },
+  { text: "Common integration patterns", href: "#common-integration-patterns" },
   { text: "Synchronous Request (API‑Based)", href: "#synchronous-request-response" },
   { text: "Asynchronous Messaging", href: "#asynchronous-messaging" },
   { text: "Publish and Subscribe (Event‑Driven Integration)", href: "#publish-subscribe" },
   { text: "Batch Integration", href: "#batch-integration" },
   { text: "File‑Based Integration", href: "#file-based-integration" },
-  { text: "Integration Technologies", href: "#integration-technologies" },
+  { text: "Integration technologies", href: "#integration-technologies" },
   { text: "Power Platform", href: "#power-platform" },
   { text: "Azure Integration Services", href: "#azure-integration-services" },
-  { text: "Integration Technology Decision Matrix", href: "#matrix" },
+  { text: "Integration technology decision matrix", href: "#matrix" },
   { text: "Summary", href: "#summary" }
 ]) }}
 
@@ -31,13 +31,13 @@
   This page summarises common integration patterns used with Dynamics 365, examples of when to use them, the key Power Platform and Azure integration technologies available, and recommended best practices.
 </p>
 
-<h1 class="govuk-heading-l" id="common-integration-patterns">
-  Common Integration Patterns
-</h1>
-
-<h2 class="govuk-heading-m" id="synchronous-request-response">
-  1. Synchronous Request (API-Based)
+<h2 class="govuk-heading-l" id="common-integration-patterns">
+  Common integration patterns
 </h2>
+
+<h3 class="govuk-heading-m" id="synchronous-request-response">
+  1. Synchronous request (API-based)
+</h3>
 
 <p class="govuk-body">
 The API-based integration pattern is a synchronous request-response approach where one system calls an API exposed by another system and waits for an immediate response. In Dynamics 365, this is typically implemented using the Dataverse Web API, allowing external systems to create, read, update, or delete records and invoke custom actions in real time. This pattern is well suited to scenarios where instant feedback is required for the user, such as creating a Case and returning a reference number to give to a customer over the phone.
@@ -59,9 +59,9 @@ While this is a simple approach, it potentially introduces a dependency between 
   <li>Validating organisation details in real time before an application is submitted</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="asynchronous-messaging">
-  2. Asynchronous Messaging
-</h2>
+<h3 class="govuk-heading-m" id="asynchronous-messaging">
+  2. Asynchronous messaging
+</h3>
 
 <p class="govuk-body">
   The asynchronous messaging integration pattern enables systems to communicate by sending messages that are processed independently and at a later time, without requiring the sender to wait for an immediate response. In Dynamics 365, this pattern is commonly used alongside messaging or event technologies, allowing changes in data to be published as messages for downstream systems to consume. This approach is well suited to background processing, high-volume updates, and scenarios where immediate user feedback is not required.
@@ -83,9 +83,9 @@ While this is a simple approach, it potentially introduces a dependency between 
   <li>Sending case updates to another system without impacting user experience</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="publish-subscribe">
-  3. Publish and Subscribe (Event-Driven Integration)
-</h2>
+<h3 class="govuk-heading-m" id="publish-subscribe">
+  3. Publish and subscribe (event-driven integration)
+</h3>
 
 <p class="govuk-body">
   The publish and subscribe integration pattern is an event-driven approach where Dynamics 365 publishes events and one or more subscribing systems react to them independently. The publishing system has no awareness of who consumes the event, which enables one-to-many integrations and loose coupling. This pattern is well suited to scenarios where multiple downstream systems need to respond to the same business change, such as an update to a contact record which is used in multiple applications.
@@ -107,9 +107,9 @@ While this is a simple approach, it potentially introduces a dependency between 
   <li>Multiple downstream services reacting to the same business event</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="batch-integration">
-  4. Batch Integration
-</h2>
+<h3 class="govuk-heading-m" id="batch-integration">
+  4. Batch integration
+</h3>
 
 <p class="govuk-body">
   Batch integration is a pattern where data is exchanged in bulk at scheduled intervals, rather than processed continuously or in real time. It is commonly used for large data volumes, reporting, reconciliation, or reference data updates, such as nightly exports to a data warehouse or periodic imports from external systems. While efficient and simple to operate, batch integration introduces delayed availability of data and is not suitable for time‑critical scenarios.
@@ -128,9 +128,9 @@ While this is a simple approach, it potentially introduces a dependency between 
   <li>Scheduled import of price lists or reference data</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="file-based-integration">
-  5. File-Based Integration
-</h2>
+<h3 class="govuk-heading-m" id="file-based-integration">
+  5. File-based integration
+</h3>
 
 <p class="govuk-body">
   File-based integration involves systems exchanging data using files such as CSV, XML, or JSON, typically transferred via secure mechanisms like SFTP or shared storage. This pattern is often used when integrating with legacy or third-party systems that do not support modern APIs.
@@ -151,13 +151,13 @@ While this is a simple approach, it potentially introduces a dependency between 
   <li>Exporting data to SFTP for external partners</li>
 </ul>
 
-<h1 class="govuk-heading-l" id="integration-technologies">
-  Integration Technologies
-</h1>
-
-<h2 class="govuk-heading-m" id="power-platform">
-  Power Platform Integration Technologies
+<h2 class="govuk-heading-l" id="integration-technologies">
+  Integration technologies
 </h2>
+
+<h3 class="govuk-heading-m" id="power-platform">
+  Power Platform integration technologies
+</h3>
 
 <p class="govuk-body">
   Power Platform provides low-code integration technologies that allow Dynamics 365 to integrate with other systems quickly, consistently, and with minimal custom development. Central to this capability is Power Automate, which enables lightweight integrations to be built. Power Automate uses pre-built standard connectors for Microsoft services (such as Dynamics 365, Dataverse, SharePoint, and Outlook) and many third‑party SaaS platforms, allowing integrations to be created by configuring actions and triggers rather than writing bespoke code.
@@ -173,9 +173,9 @@ While this is a simple approach, it potentially introduces a dependency between 
   <li>Custom Connectors allow external APIs to be exposed consistently to Dynamics 365 and Power Apps</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="azure-integration-services">
-  Azure Integration Technologies
-</h2>
+<h3 class="govuk-heading-m" id="azure-integration-services">
+  Azure integration technologies
+</h3>
 
 <p class="govuk-body">
   Azure provides enterprise-grade integration technologies that complement Dynamics 365 by supporting high-volume, complex, and scalable integration scenarios. Services such as Azure Logic Apps, Azure Functions, Azure Service Bus, and Azure Event Grid are commonly used to implement asynchronous, event-driven integrations. These services enable robust message handling, custom transformations, and reliable communication between Dynamics 365 and other internal or external systems, as well as functionality to better handle failures and reprocessing events.
@@ -200,9 +200,9 @@ While this is a simple approach, it potentially introduces a dependency between 
   <strong>Azure Event Grid</strong> – A lightweight event routing service used to publish and distribute events from Dynamics 365 and other systems to multiple subscribers in near real time.
 </p>
 
-<h1 class="govuk-heading-l" id="matrix">
-  Integration Technology Decision Matrix
-</h1>
+<h2 class="govuk-heading-l" id="matrix">
+  Integration technology decision matrix
+</h2>
 
 <p class="govuk-body">
   This decision matrix provides a high-level comparison of integration technologies available for Dynamics 365, helping choose the most appropriate option based on integration style, complexity, scalability, and delivery approach.
@@ -287,9 +287,9 @@ While this is a simple approach, it potentially introduces a dependency between 
   </tbody>
 </table>
 
-<h1 class="govuk-heading-l" id="summary">
+<h2 class="govuk-heading-l" id="summary">
   Summary
-</h1>
+</h2>
 
 <p class="govuk-body">
   Dynamics 365 supports a wide range of integration patterns from simple synchronous APIs to fully event-driven architectures. Power Platform enables lightweight low-code integration, while Azure services provide enterprise-grade scalability and resilience. 

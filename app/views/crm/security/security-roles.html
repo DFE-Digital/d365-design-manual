@@ -10,8 +10,8 @@
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
-  { text: "What good Security Role design looks like", href: "#good" },
-  { text: "Implications of how you design Security Roles", href: "#implications" },
+  { text: "What good security role design looks like", href: "#good" },
+  { text: "Implications of how you design security roles", href: "#implications" },
   { text: "Examples", href: "#examples" },
   { text: "Summary", href: "#summary" }
 ]) }}
@@ -20,13 +20,13 @@
 Security Roles in Dynamics 365 define what users and teams can see and do. Good Security Role design helps the Department for Education (DfE) keep systems secure, consistent and easier to maintain.
 </p>
 
-<h2 class="govuk-heading-l" id="good">What good Security Role design looks like</h2>
+<h2 class="govuk-heading-l" id="good">What good security role design looks like</h2>
 
 <p class="govuk-body">
 Security Roles should be simple, predictable and reusable. Create Security Role based on what users need to do, not on who they are or where they sit.
 </p>
 
-<h2 class="govuk-heading-m">Do's</h2>
+<h3 class="govuk-heading-m">Do's</h3>
 
 <ul class="govuk-list govuk-list--bullet">
   <li>Create Security Roles based on job responsibilities, not teams or individuals.</li>
@@ -38,7 +38,7 @@ Security Roles should be simple, predictable and reusable. Create Security Role 
   <li>Regularly review Security Role to ensure they still match how DfE services operate.</li>
 </ul>
 
-<h2 class="govuk-heading-m">Don'ts</h2>
+<h3 class="govuk-heading-m">Don'ts</h3>
 
 <ul class="govuk-list govuk-list--bullet">
   <li>Do not create a new Security Role every time a small change is needed.</li>
@@ -48,7 +48,7 @@ Security Roles should be simple, predictable and reusable. Create Security Role 
   <li>Do not work around poor Business Unit design by giving users overly broad Security Role access.</li>
 </ul>
 
-<h2 class="govuk-heading-l" id="implications">Implications of how you design Security Roles</h2>
+<h2 class="govuk-heading-l" id="implications">Implications of how you design security roles</h2>
 
 <p class="govuk-body">Security Role design affects:</p>
 
@@ -61,17 +61,17 @@ Security Roles should be simple, predictable and reusable. Create Security Role 
 
 <h2 class="govuk-heading-l" id="examples">Examples</h2>
 
-<h3 class="govuk-heading-s">Example 1: Security Roles based on responsibility</h3>
+<h3 class="govuk-heading-m">Example 1: Security roles based on responsibility</h3>
 <p class="govuk-body">
 A “Case Worker” Security Role may include permissions to create, update and assign case records, but only read access to related financial data.
 </p>
 
-<h3 class="govuk-heading-s">Example 2: Using teams for flexible access</h3>
+<h3 class="govuk-heading-m">Example 2: Using teams for flexible access</h3>
 <p class="govuk-body">
 A data analyst working across several DfE service areas can gain access through membership of teams, rather than being given multiple high‑privilege roles.
 </p>
 
-<h3 class="govuk-heading-s">Example 3: Avoiding unnecessary Security Roles</h3>
+<h3 class="govuk-heading-m">Example 3: Avoiding unnecessary security roles</h3>
 <p class="govuk-body">
 Instead of creating separate Security Roles for each policy area (for example, Early Years Case Worker and FE Case Worker), create one Case Worker role and manage data access using Business Units and/or teams.
 </p>

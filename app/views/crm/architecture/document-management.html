@@ -10,9 +10,9 @@
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
-  { text: "Use SharePoint Instead of Storing Files in Dynamics 365", href: "#why-use-sharepoint" },
-  { text: "Recommended Configuration and Best Practices", href: "#configuration-and-best-practices" },
-  { text: "Security Considerations", href: "#security-considerations" },
+  { text: "Use SharePoint instead of storing files in Dynamics 365", href: "#why-use-sharepoint" },
+  { text: "Recommended configuration and best practices", href: "#configuration-and-best-practices" },
+  { text: "Security considerations", href: "#security-considerations" },
   { text: "Summary", href: "#summary" }
 ]) }}
 
@@ -25,12 +25,12 @@
 </p>
 
 <h2 class="govuk-heading-l" id="why-use-sharepoint">
-  Use SharePoint Instead of Storing Files in Dynamics 365
+  Use SharePoint instead of storing files in Dynamics 365
 </h2>
 
-<h2 class="govuk-heading-m" id="platform-alignment">
-  Platform Alignment and Supportability
-</h2>
+<h3 class="govuk-heading-m" id="platform-alignment">
+  Platform alignment and supportability
+</h3>
 
 <p class="govuk-body">
   Microsoft designs Dynamics 365 and SharePoint to work together. The out-of-the-box integration:
@@ -46,9 +46,9 @@
   Avoiding custom document storage solutions reduces technical debt and upgrade risk.
 </p>
 
-<h2 class="govuk-heading-m" id="performance-and-costs">
-  Improved Performance and Reduced Dataverse Storage Costs
-</h2>
+<h3 class="govuk-heading-m" id="performance-and-costs">
+  Improved performance and reduced Dataverse storage costs
+</h3>
 
 <p class="govuk-body">
   Storing files directly in Dataverse:
@@ -68,9 +68,9 @@
   <li>Leverages significantly cheaper and more scalable storage</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="document-management-capabilities">
-  Rich Document Management Capabilities
-</h2>
+<h3 class="govuk-heading-m" id="document-management-capabilities">
+  Rich document management capabilities
+</h3>
 
 <p class="govuk-body">
   SharePoint provides features that Dynamics does not natively offer, including:
@@ -88,9 +88,9 @@
   These capabilities are available immediately with the out-of-the-box integration.
 </p>
 
-<h2 class="govuk-heading-m" id="user-experience">
-  Seamless User Experience in Dynamics
-</h2>
+<h3 class="govuk-heading-m" id="user-experience">
+  Seamless user experience in Dynamics
+</h3>
 
 <p class="govuk-body">
   With the integration enabled:
@@ -107,12 +107,12 @@
 </p>
 
 <h2 class="govuk-heading-l" id="configuration-and-best-practices">
-  Recommended Configuration and Best Practices
+  Recommended configuration and best practices
 </h2>
 
-<h2 class="govuk-heading-m" id="enable-integration">
-  Enable and Configure the Out-of-the-Box Integration
-</h2>
+<h3 class="govuk-heading-m" id="enable-integration">
+  Enable and configure the out-of-the-box integration
+</h3>
 
 <ul class="govuk-list govuk-list--bullet">
   <li>Use the standard Dynamics 365 SharePoint Online integration wizard</li>
@@ -124,9 +124,9 @@
   Avoid custom folder logic unless absolutely required.
 </p>
 
-<h2 class="govuk-heading-m" id="folder-structure">
-  Folder Structure
-</h2>
+<h3 class="govuk-heading-m" id="folder-structure">
+  Folder structure
+</h3>
 
 <ul class="govuk-list govuk-list--bullet">
   <li>Use the default folder-per-record model</li>
@@ -138,9 +138,9 @@
   Over-customisation increases complexity and makes permissions harder to manage.
 </p>
 
-<h2 class="govuk-heading-m" id="file-standards">
-  File and Naming Standards
-</h2>
+<h3 class="govuk-heading-m" id="file-standards">
+  File and naming standards
+</h3>
 
 <ul class="govuk-list govuk-list--bullet">
   <li>Encourage meaningful file names and rely on versioning rather than duplicating files</li>
@@ -148,9 +148,9 @@
   <li>Use SharePoint metadata only where there is a defined reporting or governance requirement</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="what-we-avoid">
-  What We Avoid as a Standard
-</h2>
+<h3 class="govuk-heading-m" id="what-we-avoid">
+  What we avoid as a standard
+</h3>
 
 <ul class="govuk-list govuk-list--bullet">
   <li>Storing large volumes of files directly in Dataverse</li>
@@ -160,16 +160,16 @@
 </ul>
 
 <h2 class="govuk-heading-l" id="security-considerations">
-  Security Considerations 
+  Security considerations 
 </h2>
 
 <p class="govuk-body">
   Dynamics 365 security roles and record-level permissions are <strong>not replicated to SharePoint</strong> out of the box. This must be explicitly considered as part of solution design.
 </p>
 
-<h2 class="govuk-heading-m" id="baseline-security-model">
-  Baseline Security Model (Recommended Standard)
-</h2>
+<h3 class="govuk-heading-m" id="baseline-security-model">
+  Baseline security model (recommended standard)
+</h3>
 
 <ul class="govuk-list govuk-list--bullet">
   <li>Secure access primarily at the SharePoint site or document library level</li>
@@ -181,9 +181,9 @@
   This model is simpler, easier to audit, and more performant.
 </p>
 
-<h2 class="govuk-heading-m" id="site-permissions">
-  Using SharePoint Site Permissions
-</h2>
+<h3 class="govuk-heading-m" id="site-permissions">
+  Using SharePoint site permissions
+</h3>
 
 <ul class="govuk-list govuk-list--bullet">
   <li>Use Azure AD security groups to control site or library access</li>
@@ -191,9 +191,9 @@
   <li>Manage group membership outside of Dynamics</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="folder-security">
-  Folder-Level Security (Use with Caution)
-</h2>
+<h3 class="govuk-heading-m" id="folder-security">
+  Folder-level security (use with caution)
+</h3>
 
 <p class="govuk-body">
   Folder-level permissions may be used where there is a genuine regulatory or confidentiality requirement and where only a small number of records require restricted access.
@@ -209,9 +209,9 @@
   Heavy use of folder-level permissions can cause performance and manageability issues.
 </p>
 
-<h2 class="govuk-heading-m" id="sensitive-documents">
-  Highly Sensitive Documents
-</h2>
+<h3 class="govuk-heading-m" id="sensitive-documents">
+  Highly sensitive documents
+</h3>
 
 <ul class="govuk-list govuk-list--bullet">
   <li>Use separate SharePoint sites for highly restricted content</li>

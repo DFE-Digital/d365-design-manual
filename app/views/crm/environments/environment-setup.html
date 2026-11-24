@@ -23,7 +23,7 @@
 
 <p class="govuk-body">Each environment should be aligned as closely as possible to avoid environment‑specific issues, with PreProd being a replica of Production where possible.</p>
 
-<h2 class="govuk-heading-m" id="dev">Development environment</h2>
+<h3 class="govuk-heading-m" id="dev">Development environment</h3>
 
 <p class="govuk-body">Dev is the only environment where configuration changes, custom components, and development work are performed. All solution updates and customisation happen here before being packaged and deployed downstream.</p>
 
@@ -35,7 +35,7 @@
   <li>Only sample test data should be stored in development</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="test">Test environment</h2>
+<h3 class="govuk-heading-m" id="test">Test environment</h3>
 
 <p class="govuk-body">Test is the first controlled environment beyond development and is used for functional testing, integration testing, and defect validation by test analysts within the project teams.</p>
 
@@ -47,7 +47,7 @@
   <li>Keep configuration aligned with PreProd and Prod for accurate testing results</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="preprod">PreProd environment</h2>
+<h3 class="govuk-heading-m" id="preprod">PreProd environment</h3>
 
 <p class="govuk-body">PreProd is the final staging environment and should operate as a near‑production replica. It is used for UAT, OAT, regression testing, release rehearsals, and final verification before go‑live.</p>
 
@@ -58,7 +58,7 @@
   <li>Any change requires a formal change request</li>
 </ul>
 
-<h2 class="govuk-heading-m" id="prod">Production environment</h2>
+<h3 class="govuk-heading-m" id="prod">Production environment</h3>
 
 <p class="govuk-body">Prod is the live operational environment used by end users and must remain stable, secure, and tightly governed. Only approved changes should be deployed here through formal release processes.</p>
 
