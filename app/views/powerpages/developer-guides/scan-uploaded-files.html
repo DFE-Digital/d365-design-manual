@@ -1,4 +1,4 @@
-{% set pageData = pages['powerpages/patterns/scan-uploaded-files'] %}
+{% set pageData = pages['powerpages/developer-guides/scan-uploaded-files'] %}
 {% set showTitlePanel = false %}
 {% set showSubNav = true %}
 
@@ -32,7 +32,7 @@
   { text: "Request and response", href: "#contract" }
 ]) }}
 
-<p class="govuk-body">Scan every file users upload before you save it to CRM. The <a class="govuk-link" href="{{ pages['powerpages/patterns/crm-helper-framework'].url }}">CRM helper framework</a> does this for you when it validates a file input, as long as your site has the <code>VirusScan</code> server logic.</p>
+<p class="govuk-body">Scan every file users upload before you save it to CRM. The <a class="govuk-link" href="{{ pages['powerpages/developer-guides/crm-helper-framework'].url }}">CRM helper framework</a> does this for you when it validates a file input, as long as your site has the <code>VirusScan</code> server logic.</p>
 
 <h2 class="govuk-heading-l" id="how-it-works">How it works</h2>
 
@@ -67,7 +67,7 @@
 
 <h2 class="govuk-heading-l" id="set-up">Set up the VirusScan server logic</h2>
 
-<p class="govuk-body">If you haven't used server logic before, read <a class="govuk-link" href="{{ pages['powerpages/server-logic/setting-up'].url }}">setting up server logic</a> first.</p>
+<p class="govuk-body">If you haven't used server logic before, read <a class="govuk-link" href="{{ pages['powerpages/developer-guides/server-logic/setting-up'].url }}">setting up server logic</a> first.</p>
 
 <h3 class="govuk-heading-m" id="site-settings">Site settings</h3>
 
@@ -156,7 +156,7 @@ async function post() {
   }
 }</code></pre>
 
-<p class="govuk-body">The script doesn't parse the files or log them. Holding a large file in memory more than once can stop the script with the platform's generic error, which your <code>catch</code> can't handle. See <a class="govuk-link" href="{{ pages['powerpages/server-logic/behaviour-and-limitations'].url }}#memory-limit">the memory limit</a>.</p>
+<p class="govuk-body">The script doesn't parse the files or log them. Holding a large file in memory more than once can stop the script with the platform's generic error, which your <code>catch</code> can't handle. See <a class="govuk-link" href="{{ pages['powerpages/developer-guides/server-logic/behaviour-and-limitations'].url }}#memory-limit">the memory limit</a>.</p>
 
 <h2 class="govuk-heading-l" id="scan-files">Scan files on your page</h2>
 

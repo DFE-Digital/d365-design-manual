@@ -1,10 +1,11 @@
-{% set pageData = pages['powerpages/patterns/page-heading'] %}
+{% set pageData = pages['powerpages/page-templates/page-headings'] %}
 {% set showTitlePanel = false %}
 {% set showSubNav = true %}
 
 {% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
+{% from 'includes/patterns/_caption-page-heading.njk' import patternsCaptionHeadingSingleExample, patternsCaptionHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
@@ -24,6 +25,10 @@
   { text: "Single question page", href: "#single-question" },
   { text: "Multiple question page", href: "#multiple-question" },
   { text: "Why the difference?", href: "#difference" },
+  { text: "Adding a caption", href: "#captions", children: [
+    { text: "Caption on a single question page", href: "#captions-single-question" },
+    { text: "Caption on a multiple question page", href: "#captions-multiple-question" }
+  ] },
   { text: "Editing the page title in Dynamics 365", href: "#how-to" },
   { text: "Best practices", href: "#best-practices" },
   { text: "Further reading", href: "#further-reading" }
@@ -48,6 +53,32 @@
 <p class="govuk-body">Single question pages need a custom structure for the heading as part of the form itself, while multiple question pages can use the default inherited title. This ensures that both types of pages follow accessible design principles while maintaining consistency across the service.</p>
 
 <p class="govuk-body">Both options inherit the page title from the Web Page Content record. This is accessed in Liquid as <code>{% raw %}{{ page.title }}{% endraw %}</code>.</p>
+
+<h2 class="govuk-heading-l" id="captions">Adding a caption</h2>
+
+<p class="govuk-body">You may need to include a caption above the page heading to indicate that the page is part of a larger section or group.</p>
+
+<p class="govuk-body">To add a caption, set the page title in the Web Page Content record with the caption and title separated by a colon. For example:</p>
+
+<div class="govuk-inset-text">
+  About you: What is your first name?
+</div>
+
+<p class="govuk-body">In the Liquid template, you split the page title into caption and main title using the Liquid <code>split</code> filter. The first part becomes the caption, and the second part becomes the main title.</p>
+
+<h3 class="govuk-heading-m" id="captions-single-question">Caption on a single question page</h3>
+
+{{ patternsCaptionHeadingSingleExample() }}
+
+<p class="govuk-body">In this example, <code>{% raw %}{{ title[0] }}{% endraw %}</code> is the caption (before the colon) and <code>{% raw %}{{ title[1] }}{% endraw %}</code> is the main title (after the colon).</p>
+
+<h3 class="govuk-heading-m" id="captions-multiple-question">Caption on a multiple question page</h3>
+
+<p class="govuk-body">Without a caption, a multiple question page can leave out the <code>title</code> block. With a caption, you need to include the <code>title</code> block and override its content as shown below:</p>
+
+{{ patternsCaptionHeadingMultipleExample() }}
+
+<p class="govuk-body">In this example, the <code>title</code> block overrides the default page title, splitting it into the caption and main title. The caption is displayed above the main title, helping to clarify that the page is part of a larger section or group.</p>
 
 <h2 class="govuk-heading-l" id="how-to">Editing the page title in Dynamics 365</h2>
 

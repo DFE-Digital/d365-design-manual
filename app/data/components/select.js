@@ -64,10 +64,10 @@ export default {
   errorMessages: {
     title: 'Error messages',
     content: `
-      <p class="govuk-body">An error message is shown next to the field and in the error summary when there is a validation error. The <a class="govuk-link" href="/powerpages/patterns/crm-helper-framework/">custom CRM portal helper framework</a> automatically processes and handles error messages for specific error states and is included in the files for the core portal set up. You do not need to add any custom error containers to your page.</p>
+      <p class="govuk-body">An error message is shown next to the field and in the error summary when there is a validation error. The <a class="govuk-link" href="/powerpages/developer-guides/crm-helper-framework/">custom CRM portal helper framework</a> automatically processes and handles error messages for specific error states and is included in the files for the core portal set up. You do not need to add any custom error containers to your page.</p>
       <p class="govuk-body govuk-!-font-weight-bold">If nothing is chosen and the question is required</p>
       <p class="govuk-body">'Choose [whatever it is]'.<br><br>For example, 'Choose location'.</p>
-      <p class="govuk-body">Occasionally you may wish to use error messages outside of the validation process. You can <a class="govuk-link" href="/powerpages/patterns/crm-helper-framework/">read about the functions available within the portal helper framework</a> to help you with this.</p>
+      <p class="govuk-body">Occasionally you may wish to use error messages outside of the validation process. You can <a class="govuk-link" href="/powerpages/developer-guides/crm-helper-framework/">read about the functions available within the portal helper framework</a> to help you with this.</p>
     `
   }
 };

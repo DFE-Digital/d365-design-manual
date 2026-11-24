@@ -26,7 +26,7 @@ const pages = {
     description: "Guidance for building GOV.UK-aligned Power Pages with the GOV.UK Design System, DfE Frontend and custom components.",
     template: "powerpages",
     parent: "home",
-    children: ["powerpages/getting-started", "powerpages/styles", "powerpages/components", "powerpages/patterns", "powerpages/server-logic"]
+    children: ["powerpages/getting-started", "powerpages/page-templates", "powerpages/components", "powerpages/patterns", "powerpages/developer-guides"]
   },
 
   // Getting Started
@@ -89,21 +89,47 @@ const pages = {
     parent: "powerpages/getting-started"
   },
 
-  // Styles
-  "powerpages/styles": {
-    title: "Styles",
-    url: "/powerpages/styles/",
-    description: "Understand the design standards and elements that create consistent, accessible Power Pages websites for sector users.",
-    template: "powerpages/styles",
+  // Page templates
+  "powerpages/page-templates": {
+    title: "Page templates",
+    url: "/powerpages/page-templates/",
+    description: "Use the DfE layout templates to give every page a consistent structure, and change the parts each page needs, such as the heading, phase banner and breadcrumbs.",
+    template: "powerpages/page-templates",
     parent: "powerpages",
-    children: ["powerpages/styles/layout"]
+    children: [
+      "powerpages/page-templates/layouts",
+      "powerpages/page-templates/page-headings",
+      "powerpages/page-templates/phase-banner",
+      "powerpages/page-templates/breadcrumbs-and-back-links"
+    ]
   },
-  "powerpages/styles/layout": {
-    title: "Layout",
-    url: "/powerpages/styles/layout/",
-    description: "Learn how to arrange content on your Power Pages website for effective, user-friendly layouts.",
-    template: "powerpages/styles/layout",
-    parent: "powerpages/styles"
+  "powerpages/page-templates/layouts": {
+    title: "Layouts",
+    url: "/powerpages/page-templates/layouts/",
+    description: "Choose between the one and two column layouts, and extend them in your web templates.",
+    template: "powerpages/page-templates/layouts",
+    parent: "powerpages/page-templates"
+  },
+  "powerpages/page-templates/page-headings": {
+    title: "Page headings",
+    url: "/powerpages/page-templates/page-headings/",
+    description: "Set accessible page headings on single and multiple question pages, with or without a caption.",
+    template: "powerpages/page-templates/page-headings",
+    parent: "powerpages/page-templates"
+  },
+  "powerpages/page-templates/phase-banner": {
+    title: "Phase banner",
+    url: "/powerpages/page-templates/phase-banner/",
+    description: "Switch the phase banner between alpha and beta, change its content or remove it when your service is live.",
+    template: "powerpages/page-templates/phase-banner",
+    parent: "powerpages/page-templates"
+  },
+  "powerpages/page-templates/breadcrumbs-and-back-links": {
+    title: "Breadcrumbs and back links",
+    url: "/powerpages/page-templates/breadcrumbs-and-back-links/",
+    description: "Use the default breadcrumbs, or replace them with a back link in end-to-end journeys.",
+    template: "powerpages/page-templates/breadcrumbs-and-back-links",
+    parent: "powerpages/page-templates"
   },
 
   // Components - uses data-driven rendering
@@ -313,102 +339,80 @@ const pages = {
   "powerpages/patterns": {
     title: "Patterns",
     url: "/powerpages/patterns/",
-    description: "Explore patterns that solve common design and development challenges when building Power Pages websites.",
+    description: "Best-practice ways to help users complete common tasks in Power Pages services, and how to build them.",
     template: "powerpages/patterns",
     parent: "powerpages",
     children: [
-      "powerpages/patterns/apply-sort-and-filters",
-      "powerpages/patterns/crm-helper-framework",
       "powerpages/patterns/custom-errors",
-      "powerpages/patterns/scan-uploaded-files",
-      "powerpages/patterns/back-link",
-      "powerpages/patterns/phase-banner",
-      "powerpages/patterns/page-heading",
-      "powerpages/patterns/caption-page-heading"
+      "powerpages/patterns/apply-sort-and-filters"
     ]
   },
-  "powerpages/patterns/apply-sort-and-filters": {
-    title: "Applying sort and filters",
-    url: "/powerpages/patterns/apply-sort-and-filters/",
-    description: "Learn how to implement server-side filtering and sorting in Power Pages using URL parameters and Liquid.",
-    template: "powerpages/patterns/apply-sort-and-filters",
-    parent: "powerpages/patterns"
-  },
-  "powerpages/patterns/crm-helper-framework": {
-    title: "Validating and submitting data to CRM",
-    url: "/powerpages/patterns/crm-helper-framework/",
-    description: "Use the CRM Helper Framework to validate user input and submit data to CRM.",
-    template: "powerpages/patterns/crm-helper-framework",
-    parent: "powerpages/patterns"
-  },
   "powerpages/patterns/custom-errors": {
-    title: "Displaying custom errors",
+    title: "Error messages",
     url: "/powerpages/patterns/custom-errors/",
-    description: "Learn how to show helpful custom error messages to users on your Power Pages website.",
+    description: "Tell users what went wrong and how to fix it, including errors shown in a custom location and errors that don't come from validation.",
     template: "powerpages/patterns/custom-errors",
     parent: "powerpages/patterns"
   },
-  "powerpages/patterns/scan-uploaded-files": {
-    title: "Scanning uploaded files for viruses",
-    url: "/powerpages/patterns/scan-uploaded-files/",
-    description: "Scan files for viruses before they're saved to CRM, using the CRM helper framework and the VirusScan server logic.",
-    template: "powerpages/patterns/scan-uploaded-files",
-    parent: "powerpages/patterns"
-  },
-  "powerpages/patterns/back-link": {
-    title: "Overriding breadcrumbs with a back link",
-    url: "/powerpages/patterns/back-link/",
-    description: "Show a back link in place of breadcrumbs to simplify navigation in specific Power Pages journeys.",
-    template: "powerpages/patterns/back-link",
-    parent: "powerpages/patterns"
-  },
-  "powerpages/patterns/phase-banner": {
-    title: "Overriding the phase banner",
-    url: "/powerpages/patterns/phase-banner/",
-    description: "Find out how to replace or customise the phase banner to reflect your service's stage.",
-    template: "powerpages/patterns/phase-banner",
-    parent: "powerpages/patterns"
-  },
-  "powerpages/patterns/page-heading": {
-    title: "Setting the page heading",
-    url: "/powerpages/patterns/page-heading/",
-    description: "Understand how to apply consistent, accessible page headings across Power Pages screens.",
-    template: "powerpages/patterns/page-heading",
-    parent: "powerpages/patterns"
-  },
-  "powerpages/patterns/caption-page-heading": {
-    title: "Using captions in page headings",
-    url: "/powerpages/patterns/caption-page-heading/",
-    description: "Enhance page context by adding captions above headings on Power Pages pages.",
-    template: "powerpages/patterns/caption-page-heading",
+  "powerpages/patterns/apply-sort-and-filters": {
+    title: "Sorting and filtering lists",
+    url: "/powerpages/patterns/apply-sort-and-filters/",
+    description: "Help users find records in a long list by letting them filter and sort it, using URL parameters and Liquid on the server.",
+    template: "powerpages/patterns/apply-sort-and-filters",
     parent: "powerpages/patterns"
   },
 
-  // Server logic
-  "powerpages/server-logic": {
-    title: "Server logic",
-    url: "/powerpages/server-logic/",
-    description: "Run JavaScript on the server in Power Pages to work with Dataverse and call other services without exposing secrets in the browser.",
-    template: "powerpages/server-logic",
+  // Developer guides
+  "powerpages/developer-guides": {
+    title: "Developer guides",
+    url: "/powerpages/developer-guides/",
+    description: "Use the CRM helper framework and server logic to validate data, save it to CRM and do work that has to run on the server.",
+    template: "powerpages/developer-guides",
     parent: "powerpages",
     children: [
-      "powerpages/server-logic/setting-up",
-      "powerpages/server-logic/behaviour-and-limitations"
+      "powerpages/developer-guides/crm-helper-framework",
+      "powerpages/developer-guides/server-logic",
+      "powerpages/developer-guides/scan-uploaded-files"
     ]
   },
-  "powerpages/server-logic/setting-up": {
-    title: "Setting up server logic",
-    url: "/powerpages/server-logic/setting-up/",
-    description: "Enable server logic on your site, create a server logic record, write the script and call it from your pages.",
-    template: "powerpages/server-logic/setting-up",
-    parent: "powerpages/server-logic"
+  "powerpages/developer-guides/crm-helper-framework": {
+    title: "CRM helper framework",
+    url: "/powerpages/developer-guides/crm-helper-framework/",
+    description: "Use the CRM helper framework to validate user input and submit data to CRM.",
+    template: "powerpages/developer-guides/crm-helper-framework",
+    parent: "powerpages/developer-guides"
   },
-  "powerpages/server-logic/behaviour-and-limitations": {
+  "powerpages/developer-guides/scan-uploaded-files": {
+    title: "Scanning uploaded files for viruses",
+    url: "/powerpages/developer-guides/scan-uploaded-files/",
+    description: "Scan files for viruses before they're saved to CRM, using the CRM helper framework and the VirusScan server logic.",
+    template: "powerpages/developer-guides/scan-uploaded-files",
+    parent: "powerpages/developer-guides"
+  },
+  "powerpages/developer-guides/server-logic": {
+    title: "Server logic",
+    url: "/powerpages/developer-guides/server-logic/",
+    description: "Run JavaScript on the server in Power Pages to work with Dataverse and call other services without exposing secrets in the browser.",
+    template: "powerpages/developer-guides/server-logic",
+    parent: "powerpages/developer-guides",
+    children: [
+      "powerpages/developer-guides/server-logic/setting-up",
+      "powerpages/developer-guides/server-logic/behaviour-and-limitations"
+    ]
+  },
+  "powerpages/developer-guides/server-logic/setting-up": {
+    title: "Setting up server logic",
+    url: "/powerpages/developer-guides/server-logic/setting-up/",
+    description: "Enable server logic on your site, create a server logic record, write the script and call it from your pages.",
+    template: "powerpages/developer-guides/server-logic/setting-up",
+    parent: "powerpages/developer-guides/server-logic"
+  },
+  "powerpages/developer-guides/server-logic/behaviour-and-limitations": {
     title: "Behaviour and limitations",
-    url: "/powerpages/server-logic/behaviour-and-limitations/",
+    url: "/powerpages/developer-guides/server-logic/behaviour-and-limitations/",
     description: "Known quirks, size and memory limits, and how to debug server logic that fails with a generic error.",
-    template: "powerpages/server-logic/behaviour-and-limitations",
-    parent: "powerpages/server-logic"
+    template: "powerpages/developer-guides/server-logic/behaviour-and-limitations",
+    parent: "powerpages/developer-guides/server-logic"
   },
 
   
@@ -720,6 +724,34 @@ const pages = {
 };
 
 export default pages;
+
+// Old URLs of pages that have moved, so existing links and bookmarks still work
+// Sub-paths are kept, so /powerpages/server-logic/setting-up/ goes to its new location too
+export const redirects = {
+  "/powerpages/styles/layout/": "/powerpages/page-templates/layouts/",
+  "/powerpages/styles/": "/powerpages/page-templates/",
+  "/powerpages/patterns/page-heading/": "/powerpages/page-templates/page-headings/",
+  "/powerpages/patterns/caption-page-heading/": "/powerpages/page-templates/page-headings/#captions",
+  "/powerpages/patterns/phase-banner/": "/powerpages/page-templates/phase-banner/",
+  "/powerpages/patterns/back-link/": "/powerpages/page-templates/breadcrumbs-and-back-links/",
+  "/powerpages/patterns/crm-helper-framework/": "/powerpages/developer-guides/crm-helper-framework/",
+  "/powerpages/patterns/scan-uploaded-files/": "/powerpages/developer-guides/scan-uploaded-files/",
+  "/powerpages/server-logic/": "/powerpages/developer-guides/server-logic/"
+};
+
+// Longest first, so a moved page wins over the section it was in
+const redirectSources = Object.keys(redirects).sort((a, b) => b.length - a.length);
+
+export function getRedirect(url) {
+  const path = url.endsWith('/') ? url : `${url}/`;
+  const from = redirectSources.find(oldUrl => path.startsWith(oldUrl));
+  if (!from) return null;
+
+  const to = redirects[from];
+  const rest = path.slice(from.length);
+  // A target with a fragment points at a section, so there's nowhere to put a sub-path
+  return rest && !to.includes('#') ? `${to}${rest}` : to;
+}
 
 // Helper functions
 export function getPage(key) {

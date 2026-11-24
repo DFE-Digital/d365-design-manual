@@ -1,10 +1,10 @@
 {% set powerpages_sections = [
   { title: "Overview", url: pages['powerpages'].url, key: "overview" },
   { title: "Getting started", url: pages['powerpages/getting-started'].url, key: "getting-started" },
-  { title: "Styles", url: pages['powerpages/styles'].url, key: "styles" },
+  { title: "Page templates", url: pages['powerpages/page-templates'].url, key: "page-templates" },
   { title: "Components", url: pages['powerpages/components'].url, key: "components" },
   { title: "Patterns", url: pages['powerpages/patterns'].url, key: "patterns" },
-  { title: "Server logic", url: pages['powerpages/server-logic'].url, key: "server-logic" }
+  { title: "Developer guides", url: pages['powerpages/developer-guides'].url, key: "developer-guides" }
 ] %}
 
 {% set getting_started = [
@@ -41,24 +41,27 @@
   pages["powerpages/components/timeline"]
 ] %}
 
-{% set styles = [
-  pages["powerpages/styles/layout"]
+{% set page_templates = [
+  pages["powerpages/page-templates/layouts"],
+  pages["powerpages/page-templates/page-headings"],
+  pages["powerpages/page-templates/phase-banner"],
+  pages["powerpages/page-templates/breadcrumbs-and-back-links"]
 ] %}
 
 {% set patterns = [
-  pages["powerpages/patterns/apply-sort-and-filters"],
   pages["powerpages/patterns/custom-errors"],
-  pages["powerpages/patterns/back-link"],
-  pages["powerpages/patterns/phase-banner"],
-  pages["powerpages/patterns/page-heading"],
-  pages["powerpages/patterns/caption-page-heading"],
-  pages["powerpages/patterns/crm-helper-framework"],
-  pages["powerpages/patterns/scan-uploaded-files"]
+  pages["powerpages/patterns/apply-sort-and-filters"]
+] %}
+
+{% set developer_guides = [
+  pages["powerpages/developer-guides/crm-helper-framework"],
+  pages["powerpages/developer-guides/server-logic"],
+  pages["powerpages/developer-guides/scan-uploaded-files"]
 ] %}
 
 {% set server_logic = [
-  pages["powerpages/server-logic/setting-up"],
-  pages["powerpages/server-logic/behaviour-and-limitations"]
+  pages["powerpages/developer-guides/server-logic/setting-up"],
+  pages["powerpages/developer-guides/server-logic/behaviour-and-limitations"]
 ] %}
 
 
@@ -125,14 +128,14 @@
 {% set currentSection = "overview" %}
 {% if currentPath | contains(pages['powerpages/getting-started'].url) %}
   {% set currentSection = "getting-started" %}
-{% elseif currentPath | contains(pages['powerpages/styles'].url) %}
-  {% set currentSection = "styles" %}
+{% elseif currentPath | contains(pages['powerpages/page-templates'].url) %}
+  {% set currentSection = "page-templates" %}
 {% elseif currentPath | contains(pages['powerpages/components'].url) %}
   {% set currentSection = "components" %}
 {% elseif currentPath | contains(pages['powerpages/patterns'].url) %}
   {% set currentSection = "patterns" %}
-{% elseif currentPath | contains(pages['powerpages/server-logic'].url) %}
-  {% set currentSection = "server-logic" %}
+{% elseif currentPath | contains(pages['powerpages/developer-guides'].url) %}
+  {% set currentSection = "developer-guides" %}
 {% elseif currentPath | contains(pages['crm/configuration'].url) %}
   {% set currentSection = "configuration" %}
 {% elseif currentPath | contains(pages['crm/customisation'].url) %}
@@ -197,11 +200,11 @@
     {% endfor %}
   </ul>
 </nav>
-{% elseif currentPath | contains(pages['powerpages/styles'].url) and currentPath != pages['powerpages/styles'].url %}
-<nav aria-label="Styles Menu" class="dfe-vertical-nav">
+{% elseif currentPath | contains(pages['powerpages/page-templates'].url) and currentPath != pages['powerpages/page-templates'].url %}
+<nav aria-label="Page Templates Menu" class="dfe-vertical-nav">
   <h2 class="govuk-heading-s govuk-!-margin-bottom-2">In this section</h2>
   <ul class="dfe-vertical-nav__section" id="side-navigation">
-    {% for page in styles %}
+    {% for page in page_templates %}
     {% set isCurrentPage = currentPath | contains(page.url) %}
     <li class="dfe-vertical-nav__section-item {% if isCurrentPage %}dfe-vertical-nav__section-item--current{% endif %}">
       <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}"{% if isCurrentPage %} aria-current="page"{% endif %}>{{ page.title }}</a>
@@ -221,14 +224,28 @@
     {% endfor %}
   </ul>
 </nav>
-{% elseif currentPath | contains(pages['powerpages/server-logic'].url) and currentPath != pages['powerpages/server-logic'].url %}
-<nav aria-label="Server Logic Menu" class="dfe-vertical-nav">
+{% elseif currentPath | contains(pages['powerpages/developer-guides'].url) and currentPath != pages['powerpages/developer-guides'].url %}
+<nav aria-label="Developer Guides Menu" class="dfe-vertical-nav">
   <h2 class="govuk-heading-s govuk-!-margin-bottom-2">In this section</h2>
   <ul class="dfe-vertical-nav__section" id="side-navigation">
-    {% for page in server_logic %}
+    {% for page in developer_guides %}
     {% set isCurrentPage = currentPath | contains(page.url) %}
+    {% if page.url == pages['powerpages/developer-guides/server-logic'].url %}
+      {# Server logic has its own pages, so only highlight it on its overview page #}
+      {% set isCurrentPage = currentPath == page.url or currentPath + '/' == page.url %}
+    {% endif %}
     <li class="dfe-vertical-nav__section-item {% if isCurrentPage %}dfe-vertical-nav__section-item--current{% endif %}">
       <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ page.url }}"{% if isCurrentPage %} aria-current="page"{% endif %}>{{ page.title }}</a>
+      {% if page.url == pages['powerpages/developer-guides/server-logic'].url %}
+      <ul class="dfe-vertical-nav__section dfe-vertical-nav__section--nested">
+        {% for child in server_logic %}
+        {% set isCurrentChild = currentPath | contains(child.url) %}
+        <li class="dfe-vertical-nav__section-item {% if isCurrentChild %}dfe-vertical-nav__section-item--current{% endif %}">
+          <a class="dfe-vertical-nav__link govuk-link govuk-link--no-visited-state govuk-link--no-underline" href="{{ child.url }}"{% if isCurrentChild %} aria-current="page"{% endif %}>{{ child.title }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
     </li>
     {% endfor %}
   </ul>

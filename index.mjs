@@ -14,7 +14,7 @@ import favicon from 'serve-favicon';
 import * as cheerio from 'cheerio';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import pages, { getPageByUrl, getBreadcrumbs, getChildren, getAllPages } from './app/data/pages.js';
+import pages, { getPageByUrl, getBreadcrumbs, getChildren, getAllPages, getRedirect } from './app/data/pages.js';
 import componentExamples from './app/data/component-examples.js';
 import components, { getComponent } from './app/data/components/index.js';
 import hljs from 'highlight.js';
@@ -350,6 +350,18 @@ app.use(function(req, res, next) {
 app.get(/\.html?$/i, function (req, res) {
   const path = req.path.replace(/\.html?$/, '');
   res.redirect(path);
+});
+
+// Send old URLs of moved pages to their new location
+app.use((req, res, next) => {
+  const redirectTo = getRedirect(req.path);
+  if (redirectTo) {
+    const queryStart = req.originalUrl.indexOf('?');
+    const query = queryStart === -1 ? '' : req.originalUrl.slice(queryStart);
+    const [target, fragment] = redirectTo.split('#');
+    return res.redirect(301, `${target}${query}${fragment ? `#${fragment}` : ''}`);
+  }
+  next();
 });
 
 app.get(/^([^.]+)$/, function (req, res, next) {

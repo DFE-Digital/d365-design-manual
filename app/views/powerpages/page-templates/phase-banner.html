@@ -1,4 +1,4 @@
-{% set pageData = pages['powerpages/patterns/phase-banner'] %}
+{% set pageData = pages['powerpages/page-templates/phase-banner'] %}
 {% set showTitlePanel = false %}
 {% set showSubNav = true %}
 
@@ -20,14 +20,14 @@
 {% endif %}
 
 {{ contentsList([
-  { text: "Switching between Alpha and Beta", href: "#switching-alpha-beta" },
+  { text: "Switching between alpha and beta", href: "#switching-alpha-beta" },
   { text: "Removing the phase banner", href: "#removing-phase-banner" },
   { text: "Customising the banner content", href: "#customising-content" }
 ]) }}
 
 <p class="govuk-body">The GOV.UK phase banner is included by default in the layout templates and displays a Beta label. You can override this to display Alpha instead, or customise the banner content.</p>
 
-<h2 class="govuk-heading-l" id="switching-alpha-beta">Switching between Alpha and Beta</h2>
+<h2 class="govuk-heading-l" id="switching-alpha-beta">Switching between alpha and beta</h2>
 
 <p class="govuk-body">To change the phase, update the include statement in your layout templates.</p>
 
@@ -45,7 +45,7 @@
 
 <h2 class="govuk-heading-l" id="removing-phase-banner">Removing the phase banner</h2>
 
-<p class="govuk-body">If your service is live and no longer in Alpha or Beta, you can remove the phase banner entirely.</p>
+<p class="govuk-body">If your service is live and no longer in alpha or beta, you can remove the phase banner entirely.</p>
 
 <p class="govuk-body">Delete this line from both layout templates:</p>
 <pre><code class="language-liquid">{% raw %}{% include 'DfE/Content/PhaseBanner/Beta' %}{% endraw %}</code></pre>

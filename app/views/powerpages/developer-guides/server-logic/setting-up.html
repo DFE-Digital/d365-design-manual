@@ -1,4 +1,4 @@
-{% set pageData = pages['powerpages/server-logic/setting-up'] %}
+{% set pageData = pages['powerpages/developer-guides/server-logic/setting-up'] %}
 {% set showTitlePanel = false %}
 {% set showSubNav = true %}
 
@@ -25,7 +25,7 @@
   { text: "Deploy server logic to other environments", href: "#deploy" }
 ]) }}
 
-<p class="govuk-body">This page explains how to set up server logic on a site built from the base portal. Read <a class="govuk-link" href="{{ pages['powerpages/server-logic/behaviour-and-limitations'].url }}">behaviour and limitations</a> as well: several things that work in a browser crash a server logic script.</p>
+<p class="govuk-body">This page explains how to set up server logic on a site built from the base portal. Read <a class="govuk-link" href="{{ pages['powerpages/developer-guides/server-logic/behaviour-and-limitations'].url }}">behaviour and limitations</a> as well: several things that work in a browser crash a server logic script.</p>
 
 <h2 class="govuk-heading-l" id="site-settings">Turn on server logic</h2>
 
@@ -54,7 +54,7 @@
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header"><code>ServerLogic/MaxMemoryUsageInBytes</code></th>
       <td class="govuk-table__cell">How much memory each script can use. The default is 10 MB, and only about a third of that is available for your data. Microsoft no longer documents this setting, but it still works.</td>
-      <td class="govuk-table__cell"><code>41943040</code> (40 MB) on any site that handles uploaded files or large requests, such as the <a class="govuk-link" href="{{ pages['powerpages/patterns/scan-uploaded-files'].url }}">virus scan</a>.</td>
+      <td class="govuk-table__cell"><code>41943040</code> (40 MB) on any site that handles uploaded files or large requests, such as the <a class="govuk-link" href="{{ pages['powerpages/developer-guides/scan-uploaded-files'].url }}">virus scan</a>.</td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header"><code>ServerLogic/AllowedDomains</code></th>
@@ -168,7 +168,7 @@ const SERVICE_KEY = Server.EnvironmentVariable.get("dfe_virusscankey");</code></
 
 <h2 class="govuk-heading-l" id="call-from-page">Call server logic from a page</h2>
 
-<p class="govuk-body">Every request to server logic must include the site's anti-forgery (CSRF) token. The <a class="govuk-link" href="{{ pages['powerpages/patterns/crm-helper-framework'].url }}">CRM helper framework</a> adds it for you through <code>webapi.safeAjax</code>.</p>
+<p class="govuk-body">Every request to server logic must include the site's anti-forgery (CSRF) token. The <a class="govuk-link" href="{{ pages['powerpages/developer-guides/crm-helper-framework'].url }}">CRM helper framework</a> adds it for you through <code>webapi.safeAjax</code>.</p>
 
 <pre><code class="language-javascript">webapi.safeAjax({
   type: "POST",
@@ -215,7 +215,7 @@ const SERVICE_KEY = Server.EnvironmentVariable.get("dfe_virusscankey");</code></
   "error": "Exception occurred while processing this request"
 }</code></pre>
 
-<p class="govuk-body">If <code>success</code> is <code>false</code> with that generic error, your own <code>try</code> and <code>catch</code> didn't run. See <a class="govuk-link" href="{{ pages['powerpages/server-logic/behaviour-and-limitations'].url }}#debugging">how to debug the generic error</a>.</p>
+<p class="govuk-body">If <code>success</code> is <code>false</code> with that generic error, your own <code>try</code> and <code>catch</code> didn't run. See <a class="govuk-link" href="{{ pages['powerpages/developer-guides/server-logic/behaviour-and-limitations'].url }}#debugging">how to debug the generic error</a>.</p>
 
 <h2 class="govuk-heading-l" id="call-another-service">Call another service from server logic</h2>
 
@@ -238,7 +238,7 @@ const result = JSON.parse(parsed.Body);</code></pre>
 
 <ul class="govuk-list govuk-list--bullet">
   <li>Use a plain media type for the last argument, such as <code>"application/json"</code>. <code>HttpClient</code> rejects a media type with parameters, such as <code>"text/plain; charset=utf-8"</code>, with a <code>StatusCode</code> of 0 and "The format of value ... is invalid".</li>
-  <li>If the service sits behind Azure API Management or the department's application gateway, requests are limited to 2,000 KB. See <a class="govuk-link" href="{{ pages['powerpages/server-logic/behaviour-and-limitations'].url }}#size-limits">size and memory limits</a>.</li>
+  <li>If the service sits behind Azure API Management or the department's application gateway, requests are limited to 2,000 KB. See <a class="govuk-link" href="{{ pages['powerpages/developer-guides/server-logic/behaviour-and-limitations'].url }}#size-limits">size and memory limits</a>.</li>
 </ul>
 
 <h2 class="govuk-heading-l" id="deploy">Deploy server logic to other environments</h2>

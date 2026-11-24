@@ -27,7 +27,7 @@ export default {
 
       <h3 class="govuk-heading-s">Improved file upload or plain file input</h3>
       <p class="govuk-body">Use GOV.UK's improved file upload component. It's easier to use: users can drag and drop files, and it shows the name of the file they've chosen. To use it, wrap the file input in a <code>&lt;div&gt;</code> with the <code>govuk-file-upload-wrapper</code> class and <code>data-module="govuk-file-upload"</code>. The base portal's layouts already start GOV.UK Frontend, which turns it into the improved component.</p>
-      <p class="govuk-body">The <a class="govuk-link" href="/powerpages/patterns/crm-helper-framework/">CRM helper framework</a> works with the improved component from version 03. On a site still using version 02 or earlier, use the plain file input. See <a class="govuk-link" href="/powerpages/getting-started/framework-versions/">framework versions</a>.</p>
+      <p class="govuk-body">The <a class="govuk-link" href="/powerpages/developer-guides/crm-helper-framework/">CRM helper framework</a> works with the improved component from version 03. On a site still using version 02 or earlier, use the plain file input. See <a class="govuk-link" href="/powerpages/getting-started/framework-versions/">framework versions</a>.</p>
       <p class="govuk-body">Use the <code>govuk-file-upload-wrapper</code> class, not <code>govuk-drop-zone</code>. <code>govuk-drop-zone</code> is deprecated, and will be removed in GOV.UK Frontend 7.</p>
 
       <h3 class="govuk-heading-s">Tell users what files they can upload</h3>
@@ -53,7 +53,7 @@ const isValid = await DfEPortal.ValidateData(inputs);</code></pre>
         <li><code>maxFileSize</code>: the largest file, in megabytes</li>
         <li><code>fileLimit</code>: how many files users can select at once</li>
       </ul>
-      <p class="govuk-body"><code>ValidateData</code> checks the files' type, number and size, then sends them to be scanned for viruses. Your site needs the <code>VirusScan</code> server logic for this. See <a class="govuk-link" href="/powerpages/patterns/scan-uploaded-files/">scanning uploaded files for viruses</a>, including the largest files that can be scanned.</p>
+      <p class="govuk-body"><code>ValidateData</code> checks the files' type, number and size, then sends them to be scanned for viruses. Your site needs the <code>VirusScan</code> server logic for this. See <a class="govuk-link" href="/powerpages/developer-guides/scan-uploaded-files/">scanning uploaded files for viruses</a>, including the largest files that can be scanned.</p>
 
       <h3 class="govuk-heading-s">Save the file</h3>
       <p class="govuk-body">Save the record first, then upload the file to it:</p>
@@ -107,7 +107,7 @@ await DfEPortal.WebApi.UploadFile("dfe_evidencefile", "dfe_applications", record
   errorMessages: {
     title: 'Error messages',
     content: `
-      <p class="govuk-body">An error message is displayed next to the field and in the error summary when a validation error occurs. The <a class="govuk-link" href="/powerpages/patterns/crm-helper-framework/">CRM helper framework</a> shows these for you. With the improved component, the error message is placed above the component, as GOV.UK does it.</p>
+      <p class="govuk-body">An error message is displayed next to the field and in the error summary when a validation error occurs. The <a class="govuk-link" href="/powerpages/developer-guides/crm-helper-framework/">CRM helper framework</a> shows these for you. With the improved component, the error message is placed above the component, as GOV.UK does it.</p>
       <table class="govuk-table">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">

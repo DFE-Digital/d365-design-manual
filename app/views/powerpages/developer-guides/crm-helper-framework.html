@@ -1,4 +1,4 @@
-{% set pageData = pages['powerpages/patterns/crm-helper-framework'] %}
+{% set pageData = pages['powerpages/developer-guides/crm-helper-framework'] %}
 {% set showTitlePanel = false %}
 {% set showSubNav = true %}
 
@@ -47,7 +47,7 @@
 
 <p class="govuk-body">This page describes version 03 of the framework. To find out which version your site uses and what's changed, see <a class="govuk-link" href="{{ pages['powerpages/getting-started/framework-versions'].url }}">framework versions</a>.</p>
 
-<p class="govuk-body">Some work can't be done safely in the browser, such as virus scanning files or calling a service that needs a key. For that, use <a class="govuk-link" href="{{ pages['powerpages/server-logic'].url }}">server logic</a>.</p>
+<p class="govuk-body">Some work can't be done safely in the browser, such as virus scanning files or calling a service that needs a key. For that, use <a class="govuk-link" href="{{ pages['powerpages/developer-guides/server-logic'].url }}">server logic</a>.</p>
 
 <h2 class="govuk-heading-l" id="before-you-start">Before you start</h2>
 
@@ -739,7 +739,7 @@
         <li><code>maxFileSize</code>: the largest file, in megabytes</li>
         <li><code>fileLimit</code>: how many files can be selected at once</li>
       </ul>
-      <p class="govuk-body">Virus scanning needs the <code>VirusScan</code> server logic on your site. See <a class="govuk-link" href="{{ pages['powerpages/patterns/scan-uploaded-files'].url }}">scanning uploaded files for viruses</a>, including the largest files that can be scanned. If the input is optional and no file is selected, all the checks, including the scan, are skipped.</p>
+      <p class="govuk-body">Virus scanning needs the <code>VirusScan</code> server logic on your site. See <a class="govuk-link" href="{{ pages['powerpages/developer-guides/scan-uploaded-files'].url }}">scanning uploaded files for viruses</a>, including the largest files that can be scanned. If the input is optional and no file is selected, all the checks, including the scan, are skipped.</p>
       <p class="govuk-body">File inputs are validated but not included in ConstructData output. After the record is saved, use one of these to upload the file:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li><code>DfEPortal.WebApi.UploadFile</code> - Use when uploading to a <strong>file column</strong> or <strong>image column</strong> directly on the entity record.</li>
@@ -968,7 +968,7 @@ if (!isValid) {
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">When to use</dt>
-    <dd class="govuk-summary-list__value">For calls to another service, or work that needs a key or secret, consider <a class="govuk-link" href="{{ pages['powerpages/server-logic'].url }}">server logic</a> instead. It's quicker and runs as the signed-in user.</dd>
+    <dd class="govuk-summary-list__value">For calls to another service, or work that needs a key or secret, consider <a class="govuk-link" href="{{ pages['powerpages/developer-guides/server-logic'].url }}">server logic</a> instead. It's quicker and runs as the signed-in user.</dd>
   </div>
 </dl>
 
@@ -1302,7 +1302,7 @@ if (!isValid) {
 <p class="govuk-body"><strong>Explanation</strong>:</p>
 <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
   <li>The file input uses the improved file upload component. The plain file input works in the same way.</li>
-  <li><code>ValidateData</code> checks the file and sends it to the <code>VirusScan</code> server logic. See <a class="govuk-link" href="{{ pages['powerpages/patterns/scan-uploaded-files'].url }}">scanning uploaded files for viruses</a>.</li>
+  <li><code>ValidateData</code> checks the file and sends it to the <code>VirusScan</code> server logic. See <a class="govuk-link" href="{{ pages['powerpages/developer-guides/scan-uploaded-files'].url }}">scanning uploaded files for viruses</a>.</li>
   <li>The other answers are saved first, then <code>UploadFile</code> uploads the file to the <code>dfe_evidencefile</code> column.</li>
   <li><code>ConstructData</code> is only given the text input, because it can't build data from a file input on its own.</li>
 </ul>
@@ -1315,7 +1315,7 @@ if (!isValid) {
   <li>Use try-catch blocks to handle errors, and re-enable the button and hide the spinner if something fails.</li>
   <li>Use <code>DisableButton</code> and <code>ShowLoadingSpinner</code> during processing to prevent multiple submissions and provide visual feedback.</li>
   <li>Ensure your <code>inputObj</code> properties (e.g. <code>required</code>, <code>targetType</code>) match the form's requirements to avoid unexpected behaviour.</li>
-  <li>Keep any check users mustn't be able to get around, and anything that needs a key, in <a class="govuk-link" href="{{ pages['powerpages/server-logic'].url }}">server logic</a>. Code in the browser can be changed by the user.</li>
+  <li>Keep any check users mustn't be able to get around, and anything that needs a key, in <a class="govuk-link" href="{{ pages['powerpages/developer-guides/server-logic'].url }}">server logic</a>. Code in the browser can be changed by the user.</li>
   <li>Avoid logging sensitive data (e.g. email addresses) to the console in production.</li>
 </ul>
 
