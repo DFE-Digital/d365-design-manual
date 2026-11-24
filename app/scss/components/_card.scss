@@ -7,7 +7,7 @@
   gap: 15px;
   margin-bottom: 30px;
 
-  @include mq($from: tablet) {
+  @include govuk-media-query($from: tablet) {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
@@ -22,7 +22,7 @@
   border: 1px solid $govuk-border-colour;
   max-width: 400px;
 
-  @include mq($until: tablet) {
+  @include govuk-media-query($until: tablet) {
     max-width: 100%;
   }
 

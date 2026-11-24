@@ -19,8 +19,8 @@
   color: $govuk-brand-colour;
 
   &:hover {
-    background-color: govuk-colour("light-grey");
-    color: govuk-shade($govuk-brand-colour, 20%);
+    background-color: govuk-colour("black", $variant: "tint-95");
+    color: govuk-colour("blue", $variant: "shade-25");
   }
 
   &:focus {
