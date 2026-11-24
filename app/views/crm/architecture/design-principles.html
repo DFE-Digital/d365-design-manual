@@ -1,24 +1,13 @@
 {% set pageData = pages['crm/architecture/design-principles'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Simplicity", href: "#simplicity" },
@@ -39,15 +28,11 @@
   { text: "Maintainability", href: "#maintainability" }
 ]) }}
 
-
-
 <p class="govuk-body">This page outlines the core architecture and design principles that guide how DfE design, implement, and extend Microsoft Dynamics 365 solutions. These principles aim to ensure our solutions are scalable, secure, maintainable, and aligned with both Microsoft best practice and organisational standards.</p>
 
 <p class="govuk-body">Dynamics 365 is a cloud platform built on Microsoft Dataverse and tightly integrated with the wider Power Platform and Microsoft 365 ecosystem. DfE's architectural approach leverages these native capabilities rather than recreating them through custom development.</p>
 
 <p class="govuk-body">All Dynamics 365 implementations should align with these principles unless a clear, documented exception has been approved.</p>
-
-
 
 <h2 class="govuk-heading-m" id="simplicity">Simplicity (KISS – Keep It Simple Stupid)</h2>
 <p class="govuk-body">
@@ -224,12 +209,6 @@ Maintainable solutions can be easily supported and adapted as business needs and
   <li>Use out of box functionality where possible</li>
   <li>Document key architectural decisions</li>
 </ul>
-
-
-
-
-
-
 
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__prev">

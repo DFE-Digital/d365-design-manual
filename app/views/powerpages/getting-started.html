@@ -1,12 +1,10 @@
 {% set pageData = pages['powerpages/getting-started'] %}
-{% set showTitlePanel = true %}
-{% set showSubNav = true %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% from 'includes/_side-nav.html' import getting_started %}
-
 {% block content %}
+
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 <p class="govuk-body-l">{{ pageData.description }}</p>
 
@@ -19,7 +17,7 @@
 <h2 class="govuk-heading-m">In this section</h2>
 
 <ul class="dfe-component-list">
-  {% for page in getting_started %}
+  {% for page in children %}
   {% if page.url != pageData.url %}
   <li class="dfe-component-list__item">
     <h3 class="govuk-heading-s govuk-!-margin-bottom-1">

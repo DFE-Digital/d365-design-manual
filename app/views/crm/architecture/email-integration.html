@@ -1,24 +1,13 @@
 {% set pageData = pages['crm/architecture/email-integration'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Why We Use Server-Side Synchronisation", href: "#why-we-use-sss" },
@@ -26,9 +15,6 @@
   { text: "Best Practice Guidelines", href: "#best-practice-guidelines" },
   { text: "What This Standard Avoids", href: "#what-this-standard-avoids" }
 ]) }}
-
-
-
 
 <p class="govuk-body">
 All email integration between Microsoft Dynamics 365 and Microsoft Exchange Online is implemented using Server-Side Synchronisation as the DfE approved method. This approach ensures a secure, scalable and supportable integration that aligns with Microsoft best practice and reduces reliance on desktop-based components or custom integrations.
@@ -52,10 +38,6 @@ Because synchronisation occurs between Microsoft services, email processing is n
 Server-Side Synchronisation also improves security and compliance by using secure authentication, avoiding the storage of credential, and supporting better auditing and monitoring.
 </p>
 
-
-
-
-
 <h2 class="govuk-heading-l" id="what-sss-is-used-for">What Server-Side Synchronisation Is Used For</h2>
 
 <p class="govuk-body">
@@ -69,8 +51,6 @@ Server-Side Synchronisation is used for the following within Dynamics 365:
   <li>Processing email attachments in line with CRM policies</li>
   <li>Supporting shared and queue mailboxes</li>
 </ul>
-
-
 
 <h2 class="govuk-heading-l" id="best-practice-guidelines">Best Practice Guidelines</h2>
 
@@ -102,10 +82,6 @@ This standard deliberately avoids the following approaches:
   <li>Inconsistent or unmanaged email tracking behaviour</li>
 </ul>
 
-
-
-
-
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__prev">
     <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/architecture/document-management'].url }}" rel="prev">
@@ -132,8 +108,5 @@ This standard deliberately avoids the following approaches:
     </a>
   </div>
 </nav>
-
-
-
 
 {% endblock %}

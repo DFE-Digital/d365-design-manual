@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (mql.matches) {
       // mobile
-      toggle.children('h3').hide()
       toggle.removeAttribute('hidden');
       toggle.setAttribute('aria-expanded', 'false');
       menu.hidden = true;

@@ -1,10 +1,10 @@
 {% set pageData = pages['powerpages'] %}
-{% set showTitlePanel = true %}
-{% set showSubNav = true %}
 
-{% extends "layouts/_two-column-wide-left.html" %}
+{% extends "layouts/_wide-right-left-navigation.html" %}
 
 {% block content %}
+
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 <p class="govuk-body-l">{{ pageData.description }}</p>
 
@@ -63,42 +63,20 @@
   </strong>
 </div>
 
-{% endblock %}
 
-{% block sideContent %}
-<h2 class="govuk-heading-m">Explore this section</h2>
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-<ul class="dfe-component-list dfe-component-list--single-column">
+<h2 class="govuk-heading-m">In this section</h2>
+
+<ul class="dfe-component-list">
+  {% for page in children %}
   <li class="dfe-component-list__item">
     <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
-      <a class="govuk-link govuk-link--no-visited-state" href="{{ pages['powerpages/getting-started'].url }}">Getting started</a>
+      <a class="govuk-link govuk-link--no-visited-state" href="{{ page.url }}">{{ page.title }}</a>
     </h3>
-    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ pages['powerpages/getting-started'].description }}</p>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ page.description }}</p>
   </li>
-  <li class="dfe-component-list__item">
-    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
-      <a class="govuk-link govuk-link--no-visited-state" href="{{ pages['powerpages/page-templates'].url }}">Page templates</a>
-    </h3>
-    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ pages['powerpages/page-templates'].description }}</p>
-  </li>
-  <li class="dfe-component-list__item">
-    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
-      <a class="govuk-link govuk-link--no-visited-state" href="{{ pages['powerpages/components'].url }}">Components</a>
-    </h3>
-    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ pages['powerpages/components'].description }}</p>
-  </li>
-  <li class="dfe-component-list__item">
-    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
-      <a class="govuk-link govuk-link--no-visited-state" href="{{ pages['powerpages/patterns'].url }}">Patterns</a>
-    </h3>
-    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ pages['powerpages/patterns'].description }}</p>
-  </li>
-  <li class="dfe-component-list__item">
-    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
-      <a class="govuk-link govuk-link--no-visited-state" href="{{ pages['powerpages/developer-guides'].url }}">Developer guides</a>
-    </h3>
-    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ pages['powerpages/developer-guides'].description }}</p>
-  </li>
+  {% endfor %}
 </ul>
 
 <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
@@ -106,4 +84,5 @@
 <h2 class="govuk-heading-m">Get help</h2>
 
 <p class="govuk-body">If you have questions or need advice on implementing these patterns, <a class="govuk-link" href="mailto:solutionsdevelopment.techdirectorate@education.gov.uk">contact the Solutions Delivery Team</a>.</p>
+
 {% endblock %}

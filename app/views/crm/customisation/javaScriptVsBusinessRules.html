@@ -1,24 +1,13 @@
 {% set pageData = pages['crm/customisation/javascriptvsbusinessrules'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "When to use Business Rules", href: "#business-rules" },
@@ -27,14 +16,9 @@
   { text: "Summary", href: "#summary" }
 ]) }}
 
-
-
 <p class="govuk-body">Dynamics 365 provides two main options for implementing client‑side logic on forms - Business Rules and JavaScript. Both can support field validation, visibility, defaulting values and enforcing simple behaviour.</p>
 
 <p class="govuk-body">This page explains when each option should be used, why it matters, and the limitations and considerations to be aware of.</p>
-
-
-
 
 <h2 class="govuk-heading-l" id="business-rules">When to use Business Rules</h2>
 
@@ -67,11 +51,6 @@
 
 <p class="govuk-body">Note: If a requirement can be met cleanly using a Business Rule, it should be used before considering JavaScript.</p>
 
-
-
-
-
-
 <h2 class="govuk-heading-l" id="javascript">When to use JavaScript</h2>
 
 <p class="govuk-body">JavaScript should be used when the requirement is too advanced or too performance‑critical for Business Rules. JavaScript allows complete control over the client‑side experience and supports more granular, dynamic behaviour.</p>
@@ -100,9 +79,6 @@
   <li>It requires developer skills</li>
 </ul>
 
-
-
-
 <h2 class="govuk-heading-l" id="complex-rules">Complex Business Rules may not be efficient</h2>
 
 <p class="govuk-body">While Business Rules can handle multi‑step conditions and branching logic, they are not always efficient. A complex Business Rule that tries to do too much can slow down form load times, clash with other rules, or be harder to understand and maintain.</p>
@@ -117,10 +93,6 @@
 
 <p class="govuk-body">Choosing JavaScript for these scenarios is acceptable, as long as configuration and simpler Business Rules have been considered first and ruled out.</p>
 
-
-
-
-
 <h2 class="govuk-heading-l" id="summary">Summary</h2>
 
 <ul class="govuk-list govuk-list--bullet">
@@ -129,9 +101,6 @@
   <li>Avoid overly complex Business Rules that reduce performance when JavaScript may be more efficient</li>
   <li>Always choose the approach that delivers the requirement with the least complexity, while staying maintainable and aligned with DfE’s CRM standards</li>
 </ul>
-
-
-
 
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__prev">
@@ -159,7 +128,5 @@
     </a>
   </div>
 </nav>
-
-
 
 {% endblock %}

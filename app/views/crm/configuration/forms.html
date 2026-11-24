@@ -1,24 +1,13 @@
 {% set pageData = pages['crm/configuration/forms'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Use multiple forms for different roles", href: "#multiple-forms" },
@@ -33,8 +22,6 @@
 ]) }}
 
 <p class="govuk-body">Forms are one of the most important parts of a model‑driven app. They define how users view and edit data, guide people through business processes, and shape the overall usability of the system. Good form design helps users complete tasks efficiently and keeps the user experience consistent across DfE solutions.</p>
-
-
 
 <h2 class="govuk-heading-l" id="multiple-forms">Use multiple forms for different roles</h2>
 
@@ -53,9 +40,6 @@
   <li>A “Contact Centre Agent” form may focus on key triage data and hide admin details</li>
 </ul>
 
-
-
-
 <h2 class="govuk-heading-l" id="roles">Security roles to control form access</h2>
 
 <p class="govuk-body">Security roles can restrict which forms users see. This helps ensure users only access information relevant to their job.</p>
@@ -68,9 +52,6 @@
 </ul>
 
 <p class="govuk-body">This means that forms can be configured and limited by security role to ensure a relevant experience.</p>
-
-
-
 
 <h2 class="govuk-heading-l" id="layouts">Keep layouts clean, simple and task‑focused</h2>
 
@@ -88,11 +69,6 @@
 
 <p class="govuk-body">A well‑structured form helps users complete tasks faster.</p>
 
-
-
-
-
-
 <h2 class="govuk-heading-l" id="subgrids">Subgrids for related information</h2>
 
 <p class="govuk-body">Subgrids allow users to view related records directly from the form (for example, viewing all cases linked to a contact).</p>
@@ -108,9 +84,6 @@
 
 <p class="govuk-body">This approach emphasises using components like subgrids and Quick View forms to display related content effectively.</p>
 
-
-
-
 <h2 class="govuk-heading-l" id="quickview">Quick View forms for read‑only related data</h2>
 
 <p class="govuk-body">Quick View forms show information from a related table without requiring users to open the related record.</p>
@@ -121,8 +94,6 @@
   <li>Helps users understand context quickly</li>
   <li>Keeps references visible without duplicating data</li>
 </ul>
-
-
 
 <h2 class="govuk-heading-l" id="naming">Provide meaningful form names</h2>
 
@@ -136,15 +107,9 @@
   <li>Application - Admin Form</li>
 </ul>
 
-
-
-
 <h2 class="govuk-heading-l" id="tabs">Consistent tab and section naming</h2>
 
 <p class="govuk-body">Use clear names (e.g. Address, History, Funding) instead of Tab_2 or Section_3. This enhances maintainability and keeps the user experience consistent.</p>
-
-
-
 
 <h2 class="govuk-heading-l" id="script">Keep business rules and client logic efficient</h2>
 
@@ -158,13 +123,10 @@
 
 <p class="govuk-body">Keep logic lightweight to avoid slow form performance. Use the simplest method that meets the requirement (e.g. use Business Rules before JavaScript).</p>
 
-
-
 <h2 class="govuk-heading-l" id="further-reading">Further reading</h2>
 <p class="govuk-body">
   <a class="govuk-link govuk-link--no-visited-state" href="https://learn.microsoft.com/en-us/power-apps/maker/model-driven-apps/create-design-forms" target="_blank">Create and design model-driven app forms (opens in a new tab)</a> is Microsoft’s primary guidance page for developers working with forms.
 </p>
-
 
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__prev">

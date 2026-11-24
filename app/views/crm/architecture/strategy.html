@@ -1,24 +1,13 @@
 {% set pageData = pages['crm/architecture/strategy'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Purpose", href: "#purpose" },
@@ -34,8 +23,6 @@
   { text: "Continuous Improvement and Evolution", href: "#improvement" }
 ]) }}
 
-
-
 <h2 class="govuk-heading-l" id="purpose">Purpose</h2>
 <p class="govuk-body">
 This strategy sets out how Customer Relationship Management (CRM) platforms are used, governed and evolved across the Department for Education (DfE). It provides a shared direction for how CRM capabilities are delivered today and how they will mature over time. 
@@ -46,9 +33,6 @@ DfE currently operates a large number of CRM solutions to support a wide range o
 <p class="govuk-body">
 This strategy will be reviewed periodically to ensure it remains aligned to departmental priorities and platform evolution. 
 </p>
-
-
-
 
 <h2 class="govuk-heading-l" id="vision">CRM Vision</h2>
 <p class="govuk-body">
@@ -70,9 +54,6 @@ DfE CRM platforms will:
 <p class="govuk-body">
 Over time, this approach will reduce fragmentation, improve data visibility and allow DfE to respond more quickly to changing service needs while maintaining strong governance and security. 
 </p>
-
-
-
 
 <h2 class="govuk-heading-l" id="scope">Scope</h2>
 <p class="govuk-body">
@@ -100,9 +81,6 @@ This strategy applies to:
   <li>Power Platform solutions, components and automation that extend or integrate with CRM </li>
   <li>Data models, integrations and shared capabilities associated with CRM platforms </li>
 </ul>
-
-
-
 
 <h2 class="govuk-heading-l" id="landscape">Current CRM Landscape and Direction </h2>
 <p class="govuk-body">
@@ -140,9 +118,6 @@ These platforms form the strategic foundation for future CRM delivery at DfE. Ne
 <p class="govuk-body">
 Exceptions may be permitted where a service cannot reasonably be supported by one of these platforms due to specific constraints or requirements. In such cases, there must be clear, documented justification agreed with the SDT CRM Design Authority. 
 </p>
-
-
-
 
 <h2 class="govuk-heading-l" id="design">Design Principles</h2>
 <p class="govuk-body">
@@ -183,10 +158,6 @@ CRM solutions should be designed with the expectation that additional services w
 All CRM solutions must align with SDT delivery standards, architectural guidance and governance processes. Deviations from these principles require agreement through the SDT CRM Design Authority and must be documented. 
 </p>
 
-
-
-
-
 <h2 class="govuk-heading-l" id="reuse">Shared Capabilities and Reuse </h2>
 <p class="govuk-body">
 A key aim of the strategy is to build reusable CRM capabilities that can be shared across platforms and services. 
@@ -203,10 +174,6 @@ This includes:
 <p class="govuk-body">
 Reuse is the default expectation. New functionality should only be built where existing capabilities cannot meet the need. 
 </p>
-
-
-
-
 
 <h2 class="govuk-heading-l" id="data">Data and Information Management </h2>
 <p class="govuk-body">
@@ -239,9 +206,6 @@ CRM platforms must reflect the sensitivity of the data they hold:
 <p class="govuk-body">
 Data quality, retention and disposal must be built in from the start and applied consistently. Shared approaches to validation, retention and disposal should be reused wherever possible.
 </p>
-
-
-
 
 <h2 class="govuk-heading-l" id="security">Security and Access</h2>
 <p class="govuk-body">
@@ -284,10 +248,6 @@ Development, test and production environments must be clearly separated, with co
 CRM platforms must support auditing, monitoring and logging appropriate to the sensitivity of the data held, enabling investigation, assurance and compliance with departmental policies.
 </p>
 
-
-
-
-
 <h2 class="govuk-heading-l" id="governance-and-design">Governance and Design Authority</h2>
 <p class="govuk-body">
 Strong governance is essential to ensure DfE's CRM platforms are used effectively, consistently and in line with this strategy. An SDT CRM Design Authority will provide oversight across the CRM estate.  
@@ -305,10 +265,6 @@ Its role is to:
 All CRM platforms supported by SDT, and those transitioning into SDT support, are expected to operate within this governance model. Governance is intended to enable faster, better decision-making rather than create unnecessary barriers to delivery. 
 </p>
 
-
-
-
-
 <h2 class="govuk-heading-l" id="delivery">Delivery and Onboarding </h2>
 <p class="govuk-body">
 DfE CRM platforms are delivered and evolved as shared products, not one-off solutions. The default approach for new services is onboarding to an existing strategic CRM platform aligned to their service model. 
@@ -325,10 +281,6 @@ Delivery should:
 This approach reduces duplication, enables faster onboarding of services, and supports the long-term consolidation of the CRM estate. 
 </p>
 
-
-
-
-
 <h2 class="govuk-heading-l" id="improvement">Continuous Improvement and Evolution </h2>
 <p class="govuk-body">
 DfE’s CRM estate will continue to evolve as services change and Microsoft Dynamics 365 capabilities develop. Continuous improvement is essential to reduce complexity, increase reuse and realise the benefits of consolidation over time. 
@@ -342,13 +294,6 @@ DfE will:
   <li>Align more closely to out-of-the-box Dynamics 365 functionality to enable easier adoption of new features, including AI-enabled capabilities </li>
   <li>Review and refine CRM platforms and governance based on delivery and operational learning</li>
 </ul>
-
-
-
-
-
-
-
 
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__next">

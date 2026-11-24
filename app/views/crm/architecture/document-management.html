@@ -1,24 +1,13 @@
 {% set pageData = pages['crm/architecture/document-management'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Use SharePoint Instead of Storing Files in Dynamics 365", href: "#why-use-sharepoint" },
@@ -26,10 +15,6 @@
   { text: "Security Considerations", href: "#security-considerations" },
   { text: "Summary", href: "#summary" }
 ]) }}
-
-
-
-
 
 <p class="govuk-body">
   As part of our CRM standards, Dynamics 365 should use the out-of-the-box (OOTB) integration with SharePoint Online as the default and preferred approach for storing documents and files related to records stored in Dynamics 365.
@@ -121,9 +106,6 @@
   This provides the benefits of SharePoint without compromising the Dynamics user experience.
 </p>
 
-
-
-
 <h2 class="govuk-heading-l" id="configuration-and-best-practices">
   Recommended Configuration and Best Practices
 </h2>
@@ -176,8 +158,6 @@
   <li>Custom security synchronisation between Dynamics and SharePoint</li>
   <li>Over‑customised folder structures or permission models</li>
 </ul>
-
-
 
 <h2 class="govuk-heading-l" id="security-considerations">
   Security Considerations 
@@ -243,18 +223,11 @@
   Dynamics should link to the document location rather than hosting the file directly.
 </p>
 
-
 <h2 class="govuk-heading-l" id="summary">Summary</h2>
 
 <p class="govuk-body">
   Using the out-of-the-box Dynamics 365 and SharePoint Online integration is the standard approach for document storage. It delivers better performance, lower cost, richer document management and a secure, supportable architecture when security is deliberately designed in SharePoint.
 </p>
-
-
-
-
-
-
 
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__prev">

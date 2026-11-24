@@ -1,24 +1,13 @@
 {% set pageData = pages['crm/architecture/reporting'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Reporting Approach", href: "#reporting-approach" },
@@ -27,11 +16,6 @@
   { text: "Use of Azure Synapse Link", href: "#synapse-link" },
   { text: "Best Practice Guidelines", href: "#best-practice-guidelines" }
 ]) }}
-
-
-
-
-
 
 <p class="govuk-body">
 Dynamics 365 provides a range of out-of-the-box reporting and analytics capabilities that support day-to-day operational reporting, such as views, charts, dashboards and basic analytics available directly within the application.
@@ -106,14 +90,6 @@ The following best practices apply to reporting in Dynamics 365:
   <li>Connect Power BI to Data Lake rather than Dynamics 365 for high-volume reporting</li>
   <li>Ensure reports align with data governance, security and retention policies</li>
 </ul>
-
-
-
-
-
-
-
-
 
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__prev">

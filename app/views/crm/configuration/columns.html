@@ -1,24 +1,13 @@
 {% set pageData = pages['crm/configuration/columns'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Naming conventions", href: "#naming" },
@@ -31,8 +20,6 @@
 ]) }}
 
 <p class="govuk-body">Good column (field) design is essential for building a clear, maintainable, and consistent data model. Well‑named columns improve usability, reporting, integration, and long‑term support. This guidance explains how to define columns in a consistent way across DfE solutions.</p>
-
-
 
 <h2 class="govuk-heading-l" id="naming">Naming conventions</h2>
 
@@ -55,8 +42,6 @@
 
 <p class="govuk-body">Microsoft guidance emphasises reviewing schema names to ensure they are clear and predictable for API or automation references.</p>
 
-
-
 <h2 class="govuk-heading-l" id="descriptions">Column descriptions</h2>
 
 <p class="govuk-body">Column descriptions help everyone understand the purpose of a column, especially when working across multiple teams or after long periods of time.</p>
@@ -69,10 +54,6 @@
 </ul>
 
 <p class="govuk-body">All columns should have a meaningful description to allow data dictionaries to be created and maintained.</p>
-
-
-
-
 
 <h2 class="govuk-heading-l" id="type">Choosing the right column type</h2>
 
@@ -100,12 +81,6 @@
 
 <p class="govuk-body">Lookup columns are also sometimes used instead of Choice columns when values may change and there is a requirement to make it more configurable as reference data instead of a hardcoded set of values.</p>
 
-
-
-
-
-
-
 <h2 class="govuk-heading-l" id="choice-lookup">Choice columns vs lookup columns</h2>
 
 <p class="govuk-body">Choosing between a choice column and a lookup column affects reuse, relationships and reporting.</p>
@@ -126,10 +101,6 @@
 </ul>
 
 <p class="govuk-body">Lookup columns ensure data consistency and prevent hardcoding lists of values across different tables.</p>
-
-
-
-
 
 <h2 class="govuk-heading-l" id="relationships">Relationships between tables</h2>
 
@@ -154,10 +125,6 @@
 
 <p class="govuk-body">Use and test cascade behaviours carefully - they can have unintended consequences with data being unintentionally deleted.</p>
 
-
-
-
-
 <h2 class="govuk-heading-l" id="best-practice">Additional best practices</h2>
 
 <h2 class="govuk-heading-m" id="unnecessary">Avoid unnecessary columns</h2>
@@ -175,14 +142,9 @@
 <h2 class="govuk-heading-m" id="reporting">Consider reporting</h2>
 <p class="govuk-body">Consider how the column will be used in Power BI or exported reporting. Choice columns, for example, produce both text and numeric values which may impact reporting design.</p>
 
-
-
 <h2 class="govuk-heading-l" id="further-reading">Further reading</h2>
 <p class="govuk-body">
   <a class="govuk-link govuk-link--no-visited-state" href="https://learn.microsoft.com/en-us/power-apps/maker/data-platform/fields-overview" target="_blank">Create new data columns in Dataverse (opens in a new tab)</a> is Microsoft’s primary guidance page for developers working with columns. </p>
-
-
-
 
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__prev">
@@ -210,7 +172,5 @@
     </a>
   </div>
 </nav>
-
-
 
 {% endblock %}

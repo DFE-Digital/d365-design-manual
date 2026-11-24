@@ -1,24 +1,13 @@
 {% set pageData = pages['crm/customisation/plugins'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "When to Use Plugins", href: "#use" },
@@ -27,15 +16,9 @@
   { text: "Summary", href: "#summary" }
 ]) }}
 
-
-
 <p class="govuk-body">Plugins are server‑side code that run within the Dataverse execution pipeline. They allow you to extend Dynamics 365 beyond what configuration and low‑code tools can offer. Plugins provide powerful, reliable and high‑performance automation for business‑critical scenarios.</p>
 
 <p class="govuk-body">This page explains when plugins should be used, how they differ from Power Automate flows, and the best practices to follow when building and deploying them as part of a Dynamics 365 solution.</p>
-
-
-
-
 
 <h2 class="govuk-heading-l" id="use">When to Use Plugins</h2>
 
@@ -61,9 +44,6 @@
   <li>The requirement involves deep Dataverse integration or multi‑step logic</li>
 </ul>
 
-
-
-
 <h2 class="govuk-heading-l" id="when">Examples of When Plugins Are Suitable</h2>
 
 <ul class="govuk-list govuk-list--bullet">
@@ -77,9 +57,6 @@
 </ul>
 
 <p class="govuk-body">These are patterns that low‑code tools often struggle with, in terms of either performance or reliability.</p>
-
-
-
 
 <h2 class="govuk-heading-l" id="best-practice">Best Practice When Using Plugins</h2>
 
@@ -134,15 +111,9 @@
   <li>Use Azure DevOps pipelines to deploy consistently</li>
 </ul>
 
-
-
-
-
 <h2 class="govuk-heading-l" id="summary">Summary</h2>
 
 <p class="govuk-body">Plugins provide a robust and high‑performance way to implement advanced business logic within Dynamics 365. They should be used when configuration or low‑code tools cannot meet the requirement, or when logic must run synchronously and efficiently at scale.</p>
-
-
 
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__prev">
@@ -170,6 +141,5 @@
     </a>
   </div>
 </nav>
-
 
 {% endblock %}

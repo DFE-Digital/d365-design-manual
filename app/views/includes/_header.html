@@ -1,34 +1,17 @@
-<header class="govuk-header" data-module="govuk-header">
-  <div class="govuk-header__container govuk-width-container">
-    <div class="govuk-header__logo">
-      <a href="/" class="govuk-header__link govuk-header__link--homepage">
-        <img src="/assets/images/dfe-logo_white.png" alt="Department for Education" class="govuk-header__logotype">
-      </a>
-    </div>
-  </div>
-</header>
-
-{% set navigationItems = [
-  { href: pages['powerpages'].url, text: "Power Pages" },
-  { href: pages['crm'].url, text: "Dynamics 365 CRM" }
-] %}
-
-{% set updatedNavigation = [] %}
-
-{% set powerPagesActive = currentPath | contains(pages['powerpages'].url) %}
-{% set updatedPowerPagesItem = navigationItems[0] | merge({ active: powerPagesActive }) %}
-
-{% set crmActive = currentPath | contains(pages['crm'].url) %}
-{% set updatedCRMItem = navigationItems[1] | merge({ active: crmActive }) %}
-
-{% set updatedNavigation = [updatedPowerPagesItem, updatedCRMItem] %}
-
+{% from "govuk/components/generic-header/macro.njk" import govukGenericHeader %}
 {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
 
-{% if pageData.title != "Home" %}
+{# This site isn't on GOV.UK, so it uses the Generic header with the DfE logo rather than the GOV.UK header #}
+{{ govukGenericHeader({
+  url: pages['home'].url,
+  logoHtml: '<img src="/assets/images/dfe-logo_white.png" alt="Department for Education" class="dfe-header__logo">'
+}) }}
+
 {{ govukServiceNavigation({
   serviceName: "Dynamics 365 Design System",
   serviceUrl: pages['home'].url,
-  navigation: updatedNavigation
+  navigation: [
+    { href: pages['powerpages'].url, text: "Power Pages", active: currentPath | contains(pages['powerpages'].url) },
+    { href: pages['crm'].url, text: "Dynamics 365 CRM", active: currentPath | contains(pages['crm'].url) }
+  ]
 }) }}
-{% endif %}

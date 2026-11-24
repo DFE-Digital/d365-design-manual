@@ -1,24 +1,13 @@
 {% set pageData = pages['crm/security/business-units-security-roles'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "What a Business Unit does", href: "#businessunit" },
@@ -28,9 +17,6 @@
   { text: "Key things to remember", href: "#key" },
   { text: "Summary", href: "#summary" }
 ]) }}
-
-
-
 
 <p class="govuk-body">Business Units and Security Roles work together to control what users can see and do in Dynamics 365. Understanding the relationship between them helps you design secure, predictable access for your organisation.</p>
 
@@ -47,11 +33,6 @@
 
 <p class="govuk-body">Business Units are arranged in a hierarchy with a root Business Unit at the top.</p>
 
-
-
-
-
-
 <h2 class="govuk-heading-l" id="role">What a Security Role does</h2>
 
 <p class="govuk-body">A Security Role controls what a user or team is allowed to do, including reading, creating, updating and deleting records. It also defines how far those permissions reach across the Business Unit(s):</p>
@@ -66,11 +47,6 @@
 
 <p class="govuk-body">The scope always applies relative to the user’s Business Unit.</p>
 
-
-
-
-
-
 <h2 class="govuk-heading-l" id="together">How they work together</h2>
 
 <p class="govuk-body">A user’s Business Unit determines the scope of the permissions defined in their Security Roles.</p> 
@@ -83,7 +59,6 @@
 
 <img src="/assets/images/businessunit_example.png" alt="Example business unit structure">
 
-
 <h3 class="govuk-heading-s">Example 1: Business Unit–level access</h3>
 
 <p class="govuk-body">Scenario:</p>
@@ -93,7 +68,6 @@
 </ul>
 
 <p class="govuk-body">This means Sarah can only see Cases owned by the UK Business Unit, Sarah cannot see Cases owned by other Business Units (CRM, International, North or South).</p>
-
 
 <h3 class="govuk-heading-s">Example 2: Parent/Child access</h3>
 
@@ -105,7 +79,6 @@
 
 <p class="govuk-body">This means John can see Cases in the UK Business Unit plus North and South child Business Units. John cannot see Cases in the CRM or International Business Units.</p>
 
-
 <h3 class="govuk-heading-s">Example 3: Organisation-level access</h3>
 
 <p class="govuk-body">Scenario:</p>
@@ -115,7 +88,6 @@
 </ul>
 
 <p class="govuk-body">This means Robert can see all Claims across the organisation, regardless of Business Units.</p>
-
 
 <h3 class="govuk-heading-s">Example 4: Combination of the above (most common)</h3>
 
@@ -131,8 +103,6 @@
 </ul>
 
 <p class="govuk-body">This means Emma can see all Contacts and Organisations across the organisation, Cases within the UK, North and South Business Units, and Tasks within the UK Business Unit.</p>
-
-
 
 <h2 class="govuk-heading-l" id="teams">Assigning roles to Teams</h2>
 
@@ -150,10 +120,6 @@
 
 <p class="govuk-body"><strong>This means:</strong> Daniel inherits access to Case records in the UK Business Unit through the Team membership, without needing to move Business Units.</p>
 
-
-
-
-
 <h2 class="govuk-heading-l" id="key">Key things to remember</h2>
 
 <ul class="govuk-list govuk-list--bullet">
@@ -164,10 +130,6 @@
   <li>Moving users between Business Units changes the data they can see</li>
 </ul>
 
-
-
-
-
 <h2 class="govuk-heading-l" id="summary">Summary</h2>
 
 <ul class="govuk-list govuk-list--bullet">
@@ -176,8 +138,6 @@
   <li>Teams can bridge the gaps for exception scenarios</li>
   <li>Together, they determine what data they can access</li>
 </ul>
-
-
 
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__next">
@@ -193,6 +153,5 @@
     </a>
   </div>
 </nav>
-
 
 {% endblock %}

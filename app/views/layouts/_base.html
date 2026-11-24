@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" class="govuk-template govuk-template--rebranded">
+<html lang="en" class="govuk-template">
 
 <head>
     <meta charset="utf-8">
     <title>{% if seoPageName %}{{seoPageName}}{% elseif pageData.title %}{{pageData.title}}{%endif%} - Dynamics 365 Design System - Department for Education</title>
     <meta name="description" content="{% if seoPageDescription %}{{seoPageDescription}}{% elseif pageName %}{{pageDescription}}{%endif%}">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#1d70b8">
+    <meta name="theme-color" content="#0b0c0c">
     <link rel="icon" sizes="48x48" href="/assets/images/favicon.ico">
     <link rel="icon" sizes="any" href="/assets/images/favicon.svg" type="image/svg+xml">
     <link rel="mask-icon" href="/assets/images/govuk-icon-mask.svg" color="#1d70b8">
@@ -41,23 +41,6 @@
     </header>
     {% endif %}
 
-    {% if showTitlePanel %}
-      <section style="background-color:#1d70b8;" class="govuk-!-padding-top-4 govuk-!-padding-bottom-4">
-        <div class="govuk-width-container">
-          <div class="govuk-grid-row ">
-            <div class="govuk-grid-column-two-thirds">
-              <h1 class="govuk-heading-xl govuk-!-margin-top-5 govuk-!-margin-bottom-5" style="color:#fff;">{{ pageData.title }}</h1>
-              <p class="govuk-body-l" style="color:#fff;">{{ pageData.description }}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    {% endif %}
-
-    {% if showSubNav and showTitlePanel %}
-      {% include "includes/_sub-nav.html" %}
-    {% endif %}
-
     <!-- Back to top link -->
     <a href="#main-content" id="back-to-top" class="dfe-back-to-top govuk-link" aria-label="Back to top of page">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -78,19 +61,11 @@
     <!-- Copy code button for all code blocks -->
     <script src="/assets/js/copy-code-button.js"></script>
 
-    {% if showTitlePanel %}
-    <script>
-      $('.govuk-service-navigation').addClass('govuk-service-navigation--inverse');
-    </script>
-    {% endif %}
-
     {% block script %}{% endblock %}
 
     <script type="module" src="/assets/js/govuk-frontend.min.js"></script>
     <script type="module" src="/assets/js/dfe-custom-components.js"></script>
-    {% if showSubNav %}
     <script src="/assets/js/side-nav-toggle.js"></script>
-    {% endif %}
     <script type="module">
       import { initAll } from "/assets/js/govuk-frontend.min.js";
       import { DfEComponents } from "/assets/js/dfe-custom-components.js";

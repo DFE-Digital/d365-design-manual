@@ -1,24 +1,13 @@
 {% set pageData = pages['crm/architecture/product-suite'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Dynamics 365 Customer Service", href: "#customer-service" },
@@ -31,16 +20,11 @@
   { text: "Dataverse", href: "#dataverse" }
 ]) }}
 
-
-
-
 <p class="govuk-body">DfE uses Microsoft Dynamics 365 and Power Platform to provide CRM and digital services.</p>
 
 <p class="govuk-body">This page summarises the main apps and components already used across DfE.</p>
 
 <p class="govuk-body">When designing new services, you should use tools and applications that are already approved and in use by DfE, as existing standards, support models and licensing can often be reused.</p>
-
-
 
 <h2 class="govuk-heading-l" id="customer-service">Dynamics 365 Customer Service</h2>
 
@@ -62,8 +46,6 @@
   <li>Support collaboration between teams</li>
 </ul>
 
-
-
 <h2 class="govuk-heading-l" id="sales">Dynamics 365 Sales</h2>
 
 <p class="govuk-body">Dynamics 365 Sales is only used by the Employer CRM to track leads and opportunities for employers.</p>
@@ -81,8 +63,6 @@
   <li>Activity and interaction tracking for emails, calls, meetings, and tasks</li>
   <li>AI and analytics such as relationship insights and predictive scoring to prioritise opportunities</li>
 </ul>
-
-
 
 <h2 class="govuk-heading-l" id="customer-insights">Dynamics 365 Customer Insights</h2>
 
@@ -102,8 +82,6 @@
   <li>Event marketing and event registration management</li>
   <li>Consent and preference management to support compliant customer engagement</li>
 </ul>
-
-
 
 <h2 class="govuk-heading-l" id="power-apps">Power Apps</h2>
 
@@ -132,8 +110,6 @@
   <li>Reporting and analytics through dashboards, charts, and Power BI integration</li>
 </ul>
 
-
-
 <h2 class="govuk-heading-m" id="canvas-apps">Canvas apps</h2>
 
 <h2 class="govuk-heading-m" id="what">What it is</h2>
@@ -150,10 +126,6 @@
   <li>Rich user interface components such as galleries, forms, charts, media, and custom controls</li>
   <li>Business logic implemented through formulas, conditional behaviour, and validation</li>
 </ul>
-
-
-
-
 
 <h2 class="govuk-heading-l" id="power-pages">Power Pages</h2>
 
@@ -180,8 +152,6 @@
   <li>Built‑in security, monitoring, and compliance aligned with Microsoft cloud standards</li>
 </ul>
 
-
-
 <h2 class="govuk-heading-l" id="power-automate">Power Automate</h2>
 
 <p class="govuk-body">Power Automate is used across all DfE CRMs for automation and lightweight integrations.</p>
@@ -203,10 +173,6 @@
   <li>Seamless integration with Power Apps, Power Pages, and Dynamics 365 applications</li>
 </ul>
 
-
-
-
-
 <h2 class="govuk-heading-l" id="power-bi">Power BI</h2>
 
 <p class="govuk-body">Power BI is used for reporting only. It it DfE's recommended analytics tool for Dynamics 365.</p>
@@ -226,8 +192,6 @@
   <li>Secure sharing and collaboration through the Power BI service and Microsoft Teams</li>
   <li>Embedded analytics for integrating Power BI reports into applications such as Dynamics 365</li>
 </ul>
-
-
 
 <h2 class="govuk-heading-l" id="dataverse">Dataverse</h2>
 
@@ -251,12 +215,6 @@
   <li>Data import, export, and integration via connectors</li>
   <li>Scalability and performance suitable for enterprise‑grade workloads</li>
 </ul>
-
-
-
-
-
-
 
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__prev">
@@ -284,7 +242,5 @@
     </a>
   </div>
 </nav>
-
-
 
 {% endblock %}

@@ -153,16 +153,16 @@ const pages = {
       "powerpages/components/filter-panel",
       "powerpages/components/loading-spinner",
       "powerpages/components/number-input",
+      "powerpages/components/print-link",
       "powerpages/components/radios",
       "powerpages/components/search",
       "powerpages/components/select",
       "powerpages/components/sidebar",
-      "powerpages/components/print-link",
       "powerpages/components/sortable-table",
       "powerpages/components/sub-navigation",
       "powerpages/components/telephone-input",
-      "powerpages/components/text-input",
       "powerpages/components/textarea",
+      "powerpages/components/text-input",
       "powerpages/components/timeline"
     ]
   },
@@ -424,9 +424,9 @@ const pages = {
     template: "crm",
     parent: "home",
     children: [
+      "crm/architecture",
       "crm/configuration",
       "crm/customisation",
-      "crm/architecture",
       "crm/environments",
       "crm/security",
       "crm/other"
@@ -499,8 +499,8 @@ const pages = {
         children: [
       "crm/customisation/configuration-first",
       "crm/customisation/javascript-vs-businessrules",
-      "crm/customisation/plugins",
       "crm/customisation/power-automate",
+      "crm/customisation/plugins",
       "crm/customisation/pro-code"
     ]
   },
@@ -549,8 +549,8 @@ const pages = {
       "crm/architecture/strategy",
       "crm/architecture/product-suite",
       "crm/architecture/design-principles",
-      "crm/architecture/patterns-components",
       "crm/architecture/integration",
+      "crm/architecture/patterns-components",
       "crm/architecture/document-management",
       "crm/architecture/email-integration",
       "crm/architecture/reporting"
@@ -792,4 +792,33 @@ export function getBreadcrumbs(pageKey) {
 
 export function getAllPages() {
   return pages;
+}
+
+// Side navigation for the product area (Power Pages or CRM) a page is in.
+// Lists the product's sections, opening up the sections on the way to the current page.
+export function getNavTree(pageKey) {
+  const trail = pageKey ? getBreadcrumbs(pageKey).map(crumb => crumb.key) : [];
+  const rootKey = trail.find(key => pages[key].parent === 'home');
+  if (!rootKey) return null;
+
+  const toItem = key => {
+    const page = pages[key];
+    const isOpen = trail.includes(key);
+    return {
+      title: page.title,
+      url: page.url,
+      current: key === pageKey,
+      active: isOpen,
+      children: isOpen && page.children ? page.children.map(toItem) : []
+    };
+  };
+
+  const root = pages[rootKey];
+  return {
+    title: root.title,
+    items: [
+      { title: 'Overview', url: root.url, current: rootKey === pageKey, active: rootKey === pageKey, children: [] },
+      ...root.children.map(toItem)
+    ]
+  };
 }

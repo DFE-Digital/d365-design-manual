@@ -1,24 +1,13 @@
 {% set pageData = pages['powerpages/developer-guides/crm-helper-framework'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
 {% from 'includes/components/_codeExample.njk' import codeExample %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5" id="introduction">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5" id="introduction">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5" id="introduction">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Introduction", href: "#introduction" },
@@ -1318,6 +1307,5 @@ if (!isValid) {
   <li>Keep any check users mustn't be able to get around, and anything that needs a key, in <a class="govuk-link" href="{{ pages['powerpages/developer-guides/server-logic'].url }}">server logic</a>. Code in the browser can be changed by the user.</li>
   <li>Avoid logging sensitive data (e.g. email addresses) to the console in production.</li>
 </ul>
-
 
 {% endblock %}

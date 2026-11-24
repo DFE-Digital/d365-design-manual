@@ -1,34 +1,19 @@
 {% set pageData = pages['crm/other/tooling'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Core Tools", href: "#core-tools" }
 ]) }}
 
-
-
 <p class="govuk-body">Developers working with Dynamics 365 and the Power Platform should use a standard set of tools to ensure consistent development practices across DfE. These tools support solution development, source control, plugin coding and application lifecycle management.</p>
-
-
 
 <h2 class="govuk-heading-l" id="core-tools">Core Tools</h2>
 
@@ -64,10 +49,6 @@
 <h2 class="govuk-heading-m" id="postman">Postman</h2>
 <p class="govuk-body">Useful for testing API requests, Dataverse Web API calls, custom connectors and integrations during development.</p>
 
-
-
-
-
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__prev">
     <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/other/licensing'].url }}" rel="prev">
@@ -82,7 +63,5 @@
     </a>
   </div>
 </nav>
-
-
 
 {% endblock %}

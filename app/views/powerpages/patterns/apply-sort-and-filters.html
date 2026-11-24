@@ -1,24 +1,13 @@
 {% set pageData = pages['powerpages/patterns/apply-sort-and-filters'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
 {% from 'includes/components/_codeExample.njk' import codeExample %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5" id="introduction">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5" id="introduction">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5" id="introduction">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Overview", href: "#overview" },

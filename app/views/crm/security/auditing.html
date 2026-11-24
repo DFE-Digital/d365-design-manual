@@ -1,24 +1,13 @@
 {% set pageData = pages['crm/security/auditing'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Core auditing requirements", href: "#core" },
@@ -27,8 +16,6 @@
   { text: "Don'ts", href: "#donts" },
   { text: "Summary", href: "#summary" }
 ]) }}
-
-
 
 <p class="govuk-body">
 Auditing in Dynamics 365 helps track data changes, understand user activity and meet compliance requirements. 
@@ -81,9 +68,6 @@ Auditing when data is viewed/read is not handled through Dynamics 365. If a serv
 Enable auditing for all business‑data tables, use Purview for sensitive read‑access tracking, and keep auditing focused and purposeful. This helps DfE maintain transparency, protect sensitive information and meet compliance standards.
 </p>
 
-
-
-
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__prev">
     <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/security/teams'].url }}" rel="prev">
@@ -98,8 +82,5 @@ Enable auditing for all business‑data tables, use Purview for sensitive read�
     </a>
   </div>
 </nav>
-
-
-
 
 {% endblock %}

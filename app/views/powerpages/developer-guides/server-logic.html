@@ -1,15 +1,6 @@
 {% set pageData = pages['powerpages/developer-guides/server-logic'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
-
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
-{% from 'includes/_side-nav.html' import server_logic %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
-
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
 
 {% block content %}
 
@@ -43,7 +34,7 @@
 <h2 class="govuk-heading-m">In this section</h2>
 
 <ul class="dfe-component-list">
-  {% for page in server_logic %}
+  {% for page in children %}
   {% if page.url != pageData.url %}
   <li class="dfe-component-list__item">
     <h3 class="govuk-heading-s govuk-!-margin-bottom-1">

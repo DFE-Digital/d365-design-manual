@@ -1,24 +1,13 @@
 {% set pageData = pages['crm/customisation/power-automate'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "When to Use Power Automate in Dynamics 365", href: "#when" },
@@ -26,16 +15,9 @@
   { text: "Summary", href: "#summary" }
 ]) }}
 
-
-
 <p class="govuk-body">Power Automate is Microsoft’s low‑code automation service used to build workflows, integrate systems and automate routine tasks across Dynamics 365 and the wider Power Platform. Power Automate is widely used across DfE.</p>
 
 <p class="govuk-body">This page explains when Power Automate should be used within Dynamics 365 and outlines best practices to ensure flows are reliable, scalable and aligned with DfE standards.</p>
-
-
-
-
-
 
 <h2 class="govuk-heading-l" id="when">When to Use Power Automate in Dynamics 365</h2>
 
@@ -62,13 +44,9 @@
 
 <p class="govuk-body">If the logic is complex, requires high performance, or must run synchronously (for example, validation before save), you should use a plugin instead.</p>
 
-
-
-
 <h2 class="govuk-heading-l" id="best-practice">Best Practice When Using Power Automate</h2>
 
 <p class="govuk-body">To ensure flows are robust and easy to support, follow these best practices:</p>
-
 
 <h2 class="govuk-heading-m" id="simple">Keep flows simple</h2>
 <ul class="govuk-list govuk-list--bullet">
@@ -113,18 +91,11 @@
   <li>Review flows regularly to ensure they remain aligned with business processes</li>
 </ul>
 
-
-
-
-
 <h2 class="govuk-heading-l" id="summary">Summary</h2>
 
 <p class="govuk-body">Power Automate is a strong option for simple, asynchronous automation and basic integrations within Dynamics 365. It enables fast development while reducing the need for custom code. However, complex or performance‑critical logic should be handled by plugins or configuration to maintain stability and consistency across environments.</p>
 
 <p class="govuk-body">Note: DfE is licenced to use Power Automate in relation to Dynamics 365. If Flows do not have a connection to Dynamics 365 then additional licencing may be required.</p>
-
-
-
 
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__prev">
@@ -152,7 +123,5 @@
     </a>
   </div>
 </nav>
-
-
 
 {% endblock %}

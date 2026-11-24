@@ -1,23 +1,12 @@
 {% set pageData = pages['powerpages/components/print-link'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
 {% from 'includes/components/_exampleTabs.njk' import exampleTabs %}
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 <p class="govuk-body"><a class="govuk-link" href="#html-example">Skip to HTML example</a></p>
 

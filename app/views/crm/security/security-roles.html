@@ -1,24 +1,13 @@
 {% set pageData = pages['crm/security/security-roles'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "What good Security Role design looks like", href: "#good" },
@@ -26,10 +15,6 @@
   { text: "Examples", href: "#examples" },
   { text: "Summary", href: "#summary" }
 ]) }}
-
-
-
-
 
 <p class="govuk-body">
 Security Roles in Dynamics 365 define what users and teams can see and do. Good Security Role design helps the Department for Education (DfE) keep systems secure, consistent and easier to maintain.
@@ -97,10 +82,6 @@ Instead of creating separate Security Roles for each policy area (for example, E
 Security Roles should be simple, clear and based on what users need to do. Assign Security Roles to teams where possible, avoid duplication, and review them regularly. Well‑designed roles support secure, scalable and maintainable Dynamics 365 services across DfE.
 </p>
 
-
-
-
-
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__prev">
     <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/security/business-units'].url }}" rel="prev">
@@ -127,6 +108,5 @@ Security Roles should be simple, clear and based on what users need to do. Assig
     </a>
   </div>
 </nav>
-
 
 {% endblock %}

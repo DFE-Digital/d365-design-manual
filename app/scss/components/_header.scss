@@ -1,14 +1,15 @@
 // Header Component
 // =================
 
-// DfE branding updates
-.govuk-header__link .govuk-header__logotype {
+// DfE logo in the Generic header
+.dfe-header__logo {
+  display: block;
   height: 40px;
 }
 
-.govuk-header__link:focus .govuk-header__logotype {
+// The header is black, so switch to the black logo on the yellow focus state
+.govuk-generic-header__homepage-link:focus .dfe-header__logo {
   content: url(/assets/images/dfe-logo_black.png);
-  height: 40px;
 }
 
 // Manual top navigation

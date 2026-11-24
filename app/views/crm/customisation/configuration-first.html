@@ -1,24 +1,13 @@
 {% set pageData = pages['crm/customisation/configuration-first'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Start with configuration (out‑of‑the‑box first)", href: "#config" },
@@ -27,14 +16,9 @@
   { text: "Summary", href: "#summary" }
 ]) }}
 
-
-
 <p class="govuk-body">DfE follows a configuration‑first approach when building CRM services on Dynamics 365 and the Power Platform. This ensures solutions remain simple, maintainable and aligned with Microsoft best practice. Teams should always use the out‑of‑the‑box capabilities of the platform before considering customisation.</p>
 
 <p class="govuk-body">This tiered approach helps deliver changes quickly, reduces long‑term support needs and ensures solutions are easier to upgrade, test and operate across all environments.</p>
-
-
-
 
 <h2 class="govuk-heading-l" id="config">Start with configuration (out‑of‑the‑box first)</h2>
 
@@ -56,11 +40,6 @@
   <li>Setting up queues, SLAs, routing rules, duplicate detection.</li>
 </ul>
 
-
-
-
-
-
 <h2 class="govuk-heading-l" id="low-code">Use low‑code only when configuration is not enough</h2>
 
 <p class="govuk-body">If configuration cannot meet a requirement, the next option is low‑code tools such as Business Rules, Power Automate and Power FX. These provide automation and logic without writing full code.</p>
@@ -80,11 +59,6 @@
 </ul>
 
 <p class="govuk-body">Low‑code is powerful but should only be used when out‑of‑the‑box configuration cannot meet the requirement.</p>
-
-
-
-
-
 
 <h2 class="govuk-heading-l" id="pro-code">Use pro‑code only when the platform cannot meet the need</h2>
 
@@ -110,17 +84,9 @@
 
 <p class="govuk-body">Pro‑code is essential for certain scenarios but must be used sparingly, with clear justification and aligned to the solution design.</p>
 
-
-
-
-
-
 <h2 class="govuk-heading-l" id="summary">Summary</h2>
 
 <p class="govuk-body">Teams must always start with out‑of‑the‑box configuration, move to low‑code only when needed, and use pro‑code only for requirements that cannot be met by the platform. This tiered approach ensures Dynamics 365 and Power Platform solutions are consistent, maintainable and aligned with DfE’s design principles and long‑term CRM strategy.</p>
-
-
-
 
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__next">
@@ -136,7 +102,5 @@
     </a>
   </div>
 </nav>
-
-
 
 {% endblock %}

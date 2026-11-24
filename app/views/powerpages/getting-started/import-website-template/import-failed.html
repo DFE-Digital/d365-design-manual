@@ -1,23 +1,11 @@
 {% set pageData = pages['powerpages/getting-started/import-website-template/import-failed'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
-
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
-
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
 
 {% block content %}
 
 <div class="govuk-panel govuk-panel--confirmation" style="background-color:#ca3535;">
-  {% if showTitlePanel == false %}
   <h1 class="govuk-panel__title">{{ pageData.title }}</h1>
-  {% else %}
-  <h2 class="govuk-panel__title">{{ pageData.title }}</h2>
-  {% endif %}
   <div class="govuk-panel__body">
     {{ pageData.description }}
   </div>

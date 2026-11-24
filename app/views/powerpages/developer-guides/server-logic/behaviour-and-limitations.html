@@ -1,15 +1,8 @@
 {% set pageData = pages['powerpages/developer-guides/server-logic/behaviour-and-limitations'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
-
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
 
 {% block content %}
 

@@ -1,24 +1,13 @@
 {% set pageData = pages['crm/configuration/tables'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Use out‑of‑the‑box tables where possible", href: "#ootb-tables" },
@@ -51,10 +40,6 @@
 </ul>
 
 <p class="govuk-body">Avoid creating custom tables that duplicate the purpose of standard ones.</p>
-
-
-
-
 
 <h2 class="govuk-heading-l" id="re-use">Create tables that support reuse</h2>
 
@@ -90,10 +75,6 @@
   <li>Keep the overall system consistent</li>
 </ul>
 
-
-
-
-
 <h2 class="govuk-heading-l" id="corporate-models">Align tables to DfE’s corporate data models</h2>
 
 <p class="govuk-body">DfE’s Data Directorate is producing organisation‑wide data standards, including:</p>
@@ -112,11 +93,6 @@
 </ul>
 
 <p class="govuk-body">This ensures consistency across DfE systems and makes data easier to exchange, validate and process data.</p>
-
-
-
-
-
 
 <h2 class="govuk-heading-l" id="naming">Consistent naming conventions</h2>
 
@@ -137,17 +113,11 @@
   <li>Avoid renaming display names after creation - the underlying schema name cannot be changed later and can become misaligned</li>
 </ul>
 
-
-
-
 <h2 class="govuk-heading-l" id="descriptions">Table descriptions</h2>
 
 <p class="govuk-body">Every table must have a meaningful description. Table descriptions are visible in the solution and help future developers understand purpose.</p>
 
 <p class="govuk-body">Data teams also use table metadata from solutions in order to generate a data dictionary for each application. Having meaningful table descriptions help data teams to understand the usage of each table.</p>
-
-
-
 
 <h2 class="govuk-heading-l" id="ownership">Table type and ownership model</h2>
 
@@ -163,16 +133,9 @@
 
 <p class="govuk-body">Choosing the right type and ownership model ensures security roles and permissions behave as expected.</p>
 
-
-
-
-
 <h2 class="govuk-heading-l" id="further-reading">Further reading</h2>
 <p class="govuk-body">
   <a class="govuk-link govuk-link--no-visited-state" href="https://learn.microsoft.com/en-us/power-apps/maker/data-platform/entity-overview" target="_blank">Tables in Dataverse (opens in a new tab)</a> is Microsoft’s primary guidance page for developers working with tables. </p>
-
-
-
 
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__prev">
@@ -200,6 +163,5 @@
     </a>
   </div>
 </nav>
-
 
 {% endblock %}

@@ -1,10 +1,10 @@
 {% set pageData = pages['crm'] %}
-{% set showTitlePanel = true %}
-{% set showSubNav = true %}
 
-{% extends "layouts/_two-column-wide-left.html" %}
+{% extends "layouts/_wide-right-left-navigation.html" %}
 
 {% block content %}
+
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 <p class="govuk-body-l">The Dynamics 365 Design System provides guidance on how to build CRM solutions in a consistent, scalable and maintainable way across DfE. It sets out how we use configuration, low‑code, pro‑code, architecture patterns, environment management and security to deliver services that align with DfE’s long‑term CRM strategy.</p>
 
@@ -27,7 +27,6 @@
   <li>Which Dynamics 365 licences are required</li>
 </ul>
 
-
 <h2 class="govuk-heading-m">Experience required</h2>
 
 <p class="govuk-body">To use this manual effectively, you should have:</p>
@@ -40,50 +39,19 @@
   <li>Experience working with environments across the Power Platform</li>
 </ul>
 
+<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
+<h2 class="govuk-heading-m">In this section</h2>
 
-{% endblock %}
-
-{% block sideContent %}
-<h2 class="govuk-heading-m">Explore this section</h2>
-
-<ul class="dfe-component-list dfe-component-list--single-column">
+<ul class="dfe-component-list">
+  {% for page in children %}
   <li class="dfe-component-list__item">
     <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
-      <a class="govuk-link govuk-link--no-visited-state" href="{{ pages['crm/architecture'].url }}">Architecture</a>
+      <a class="govuk-link govuk-link--no-visited-state" href="{{ page.url }}">{{ page.title }}</a>
     </h3>
-    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ pages['crm/architecture'].description }}</p>
+    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ page.description }}</p>
   </li>
-  <li class="dfe-component-list__item">
-    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
-      <a class="govuk-link govuk-link--no-visited-state" href="{{ pages['crm/configuration'].url }}">Configuration</a>
-    </h3>
-    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ pages['crm/configuration'].description }}</p>
-  </li>
-  <li class="dfe-component-list__item">
-    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
-      <a class="govuk-link govuk-link--no-visited-state" href="{{ pages['crm/customisation'].url }}">Customisation</a>
-    </h3>
-    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ pages['crm/customisation'].description }}</p>
-  </li>
-  <li class="dfe-component-list__item">
-    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
-      <a class="govuk-link govuk-link--no-visited-state" href="{{ pages['crm/environments'].url }}">Environments</a>
-    </h3>
-    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ pages['crm/environments'].description }}</p>
-  </li>
-  <li class="dfe-component-list__item">
-    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
-      <a class="govuk-link govuk-link--no-visited-state" href="{{ pages['crm/security'].url }}">Security</a>
-    </h3>
-    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ pages['crm/security'].description }}</p>
-  </li>
-  <li class="dfe-component-list__item">
-    <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
-      <a class="govuk-link govuk-link--no-visited-state" href="{{ pages['crm/other'].url }}">Other</a>
-    </h3>
-    <p class="govuk-body-s govuk-!-margin-bottom-0">{{ pages['crm/other'].description }}</p>
-  </li>
+  {% endfor %}
 </ul>
 
 <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">

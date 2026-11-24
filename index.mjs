@@ -14,7 +14,7 @@ import favicon from 'serve-favicon';
 import * as cheerio from 'cheerio';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import pages, { getPageByUrl, getBreadcrumbs, getChildren, getAllPages, getRedirect } from './app/data/pages.js';
+import pages, { getPageByUrl, getBreadcrumbs, getChildren, getAllPages, getRedirect, getNavTree } from './app/data/pages.js';
 import componentExamples from './app/data/component-examples.js';
 import components, { getComponent } from './app/data/components/index.js';
 import hljs from 'highlight.js';
@@ -72,6 +72,7 @@ nunjucksEnv.addGlobal('pages', getAllPages());
 // Add navigation helper functions
 nunjucksEnv.addGlobal('getBreadcrumbs', getBreadcrumbs);
 nunjucksEnv.addGlobal('getChildren', getChildren);
+nunjucksEnv.addGlobal('getNavTree', getNavTree);
 nunjucksEnv.addGlobal('getPageByUrl', getPageByUrl);
 
 // Add component examples as a global variable
@@ -185,7 +186,8 @@ function renderComponent(componentId, res, next, currentPath, pageData) {
     currentPath,
     component,
     pageData: pageData || { title: component.title, description: component.description },
-    breadcrumbs
+    breadcrumbs,
+    pageKey
   }, (error, html) => {
     if (error) {
       next(error);
@@ -206,7 +208,8 @@ function renderTemplate(templatePath, res, next, currentPath, pageData, pageKey)
     currentPath,
     pageData,
     breadcrumbs,
-    children
+    children,
+    pageKey
   }, (error, html) => {
     if (error) {
       if (error.message.startsWith('template not found')) {
@@ -215,7 +218,8 @@ function renderTemplate(templatePath, res, next, currentPath, pageData, pageKey)
           currentPath,
           pageData,
           breadcrumbs,
-          children
+          children,
+          pageKey
         }, (err2, html2) => {
           if (err2) {
             next(err2);
@@ -239,16 +243,10 @@ function matchRoutes(req, res, next) {
 
   // Look up page in registry by URL
   const pageData = getPageByUrl(urlPath);
+  const pageKey = pageData ? Object.keys(getAllPages()).find(key => getAllPages()[key] === pageData) : null;
 
   if (pageData) {
     // Found in registry - determine how to render
-    const pageKey = Object.keys(getAllPages()).find(key => {
-      const p = getAllPages()[key];
-      const pUrl = p.url === '/' ? '/' : p.url.replace(/\/$/, '');
-      const targetUrl = urlPath === '/' ? '/' : urlPath.replace(/\/$/, '');
-      return pUrl === targetUrl;
-    });
-
     if (pageData.dataSource === 'components') {
       // Data-driven component page
       const componentId = urlPath.split('/').pop();
@@ -263,12 +261,13 @@ function matchRoutes(req, res, next) {
     }
   }
 
-  // Fall back to file-based routing for pages not in registry
+  // Fall back to file-based routing. Registry pages that land here, such as
+  // component pages without a template, still pass their key for navigation
   let filePath = urlPath.substr(1).replace(/\/$/, '');
   if (filePath === '') {
     filePath = 'index';
   }
-  renderTemplate(filePath, res, next, currentPath, null, null);
+  renderTemplate(filePath, res, next, currentPath, null, pageKey);
 }
 
 // GitHub API endpoints

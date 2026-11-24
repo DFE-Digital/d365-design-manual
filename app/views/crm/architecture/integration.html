@@ -1,24 +1,13 @@
 {% set pageData = pages['crm/architecture/integration'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 {% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Common Integration Patterns", href: "#common-integration-patterns" },
@@ -33,9 +22,6 @@
   { text: "Integration Technology Decision Matrix", href: "#matrix" },
   { text: "Summary", href: "#summary" }
 ]) }}
-
-
-
 
 <p class="govuk-body">
   Integrating Microsoft Dynamics 365 with other systems is a common requirement. Dynamics 365 typically sits at the centre of business processes and must integrate data with ERPs, finance systems, data warehouses, legacy platforms, third‑party products, and custom applications. Choosing the right integration pattern and technology is critical to achieving scalability, resilience, security, and maintainability.
@@ -72,7 +58,6 @@ While this is a simple approach, it potentially introduces a dependency between 
   <li>An external service creating a Case record in Dynamics 365 and immediately displaying the reference number to the user</li>
   <li>Validating organisation details in real time before an application is submitted</li>
 </ul>
-
 
 <h2 class="govuk-heading-m" id="asynchronous-messaging">
   2. Asynchronous Messaging
@@ -166,11 +151,6 @@ While this is a simple approach, it potentially introduces a dependency between 
   <li>Exporting data to SFTP for external partners</li>
 </ul>
 
-
-
-
-
-
 <h1 class="govuk-heading-l" id="integration-technologies">
   Integration Technologies
 </h1>
@@ -193,7 +173,6 @@ While this is a simple approach, it potentially introduces a dependency between 
   <li>Custom Connectors allow external APIs to be exposed consistently to Dynamics 365 and Power Apps</li>
 </ul>
 
-
 <h2 class="govuk-heading-m" id="azure-integration-services">
   Azure Integration Technologies
 </h2>
@@ -204,8 +183,6 @@ While this is a simple approach, it potentially introduces a dependency between 
 <p class="govuk-body">
   Azure integration technologies are best suited to code-first approaches where greater control, performance, and extensibility are required. They support advanced patterns such as publish and subscribe, guaranteed delivery, and long-running processes, making them ideal for complex environments with multiple systems and complex dependencies. They require more technical expertise and operational management than Power Platform solutions, but Azure services provide the resilience, scalability, and flexibility needed for business critical Dynamics 365 integrations.
 </p>
-
-
 
 <p class="govuk-body">
   <strong>Azure Logic Apps</strong> – A low-code integration and workflow application for orchestrating multi-step, long-running integrations between Dynamics 365 and other systems.
@@ -223,9 +200,6 @@ While this is a simple approach, it potentially introduces a dependency between 
   <strong>Azure Event Grid</strong> – A lightweight event routing service used to publish and distribute events from Dynamics 365 and other systems to multiple subscribers in near real time.
 </p>
 
-
-
-
 <h1 class="govuk-heading-l" id="matrix">
   Integration Technology Decision Matrix
 </h1>
@@ -233,8 +207,6 @@ While this is a simple approach, it potentially introduces a dependency between 
 <p class="govuk-body">
   This decision matrix provides a high-level comparison of integration technologies available for Dynamics 365, helping choose the most appropriate option based on integration style, complexity, scalability, and delivery approach.
 </p>
-
-
 
 <table class="govuk-table">
   <thead class="govuk-table__head">
@@ -315,10 +287,6 @@ While this is a simple approach, it potentially introduces a dependency between 
   </tbody>
 </table>
 
-
-
-
-
 <h1 class="govuk-heading-l" id="summary">
   Summary
 </h1>
@@ -326,11 +294,6 @@ While this is a simple approach, it potentially introduces a dependency between 
 <p class="govuk-body">
   Dynamics 365 supports a wide range of integration patterns from simple synchronous APIs to fully event-driven architectures. Power Platform enables lightweight low-code integration, while Azure services provide enterprise-grade scalability and resilience. 
 </p>
-
-
-
-
-
 
 <nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
   <div class="govuk-pagination__prev">
@@ -358,6 +321,5 @@ While this is a simple approach, it potentially introduces a dependency between 
     </a>
   </div>
 </nav>
-
 
 {% endblock %}

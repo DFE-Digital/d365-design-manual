@@ -1,22 +1,10 @@
 {% set pageData = pages['powerpages/getting-started/import-website-template'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
-
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 <p class="govuk-body">You will:</p>
 
