@@ -23,7 +23,7 @@ export default {
     content: `
       <p class="govuk-body">The sortable table allows users to sort data by clicking on column headers.</p>
       <p class="govuk-body">If the component needs to submit to a field in CRM, replace the highlighted <code>schema-name</code> text in the example HTML with the target field schema name. <strong>Do not</strong> remove any prepended or appended text to the schema name. For example, if the id attribute is displayed as <code>schema-name-error</code> in the example, the value should still contain <code>-error</code> after the schema name has been replaced (<code>dfe_field-error</code>).</p>
-      <p class="govuk-body">This step is essential for the custom portal helper framework to validate and submit data to CRM. <a class="govuk-link" href="/powerpages/developer-guides/crm-helper-framework/">Read about data validation and submitting data to CRM</a>.</p>
+      <p class="govuk-body">This step is essential for the CRM helper framework to validate and submit data to CRM. <a class="govuk-link" href="/powerpages/developer-guides/crm-helper-framework/">Read about data validation and submitting data to CRM</a>.</p>
     `
   },
 

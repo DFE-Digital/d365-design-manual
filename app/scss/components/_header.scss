@@ -4,9 +4,10 @@
 // DfE logo in the Generic header
 // Keep the logo inline, as the Generic header expects. Making it a block inside
 // the homepage link adds an empty line above and below it
-// The width gives a 40px high logo, and it scales down on narrow screens
+// DfE's header guidance sets the logo at 30px high, which this width gives.
+// It scales down on narrow screens
 .dfe-header__logo {
-  width: 368px;
+  width: 276px;
   max-width: 100%;
   height: auto;
 }

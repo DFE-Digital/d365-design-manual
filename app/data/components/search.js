@@ -79,7 +79,7 @@ export default {
     title: 'Error messages',
     content: `
       <p class="govuk-body">An error message is shown next to the field and in the error summary when there is a validation error. The HTML content for these errors is already included in the component examples and in the base portal web template set up, therefore you do not need to add any additional error containers to your page.</p>
-      <p class="govuk-body">The <a class="govuk-link" href="/powerpages/developer-guides/crm-helper-framework/">portal helper framework</a> validation process automatically handles error messages for specific error states.</p>
+      <p class="govuk-body">The <a class="govuk-link" href="/powerpages/developer-guides/crm-helper-framework/">CRM helper framework</a> validation process automatically handles error messages for specific error states.</p>
       <p class="govuk-body govuk-!-font-weight-bold">If nothing is entered</p>
       <p class="govuk-body">'Enter [whatever it is]'.<br><br>For example, 'Enter your URN'.</p>
       <p class="govuk-body govuk-!-font-weight-bold">If the input is too short</p>
@@ -90,7 +90,7 @@ export default {
       <p class="govuk-body">'[whatever it is] must be between [number] and [number] characters'.<br><br>For example, 'Your reference number must be between 6 and 8 characters'.</p>
       <p class="govuk-body govuk-!-font-weight-bold">If the input has equal value minimum and maximum lengths</p>
       <p class="govuk-body">'[whatever it is] must be [number] characters'.<br><br>For example, 'Your URN must be 6 characters'.</p>
-      <p class="govuk-body">Occasionally you may wish to use error messages outside of the validation process. You can <a class="govuk-link" href="/powerpages/developer-guides/crm-helper-framework/">read about the functions available within the portal helper framework</a> to help you with this.</p>
+      <p class="govuk-body">Occasionally you may wish to use error messages outside of the validation process. You can <a class="govuk-link" href="/powerpages/developer-guides/crm-helper-framework/">read about the functions available within the CRM helper framework</a> to help you with this.</p>
     `
   }
 };

@@ -111,7 +111,7 @@ export default {
     title: 'Minimum and maximum',
     content: `
       <p class="govuk-body">The number component does not use <code>input type="number"</code> so the standard HTML <code>min</code> and <code>max</code> attributes do not apply. Do not use the <code>minlength</code> and <code>maxlength</code> attributes associated with <code>input type="text"</code> either. Browsers will not permit the user to enter more than the characters defined by the value of the maxlength attribute, cutting off the text as-you-type and truncating pasted text. This can lead to bad user experience.</p>
-      <p class="govuk-body">You can use custom attributes which will work with the portal helper validation framework to set the allowed value or length range of a number input.</p>
+      <p class="govuk-body">You can use custom attributes which will work with the CRM helper framework to set the allowed value or length range of a number input.</p>
       <p class="govuk-body">Minimum and maximum length and minimum and maximum value attributes can be used together, but only when the input is a whole number.</p>
       <h3 class="govuk-heading-s">Minimum and maximum value</h3>
       <p class="govuk-body">Use <code>minvalue</code> and <code>maxvalue</code> attributes to set a minimum or maximum value for your input. For example, <code>input maxvalue="10"</code> will prevent the user being able to submit a number greater than 10.</p>
