@@ -67,6 +67,13 @@
   font-weight: bold;
 }
 
+// Without the bar, show the current page in black so it stands apart from the
+// open sections above it, which stay blue
+.dfe-vertical-nav__section--nested .dfe-vertical-nav__section-item--current > .dfe-vertical-nav__link,
+.dfe-vertical-nav__section-item--current:has(> .dfe-vertical-nav__section) > .dfe-vertical-nav__link {
+  color: $govuk-text-colour;
+}
+
 .dfe-vertical-nav__theme {
   @include govuk-font-size($size: 19);
   @include govuk-typography-weight-regular;
@@ -88,7 +95,6 @@
   border: 0;
   color: $govuk-link-colour;
   background: none;
-  word-break: break-all;
   cursor: pointer;
   align-items: center;
 

@@ -125,7 +125,7 @@ The site is deployed to Heroku. The `Procfile` runs `node ./index.mjs` as the we
 
 - [Express](https://expressjs.com/) - Web server
 - [Nunjucks](https://mozilla.github.io/nunjucks/) - Templating
-- [GOV.UK Frontend](https://frontend.design-system.service.gov.uk/) v5 - Design system
+- [GOV.UK Frontend](https://frontend.design-system.service.gov.uk/) v6 - Design system
 - [esbuild](https://esbuild.github.io/) - JavaScript bundling
 - [Sass](https://sass-lang.com/) - CSS preprocessing
 - [Highlight.js](https://highlightjs.org/) - Code syntax highlighting

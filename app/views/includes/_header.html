@@ -11,7 +11,7 @@
   serviceName: "Dynamics 365 and Power Pages manual",
   serviceUrl: pages['home'].url,
   navigation: [
-    { href: pages['powerpages'].url, text: "Power Pages", active: currentPath | contains(pages['powerpages'].url) },
-    { href: pages['crm'].url, text: "Dynamics 365 CRM", active: currentPath | contains(pages['crm'].url) }
+    { href: pages['powerpages'].url, text: "Power Pages", active: (currentPath + '/').indexOf(pages['powerpages'].url) == 0, current: currentPath == pages['powerpages'].url or currentPath + '/' == pages['powerpages'].url },
+    { href: pages['crm'].url, text: "Dynamics 365 CRM", active: (currentPath + '/').indexOf(pages['crm'].url) == 0, current: currentPath == pages['crm'].url or currentPath + '/' == pages['crm'].url }
   ]
 }) }}

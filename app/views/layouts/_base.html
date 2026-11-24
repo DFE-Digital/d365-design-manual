@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>{% if seoPageName %}{{seoPageName}}{% elseif pageData.title %}{{pageData.title}}{%endif%} - Dynamics 365 and Power Pages manual - Department for Education</title>
-    <meta name="description" content="{% if seoPageDescription %}{{seoPageDescription}}{% elseif pageName %}{{pageDescription}}{%endif%}">
+    <meta name="description" content="{% if seoPageDescription %}{{seoPageDescription}}{% elseif pageData.description %}{{pageData.description}}{%endif%}">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0b0c0c">
     <link rel="icon" sizes="48x48" href="/assets/images/favicon.ico">
@@ -24,7 +24,13 @@
       document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
     </script>
 
-    {% include 'includes/_header.html' %}
+    {% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
+    {{ govukSkipLink({ href: "#main-content", text: "Skip to main content" }) }}
+
+    {# The Generic header and Service navigation render as divs, so the template provides the banner landmark #}
+    <header class="govuk-template__header">
+      {% include 'includes/_header.html' %}
+    </header>
 
     <!-- Back to top link -->
     <a href="#main-content" id="back-to-top" class="dfe-back-to-top govuk-link" aria-label="Back to top of page">

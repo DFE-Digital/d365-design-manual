@@ -72,14 +72,18 @@ const pages = {
     url: "/powerpages/getting-started/import-website-template/import-success/",
     description: "Your website has imported successfully.",
     template: "powerpages/getting-started/import-website-template/import-success",
-    parent: "powerpages/getting-started/import-website-template"
+    parent: "powerpages/getting-started/import-website-template",
+    // A result page of the import tool, so it is not listed in the side navigation
+    hideFromNav: true
   },
   "powerpages/getting-started/import-website-template/import-failed": {
     title: "Import failed",
     url: "/powerpages/getting-started/import-website-template/import-failed/",
     description: "Your website has failed to import.",
     template: "powerpages/getting-started/import-website-template/import-failed",
-    parent: "powerpages/getting-started/import-website-template"
+    parent: "powerpages/getting-started/import-website-template",
+    // A result page of the import tool, so it is not listed in the side navigation
+    hideFromNav: true
   },
   "powerpages/getting-started/framework-versions": {
     title: "Framework versions",
@@ -449,7 +453,7 @@ const pages = {
     ]
   },
   "crm/configuration/model-driven-apps": {
-    title: "Model Driven Apps",
+    title: "Model-driven apps",
     url: "/crm/configuration/model-driven-apps/",
     description: "Guidance on choosing and designing model‑driven apps, including when to reuse existing apps and when to build new ones.",
     template: "crm/configuration/model-driven-apps",
@@ -505,14 +509,14 @@ const pages = {
     ]
   },
   "crm/customisation/configuration-first": {
-    title: "Configuration, Low‑code, Pro‑code",
+    title: "Configuration, low‑code and pro‑code",
     url: "/crm/customisation/configuration-first/",
     description: "Implementing changes using platform configuration first, using low‑code only where needed and reserving pro‑code for scenarios the platform cannot support.",
     template: "crm/customisation/configuration-first",
     parent: "crm/customisation"
   },
   "crm/customisation/javascript-vs-businessrules": {
-    title: "JavaScript vs Business Rules",
+    title: "JavaScript or business rules",
     url: "/crm/customisation/javascript-vs-businessrules/",
     description: "When to use Business Rules for simple client‑side logic and validation, and use JavaScript where more advanced or conditional behaviour is required.",
     template: "crm/customisation/javascript-vs-businessrules",
@@ -533,7 +537,7 @@ const pages = {
     parent: "crm/customisation"
   },
   "crm/customisation/pro-code": {
-    title: "Pro Code Coding Standards",
+    title: "Pro-code coding standards",
     url: "/crm/customisation/pro-code/",
     description: "Established coding standards and patterns to all pro‑code components to ensure maintainability, reliability and consistency across services.",
     template: "crm/customisation/pro-code",
@@ -571,42 +575,42 @@ const pages = {
     parent: "crm/architecture"
   },
   "crm/architecture/design-principles": {
-    title: "Design Principles",
+    title: "Design principles",
     url: "/crm/architecture/design-principles/",
     description: "Guiding principles that ensure solutions align with DfE’s CRM strategy, make use of out‑of‑the‑box capabilities where possible, and promote consistency and re‑use.",
     template: "crm/architecture/design-principles",
     parent: "crm/architecture"
   },
   "crm/architecture/patterns-components": {
-    title: "Patterns and Components",
+    title: "Patterns and components",
     url: "/crm/architecture/patterns-components/",
     description: "Reusable architectural patterns and shared components that support standardisation and repeatable delivery across multiple services.",
     template: "crm/architecture/patterns-components",
     parent: "crm/architecture"
   },
   "crm/architecture/integration": {
-    title: "Integration Patterns",
+    title: "Integration patterns",
     url: "/crm/architecture/integration/",
     description: "Recommended integration patterns for Dynamics 365, outlining how to connect Dynamics 365 with other systems in a secure, scalable and maintainable way using the Power Platform and supported Microsoft technologies.",
     template: "crm/architecture/integration",
     parent: "crm/architecture"
   },
   "crm/architecture/document-management": {
-    title: "SharePoint Document Storage",
+    title: "SharePoint document storage",
     url: "/crm/architecture/document-management/",
     description: "Defines the standard approach for storing documents in Dynamics 365 using the out-of-the-box SharePoint integration, including configuration, best practice and security considerations.",
     template: "crm/architecture/document-management",
     parent: "crm/architecture"
   },
   "crm/architecture/email-integration": {
-    title: "Email Integration",
+    title: "Email integration",
     url: "/crm/architecture/email-integration/",
     description: "Dynamics 365 uses server-side synchronisation with Exchange Online as the standard approach for all email integration to ensure a secure, reliable and centrally managed service.",
     template: "crm/architecture/email-integration",
     parent: "crm/architecture"
   },
   "crm/architecture/reporting": {
-    title: "Reporting and Analytics",
+    title: "Reporting and analytics",
     url: "/crm/architecture/reporting/",
     description: "Dynamics 365 reporting uses out-of-the-box capabilities where appropriate, with Power BI as the standard tool for advanced reporting and Azure Synapse Link and Data Lake used for large datasets to protect production performance.",
     template: "crm/architecture/reporting",
@@ -625,7 +629,7 @@ const pages = {
     ]
   },
   "crm/environments/environment-setup": {
-    title: "Environment Setup",
+    title: "Environment setup",
     url: "/crm/environments/environment-setup/",
     description: "Outlines the environment model, maintaining consistency across environments, and provides guidance on the end‑to‑end setup process.",
     template: "crm/environments/environment-setup",
@@ -639,7 +643,7 @@ const pages = {
     parent: "crm/environments"
   },
   "crm/environments/deployment-pipelines": {
-    title: "Azure DevOps Pipelines",
+    title: "Azure DevOps pipelines",
     url: "/crm/environments/deployment-pipelines/",
     description: "Describes how Azure DevOps pipelines should be configured to deploy Dynamics 365 and Power Pages solutions across all environments.",
     template: "crm/environments/deployment-pipelines",
@@ -660,21 +664,21 @@ const pages = {
     ]
   },
   "crm/security/business-units-security-roles": {
-    title: "How Business Units work with Security Roles",
+    title: "How business units work with security roles",
     url: "/crm/security/business-units-security-roles/",
     description: "Explains how Business Units and Security Roles work together to control what users can see and do.",
     template: "crm/security/business-units-security-roles",
     parent: "crm/security"
   },
   "crm/security/business-units": {
-    title: "Business Units",
+    title: "Business units",
     url: "/crm/security/business-units/",
     description: "Explains how business units structure data access and ownership across the organisation.",
     template: "crm/security/business-units",
     parent: "crm/security"
   },
   "crm/security/security-roles": {
-    title: "Security Roles",
+    title: "Security roles",
     url: "/crm/security/security-roles/",
     description: "Describes how security roles control permissions and define what users can view and do within the system.",
     template: "crm/security/security-roles",
@@ -700,8 +704,7 @@ const pages = {
     description: "Additional guidance and supporting information that sits outside the main architecture, security, configuration and customisation topics.",
     template: "crm/other",
     parent: "crm",
-    parent: "crm",
-        children: [
+    children: [
       "crm/other/licensing",
       "crm/other/tooling"
     ]
@@ -714,7 +717,7 @@ const pages = {
     parent: "crm/other"
   },
   "crm/other/tooling": {
-    title: "Standard Developer Tooling",
+    title: "Standard developer tooling",
     url: "/crm/other/tooling/",
     description: "Overview of the standard tools and extensions used by developers working with Dynamics 365, ensuring consistent setup, predictable workflows and alignment with DfE development practices.",
     template: "crm/other/tooling",
@@ -801,6 +804,8 @@ export function getNavTree(pageKey) {
   const rootKey = trail.find(key => pages[key].parent === 'home');
   if (!rootKey) return null;
 
+  const isListed = key => !pages[key].hideFromNav;
+
   const toItem = key => {
     const page = pages[key];
     const isOpen = trail.includes(key);
@@ -809,7 +814,7 @@ export function getNavTree(pageKey) {
       url: page.url,
       current: key === pageKey,
       active: isOpen,
-      children: isOpen && page.children ? page.children.map(toItem) : []
+      children: isOpen && page.children ? page.children.filter(isListed).map(toItem) : []
     };
   };
 
@@ -818,7 +823,7 @@ export function getNavTree(pageKey) {
     title: root.title,
     items: [
       { title: 'Overview', url: root.url, current: rootKey === pageKey, active: rootKey === pageKey, children: [] },
-      ...root.children.map(toItem)
+      ...(root.children || []).filter(isListed).map(toItem)
     ]
   };
 }
