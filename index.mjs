@@ -14,7 +14,7 @@ import favicon from 'serve-favicon';
 import * as cheerio from 'cheerio';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import pages, { getPageByUrl, getBreadcrumbs, getChildren, getAllPages, getRedirect, getNavTree } from './app/data/pages.js';
+import pages, { getPageByUrl, getBreadcrumbs, getChildren, getAllPages, getRedirect, getNavTree, getPagination } from './app/data/pages.js';
 import componentExamples from './app/data/component-examples.js';
 import components, { getComponent } from './app/data/components/index.js';
 import hljs from 'highlight.js';
@@ -73,6 +73,7 @@ nunjucksEnv.addGlobal('pages', getAllPages());
 nunjucksEnv.addGlobal('getBreadcrumbs', getBreadcrumbs);
 nunjucksEnv.addGlobal('getChildren', getChildren);
 nunjucksEnv.addGlobal('getNavTree', getNavTree);
+nunjucksEnv.addGlobal('getPagination', getPagination);
 nunjucksEnv.addGlobal('getPageByUrl', getPageByUrl);
 
 // Add component examples as a global variable

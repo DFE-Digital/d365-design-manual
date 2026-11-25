@@ -518,7 +518,7 @@ const pages = {
   "crm/customisation/javascript-vs-businessrules": {
     title: "JavaScript or business rules",
     url: "/crm/customisation/javascript-vs-businessrules/",
-    description: "When to use Business Rules for simple client‑side logic and validation, and use JavaScript where more advanced or conditional behaviour is required.",
+    description: "Use business rules first for form logic, and JavaScript when business rules are not enough.",
     template: "crm/customisation/javascript-vs-businessrules",
     parent: "crm/customisation"
   },
@@ -612,7 +612,7 @@ const pages = {
   "crm/architecture/reporting": {
     title: "Reporting and analytics",
     url: "/crm/architecture/reporting/",
-    description: "Dynamics 365 reporting uses out-of-the-box capabilities where appropriate, with Power BI as the standard tool for advanced reporting and Azure Synapse Link and Data Lake used for large datasets to protect production performance.",
+    description: "Which reporting tool to use, from Dynamics 365 views and dashboards to Power BI and Azure Synapse Link for large data sets.",
     template: "crm/architecture/reporting",
     parent: "crm/architecture"
   },
@@ -701,7 +701,7 @@ const pages = {
   "crm/other": {
     title: "Other",
     url: "/crm/other/",
-    description: "Additional guidance and supporting information that sits outside the main architecture, security, configuration and customisation topics.",
+    description: "Licensing and the standard developer tools.",
     template: "crm/other",
     parent: "crm",
     children: [
@@ -795,6 +795,19 @@ export function getBreadcrumbs(pageKey) {
 
 export function getAllPages() {
   return pages;
+}
+
+// Previous and next pages within the same section, in side navigation order
+export function getPagination(pageKey) {
+  const page = pages[pageKey];
+  if (!page || !page.parent) return {};
+
+  const siblings = (pages[page.parent].children || []).filter(key => !pages[key].hideFromNav);
+  const index = siblings.indexOf(pageKey);
+  if (index === -1) return {};
+
+  const toLink = key => key ? { title: pages[key].title, url: pages[key].url } : null;
+  return { previous: toLink(siblings[index - 1]), next: toLink(siblings[index + 1]) };
 }
 
 // Side navigation for the product area (Power Pages or CRM) a page is in.

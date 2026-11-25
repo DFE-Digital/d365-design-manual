@@ -1,7 +1,6 @@
 {% set pageData = pages['crm/architecture/strategy'] %}
 
 {% from 'includes/components/_contentsList.njk' import contentsList %}
-{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
@@ -120,43 +119,7 @@ Exceptions may be permitted where a service cannot reasonably be supported by on
 </p>
 
 <h2 class="govuk-heading-l" id="design">Design principles</h2>
-<p class="govuk-body">
-Design principles set the guardrails for how CRM platforms are designed, extended and evolved across DfE. They are intended to encourage consistency, reuse and sustainability, while still allowing services to meet their specific needs. 
-</p>
-<p class="govuk-body">
-All DfE CRM solutions must adhere to the following principles. 
-</p>
-
-<h3 class="govuk-heading-m" id="platform">Platform-led, not service-led</h3>
-<p class="govuk-body">
-CRM solutions should be designed around shared, strategic platforms rather than individual services. Services should onboard to an existing CRM platform wherever possible, using configuration and extension rather than creating new CRM instances. 
-</p>
-
-<h3 class="govuk-heading-m" id="prefer">Prefer out-of-the-box Dynamics 365 functionality</h3>
-<p class="govuk-body">
-Standard Dynamics 365 capabilities should always be considered first. Custom development should only be used where there is a clear and evidenced gap that cannot be met through configuration or supported extensions. 
-</p>
-<p class="govuk-body">
-Aligning closely to out-of-the-box functionality reduces technical debt, simplifies support and maintenance and enables easier adoption of new Microsoft features, including future AI-enabled capabilities. 
-</p>
-
-<h3 class="govuk-heading-m" id="config">Configuration over customisation </h3>
-<p class="govuk-body">
-Where change is required, configuration is the default approach. Custom code is a last resort and must be clearly justified and approved. 
-</p>
-<p class="govuk-body">
-This principle supports faster onboarding, easier upgrades and consistency across CRM platforms. 
-</p>
-
-<h3 class="govuk-heading-m" id="consolidation">Designed for consolidation and onboarding </h3>
-<p class="govuk-body">
-CRM solutions should be designed with the expectation that additional services will onboard over time. Designs should avoid assumptions that tie functionality to a single service, user group or operating model wherever possible. 
-</p>
-
-<h3 class="govuk-heading-m" id="aligned">Aligned to SDT standards and governance </h3>
-<p class="govuk-body">
-All CRM solutions must align with SDT delivery standards, architectural guidance and governance processes. Deviations from these principles require agreement through the SDT CRM Design Authority and must be documented. 
-</p>
+<p class="govuk-body">All DfE CRM solutions must follow the <a class="govuk-link" href="{{ pages['crm/architecture/design-principles'].url }}">CRM design principles</a>. Any deviation must be agreed through the SDT CRM Design Authority and documented.</p>
 
 <h2 class="govuk-heading-l" id="reuse">Shared capabilities and reuse </h2>
 <p class="govuk-body">
@@ -295,19 +258,6 @@ DfE will:
   <li>Review and refine CRM platforms and governance based on delivery and operational learning</li>
 </ul>
 
-<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
-  <div class="govuk-pagination__next">
-    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/architecture/product-suite'].url }}" rel="next">
-      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
-        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
-      </svg>
-      <span class="govuk-pagination__link-title">
-        Next<span class="govuk-visually-hidden"> page</span>
-      </span>
-      <span class="govuk-visually-hidden">:</span>
-      <span class="govuk-pagination__link-label">{{ pages['crm/architecture/product-suite'].title }}</span>
-    </a>
-  </div>
-</nav>
+{% include "includes/components/_pagination.njk" %}
 
 {% endblock %}
