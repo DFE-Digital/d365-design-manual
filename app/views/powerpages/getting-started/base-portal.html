@@ -1,0 +1,26 @@
+{% set pageData = pages['powerpages/getting-started/base-portal'] %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block content %}
+
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+
+<p class="govuk-body-l">Every DfE Power Pages site starts from the base portal, which the guidance in this manual is written for.</p>
+
+<p class="govuk-body">The base portal includes:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>GOV.UK Frontend and DfE Frontend styles</li>
+  <li>the <a class="govuk-link" href="{{ pages['powerpages/page-templates'].url }}">page templates</a> for common layouts</li>
+  <li>the <a class="govuk-link" href="{{ pages['powerpages/developer-guides/crm-helper-framework'].url }}">CRM helper framework</a> for validating forms and saving data to CRM</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="get-a-copy">Get a copy</h2>
+
+<p class="govuk-body">To get a copy of the base portal, email the Solutions Delivery Team at <a class="govuk-link" href="mailto:solutionsdevelopment.techdirectorate@education.gov.uk">solutionsdevelopment.techdirectorate@education.gov.uk</a>. Tell them which <a class="govuk-link" href="{{ pages['powerpages/getting-started/branding-standards'].url }}">branding</a> your service needs.</p>
+
+<p class="govuk-body">Before you install it, complete the <a class="govuk-link" href="{{ pages['powerpages/getting-started/pre-requisites'].url }}">pre-requisites</a> in your Dynamics 365 environment.</p>
+
+{% include "includes/components/_pagination.njk" %}
+
+{% endblock %}

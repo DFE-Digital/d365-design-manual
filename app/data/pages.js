@@ -36,7 +36,7 @@ const pages = {
     description: "Understand how to get started with building and designing your Power Pages website.",
     template: "powerpages/getting-started",
     parent: "powerpages",
-    children: ["powerpages/getting-started/branding-standards", "powerpages/getting-started/pre-requisites", "powerpages/getting-started/import-website-template", "powerpages/getting-started/framework-versions"]
+    children: ["powerpages/getting-started/branding-standards", "powerpages/getting-started/pre-requisites", "powerpages/getting-started/base-portal", "powerpages/getting-started/framework-versions"]
   },
   "powerpages/getting-started/branding-standards": {
     title: "Branding standards",
@@ -52,38 +52,12 @@ const pages = {
     template: "powerpages/getting-started/pre-requisites",
     parent: "powerpages/getting-started"
   },
-  "powerpages/getting-started/import-website-template": {
-    title: "Website import tool",
-    url: "/powerpages/getting-started/import-website-template/",
-    description: "Import the website template to your Dynamics 365 environment.",
-    template: "powerpages/getting-started/import-website-template",
-    parent: "powerpages/getting-started",
-    children: ["powerpages/getting-started/import-website-template/start-import", "powerpages/getting-started/import-website-template/import-success", "powerpages/getting-started/import-website-template/import-failed"]
-  },
-  "powerpages/getting-started/import-website-template/start-import": {
-    title: "Import website",
-    url: "/powerpages/getting-started/import-website-template/start-import/",
-    description: "Start the website import.",
-    template: "powerpages/getting-started/import-website-template/start-import",
-    parent: "powerpages/getting-started/import-website-template"
-  },
-  "powerpages/getting-started/import-website-template/import-success": {
-    title: "Import success",
-    url: "/powerpages/getting-started/import-website-template/import-success/",
-    description: "Your website has imported successfully.",
-    template: "powerpages/getting-started/import-website-template/import-success",
-    parent: "powerpages/getting-started/import-website-template",
-    // A result page of the import tool, so it is not listed in the side navigation
-    hideFromNav: true
-  },
-  "powerpages/getting-started/import-website-template/import-failed": {
-    title: "Import failed",
-    url: "/powerpages/getting-started/import-website-template/import-failed/",
-    description: "Your website has failed to import.",
-    template: "powerpages/getting-started/import-website-template/import-failed",
-    parent: "powerpages/getting-started/import-website-template",
-    // A result page of the import tool, so it is not listed in the side navigation
-    hideFromNav: true
+  "powerpages/getting-started/base-portal": {
+    title: "Get the base portal",
+    url: "/powerpages/getting-started/base-portal/",
+    description: "How to get a copy of the DfE base portal to start your Power Pages site.",
+    template: "powerpages/getting-started/base-portal",
+    parent: "powerpages/getting-started"
   },
   "powerpages/getting-started/framework-versions": {
     title: "Framework versions",
@@ -541,7 +515,9 @@ const pages = {
     url: "/crm/customisation/pro-code/",
     description: "Coding standards for plugins, scripts and other pro-code components.",
     template: "crm/customisation/pro-code",
-    parent: "crm/customisation"
+    parent: "crm/customisation",
+    // Not written yet, so it is not listed in navigation
+    hideFromNav: true
   },
   "crm/architecture": {
     title: "Architecture",
@@ -731,6 +707,7 @@ export default pages;
 // Old URLs of pages that have moved, so existing links and bookmarks still work
 // Sub-paths are kept, so /powerpages/server-logic/setting-up/ goes to its new location too
 export const redirects = {
+  "/powerpages/getting-started/import-website-template/": "/powerpages/getting-started/base-portal/",
   "/powerpages/styles/layout/": "/powerpages/page-templates/layouts/",
   "/powerpages/styles/": "/powerpages/page-templates/",
   "/powerpages/patterns/page-heading/": "/powerpages/page-templates/page-headings/",
@@ -741,6 +718,9 @@ export const redirects = {
   "/powerpages/patterns/scan-uploaded-files/": "/powerpages/developer-guides/scan-uploaded-files/",
   "/powerpages/server-logic/": "/powerpages/developer-guides/server-logic/"
 };
+
+// Old URLs whose sub-pages were removed rather than moved
+const dropSubPaths = new Set(["/powerpages/getting-started/import-website-template/"]);
 
 // Longest first, so a moved page wins over the section it was in
 const redirectSources = Object.keys(redirects).sort((a, b) => b.length - a.length);
@@ -753,7 +733,7 @@ export function getRedirect(url) {
   const to = redirects[from];
   const rest = path.slice(from.length);
   // A target with a fragment points at a section, so there's nowhere to put a sub-path
-  return rest && !to.includes('#') ? `${to}${rest}` : to;
+  return rest && !to.includes('#') && !dropSubPaths.has(from) ? `${to}${rest}` : to;
 }
 
 // Helper functions
@@ -773,7 +753,7 @@ export function getPageByUrl(url) {
 export function getChildren(parentKey) {
   const parent = pages[parentKey];
   if (!parent || !parent.children) return [];
-  return parent.children.map(key => ({ key, ...pages[key] }));
+  return parent.children.filter(key => !pages[key].hideFromNav).map(key => ({ key, ...pages[key] }));
 }
 
 export function getBreadcrumbs(pageKey) {

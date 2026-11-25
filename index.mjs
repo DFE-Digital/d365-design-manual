@@ -7,6 +7,7 @@ import slugify from 'slugify';
 import { marked } from 'marked';
 import bodyParser from 'body-parser';
 import path from 'path';
+import fs from 'fs';
 import config from './app/config.js';
 import compression from 'compression';
 import helmet from 'helmet';
@@ -16,9 +17,8 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import pages, { getPageByUrl, getBreadcrumbs, getChildren, getAllPages, getRedirect, getNavTree, getPagination } from './app/data/pages.js';
 import componentExamples from './app/data/component-examples.js';
-import components, { getComponent } from './app/data/components/index.js';
+import components from './app/data/components/index.js';
 import hljs from 'highlight.js';
-import * as githubService from './app/services/github.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -172,33 +172,6 @@ function processHtml(html) {
   return $.html();
 }
 
-// Render a data-driven component page
-function renderComponent(componentId, res, next, currentPath, pageData) {
-  const component = getComponent(componentId);
-  if (!component) {
-    return null; // Component not found
-  }
-
-  const pageKey = `powerpages/components/${componentId}`;
-  const breadcrumbs = getBreadcrumbs(pageKey);
-
-  res.set('Content-type', 'text/html; charset=utf-8');
-  res.render('powerpages/components/_component', {
-    currentPath,
-    component,
-    pageData: pageData || { title: component.title, description: component.description },
-    breadcrumbs,
-    pageKey
-  }, (error, html) => {
-    if (error) {
-      next(error);
-    } else {
-      res.end(processHtml(html));
-    }
-  });
-  return true;
-}
-
 // Render a template file with page data
 function renderTemplate(templatePath, res, next, currentPath, pageData, pageKey) {
   const breadcrumbs = pageKey ? getBreadcrumbs(pageKey) : [];
@@ -246,20 +219,15 @@ function matchRoutes(req, res, next) {
   const pageData = getPageByUrl(urlPath);
   const pageKey = pageData ? Object.keys(getAllPages()).find(key => getAllPages()[key] === pageData) : null;
 
-  if (pageData) {
-    // Found in registry - determine how to render
-    if (pageData.dataSource === 'components') {
-      // Data-driven component page
-      const componentId = urlPath.split('/').pop();
-      const rendered = renderComponent(componentId, res, next, currentPath, pageData);
-      if (rendered) return;
-    }
+  // Each page has one URL, with a trailing slash
+  if (pageData && urlPath !== pageData.url) {
+    const queryStart = req.originalUrl.indexOf('?');
+    return res.redirect(301, pageData.url + (queryStart === -1 ? '' : req.originalUrl.slice(queryStart)));
+  }
 
-    if (pageData.template) {
-      // Template-based page
-      renderTemplate(pageData.template, res, next, currentPath, pageData, pageKey);
-      return;
-    }
+  if (pageData && pageData.template) {
+    renderTemplate(pageData.template, res, next, currentPath, pageData, pageKey);
+    return;
   }
 
   // Fall back to file-based routing. Registry pages that land here, such as
@@ -268,74 +236,13 @@ function matchRoutes(req, res, next) {
   if (filePath === '') {
     filePath = 'index';
   }
+  const viewsDir = path.join(__dirname, 'app/views');
+  const exists = ['.html', '/index.html'].some(ext => fs.existsSync(path.join(viewsDir, filePath + ext)));
+  if (!exists) {
+    return next();
+  }
   renderTemplate(filePath, res, next, currentPath, null, pageKey);
 }
-
-// GitHub API endpoints
-app.post('/api/trigger-import', async (req, res) => {
-  try {
-    const { brand, environmentUrl, clientId, clientSecret } = req.body;
-
-    // Validate required fields
-    const missing = [];
-    if (!brand) missing.push('Website brand');
-    if (!environmentUrl) missing.push('Environment URL');
-    if (!clientId) missing.push('Client ID');
-    if (!clientSecret) missing.push('Client Secret');
-
-    if (missing.length) {
-      return res.status(400).json({
-        error: `Missing required field${missing.length > 1 ? 's' : ''}: ${missing.join(', ')}`
-      });
-    }
-
-    // Validate environment URL format
-    if (!environmentUrl.startsWith('https://')) {
-      return res.status(400).json({
-        error: 'Environment URL must start with https://'
-      });
-    }
-
-    const result = await githubService.triggerImport({ brand, environmentUrl, clientId, clientSecret });
-    res.status(202).json({ ok: true, ...result });
-  } catch (err) {
-    console.error('Trigger import error:', err.message);
-    const status = err.message.includes('Invalid brand') ? 400 : 500;
-    res.status(status).json({ error: err.message });
-  }
-});
-
-app.get('/api/find-run', async (req, res) => {
-  try {
-    const { dispatchTime } = req.query;
-
-    if (!dispatchTime) {
-      return res.status(400).json({ error: 'dispatchTime is required' });
-    }
-
-    const run = await githubService.findRunAfterTime(dispatchTime, 'repository_dispatch');
-    res.json({ run });
-  } catch (err) {
-    console.error('Find run error:', err.message);
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.get('/api/import-status', async (req, res) => {
-  try {
-    const { runId } = req.query;
-
-    if (!runId) {
-      return res.status(400).json({ error: 'Run ID is required' });
-    }
-
-    const status = await githubService.getRunStatus(runId);
-    res.json(status);
-  } catch (err) {
-    console.error('Get import status error:', err.message);
-    res.status(500).json({ error: err.message });
-  }
-});
 
 app.use((req, res, next) => {
   res.locals.query = req.query;
@@ -366,6 +273,17 @@ app.use((req, res, next) => {
 
 app.get(/^([^.]+)$/, function (req, res, next) {
   matchRoutes(req, res, next);
+});
+
+// Page not found
+app.use((req, res) => {
+  res.status(404).render('404', { currentPath: req.path });
+});
+
+// Anything that fails while rendering a page
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).render('500', { currentPath: req.path });
 });
 
 app.listen(config.port, () => {
