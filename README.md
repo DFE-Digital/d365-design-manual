@@ -1,37 +1,33 @@
-# Department for Education - Dynamics 365 and Power Pages manual
+# Dynamics 365 and Power Pages manual
 
-Principles, guidance, and standards to support people delivering joined-up, effective, user-centred outcomes for people who use Department for Education Dynamics 365 and Power Pages services.
+Guidance and standards for Department for Education (DfE) teams building services on Dynamics 365 CRM and Power Pages.
 
-[Access the Dynamics 365 and Power Pages manual](https://d365-design-manual-8523de7fad90.herokuapp.com/)
+[View the Dynamics 365 and Power Pages manual](https://d365-design-manual-8523de7fad90.herokuapp.com/)
 
-## About
+## What the manual covers
 
-This is a documentation site built with Node.js and Express that provides guidance for two areas:
+### Power Pages
 
-### PowerPages
+How to build accessible Power Pages websites that follow the GOV.UK Design System, using the DfE base portal:
 
-Use the guidance on this site to make your Dynamics 365 PowerPages service as consistent as possible with Government Design Service (GDS) styles, components and patterns.
+- **Getting started**: branding standards, pre-requisites, getting the base portal and framework versions
+- **Page templates**: layouts, page headings, the phase banner, and breadcrumbs and back links
+- **Components**: GOV.UK components adapted for Power Pages, and DfE components
+- **Patterns**: error messages, and sorting and filtering lists
+- **Developer guides**: the CRM helper framework, server logic and scanning uploaded files for viruses
 
-What's included:
+### Dynamics 365 CRM
 
-- Create and set up your portal
-- Styles, components and patterns for developers
-- Building your custom portal
-- Frontend validation for your custom portal
-- Using the portal WebApi
-
-### CRM Standards
-
-We maintain a consistent process of building and releasing the back end of a Dynamics 365 CRM system, encompassing its configuration, customisation, and deployment.
+The standards DfE teams follow when they design, build, deploy and secure Dynamics 365 CRM services: architecture, configuration, customisation, environments, security, licensing and tooling. The manual sets DfE standards and links to Microsoft's documentation for how each feature works.
 
 ## Getting started
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) v18 or higher
-- npm (comes with Node.js)
+- [Node.js](https://nodejs.org/) 18 or later
+- npm, which comes with Node.js
 
-### Installation
+### Run it locally
 
 1. Clone the repository:
 
@@ -40,97 +36,116 @@ We maintain a consistent process of building and releasing the back end of a Dyn
    cd dynamics-power-pages-manual
    ```
 
-2. Install dependencies:
+2. Install the dependencies:
 
    ```bash
    npm install
    ```
 
-3. Create a `.env` file in the project root (see [Environment variables](#environment-variables) below).
-
-4. Build the project assets:
-
-   ```bash
-   npm run build
-   ```
-
-5. Start the development server:
+3. Build the assets and start the development server:
 
    ```bash
    npm run dev
    ```
 
-   The site will be available at [http://localhost:3000](http://localhost:3000).
+   The site runs at [http://localhost:3000](http://localhost:3000) and rebuilds when you change files.
 
 ### Environment variables
 
-Create a `.env` file in the project root. The following variables are used for GitHub API integration:
+None are needed to run the site locally. You can set:
 
-```
-GH_APP_ID=
-GH_APP_INSTALL_ID=
-GH_APP_PRIVATE_KEY=
-```
+| Variable | What it does | Default |
+|---|---|---|
+| `PORT` | The port the server listens on | `3000` |
 
-These are optional for local development but required for GitHub integration features.
+You can put it in a `.env` file in the project root.
 
 ## Development
 
-### Available scripts
+### Scripts
 
-| Command | Description |
+| Command | What it does |
 |---|---|
-| `npm run dev` | Start the development server with file watching and auto-reload |
-| `npm run build` | Run the full build pipeline (clean, compile JS, SCSS, copy assets) |
-| `npm run serve` | Start the Express server without file watchers |
-| `npm run styles` | Compile SCSS and run PostCSS transformations |
-| `npm run build-app-js` | Bundle client-side JavaScript with esbuild |
-| `npm run clean` | Remove compiled assets from `public/` |
+| `npm run dev` | Build everything, then start the server with file watching and automatic restarts |
+| `npm run build` | Run the full build: clean, bundle JavaScript, compile Sass and copy assets |
+| `npm run serve` | Start the server without file watching |
+| `npm run styles` | Compile Sass and run PostCSS |
+| `npm run build-app-js` | Bundle the client-side JavaScript with esbuild |
+| `npm run clean` | Remove the built assets from `public/` |
 
 ### How it works
 
-- **Server**: Express.js (`index.mjs`) with Nunjucks templating
-- **Styles**: SCSS compiled to CSS, with PostCSS post-processing to strip `@font-face` declarations
-- **JavaScript**: Bundled with esbuild; jQuery and GOV.UK Frontend JS are copied as vendor scripts
-- **Templates**: Nunjucks templates in `app/views/`, extending GOV.UK Frontend components
-- **Components**: Custom DfE portal components defined in `app/data/components/` with interactive examples
+- **Server**: Express (`index.mjs`) renders Nunjucks templates from `app/views/`.
+- **Page registry**: `app/data/pages.js` lists every page with its title, URL, description, template, parent and children. The side navigation, breadcrumbs, section page lists and previous and next links are all built from it.
+- **Redirects**: the `redirects` list in `app/data/pages.js` sends old URLs of moved pages to their new location. Every page has one URL, with a trailing slash, and other forms redirect to it.
+- **Components**: each component's content is a data file in `app/data/components/`. Its page in `app/views/powerpages/components/` just loads the data and renders it through `_component.html`.
+- **Styles**: GOV.UK Frontend 6 with the DfE header and logo. Sass in `app/scss/` compiles to `public/css/`, and PostCSS removes the `@font-face` rules.
+- **JavaScript**: client-side scripts in `app/js/` are bundled with esbuild. GOV.UK Frontend and jQuery are copied in as vendor scripts.
+- **Built files**: `public/` holds the built CSS, JavaScript and images, and is committed. Run `npm run build` and commit the result when you change Sass or scripts.
+
+### Add a page
+
+1. Add an entry to `app/data/pages.js`, and add its key to its parent's `children` in the order it should appear in the navigation.
+2. Create the template named in `template`, under `app/views/`. Extend `layouts/_wide-right-left-navigation.html` and start with an `h1` of `{{ pageData.title }}`.
+3. Add `{% include "includes/components/_pagination.njk" %}` at the end for previous and next links.
+4. If the page replaces an old one, add the old URL to `redirects`.
+
+Use the GOV.UK heading scale: `h1` `govuk-heading-xl`, `h2` `govuk-heading-l`, `h3` `govuk-heading-m` and `h4` `govuk-heading-s`.
+
+### Add or change a component
+
+1. Create or edit its data file in `app/data/components/`. A component has an `intro` and a list of `sections`, each with an `id`, a `title` and `content`. The content is Nunjucks, so you can use `{{ pages['…'].url }}` links and `exampleTabs(...)` for code examples.
+2. Put the example markup in `app/views/includes/components/<component>/`.
+3. For a new component, register it in `app/data/components/index.js`, add a page to `app/data/pages.js`, and create a page template that loads it:
+
+   ```njk
+   {% set pageData = pages['powerpages/components/<component>'] %}
+   {% set component = components['<component>'] %}
+
+   {% extends "powerpages/components/_component.html" %}
+   ```
+
+### Branches
+
+Create a branch from `dev`, raise a pull request into `dev`, then release by raising a pull request from `dev` into `main`.
 
 ### Project structure
 
 ```
 dynamics-power-pages-manual/
-├── index.mjs                  # Express server entry point
+├── index.mjs                  # Express server, routing and redirects
 ├── app/
-│   ├── config.js              # Environment and app configuration
-│   ├── data/                  # Page definitions, component data
-│   │   └── components/        # Individual component definitions
-│   ├── js/                    # Client-side JavaScript source
-│   ├── scss/                  # SCSS source files
-│   ├── services/              # GitHub API integration
+│   ├── config.js              # App configuration
+│   ├── data/
+│   │   ├── pages.js           # Page registry, navigation and redirects
+│   │   └── components/        # Component content
+│   ├── images/                # Images copied into public/
+│   ├── js/                    # Client-side JavaScript
+│   ├── scss/                  # Sass
 │   └── views/                 # Nunjucks templates
-│       ├── includes/          # Partials (header, footer, nav, components)
-│       ├── layouts/           # Page layout templates
-│       ├── crm/               # CRM standards pages
-│       └── powerpages/        # PowerPages guidance pages
-├── public/                    # Compiled/built output (CSS, JS, images)
-├── Procfile                   # Heroku deployment config
+│       ├── includes/          # Header, footer, navigation and component examples
+│       ├── layouts/           # Page layouts
+│       ├── crm/               # Dynamics 365 CRM pages
+│       └── powerpages/        # Power Pages pages
+├── public/                    # Built CSS, JavaScript and images
+├── Procfile                   # Heroku process
 └── package.json
 ```
 
 ## Deployment
 
-The site is deployed to Heroku. The `Procfile` runs `node ./index.mjs` as the web process.
+The site is hosted on Heroku. The `Procfile` starts `node ./index.mjs`.
 
 ## Tech stack
 
-- [Express](https://expressjs.com/) - Web server
-- [Nunjucks](https://mozilla.github.io/nunjucks/) - Templating
-- [GOV.UK Frontend](https://frontend.design-system.service.gov.uk/) v6 - Design system
-- [esbuild](https://esbuild.github.io/) - JavaScript bundling
-- [Sass](https://sass-lang.com/) - CSS preprocessing
-- [Highlight.js](https://highlightjs.org/) - Code syntax highlighting
-- [jQuery](https://jquery.com/) - DOM manipulation
+- [Express](https://expressjs.com/): web server
+- [Nunjucks](https://mozilla.github.io/nunjucks/): templating
+- [GOV.UK Frontend](https://frontend.design-system.service.gov.uk/) 6: design system
+- [Sass](https://sass-lang.com/): styles
+- [esbuild](https://esbuild.github.io/): JavaScript bundling
+- [Highlight.js](https://highlightjs.org/): code highlighting
+- [jQuery](https://jquery.com/): used by some client-side scripts
 
 ## Contact
 
-Contact the Solutions Delivery Team for advice and guidance.
+For questions or advice, email the Solutions Delivery Team at [solutionsdevelopment.techdirectorate@education.gov.uk](mailto:solutionsdevelopment.techdirectorate@education.gov.uk).
