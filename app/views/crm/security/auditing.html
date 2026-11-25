@@ -1,105 +1,23 @@
 {% set pageData = pages['crm/security/auditing'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
-
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
-{% from 'includes/components/_contentsList.njk' import contentsList %}
-{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
-{{ contentsList([
-  { text: "Core auditing requirements", href: "#core" },
-  { text: "Sensitive data and read-event auditing", href: "#read" },
-  { text: "Do's", href: "#dos" },
-  { text: "Don'ts", href: "#donts" },
-  { text: "Summary", href: "#summary" }
-]) }}
+<p class="govuk-body">Microsoft explains <a class="govuk-link" href="https://learn.microsoft.com/en-us/power-platform/admin/manage-dataverse-auditing" target="_blank">how to set up auditing in Dataverse (opens in a new tab)</a>.</p>
 
-
-
-<p class="govuk-body">
-Auditing in Dynamics 365 helps track data changes, understand user activity and meet compliance requirements. 
-</p>
-
-<h2 class="govuk-heading-l" id="core">Core auditing requirements</h2>
-
-<p class="govuk-body">
-All tables that store business data must have out-of-box auditing enabled. This includes auditing for:
-</p>
-
+<h2 class="govuk-heading-l" id="standard">The standard</h2>
 <ul class="govuk-list govuk-list--bullet">
-  <li>Record creation</li>
-  <li>Record updates</li>
-  <li>Record deletion</li>
-</ul>
-
-<h2 class="govuk-heading-l" id="read">Sensitive data and read-event auditing</h2>
-
-<p class="govuk-body">
-Auditing when data is viewed/read is not handled through Dynamics 365. If a service needs to track read access for sensitive information, Microsoft Purview should be used.
-</p>
-
-<ul class="govuk-list govuk-list--bullet">
-  <li>Use Purview for monitoring read events on high‑risk or sensitive data</li>
-  <li>Avoid enabling unnecessary auditing to reduce storage and overheads</li>
-</ul>
-
-<h2 class="govuk-heading-l" id="dos">Do’s</h2>
-
-<ul class="govuk-list govuk-list--bullet">
-  <li>Enable auditing on all business data tables.</li>
-  <li>Agree with business owners on which fields should be audited.</li>
-  <li>Regularly review audit logs for anomalies or unusual changes.</li>
-  <li>Use Purview when read‑event tracking is required.</li>
+  <li>Turn on auditing for every table that holds business data, so creates, updates and deletes are recorded. Never turn it off on those tables.</li>
+  <li>Agree with the business owner which columns to audit, and don't audit columns that don't need it. Too much auditing affects performance and fills audit storage.</li>
+  <li>If the service needs to record who viewed sensitive data, use Microsoft Purview. Dynamics 365 auditing doesn't cover reading records.</li>
   <li>Document which tables are audited and why.</li>
-  <li>Keep audit logs for as long as needed and then delete.</li>
+  <li>Review audit logs regularly for unusual changes.</li>
+  <li>Keep audit logs only as long as they're needed, then delete them.</li>
 </ul>
 
-<h2 class="govuk-heading-l" id="donts">Don’ts</h2>
-
-<ul class="govuk-list govuk-list--bullet">
-  <li>Do not disable auditing on business data tables</li>
-  <li>Do not audit every field unnecessarily - focus on meaningful data as excessive field‑level auditing can affect performance and audit logs can grow quickly</li>
-</ul>
-
-<h2 class="govuk-heading-l" id="summary">Summary</h2>
-
-<p class="govuk-body">
-Enable auditing for all business‑data tables, use Purview for sensitive read‑access tracking, and keep auditing focused and purposeful. This helps DfE maintain transparency, protect sensitive information and meet compliance standards.
-</p>
-
-
-
-
-<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
-  <div class="govuk-pagination__prev">
-    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/security/teams'].url }}" rel="prev">
-      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
-        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
-      </svg>
-      <span class="govuk-pagination__link-title">
-        Previous<span class="govuk-visually-hidden"> page</span>
-      </span>
-      <span class="govuk-visually-hidden">:</span>
-      <span class="govuk-pagination__link-label">{{ pages['crm/security/teams'].title }}</span>
-    </a>
-  </div>
-</nav>
-
-
-
+{% include "includes/components/_pagination.njk" %}
 
 {% endblock %}

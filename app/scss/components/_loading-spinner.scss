@@ -2,7 +2,7 @@
 // ================
 
 .dfe-loading-spinner {
-  border: 6px solid govuk-colour("light-grey");
+  border: 6px solid govuk-colour("black", $variant: "tint-95");
   border-radius: 50%;
   border-top-color: $govuk-brand-colour;
   margin-bottom: 10px;

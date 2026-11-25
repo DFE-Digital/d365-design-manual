@@ -1,106 +1,55 @@
 {% set pageData = pages['crm/architecture/patterns-components'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
-{% from 'includes/patterns/_page-heading.njk' import patternsHeadingSingleExample, patternsHeadingMultipleExample %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
-  { text: "Why Re‑use Is Important", href: "#why" },
-  { text: "Re‑usable Design Patterns", href: "#design-patterns" },
-  { text: "Re‑usable Platform Components", href: "#components" },
-  { text: "Packaging, Ownership, and Governance", href: "#packaging" },
-  { text: "Designing for Re‑use from the Start", href: "#re-use" }
+  { text: "Shared components", href: "#components" },
+  { text: "DfE Core solution", href: "#dfe-core" },
+  { text: "GIAS data", href: "#gias" },
+  { text: "Building something reusable", href: "#building" }
 ]) }}
 
+<p class="govuk-body">Use the shared components before building your own. They give users the same data and behaviour across services, and save each team from solving the same problem.</p>
 
+<h2 class="govuk-heading-l" id="components">Shared components</h2>
 
+<h3 class="govuk-heading-m" id="dfe-core">DfE Core solution</h3>
 
-<p class="govuk-body">Creating re‑usable patterns and components is a key principle for building scalable and consistent Dynamics 365 solutions. By designing solutions that can be reused across teams and projects, we reduce duplication, improve quality, and deliver value more quickly.</p>
+<p class="govuk-body">The DfE Core solution (<code>DfECoreSolution</code>) holds the components every DfE CRM should share. It uses the <code>dfe_</code> publisher prefix. It includes:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>DfE's extensions to the Account and Contact tables</li>
+  <li>reference tables for school and establishment data from GIAS, such as local authorities, government regions and phases of education</li>
+  <li>DfE-wide choices, such as the DfE yes/no choice (<code>dfe_dfeyesnooptionset</code>)</li>
+  <li>a standard set of table icons</li>
+</ul>
 
+<p class="govuk-body">Install it in your environment rather than creating your own versions of these components. Don't change its components in your own solutions. If something is missing that other services would also need, ask the Solutions Delivery Team to add it to the core solution.</p>
 
+<h3 class="govuk-heading-m" id="gias">GIAS data</h3>
 
+<p class="govuk-body">School and establishment data comes from <a class="govuk-link" href="https://get-information-schools.service.gov.uk/" target="_blank">Get Information about Schools (GIAS) (opens in a new tab)</a> through a shared integration that is being rolled out across DfE CRMs. Don't build your own GIAS import.</p>
 
-<h2 class="govuk-heading-m" id="why">Why Re‑use Is Important</h2>
+<ul class="govuk-list govuk-list--bullet">
+  <li>GIAS files are downloaded every day and loaded into a central Dataverse environment with Azure Data Factory.</li>
+  <li>Each CRM that subscribes receives the GIAS tables and columns it has chosen, in the DfE Core tables in its own environment.</li>
+  <li>Subscriptions are managed centrally. Contact the Solutions Delivery Team to subscribe or to change the data your service receives.</li>
+</ul>
 
-<p class="govuk-body">Re‑usable patterns and components help establish consistency across DfE's Dynamics 365 estate. Users should benefit from familiar experiences and behaviours, while project teams gain confidence from using proven, well‑understood components. Re‑use reduces rework, limits the introduction of defects, and lowers long‑term support and maintenance effort by minimising unnecessary variation.</p>
+<h2 class="govuk-heading-l" id="building">Building something reusable</h2>
 
+<p class="govuk-body">If you build something other services could use:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>make it generic and configurable, with no service-specific logic or hard-coded values</li>
+  <li>put it in the core solution for its CRM, or in the DfE Core solution if it applies across DfE, following the <a class="govuk-link" href="{{ pages['crm/configuration/tables'].url }}#naming">publisher prefix rules</a></li>
+  <li>give it a named owner and document how to use it</li>
+</ul>
 
-
-
-
-<h2 class="govuk-heading-m" id="design-patterns">Re‑usable Design Patterns</h2>
-
-<p class="govuk-body">Standard design patterns should be defined and applied consistently across all Dynamics 365 solutions. These patterns might cover areas such as functionality, data modelling, security, automation, integration, and user experience.</p>
-
-<p class="govuk-body">Patterns should be documented, reviewed periodically, and evolved as platform capabilities and needs change.</p>
-
-
-
-<h2 class="govuk-heading-m" id="components">Re‑usable Platform Components</h2>
-
-<p class="govuk-body">Dynamics 365 and the Power Platform provide opportunities to create reusable components. Shared Dataverse tables, columns, common business rules, Power Automate flows, dashboards, and other components can often be designed once and reused many times. Components should be designed to be as generic and configurable as possible, avoiding solution‑specific logic or hard‑coded values.</p>
-
-
-
-
-<h2 class="govuk-heading-m" id="packaging">Packaging, Ownership, and Governance</h2>
-
-<p class="govuk-body">Reusable assets should be packaged and managed in a controlled way. Grouping shared components into core solutions helps promote reuse in a consistent way. Clear ownership should be established for shared components, with defined processes for change and versioning.</p>
-
-
-
-
-<h2 class="govuk-heading-m" id="re-use">Designing for Re‑use from the Start</h2>
-
-<p class="govuk-body">To be effective, re‑use must be designed in from the beginning. Components should be built with multiple consumers in mind, environment‑specific logic should be avoided, and intended usage should be clearly documented. Early consideration of re‑use ensures components remain flexible, valuable, and easy to adopt by other teams.</p>
-
-
-
-
-
-
-<nav class="govuk-pagination govuk-pagination--block" aria-label="Pagination">
-  <div class="govuk-pagination__prev">
-    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/architecture/integration'].url }}" rel="prev">
-      <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
-        <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
-      </svg>
-      <span class="govuk-pagination__link-title">
-        Previous<span class="govuk-visually-hidden"> page</span>
-      </span>
-      <span class="govuk-visually-hidden">:</span>
-      <span class="govuk-pagination__link-label">{{ pages['crm/architecture/integration'].title }}</span>
-    </a>
-  </div>
-  <div class="govuk-pagination__next">
-    <a class="govuk-link govuk-pagination__link" href="{{ pages['crm/architecture/document-management'].url }}" rel="next">
-      <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
-        <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
-      </svg>
-      <span class="govuk-pagination__link-title">
-        Next<span class="govuk-visually-hidden"> page</span>
-      </span>
-      <span class="govuk-visually-hidden">:</span>
-      <span class="govuk-pagination__link-label">{{ pages['crm/architecture/document-management'].title }}</span>
-    </a>
-  </div>
-</nav>
-
+{% include "includes/components/_pagination.njk" %}
 
 {% endblock %}

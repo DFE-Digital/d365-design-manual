@@ -1,23 +1,12 @@
 {% set pageData = pages['powerpages/patterns/custom-errors'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Default error handling", href: "#default-error-handling" },
@@ -26,7 +15,7 @@
   { text: "When to use custom error containers", href: "#when-to-use" }
 ]) }}
 
-<p class="govuk-body">The <a class="govuk-link" href="{{ pages['powerpages/patterns/crm-helper-framework'].url }}">CRM Helper Framework</a> automatically handles displaying validation errors in a GOV.UK-compliant error summary. In most cases, the default behaviour works without any additional configuration. However, there are scenarios where you need to display errors in a custom location.</p>
+<p class="govuk-body">The <a class="govuk-link" href="{{ pages['powerpages/developer-guides/crm-helper-framework'].url }}">CRM helper framework</a> automatically handles displaying validation errors in a GOV.UK-compliant error summary. In most cases, the default behaviour works without any additional configuration. However, there are scenarios where you need to display errors in a custom location.</p>
 
 <h2 class="govuk-heading-l" id="default-error-handling">Default error handling</h2>
 

@@ -1,6 +1,4 @@
-{% set pageData = pages['powerpages/styles/layout'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
+{% set pageData = pages['powerpages/page-templates/layouts'] %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
@@ -8,17 +6,13 @@
 
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
-<p class="govuk-body">Once your site is set up using the <a href="{{ pages['powerpages/getting-started/import-website-template'].url }}" class="govuk-link">website import tool</a>, you can start building your pages using the provided layouts in your Dynamics 365 environment. These layouts ensure consistency, accessibility, and compliance with GOV.UK and DfE design standards.</p>
+<p class="govuk-body">Once your site is set up from the <a href="{{ pages['powerpages/getting-started/base-portal'].url }}" class="govuk-link">base portal</a>, you can start building your pages using the provided layouts in your Dynamics 365 environment. These layouts ensure consistency, accessibility, and compliance with GOV.UK and DfE design standards.</p>
 
 <p class="govuk-body">This page will explain how to use the available layout templates, when to choose each, and how to extend them in your page templates with practical examples.</p>
 
-<h2 class="govuk-heading-l" id="available-layouts">Available Layouts</h2>
+<h2 class="govuk-heading-l" id="available-layouts">Available layouts</h2>
 
 <p class="govuk-body">The imported website template provides two main layouts for structuring your pages:</p>
 <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
@@ -27,13 +21,13 @@
 </ul>
 <p class="govuk-body">Both layouts include reusable web templates for common elements like phase banners, breadcrumbs, and page headings, making it easy to maintain a consistent structure across your site.</p>
 
-<h2 class="govuk-heading-l" id="included-web-templates">Included Web Templates</h2>
+<h2 class="govuk-heading-l" id="included-web-templates">Included web templates</h2>
 
 <p class="govuk-body">Each layout includes the following web templates, which can be customised or overridden as needed:</p>
 <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
-  <li><strong>Phase Banner</strong>: Displays a banner indicating the service's development stage. By default, it uses <code>{% raw %}{% include 'DfE/Content/PhaseBanner/Beta' %}{% endraw %}</code> for Beta services. You can switch to <code>{% raw %}{% include 'DfE/Content/PhaseBanner/Alpha' %}{% endraw %}</code> for Alpha services. For services hosted on a service.gov.uk domain, a phase banner is mandatory until the service passes a live assessment.</li>
-  <li><strong>Breadcrumbs</strong>: Uses <code>{% raw %}{% include 'DfE/Content/Breadcrumbs' %}{% endraw %}</code> to pull through default breadcrumbs based on the parent-child page structure (see <a href="https://design-system.service.gov.uk/components/breadcrumbs/" class="govuk-link">GOV.UK breadcrumbs documentation</a>). This is wrapped in a <code>{% raw %}{% block breadcrumbs %}{% endraw %}</code> so it can be overridden in the page template, such as replacing it with a back link for end-to-end service journeys.</li>
-  <li><strong>Page Heading</strong>: Uses <code>{% raw %}{% include 'DfE/Content/PageHeading' %}{% endraw %}</code> to pull through the header from the Content WebPage record (automatically created as a child of the webpage). This is wrapped in a <code>{% raw %}{% block title %}{% endraw %}</code> and can be overridden, especially for single-question pages where the heading becomes part of the form component's label or legend.</li>
+  <li><strong><a class="govuk-link" href="{{ pages['powerpages/page-templates/phase-banner'].url }}">Phase banner</a></strong>: Displays a banner indicating the service's development stage. By default, it uses <code>{% raw %}{% include 'DfE/Content/PhaseBanner/Beta' %}{% endraw %}</code> for Beta services. You can switch to <code>{% raw %}{% include 'DfE/Content/PhaseBanner/Alpha' %}{% endraw %}</code> for Alpha services. For services hosted on a service.gov.uk domain, a phase banner is mandatory until the service passes a live assessment.</li>
+  <li><strong><a class="govuk-link" href="{{ pages['powerpages/page-templates/breadcrumbs-and-back-links'].url }}">Breadcrumbs</a></strong>: Uses <code>{% raw %}{% include 'DfE/Content/Breadcrumbs' %}{% endraw %}</code> to pull through default breadcrumbs based on the parent-child page structure (see <a href="https://design-system.service.gov.uk/components/breadcrumbs/" class="govuk-link">GOV.UK breadcrumbs documentation</a>). This is wrapped in a <code>{% raw %}{% block breadcrumbs %}{% endraw %}</code> so it can be overridden in the page template, such as replacing it with a back link for end-to-end service journeys.</li>
+  <li><strong><a class="govuk-link" href="{{ pages['powerpages/page-templates/page-headings'].url }}">Page heading</a></strong>: Uses <code>{% raw %}{% include 'DfE/Content/PageHeading' %}{% endraw %}</code> to pull through the header from the Content WebPage record (automatically created as a child of the webpage). This is wrapped in a <code>{% raw %}{% block title %}{% endraw %}</code> and can be overridden, especially for single-question pages where the heading becomes part of the form component's label or legend.</li>
 </ul>
 <p class="govuk-body">The <code>{% raw %}{% block main %}{% endraw %}</code> in both layouts includes default Dynamics 365 content for forms, lists, and multi-step forms (e.g., <code>{% raw %}{% if page.adx_entityform %}{% endraw %}</code>), but these are typically overridden in actual pages with custom content.</p>
 
@@ -61,7 +55,7 @@
   <li><code>{% raw %}{% block title %}{% endraw %}</code>: Overrides the default page heading with an empty block, used for one-question pages where the heading is part of the form.</li>
   <li><code>{% raw %}{% block main %}{% endraw %}</code>: Contains the main content (a heading, paragraph, and form components).</li>
   <li>The <code>{% raw %}{% if user %}{% endraw %}</code> condition checks for authentication and redirects unauthenticated users to an access denied page. Remove this condition if authentication isn't required.</li>
-  <li><code>{% raw %}{{ page.title }}{% endraw %}</code> includes the page title from the content web page. In this case, the question being asked. See <a class="govuk-link" href="#">setting page titles</a> for more information.</li>
+  <li><code>{% raw %}{{ page.title }}{% endraw %}</code> includes the page title from the content web page. In this case, the question being asked. See <a class="govuk-link" href="{{ pages['powerpages/page-templates/page-headings'].url }}">page headings</a> for more information.</li>
   <li><code>{% raw %}{% block rightColumn %}{% endraw %}</code>: Adds content to the right sidebar, such as related links. If you do not require side content you can remove this block entirely.</li>
 </ul>
 </p>

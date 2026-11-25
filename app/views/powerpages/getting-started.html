@@ -1,25 +1,23 @@
 {% set pageData = pages['powerpages/getting-started'] %}
-{% set showTitlePanel = true %}
-{% set showSubNav = true %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% from 'includes/_side-nav.html' import getting_started %}
-
 {% block content %}
+
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 <p class="govuk-body-l">{{ pageData.description }}</p>
 
-<p class="govuk-body">This section provides guidance on setting up your Power Pages environment to work with the GOV.UK Design System. It covers the foundational elements you need to configure before building your portal, including template structures, JavaScript frameworks, and essential configurations.</p>
+<p class="govuk-body">This section provides guidance on setting up your Power Pages environment to work with the GOV.UK Design System. It covers the foundational elements you need to configure before building your portal, including template structures, the CRM helper framework, and essential configurations.</p>
 
 <p class="govuk-body">Whether you're starting a new portal or adapting an existing one, these guides will help you establish a solid foundation for building accessible, user-centred services that align with government design standards.</p>
 
 <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-<h2 class="govuk-heading-m">In this section</h2>
+<h2 class="govuk-heading-l">In this section</h2>
 
 <ul class="dfe-component-list">
-  {% for page in getting_started %}
+  {% for page in children %}
   {% if page.url != pageData.url %}
   <li class="dfe-component-list__item">
     <h3 class="govuk-heading-s govuk-!-margin-bottom-1">

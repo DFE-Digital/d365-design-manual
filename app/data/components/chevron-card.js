@@ -1,0 +1,83 @@
+export default {
+  id: 'chevron-card',
+  title: "Chevron card",
+  description: "Use the chevron card component to display a list of linked items with titles, descriptions and a visual chevron indicator.",
+  // The page has no contents list
+  contents: false,
+
+  intro: `
+    <p class="govuk-body"><a class="govuk-link" href="#html-examples">Skip to HTML examples</a></p>
+  `,
+
+  sections: [
+    {
+      id: "when-to-use-this-component",
+      title: "When to use this component",
+      content: `
+        <p class="govuk-body">{{ pageData.description }}</p>
+        <p class="govuk-body">Use chevron cards when you need to:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>present a list of navigational links with supporting descriptions</li>
+          <li>guide users to different sections or topics within your service</li>
+          <li>create a clear visual hierarchy for grouped content</li>
+        </ul>
+      `
+    },
+    {
+      id: "when-not-to-use-this-component",
+      title: "When not to use this component",
+      content: `
+        <p class="govuk-body">Do not use chevron cards:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>for actions that don't navigate to another page (use buttons instead)</li>
+          <li>when you have only one or two links (use standard links instead)</li>
+          <li>for content that doesn't benefit from descriptions (use a simple list of links)</li>
+        </ul>
+      `
+    },
+    {
+      id: "how-it-works",
+      title: "How it works",
+      content: `
+        <p class="govuk-body">The chevron card component creates a clickable area that includes:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>a linked title that users can click</li>
+          <li>an optional description providing context about the destination</li>
+          <li>a chevron arrow on the right indicating forward navigation</li>
+          <li>a hidden overlay link that makes the entire card clickable</li>
+        </ul>
+        <p class="govuk-body">Cards are separated by borders and the first card has no top border to create a clean appearance at the top of lists.</p>
+      `
+    },
+    {
+      id: "html-examples",
+      title: "HTML examples",
+      subsections: [{ id: "basic-chevron-cards", title: "Basic chevron cards" }, { id: "without-description", title: "Chevron cards without description" }],
+      content: `
+        <p class="govuk-body">
+          Select the appropriate example from this page and directly integrate the HTML into your web template.
+          You can customise these examples to align with your specific requirements.
+          Refer to the <a class="govuk-link" href="{{ pages['powerpages/page-templates/layouts'].url }}">layouts</a> section for further guidance on structuring your web template.
+        </p>
+
+        <h3 class="govuk-heading-m" id="basic-chevron-cards">Basic chevron cards</h3>
+        <p class="govuk-body">An example of chevron cards with titles and descriptions.</p>
+
+        {{ exampleTabs(
+          "Basic chevron cards",
+          "includes/components/chevron-card/basicExample.njk",
+          { showUpdateSchema: false, index: 1 }
+        ) }}
+
+        <h3 class="govuk-heading-m" id="without-description">Chevron cards without description</h3>
+        <p class="govuk-body">An example of chevron cards with titles only, without descriptions.</p>
+
+        {{ exampleTabs(
+          "Chevron cards without description",
+          "includes/components/chevron-card/simpleExample.njk",
+          { showUpdateSchema: false, index: 2 }
+        ) }}
+      `
+    }
+  ]
+};

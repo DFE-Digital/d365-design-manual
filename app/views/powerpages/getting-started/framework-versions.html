@@ -1,15 +1,8 @@
 {% set pageData = pages['powerpages/getting-started/framework-versions'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
-
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
 
 {% block content %}
 
@@ -35,7 +28,7 @@
 <ul class="govuk-list govuk-list--bullet">
   <li>GOV.UK Frontend, in GOV.UK and DfE-branded versions, including its CSS and JavaScript</li>
   <li>the DfE custom components' styles and JavaScript</li>
-  <li>the <a class="govuk-link" href="{{ pages['powerpages/patterns/crm-helper-framework'].url }}">CRM helper framework</a>, <code>dfe-crm-portal-helper.js</code></li>
+  <li>the <a class="govuk-link" href="{{ pages['powerpages/developer-guides/crm-helper-framework'].url }}">CRM helper framework</a>, <code>dfe-crm-portal-helper.js</code></li>
 </ul>
 
 <p class="govuk-body">Each release is published as a numbered version, such as <code>v02</code> or <code>v03</code>. Your site chooses a version through its web file records, so a new release doesn't change your site until you move to it.</p>
@@ -105,7 +98,7 @@
 
 <p class="govuk-body">The framework now sends files to the <code>VirusScan</code> server logic as text, not as <code>application/json</code>. In version 02, Power Pages rejected files over about 750 KB before they were scanned.</p>
 
-<p class="govuk-body">The standard <code>VirusScan</code> server logic works with both. For files over about 2 MB, your site also needs the memory site setting, and the current server logic code. See <a class="govuk-link" href="{{ pages['powerpages/patterns/scan-uploaded-files'].url }}">scanning uploaded files for viruses</a>.</p>
+<p class="govuk-body">The standard <code>VirusScan</code> server logic works with both. For files over about 2 MB, your site also needs the memory site setting, and the current server logic code. See <a class="govuk-link" href="{{ pages['powerpages/developer-guides/scan-uploaded-files'].url }}">scanning uploaded files for viruses</a>.</p>
 
 <h3 class="govuk-heading-m" id="v03-govuk-frontend">GOV.UK Frontend 6.6</h3>
 
@@ -141,5 +134,7 @@
 </ul>
 
 <p class="govuk-body">If you would like any additional advice or guidance with moving to a new version, email Eddie Haynes or Steve Tam in the Solutions Delivery Team.</p>
+
+{% include "includes/components/_pagination.njk" %}
 
 {% endblock %}
