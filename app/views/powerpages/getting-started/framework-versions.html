@@ -1,0 +1,145 @@
+{% set pageData = pages['powerpages/getting-started/framework-versions'] %}
+{% set showTitlePanel = false %}
+{% set showSubNav = true %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}
+
+{% block content %}
+
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+
+{{ contentsList([
+  { text: "What the framework is", href: "#what-it-is" },
+  { text: "Versions", href: "#versions" },
+  { text: "Check which version your site uses", href: "#check-version" },
+  { text: "Move to a new version", href: "#move-version" },
+  { text: "What changed in version 03", href: "#v03", children: [
+    { text: "Improved file upload component", href: "#v03-file-upload" },
+    { text: "Larger files can be virus scanned", href: "#v03-virus-scan" },
+    { text: "GOV.UK Frontend 6.6", href: "#v03-govuk-frontend" },
+    { text: "What to check after moving", href: "#v03-checks" }
+  ]}
+]) }}
+
+<h2 class="govuk-heading-l" id="what-it-is">What the framework is</h2>
+
+<p class="govuk-body">Sites built from the base portal load a shared set of files that DfE hosts centrally:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>GOV.UK Frontend, in GOV.UK and DfE-branded versions, including its CSS and JavaScript</li>
+  <li>the DfE custom components' styles and JavaScript</li>
+  <li>the <a class="govuk-link" href="{{ pages['powerpages/patterns/crm-helper-framework'].url }}">CRM helper framework</a>, <code>dfe-crm-portal-helper.js</code></li>
+</ul>
+
+<p class="govuk-body">Each release is published as a numbered version, such as <code>v02</code> or <code>v03</code>. Your site chooses a version through its web file records, so a new release doesn't change your site until you move to it.</p>
+
+<h2 class="govuk-heading-l" id="versions">Versions</h2>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Version</th>
+      <th scope="col" class="govuk-table__header">What it includes</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">v03</th>
+      <td class="govuk-table__cell">Support for GOV.UK's improved file upload component, virus scanning for larger files, and GOV.UK Frontend 6.6. See <a class="govuk-link" href="#v03">what changed in version 03</a>.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">v02</th>
+      <td class="govuk-table__cell">The content wrapper component. Virus scanning moved from a call in the browser to the <code>VirusScan</code> server logic.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">v01</th>
+      <td class="govuk-table__cell">First release.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="govuk-body">This manual describes the latest version. Where something works differently in an earlier version, the page says so.</p>
+
+<h2 class="govuk-heading-l" id="check-version">Check which version your site uses</h2>
+
+<ol class="govuk-list govuk-list--number">
+  <li>Open the Portal Management app and go to <strong>Web Files</strong>.</li>
+  <li>Open a framework file, such as <code>dfe-crm-portal-helper.js</code>.</li>
+  <li>Look at its <strong>Cloud Blob Address</strong>. The version is the folder after the storage address, for example <code>/v02/</code> in <code>https://&lt;storage account&gt;.blob.core.windows.net/v02/scripts/dfe-crm-portal-helper.js</code>.</li>
+</ol>
+
+<p class="govuk-body">All the framework's web files on a site should use the same version.</p>
+
+<h2 class="govuk-heading-l" id="move-version">Move to a new version</h2>
+
+<ol class="govuk-list govuk-list--number">
+  <li>Read what's changed in the new version, and check your pages for anything it affects.</li>
+  <li>In your development environment, change the Cloud Blob Address of each framework web file to the new version, for example from <code>/v02/</code> to <code>/v03/</code>.</li>
+  <li>Clear the site's cache, so it loads the new files.</li>
+  <li>Test your site, in particular forms, validation, error messages and file uploads.</li>
+  <li>Move your other environments in the same way, as part of your normal release.</li>
+</ol>
+
+<p class="govuk-body">To move back, change the addresses back to the version you were using.</p>
+
+<p class="govuk-body">For the storage address for your environments, email Eddie Haynes or Steve Tam in the Solutions Delivery Team.</p>
+
+<h2 class="govuk-heading-l" id="v03">What changed in version 03</h2>
+
+<h3 class="govuk-heading-m" id="v03-file-upload">Improved file upload component</h3>
+
+<p class="govuk-body">The framework now works with GOV.UK's improved file upload component, which lets users drag and drop files, as well as with the plain file input. Pages using the plain input don't need to change.</p>
+
+<p class="govuk-body">In version 02 and earlier, the framework couldn't find the files in the improved component. Virus scans passed without scanning anything, uploads saved nothing and validation failed. Don't use the improved component on a site that's still on version 02.</p>
+
+<p class="govuk-body">See the <a class="govuk-link" href="{{ pages['powerpages/components/file-upload'].url }}">file upload component</a> for how to use it.</p>
+
+<h3 class="govuk-heading-m" id="v03-virus-scan">Larger files can be virus scanned</h3>
+
+<p class="govuk-body">The framework now sends files to the <code>VirusScan</code> server logic as text, not as <code>application/json</code>. In version 02, Power Pages rejected files over about 750 KB before they were scanned.</p>
+
+<p class="govuk-body">The standard <code>VirusScan</code> server logic works with both. For files over about 2 MB, your site also needs the memory site setting, and the current server logic code. See <a class="govuk-link" href="{{ pages['powerpages/patterns/scan-uploaded-files'].url }}">scanning uploaded files for viruses</a>.</p>
+
+<h3 class="govuk-heading-m" id="v03-govuk-frontend">GOV.UK Frontend 6.6</h3>
+
+<p class="govuk-body">GOV.UK Frontend has been upgraded from 6.1 to 6.6. No existing HTML has to change. A few things look slightly different, such as the spacing in the header, and some markup is now recommended:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li><strong>Improved file upload:</strong> use the <code>govuk-file-upload-wrapper</code> class, not <code>govuk-drop-zone</code>, which will be removed in GOV.UK Frontend 7.</li>
+  <li><strong>Start buttons whose text contains HTML,</strong> such as visually hidden text: wrap the text in a <code>&lt;span&gt;</code>, or the spaces between words disappear. Keep the arrow outside the <code>&lt;span&gt;</code>. Start buttons with plain text don't need it.</li>
+</ul>
+
+<pre><code class="language-html">&lt;a href="/start" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button"&gt;
+  &lt;span&gt;Start &lt;span class="govuk-visually-hidden"&gt;your application&lt;/span&gt; now&lt;/span&gt;
+  &lt;svg class="govuk-button__start-icon" ...&gt;...&lt;/svg&gt;
+&lt;/a&gt;</code></pre>
+
+<div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-visually-hidden">Warning</span>
+    Keep using <code>data-maxwords</code> for character counts with a word limit. GOV.UK Frontend 6.6 replaces it with <code>data-maxlength</code> and <code>data-count-type="words"</code>, but the framework doesn't support that yet: it would treat the limit as characters and wouldn't check the number of words.
+  </strong>
+</div>
+
+<p class="govuk-body"><code>data-maxwords</code> still works. GOV.UK Frontend shows a warning about it in the browser's console, which you can ignore. See the <a class="govuk-link" href="https://github.com/alphagov/govuk-frontend/releases" target="_blank">GOV.UK Frontend release notes (opens in a new tab)</a> for everything else that changed.</p>
+
+<h3 class="govuk-heading-m" id="v03-checks">What to check after moving</h3>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>your pages' header, inputs with a prefix or suffix, and inline radios with long labels</li>
+  <li>start buttons with visually hidden text, or other HTML, in their text</li>
+  <li>file uploads, including error messages, the link from the error summary, drag and drop, and virus scanning</li>
+  <li>character counts, which should still count words or characters as before</li>
+</ul>
+
+<p class="govuk-body">If you would like any additional advice or guidance with moving to a new version, email Eddie Haynes or Steve Tam in the Solutions Delivery Team.</p>
+
+{% endblock %}

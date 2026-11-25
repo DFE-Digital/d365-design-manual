@@ -45,10 +45,10 @@
 <p class="govuk-body">If your form is not on the main page (for example, inside a modal or a separate section), you can specify a different error container by passing a CSS selector as the second parameter to <code>ValidateData</code>.</p>
 
 <pre><code class="language-javascript">// Default - uses #error-summary-container
-const isValid = DfEPortal.ValidateData(inputObj);
+const isValid = await DfEPortal.ValidateData(inputObj);
 
 // Custom - uses a different container
-const isValid = DfEPortal.ValidateData(inputObj, "#modal-error-container");</code></pre>
+const isValid = await DfEPortal.ValidateData(inputObj, "#modal-error-container");</code></pre>
 
 <p class="govuk-body">Make sure your custom container element exists in the HTML:</p>
 
@@ -87,8 +87,8 @@ DfEPortal.Errors.AddErrorSummaryDetail("feedback-submit", "Please tell us what w
 <pre><code class="language-javascript">// Focus the default error summary
 DfEPortal.Errors.FocusErrorSummary();
 
-// Focus a custom error summary
-DfEPortal.Errors.FocusErrorSummary("#modal-error-container");</code></pre>
+// Focus a custom error summary. The first parameter is the scroll options.
+DfEPortal.Errors.FocusErrorSummary({}, "#modal-error-container");</code></pre>
 
 <h3 class="govuk-heading-m">Complete example</h3>
 
@@ -155,7 +155,7 @@ DfEPortal.Errors.FocusErrorSummary("#modal-error-container");</code></pre>
   required: true
 }];
 
-const isValid = DfEPortal.ValidateData(feedbackInput, "#feedback-error-container");
+const isValid = await DfEPortal.ValidateData(feedbackInput, "#feedback-error-container");
 
 if (isValid) {
   // Submit feedback...

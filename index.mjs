@@ -77,6 +77,9 @@ nunjucksEnv.addGlobal('getPageByUrl', getPageByUrl);
 // Add component examples as a global variable
 nunjucksEnv.addGlobal('componentExamples', componentExamples);
 
+// Lets a component's template render its data file through powerpages/components/_component.html
+nunjucksEnv.addGlobal('components', components);
+
 // Add custom filters for merge and push
 nunjucksEnv.addFilter('merge', function(obj, additional) {
   return { ...obj, ...additional };

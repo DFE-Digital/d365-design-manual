@@ -18,6 +18,7 @@ import dashboard from './dashboard.js';
 import sortableTable from './sortable-table.js';
 import timeline from './timeline.js';
 import printLink from './print-link.js';
+import fileUpload from './file-upload.js';
 
 // Export as a keyed object for easy lookup
 // Keys match the URL path segment (e.g., /powerpages/components/checkboxes/)
@@ -38,7 +39,8 @@ const components = {
   dashboard,
   'sortable-table': sortableTable,
   timeline,
-  'print-link': printLink
+  'print-link': printLink,
+  'file-upload': fileUpload
 };
 
 export default components;

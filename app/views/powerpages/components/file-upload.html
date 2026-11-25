@@ -1,0 +1,10 @@
+{% set pageData = pages['powerpages/components/file-upload'] %}
+{% set component = components['file-upload'] %}
+
+{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
+
+{% extends "powerpages/components/_component.html" %}
+
+{% block beforeContent %}
+  {{ breadcrumbs(pageData, pages) }}
+{% endblock %}

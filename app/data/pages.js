@@ -26,7 +26,7 @@ const pages = {
     description: "Guidance for building GOV.UK-aligned Power Pages with the GOV.UK Design System, DfE Frontend and custom components.",
     template: "powerpages",
     parent: "home",
-    children: ["powerpages/getting-started", "powerpages/styles", "powerpages/components", "powerpages/patterns"]
+    children: ["powerpages/getting-started", "powerpages/styles", "powerpages/components", "powerpages/patterns", "powerpages/server-logic"]
   },
 
   // Getting Started
@@ -36,7 +36,7 @@ const pages = {
     description: "Understand how to get started with building and designing your Power Pages website.",
     template: "powerpages/getting-started",
     parent: "powerpages",
-    children: ["powerpages/getting-started/branding-standards", "powerpages/getting-started/pre-requisites", "powerpages/getting-started/import-website-template"]
+    children: ["powerpages/getting-started/branding-standards", "powerpages/getting-started/pre-requisites", "powerpages/getting-started/import-website-template", "powerpages/getting-started/framework-versions"]
   },
   "powerpages/getting-started/branding-standards": {
     title: "Branding standards",
@@ -81,6 +81,13 @@ const pages = {
     template: "powerpages/getting-started/import-website-template/import-failed",
     parent: "powerpages/getting-started/import-website-template"
   },
+  "powerpages/getting-started/framework-versions": {
+    title: "Framework versions",
+    url: "/powerpages/getting-started/framework-versions/",
+    description: "Find out which version of the DfE Power Pages framework your site uses, what changed in each version and how to move to a new one.",
+    template: "powerpages/getting-started/framework-versions",
+    parent: "powerpages/getting-started"
+  },
 
   // Styles
   "powerpages/styles": {
@@ -116,6 +123,7 @@ const pages = {
       "powerpages/components/date-input",
       "powerpages/components/email-input",
       "powerpages/components/feedback",
+      "powerpages/components/file-upload",
       "powerpages/components/filter-panel",
       "powerpages/components/loading-spinner",
       "powerpages/components/number-input",
@@ -192,6 +200,13 @@ const pages = {
     title: "Feedback",
     url: "/powerpages/components/feedback/",
     description: "Use the feedback component to collect user feedback about a page with a simple 'Is this page useful?' prompt.",
+    dataSource: "components",
+    parent: "powerpages/components"
+  },
+  "powerpages/components/file-upload": {
+    title: "File upload",
+    url: "/powerpages/components/file-upload/",
+    description: "Use the file upload component to help users select and upload a file, and validate and virus scan it with the CRM helper framework.",
     dataSource: "components",
     parent: "powerpages/components"
   },
@@ -305,6 +320,7 @@ const pages = {
       "powerpages/patterns/apply-sort-and-filters",
       "powerpages/patterns/crm-helper-framework",
       "powerpages/patterns/custom-errors",
+      "powerpages/patterns/scan-uploaded-files",
       "powerpages/patterns/back-link",
       "powerpages/patterns/phase-banner",
       "powerpages/patterns/page-heading",
@@ -330,6 +346,13 @@ const pages = {
     url: "/powerpages/patterns/custom-errors/",
     description: "Learn how to show helpful custom error messages to users on your Power Pages website.",
     template: "powerpages/patterns/custom-errors",
+    parent: "powerpages/patterns"
+  },
+  "powerpages/patterns/scan-uploaded-files": {
+    title: "Scanning uploaded files for viruses",
+    url: "/powerpages/patterns/scan-uploaded-files/",
+    description: "Scan files for viruses before they're saved to CRM, using the CRM helper framework and the VirusScan server logic.",
+    template: "powerpages/patterns/scan-uploaded-files",
     parent: "powerpages/patterns"
   },
   "powerpages/patterns/back-link": {
@@ -359,6 +382,33 @@ const pages = {
     description: "Enhance page context by adding captions above headings on Power Pages pages.",
     template: "powerpages/patterns/caption-page-heading",
     parent: "powerpages/patterns"
+  },
+
+  // Server logic
+  "powerpages/server-logic": {
+    title: "Server logic",
+    url: "/powerpages/server-logic/",
+    description: "Run JavaScript on the server in Power Pages to work with Dataverse and call other services without exposing secrets in the browser.",
+    template: "powerpages/server-logic",
+    parent: "powerpages",
+    children: [
+      "powerpages/server-logic/setting-up",
+      "powerpages/server-logic/behaviour-and-limitations"
+    ]
+  },
+  "powerpages/server-logic/setting-up": {
+    title: "Setting up server logic",
+    url: "/powerpages/server-logic/setting-up/",
+    description: "Enable server logic on your site, create a server logic record, write the script and call it from your pages.",
+    template: "powerpages/server-logic/setting-up",
+    parent: "powerpages/server-logic"
+  },
+  "powerpages/server-logic/behaviour-and-limitations": {
+    title: "Behaviour and limitations",
+    url: "/powerpages/server-logic/behaviour-and-limitations/",
+    description: "Known quirks, size and memory limits, and how to debug server logic that fails with a generic error.",
+    template: "powerpages/server-logic/behaviour-and-limitations",
+    parent: "powerpages/server-logic"
   },
 
   

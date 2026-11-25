@@ -1,0 +1,106 @@
+{% raw %}
+{% extends 'DfE/Layouts/2ColumnWideLeft' %}
+
+{% block main %}
+  {% unless user %}
+    <script>
+      window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
+    </script>
+  {% endunless %}
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="dfe_contactemail">
+      What is your email address?
+    </label>
+    <input class="govuk-input" id="dfe_contactemail" name="dfe_contactemail" type="email" autocomplete="email" spellcheck="false">
+  </div>
+
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        Have you applied before?
+      </legend>
+      <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="dfe_appliedbefore" name="dfe_appliedbefore" type="radio" value="1">
+          <label class="govuk-label govuk-radios__label" for="dfe_appliedbefore">Yes</label>
+        </div>
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" id="dfe_appliedbefore-2" name="dfe_appliedbefore" type="radio" value="0">
+          <label class="govuk-label govuk-radios__label" for="dfe_appliedbefore-2">No</label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="govuk-button-group">
+    <button type="submit" id="submit-btn" class="govuk-button" data-module="govuk-button">Save and continue</button>
+    <button type="submit" id="save-return-btn" class="govuk-button govuk-button--secondary" data-module="govuk-button">Save and return</button>
+  </div>
+
+  <div id="loading-spinner" class="loader govuk-visually-hidden"></div>
+
+  <script type="text/javascript">
+    const recordId = "{{ params.id }}";
+    const entitySetName = "dfe_applications";
+
+    // required is set when the user chooses a button
+    const inputs = [
+      { identifier: "dfe_contactemail", type: "email", friendlyName: "your email address" },
+      { identifier: "dfe_appliedbefore", type: "radio", friendlyName: "if you have applied before", targetType: "bool" }
+    ];
+
+    function isAnswered(input) {
+      if (input.type === "radio" || input.type === "checkbox") {
+        return $(`input[name='${input.identifier}']:checked`).length > 0;
+      }
+      return ($(`#${input.identifier}`).val() || "").trim() !== "";
+    }
+
+    function resetButtons() {
+      DfEPortal.EnableButton("submit-btn");
+      DfEPortal.EnableButton("save-return-btn");
+      DfEPortal.HideLoadingSpinner("loading-spinner");
+    }
+
+    async function save(required, nextUrl) {
+      DfEPortal.DisableButton("submit-btn");
+      DfEPortal.DisableButton("save-return-btn");
+      DfEPortal.ShowLoadingSpinner("loading-spinner");
+
+      try {
+        const toValidate = inputs.map(input => Object.assign({}, input, { required: required }));
+
+        const isValid = await DfEPortal.ValidateData(toValidate);
+        if (!isValid) {
+          resetButtons();
+          return;
+        }
+
+        // When saving and returning, only save what's been answered
+        const toSave = required ? toValidate : toValidate.filter(isAnswered);
+
+        if (toSave.length > 0) {
+          const dataObj = await DfEPortal.WebApi.ConstructData(toSave);
+          await DfEPortal.WebApi.Update(recordId, entitySetName, dataObj);
+        }
+
+        window.location.href = nextUrl;
+      } catch (error) {
+        console.error("Error:", error);
+        resetButtons();
+      }
+    }
+
+    $("#submit-btn").on("click", function (event) {
+      event.preventDefault();
+      save(true, "{{ sitemarkers['NEXT_PAGE_SITEMARKER'].url | add_query: 'id', params.id }}");
+    });
+
+    $("#save-return-btn").on("click", function (event) {
+      event.preventDefault();
+      save(false, "{{ sitemarkers['TASK_LIST_SITEMARKER'].url | add_query: 'id', params.id }}");
+    });
+  </script>
+{% endblock %}
+{% endraw %}
