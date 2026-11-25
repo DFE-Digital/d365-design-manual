@@ -1,46 +1,57 @@
 // Component data index
-// Import all component definitions here
+// Every component page renders from its data file through app/views/powerpages/components/_component.html
 
-import checkboxes from './checkboxes.js';
-import radios from './radios.js';
-import dateInput from './date-input.js';
-import emailInput from './email-input.js';
-import textInput from './text-input.js';
-import textarea from './textarea.js';
-import telephoneInput from './telephone-input.js';
-import numberInput from './number-input.js';
-import select from './select.js';
-import search from './search.js';
-import card from './card.js';
 import attachment from './attachment.js';
+import card from './card.js';
+import checkboxes from './checkboxes.js';
+import chevronCard from './chevron-card.js';
 import contentsList from './contents-list.js';
 import dashboard from './dashboard.js';
-import sortableTable from './sortable-table.js';
-import timeline from './timeline.js';
-import printLink from './print-link.js';
+import dateInput from './date-input.js';
+import emailInput from './email-input.js';
+import feedback from './feedback.js';
 import fileUpload from './file-upload.js';
+import filterPanel from './filter-panel.js';
+import loadingSpinner from './loading-spinner.js';
+import numberInput from './number-input.js';
+import printLink from './print-link.js';
+import radios from './radios.js';
+import search from './search.js';
+import select from './select.js';
+import sidebar from './sidebar.js';
+import sortableTable from './sortable-table.js';
+import subNavigation from './sub-navigation.js';
+import telephoneInput from './telephone-input.js';
+import textInput from './text-input.js';
+import textarea from './textarea.js';
+import timeline from './timeline.js';
 
-// Export as a keyed object for easy lookup
-// Keys match the URL path segment (e.g., /powerpages/components/checkboxes/)
+// Keyed by the component's URL path segment (e.g., /powerpages/components/checkboxes/)
 const components = {
-  checkboxes,
-  radios,
+  attachment: attachment,
+  card: card,
+  checkboxes: checkboxes,
+  'chevron-card': chevronCard,
+  'contents-list': contentsList,
+  dashboard: dashboard,
   'date-input': dateInput,
   'email-input': emailInput,
-  'text-input': textInput,
-  textarea,
-  'telephone-input': telephoneInput,
+  feedback: feedback,
+  'file-upload': fileUpload,
+  'filter-panel': filterPanel,
+  'loading-spinner': loadingSpinner,
   'number-input': numberInput,
-  select,
-  search,
-  card,
-  attachment,
-  'contents-list': contentsList,
-  dashboard,
-  'sortable-table': sortableTable,
-  timeline,
   'print-link': printLink,
-  'file-upload': fileUpload
+  radios: radios,
+  search: search,
+  select: select,
+  sidebar: sidebar,
+  'sortable-table': sortableTable,
+  'sub-navigation': subNavigation,
+  'telephone-input': telephoneInput,
+  'text-input': textInput,
+  textarea: textarea,
+  timeline: timeline
 };
 
 export default components;

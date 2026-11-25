@@ -1,61 +1,109 @@
 export default {
   id: 'textarea',
-  title: 'Textarea',
-  description: 'Use the textarea component when you need users to enter text that is longer than a single line.',
+  title: "Textarea",
+  description: "Use the textarea component when you need to let users enter an amount of text that's longer than a single line.",
+  // The page has no contents list
+  contents: false,
+  scripts: ["/assets/js/update-html-example.js"],
 
-  sections: ['whenToUse', 'whenNotToUse', 'howItWorks', 'examples', 'errorMessages'],
+  intro: `
+    <p class="govuk-body"><a class="govuk-link" href="#html-examples">Skip to HTML examples</a></p>
+  `,
 
-  whenToUse: {
-    title: 'When to use this component',
-    content: `<p class="govuk-body">Use the textarea component when you need users to enter text that is longer than a single line, such as comments or descriptions.</p>`
-  },
-
-  whenNotToUse: {
-    title: 'When to not use this component',
-    content: `<p class="govuk-body">Do not use the textarea component if you need users to enter short answers that will fit on a single line. In this case, use the <a class="govuk-link" href="/powerpages/components/text-input/">text input component</a>.</p>`
-  },
-
-  howItWorks: {
-    title: 'How it works',
-    content: `
-      <p class="govuk-body">All textareas must have visible labels aligned above the textarea they refer to. Labels should be short, direct and written in sentence case. Do not use colons at the end of labels.</p>
-      <p class="govuk-body">Make the height of a textarea proportional to the amount of text you expect users to enter. You can set the height of a textarea by specifying the rows attribute.</p>
-    `
-  },
-
-  examples: [
+  sections: [
     {
-      id: 'single-question',
-      title: 'For single question pages',
-      description: `
-        <p class="govuk-body">If presenting only one question on the page, designate the contents of the <code>label</code> as the page heading. This practice ensures users of screen readers hear the contents only once.</p>
-        <p class="govuk-body">You will need to include an empty <code>&#123;% title %&#125;</code> block in your web template to remove the default page header and avoid duplication.</p>
-      `,
-      templatePath: 'includes/components/textarea/headerExample.njk',
-      options: { showUpdateSchema: true, layout: 'default' }
+      id: "when-to-use-this-component",
+      title: "When to use this component",
+      content: `
+        <p class="govuk-body">{{ pageData.description }}</p>
+      `
     },
     {
-      id: 'multiple-question',
-      title: 'For multiple question pages',
-      description: `<p class="govuk-body">If presenting more than one question on the page, do not set the contents of the <code>label</code> as the page heading.</p>`,
-      templatePath: 'includes/components/textarea/standardExample.njk',
-      options: { showUpdateSchema: true, layout: 'withTitle' }
+      id: "when-not-to-use-this-component",
+      title: "When not to use this component",
+      content: `
+        <p class="govuk-body">Do not use the textarea component for single-line answers. In this case, you should use the <a class="govuk-link" href="{{ pages['powerpages/components/text-input'].url }}">text input</a> component instead.</p>
+        <p class="govuk-body">Users can find open-ended questions difficult to answer. It might be better to break up one complex question into a series of simpler ones using alternative components like <a class="govuk-link" href="{{ pages['powerpages/components/radios'].url }}">radios</a>.</p>
+      `
     },
     {
-      id: 'hint-text',
-      title: 'Using hint text',
-      description: `
-        <p class="govuk-body">Use hint text to provide relevant assistance to the majority of users, such as clarifying how their information will be used.</p>
-      `,
-      templatePath: 'includes/components/textarea/hintExample.njk',
-      options: { showUpdateSchema: true, layout: 'default' }
+      id: "how-it-works",
+      title: "How it works",
+      content: `
+        <p class="govuk-body">Read the <a class="govuk-link" href="https://design-system.service.gov.uk/components/textarea/#how-it-works" target="_blank">GOV.UK Design System guidance on textareas (opens in a new tab)</a> for information on labels, sizing, and accessibility considerations.</p>
+        <p class="govuk-body">If you need to limit the number of characters users can enter, use the <a class="govuk-link" href="https://design-system.service.gov.uk/components/character-count/" target="_blank">character count component (opens in a new tab)</a> which shows users how many characters they have remaining as they type.</p>
+        <p class="govuk-body">The <a class="govuk-link" href="{{ pages['powerpages/developer-guides/crm-helper-framework'].url }}">CRM helper framework</a> checks the limit you set on the character count's container: <code>data-maxlength</code> for a number of characters, or <code>data-maxwords</code> for a number of words.</p>
+
+        <div class="govuk-warning-text">
+          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+          <strong class="govuk-warning-text__text">
+            <span class="govuk-visually-hidden">Warning</span>
+            Use <code>data-maxwords</code> for a word limit, not GOV.UK Frontend 6.6's newer <code>data-maxlength</code> with <code>data-count-type="words"</code>. The framework doesn't support the newer markup yet: it would treat the limit as characters and wouldn't check the number of words.
+          </strong>
+        </div>
+      `
+    },
+    {
+      id: "html-examples",
+      title: "HTML examples",
+      content: `
+        <p class="govuk-body">
+          Copy the HTML into your web template. Replace <code>schema-name</code> with your CRM field schema name, keeping any suffixes like <code>-hint</code>. This is required for the <a class="govuk-link" href="{{ pages['powerpages/developer-guides/crm-helper-framework'].url }}">CRM helper framework</a> to validate and submit data.
+        </p>
+        <p class="govuk-body">
+          Use the input field above each example to enter your schema name. This updates all instances in the code automatically, ensuring no mistakes that could impact validation or accessibility.
+        </p>
+
+        <h3 class="govuk-heading-m">For single question pages</h3>
+        <p class="govuk-body">
+          If presenting only one question on the page, set the contents of the <code>&lt;label&gt;</code> as the page heading.
+          This is good practice as it means that users of screen readers will only hear the contents once.
+        </p>
+        <p class="govuk-body">You will need to include an empty <code>&#123;% title %&#125;</code> block in your web template to remove the default page header.</p>
+
+        {{ exampleTabs(
+          "Textarea for single question",
+          "includes/components/textarea/headerExample.njk",
+          { showUpdateSchema: true, index: 1, layout: 'default' }
+        ) }}
+
+        <h3 class="govuk-heading-m">For multiple question pages</h3>
+        <p class="govuk-body">If presenting more than one question on the page, do not set the contents of the <code>&lt;label&gt;</code> as the page heading.</p>
+
+        {{ exampleTabs(
+          "Textarea for multiple questions",
+          "includes/components/textarea/standardExample.njk",
+          { showUpdateSchema: true, index: 2, layout: 'withTitle' }
+        ) }}
+
+        <h3 class="govuk-heading-m">Using hint text</h3>
+        <p class="govuk-body">Use hint text for help that's relevant to the majority of users, like how their information will be used, or where to find it.</p>
+        <p class="govuk-body">Do not use long paragraphs and lists in hint text. Screen readers read out the entire text when users interact with the form element. Do not include links within hint text.</p>
+
+        {{ exampleTabs(
+          "Textarea with hint",
+          "includes/components/textarea/hintExample.njk",
+          { showUpdateSchema: true, index: 3, layout: 'default' }
+        ) }}
+      `
+    },
+    {
+      id: "error-messages",
+      title: "Error messages",
+      content: `
+        <p class="govuk-body">
+          An error message is displayed next to the field and in the error summary when a validation error occurs.
+          The <a class="govuk-link" href="{{ pages['powerpages/developer-guides/crm-helper-framework'].url }}">CRM helper framework</a> automatically handles error messages for specific error states.
+        </p>
+        <p class="govuk-body govuk-!-font-weight-bold">If nothing is entered and the question is required</p>
+        <p class="govuk-body">'Enter [whatever it is]'. For example, 'Enter your feedback'.</p>
+        <p class="govuk-body govuk-!-font-weight-bold">If the input is too long</p>
+        <p class="govuk-body">'[whatever it is] must be [number] characters or less'. For example, 'Your feedback must be 500 characters or less'.</p>
+        <p class="govuk-body govuk-!-font-weight-bold">If the input has too many words</p>
+        <p class="govuk-body">'[whatever it is] must be [number] words or less'. For example, 'Your feedback must be 150 words or less'. Blank lines and paragraph breaks aren't counted as words.</p>
+        <p class="govuk-body govuk-!-font-weight-bold">If the input is too short</p>
+        <p class="govuk-body">'[whatever it is] must be [number] characters or more'. For example, 'Your feedback must be 10 characters or more'.</p>
+      `
     }
-  ],
-
-  errorMessages: {
-    title: 'Error messages',
-    content: `
-      <p class="govuk-body">An error message is displayed next to the field and in the error summary when a validation error occurs. The CRM helper framework automatically handles error messages for specific error states, therefore you do not need to add any additional error containers to your HTML. <a class="govuk-link" href="/powerpages/developer-guides/crm-helper-framework/">Refer to the CRM helper framework guide</a> to understand how to validate your front-end data.</p>
-    `
-  }
+  ]
 };

@@ -148,91 +148,78 @@ const pages = {
     title: "Attachment",
     url: "/powerpages/components/attachment/",
     description: "Use the attachment component to display downloadable file attachments (e.g. PDFs, Word documents) with a thumbnail, title, and metadata like file type or size.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/card": {
     title: "Card",
     url: "/powerpages/components/card/",
     description: "The card component is a versatile user interface element used to display grouped information in a visually appealing and organised way.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/checkboxes": {
     title: "Checkboxes",
     url: "/powerpages/components/checkboxes/",
     description: "Use the checkboxes component to assist users in selecting multiple options from a list or toggling a single option on or off.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/chevron-card": {
     title: "Chevron card",
     url: "/powerpages/components/chevron-card/",
     description: "Use the chevron card component to display a list of linked items with titles, descriptions and a visual chevron indicator.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/contents-list": {
     title: "Contents list",
     url: "/powerpages/components/contents-list/",
     description: "Use a contents list at the top of a page to facilitate user navigation within a small group of related pages or page sections.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/dashboard": {
     title: "Dashboard",
     url: "/powerpages/components/dashboard/",
     description: "Use the dashboard component to present a summarised view of information for groups.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/date-input": {
     title: "Date input",
     url: "/powerpages/components/date-input/",
     description: "Use the date input component when users need to input a memorable or easily retrievable date.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/email-input": {
     title: "Email input",
     url: "/powerpages/components/email-input/",
     description: "Use the email input component when allowing users to input their email address.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/feedback": {
     title: "Feedback",
     url: "/powerpages/components/feedback/",
     description: "Use the feedback component to collect user feedback about a page with a simple 'Is this page useful?' prompt.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/file-upload": {
     title: "File upload",
     url: "/powerpages/components/file-upload/",
     description: "Use the file upload component to help users select and upload a file, and validate and virus scan it with the CRM helper framework.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/filter-panel": {
     title: "Filter panel",
     url: "/powerpages/components/filter-panel/",
     description: "Use the filter panel component to help users narrow down a large list of results by applying multiple filters.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/loading-spinner": {
     title: "Loading spinner",
     url: "/powerpages/components/loading-spinner/",
     description: "Use the loading spinner component to indicate that content is being loaded or an action is being processed.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/number-input": {
     title: "Number input",
     url: "/powerpages/components/number-input/",
     description: "Use the number input component when you need to let a user enter either a whole number, a decimal number or either.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/print-link": {
@@ -246,70 +233,60 @@ const pages = {
     title: "Radios",
     url: "/powerpages/components/radios/",
     description: "Use the radios component when users can only select one option from a list.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/search": {
     title: "Search",
     url: "/powerpages/components/search/",
     description: "Use the search component when you need to let users search and select a record from a database table.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/select": {
     title: "Select",
     url: "/powerpages/components/select/",
     description: "The select component should only be used as a last resort in public-facing services.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/sidebar": {
     title: "Sidebar",
     url: "/powerpages/components/sidebar/",
     description: "Use the sidebar component to display related links or supplementary information alongside main content.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/sortable-table": {
     title: "Sortable table",
     url: "/powerpages/components/sortable-table/",
     description: "Use the sortable table component to let users sort columns in ascending or descending order.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/sub-navigation": {
     title: "Sub-navigation",
     url: "/powerpages/components/sub-navigation/",
     description: "Use the sub-navigation component to help users navigate between related pages or sections within a service.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/telephone-input": {
     title: "Telephone input",
     url: "/powerpages/components/telephone-input/",
     description: "Use the telephone input component when you need to let users enter a phone number.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/text-input": {
     title: "Text input",
     url: "/powerpages/components/text-input/",
     description: "Use the text input component when you need to let users enter text that's no longer than a single line.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/textarea": {
     title: "Textarea",
     url: "/powerpages/components/textarea/",
     description: "Use the textarea component when you need to let users enter an amount of text that's longer than a single line.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
   "powerpages/components/timeline": {
     title: "Timeline",
     url: "/powerpages/components/timeline/",
     description: "Use the timeline component to help users understand what has happened and when.",
-    dataSource: "components",
     parent: "powerpages/components"
   },
 

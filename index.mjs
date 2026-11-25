@@ -82,6 +82,22 @@ nunjucksEnv.addGlobal('componentExamples', componentExamples);
 // Lets a component's template render its data file through powerpages/components/_component.html
 nunjucksEnv.addGlobal('components', components);
 
+// The contents list for a component page: its sections, with any subsections nested under them
+nunjucksEnv.addGlobal('componentContents', component => (component.sections || []).map(section => ({
+  text: section.title,
+  href: `#${section.id}`,
+  ...(section.subsections && section.subsections.length
+    ? { children: section.subsections.map(sub => ({ text: sub.title, href: `#${sub.id}` })) }
+    : {})
+})));
+
+// Renders a component page's content from its data file. The content is Nunjucks, so links built from
+// the page registry, example tabs and other macros render with the page's own context
+nunjucksEnv.addFilter('renderContent', function (content, imports = []) {
+  const header = ['{% from "includes/components/_exampleTabs.njk" import exampleTabs %}', ...imports].join('\n');
+  return new nunjucks.runtime.SafeString(nunjucksEnv.renderString(`${header}\n${content || ''}`, this.ctx));
+});
+
 // Add custom filters for merge and push
 nunjucksEnv.addFilter('merge', function(obj, additional) {
   return { ...obj, ...additional };
