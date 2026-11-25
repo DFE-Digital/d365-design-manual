@@ -176,7 +176,7 @@ export default {
           <li><code>ProcessFileAndUploadToNotes</code> builds the table's entity set name by adding "s" to its logical name, so it doesn't work for tables whose entity set name is different, such as one ending in "y".</li>
           <li>In version 02 and earlier of the framework, the improved component doesn't work: the virus scan passes without scanning, and the file isn't saved.</li>
         </ul>
-        <p class="govuk-body">To report an issue, use the <a class="govuk-link" href="https://github.com/DFE-Digital/d365-design-manual/issues" target="_blank">issues backlog in GitHub (opens in a new tab)</a>.</p>
+        <p class="govuk-body">To report an issue, use the <a class="govuk-link" href="https://github.com/DFE-Digital/dynamics-power-pages-manual/issues" target="_blank">issues backlog in GitHub (opens in a new tab)</a>.</p>
       `
     }
   ]
