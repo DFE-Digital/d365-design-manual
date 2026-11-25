@@ -9,11 +9,17 @@
 
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ component.title }}</h1>
 
+{% if component.introBeforeContents %}
+  {{ component.intro | renderContent(component.imports) }}
+{% endif %}
+
 {% if component.contents != false %}
   {{ contentsList(componentContents(component)) }}
 {% endif %}
 
-{{ component.intro | renderContent(component.imports) }}
+{% if not component.introBeforeContents %}
+  {{ component.intro | renderContent(component.imports) }}
+{% endif %}
 
 {% for section in component.sections %}
 <h2 class="govuk-heading-l" id="{{ section.id }}">{{ section.title }}</h2>

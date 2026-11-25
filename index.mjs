@@ -16,7 +16,6 @@ import * as cheerio from 'cheerio';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import pages, { getPageByUrl, getBreadcrumbs, getChildren, getAllPages, getRedirect, getNavTree, getPagination } from './app/data/pages.js';
-import componentExamples from './app/data/component-examples.js';
 import components from './app/data/components/index.js';
 import hljs from 'highlight.js';
 
@@ -75,9 +74,6 @@ nunjucksEnv.addGlobal('getChildren', getChildren);
 nunjucksEnv.addGlobal('getNavTree', getNavTree);
 nunjucksEnv.addGlobal('getPagination', getPagination);
 nunjucksEnv.addGlobal('getPageByUrl', getPageByUrl);
-
-// Add component examples as a global variable
-nunjucksEnv.addGlobal('componentExamples', componentExamples);
 
 // Lets a component's template render its data file through powerpages/components/_component.html
 nunjucksEnv.addGlobal('components', components);
@@ -251,7 +247,16 @@ function matchRoutes(req, res, next) {
   let filePath = urlPath.substr(1).replace(/\/$/, '');
   if (filePath === '') {
     filePath = 'index';
+  } else if (filePath === 'index') {
+    return res.redirect(301, '/');
   }
+
+  // Layouts, includes, partials and the error pages aren't pages in their own right
+  const segments = filePath.split('/');
+  if (['layouts', 'includes'].includes(segments[0]) || segments.some(s => s.startsWith('_')) || ['404', '500'].includes(filePath)) {
+    return next();
+  }
+
   const viewsDir = path.join(__dirname, 'app/views');
   const exists = ['.html', '/index.html'].some(ext => fs.existsSync(path.join(viewsDir, filePath + ext)));
   if (!exists) {
@@ -270,9 +275,14 @@ app.use(function(req, res, next) {
   next();
 });
 
+// Old .html links go to the page without the extension, keeping the query string.
+// Leading slashes are collapsed so the redirect can't point to another site
 app.get(/\.html?$/i, function (req, res) {
-  const path = req.path.replace(/\.html?$/, '');
-  res.redirect(path);
+  const target = req.path.replace(/\.html?$/i, '').replace(/^\/+/, '/') || '/';
+  const page = getPageByUrl(target);
+  const queryStart = req.originalUrl.indexOf('?');
+  const query = queryStart === -1 ? '' : req.originalUrl.slice(queryStart);
+  res.redirect(301, (page ? page.url : target) + query);
 });
 
 // Send old URLs of moved pages to their new location

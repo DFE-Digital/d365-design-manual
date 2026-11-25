@@ -3,6 +3,8 @@ export default {
   title: "Filter panel",
   description: "Use the filter panel component to help users narrow down a large list of results by applying multiple filters.",
 
+  // The skip link sits above the contents list
+  introBeforeContents: true,
   intro: `
     <p class="govuk-body"><a class="govuk-link" href="#html-example">Skip to HTML example</a></p>
   `,

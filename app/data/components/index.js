@@ -55,13 +55,3 @@ const components = {
 };
 
 export default components;
-
-// Helper to get component by ID
-export function getComponent(id) {
-  return components[id] || null;
-}
-
-// Get all component IDs
-export function getAllComponentIds() {
-  return Object.keys(components);
-}

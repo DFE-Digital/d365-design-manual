@@ -448,7 +448,7 @@ const pages = {
   "crm/customisation": {
     title: "Customisation",
     url: "/crm/customisation/",
-    description: "Guidance on when and how to use low‑code and pro‑code customisations in Dynamics 365, focusing on using the right tools for the job.",
+    description: "Guidance on when and how to use low-code and pro-code customisations in Dynamics 365, focusing on using the right tools for the job.",
     template: "crm/customisation",
     parent: "crm",
         children: [
@@ -460,7 +460,7 @@ const pages = {
     ]
   },
   "crm/customisation/configuration-first": {
-    title: "Configuration, low‑code and pro‑code",
+    title: "Configuration, low-code and pro-code",
     url: "/crm/customisation/configuration-first/",
     description: "Use configuration first, then low-code, and pro-code only when nothing else meets the need.",
     template: "crm/customisation/configuration-first",
@@ -499,7 +499,7 @@ const pages = {
   "crm/architecture": {
     title: "Architecture",
     url: "/crm/architecture/",
-    description: "Guidance on designing Dynamics 365 solutions that follow DfE’s architecture principles, promote simplicity, consistency and re‑use.",
+    description: "Guidance on designing Dynamics 365 solutions that follow DfE’s architecture principles, promote simplicity, consistency and re-use.",
     template: "crm/architecture",
     parent: "crm",
     children: [
