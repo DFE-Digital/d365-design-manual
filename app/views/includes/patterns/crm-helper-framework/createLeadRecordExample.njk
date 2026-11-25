@@ -26,8 +26,7 @@
         identifier: "emailaddress",
         type: "email",
         friendlyName: "your email address",
-        required: true,
-        resolve: false
+        required: true
       }
     ];
 
@@ -40,15 +39,20 @@
       DfEPortal.ShowLoadingSpinner("loading-spinner");
 
       try {
-        // Validate the input data
-        await DfEPortal.ValidateData(inputObj);
+        // Validate the input data. It resolves with false if anything fails.
+        const isValid = await DfEPortal.ValidateData(inputObj);
+        if (!isValid) {
+          DfEPortal.EnableButton("submit-btn");
+          DfEPortal.HideLoadingSpinner("loading-spinner");
+          return;
+        }
 
         // Construct the data object for submission
         const dataObj = await DfEPortal.WebApi.ConstructData(inputObj);
 
         // Create the lead record
-        const entityName = "lead";
-        const leadId = await DfEPortal.WebApi.Create(entityName, dataObj);
+        const entitySetName = "leads";
+        const leadId = await DfEPortal.WebApi.Create(entitySetName, dataObj);
 
         // Redirect or notify the user of success
         alert("Lead created successfully!");

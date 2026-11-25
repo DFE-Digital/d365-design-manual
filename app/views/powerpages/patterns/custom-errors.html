@@ -1,23 +1,12 @@
 {% set pageData = pages['powerpages/patterns/custom-errors'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Default error handling", href: "#default-error-handling" },
@@ -26,7 +15,7 @@
   { text: "When to use custom error containers", href: "#when-to-use" }
 ]) }}
 
-<p class="govuk-body">The <a class="govuk-link" href="{{ pages['powerpages/patterns/crm-helper-framework'].url }}">CRM Helper Framework</a> automatically handles displaying validation errors in a GOV.UK-compliant error summary. In most cases, the default behaviour works without any additional configuration. However, there are scenarios where you need to display errors in a custom location.</p>
+<p class="govuk-body">The <a class="govuk-link" href="{{ pages['powerpages/developer-guides/crm-helper-framework'].url }}">CRM helper framework</a> automatically handles displaying validation errors in a GOV.UK-compliant error summary. In most cases, the default behaviour works without any additional configuration. However, there are scenarios where you need to display errors in a custom location.</p>
 
 <h2 class="govuk-heading-l" id="default-error-handling">Default error handling</h2>
 
@@ -45,10 +34,10 @@
 <p class="govuk-body">If your form is not on the main page (for example, inside a modal or a separate section), you can specify a different error container by passing a CSS selector as the second parameter to <code>ValidateData</code>.</p>
 
 <pre><code class="language-javascript">// Default - uses #error-summary-container
-const isValid = DfEPortal.ValidateData(inputObj);
+const isValid = await DfEPortal.ValidateData(inputObj);
 
 // Custom - uses a different container
-const isValid = DfEPortal.ValidateData(inputObj, "#modal-error-container");</code></pre>
+const isValid = await DfEPortal.ValidateData(inputObj, "#modal-error-container");</code></pre>
 
 <p class="govuk-body">Make sure your custom container element exists in the HTML:</p>
 
@@ -87,8 +76,8 @@ DfEPortal.Errors.AddErrorSummaryDetail("feedback-submit", "Please tell us what w
 <pre><code class="language-javascript">// Focus the default error summary
 DfEPortal.Errors.FocusErrorSummary();
 
-// Focus a custom error summary
-DfEPortal.Errors.FocusErrorSummary("#modal-error-container");</code></pre>
+// Focus a custom error summary. The first parameter is the scroll options.
+DfEPortal.Errors.FocusErrorSummary({}, "#modal-error-container");</code></pre>
 
 <h3 class="govuk-heading-m">Complete example</h3>
 
@@ -155,7 +144,7 @@ DfEPortal.Errors.FocusErrorSummary("#modal-error-container");</code></pre>
   required: true
 }];
 
-const isValid = DfEPortal.ValidateData(feedbackInput, "#feedback-error-container");
+const isValid = await DfEPortal.ValidateData(feedbackInput, "#feedback-error-container");
 
 if (isValid) {
   // Submit feedback...

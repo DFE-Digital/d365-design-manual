@@ -16,7 +16,7 @@ pre * {
 pre code {
   outline: 1px solid rgba(0, 0, 0, 0) !important;
   color: #0b0c0c !important;
-  background-color: #f3f2f1 !important;
+  background-color: govuk-colour("black", $variant: "tint-95") !important;
 }
 
 // Inline code styling
@@ -30,7 +30,7 @@ dd code {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 2px 5px;
-  background-color: #f3f2f1;
+  background-color: govuk-colour("black", $variant: "tint-95");
   color: #d13118;
   font-weight: 400;
   font-size: 0.95em;

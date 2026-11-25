@@ -7,6 +7,7 @@ import slugify from 'slugify';
 import { marked } from 'marked';
 import bodyParser from 'body-parser';
 import path from 'path';
+import fs from 'fs';
 import config from './app/config.js';
 import compression from 'compression';
 import helmet from 'helmet';
@@ -14,11 +15,9 @@ import favicon from 'serve-favicon';
 import * as cheerio from 'cheerio';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import pages, { getPageByUrl, getBreadcrumbs, getChildren, getAllPages } from './app/data/pages.js';
-import componentExamples from './app/data/component-examples.js';
-import components, { getComponent } from './app/data/components/index.js';
+import pages, { getPageByUrl, getBreadcrumbs, getChildren, getAllPages, getRedirect, getNavTree, getPagination } from './app/data/pages.js';
+import components from './app/data/components/index.js';
 import hljs from 'highlight.js';
-import * as githubService from './app/services/github.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -72,10 +71,28 @@ nunjucksEnv.addGlobal('pages', getAllPages());
 // Add navigation helper functions
 nunjucksEnv.addGlobal('getBreadcrumbs', getBreadcrumbs);
 nunjucksEnv.addGlobal('getChildren', getChildren);
+nunjucksEnv.addGlobal('getNavTree', getNavTree);
+nunjucksEnv.addGlobal('getPagination', getPagination);
 nunjucksEnv.addGlobal('getPageByUrl', getPageByUrl);
 
-// Add component examples as a global variable
-nunjucksEnv.addGlobal('componentExamples', componentExamples);
+// Lets a component's template render its data file through powerpages/components/_component.html
+nunjucksEnv.addGlobal('components', components);
+
+// The contents list for a component page: its sections, with any subsections nested under them
+nunjucksEnv.addGlobal('componentContents', component => (component.sections || []).map(section => ({
+  text: section.title,
+  href: `#${section.id}`,
+  ...(section.subsections && section.subsections.length
+    ? { children: section.subsections.map(sub => ({ text: sub.title, href: `#${sub.id}` })) }
+    : {})
+})));
+
+// Renders a component page's content from its data file. The content is Nunjucks, so links built from
+// the page registry, example tabs and other macros render with the page's own context
+nunjucksEnv.addFilter('renderContent', function (content, imports = []) {
+  const header = ['{% from "includes/components/_exampleTabs.njk" import exampleTabs %}', ...imports].join('\n');
+  return new nunjucks.runtime.SafeString(nunjucksEnv.renderString(`${header}\n${content || ''}`, this.ctx));
+});
 
 // Add custom filters for merge and push
 nunjucksEnv.addFilter('merge', function(obj, additional) {
@@ -127,7 +144,7 @@ nunjucksEnv.addFilter('getPageDescription', (url) => {
 app.engine('html', nunjucks.render); // Tell Express to use Nunjucks for .html files
 app.set('view engine', 'html'); // Set the default view engine to 'html'
 
-app.locals.serviceName = 'Dynamics 365 Design Manual';
+app.locals.serviceName = 'Dynamics 365 and Power Pages manual';
 
 // Set up static file serving for the app's assets
 app.use('/assets/js/sdt-toolkit.js', (req, res, next) => {
@@ -167,32 +184,6 @@ function processHtml(html) {
   return $.html();
 }
 
-// Render a data-driven component page
-function renderComponent(componentId, res, next, currentPath, pageData) {
-  const component = getComponent(componentId);
-  if (!component) {
-    return null; // Component not found
-  }
-
-  const pageKey = `powerpages/components/${componentId}`;
-  const breadcrumbs = getBreadcrumbs(pageKey);
-
-  res.set('Content-type', 'text/html; charset=utf-8');
-  res.render('powerpages/components/_component', {
-    currentPath,
-    component,
-    pageData: pageData || { title: component.title, description: component.description },
-    breadcrumbs
-  }, (error, html) => {
-    if (error) {
-      next(error);
-    } else {
-      res.end(processHtml(html));
-    }
-  });
-  return true;
-}
-
 // Render a template file with page data
 function renderTemplate(templatePath, res, next, currentPath, pageData, pageKey) {
   const breadcrumbs = pageKey ? getBreadcrumbs(pageKey) : [];
@@ -203,7 +194,8 @@ function renderTemplate(templatePath, res, next, currentPath, pageData, pageKey)
     currentPath,
     pageData,
     breadcrumbs,
-    children
+    children,
+    pageKey
   }, (error, html) => {
     if (error) {
       if (error.message.startsWith('template not found')) {
@@ -212,7 +204,8 @@ function renderTemplate(templatePath, res, next, currentPath, pageData, pageKey)
           currentPath,
           pageData,
           breadcrumbs,
-          children
+          children,
+          pageKey
         }, (err2, html2) => {
           if (err2) {
             next(err2);
@@ -236,103 +229,41 @@ function matchRoutes(req, res, next) {
 
   // Look up page in registry by URL
   const pageData = getPageByUrl(urlPath);
+  const pageKey = pageData ? Object.keys(getAllPages()).find(key => getAllPages()[key] === pageData) : null;
 
-  if (pageData) {
-    // Found in registry - determine how to render
-    const pageKey = Object.keys(getAllPages()).find(key => {
-      const p = getAllPages()[key];
-      const pUrl = p.url === '/' ? '/' : p.url.replace(/\/$/, '');
-      const targetUrl = urlPath === '/' ? '/' : urlPath.replace(/\/$/, '');
-      return pUrl === targetUrl;
-    });
-
-    if (pageData.dataSource === 'components') {
-      // Data-driven component page
-      const componentId = urlPath.split('/').pop();
-      const rendered = renderComponent(componentId, res, next, currentPath, pageData);
-      if (rendered) return;
-    }
-
-    if (pageData.template) {
-      // Template-based page
-      renderTemplate(pageData.template, res, next, currentPath, pageData, pageKey);
-      return;
-    }
+  // Each page has one URL, with a trailing slash
+  if (pageData && urlPath !== pageData.url) {
+    const queryStart = req.originalUrl.indexOf('?');
+    return res.redirect(301, pageData.url + (queryStart === -1 ? '' : req.originalUrl.slice(queryStart)));
   }
 
-  // Fall back to file-based routing for pages not in registry
+  if (pageData && pageData.template) {
+    renderTemplate(pageData.template, res, next, currentPath, pageData, pageKey);
+    return;
+  }
+
+  // Fall back to file-based routing. Registry pages that land here, such as
+  // component pages without a template, still pass their key for navigation
   let filePath = urlPath.substr(1).replace(/\/$/, '');
   if (filePath === '') {
     filePath = 'index';
+  } else if (filePath === 'index') {
+    return res.redirect(301, '/');
   }
-  renderTemplate(filePath, res, next, currentPath, null, null);
+
+  // Layouts, includes, partials and the error pages aren't pages in their own right
+  const segments = filePath.split('/');
+  if (['layouts', 'includes'].includes(segments[0]) || segments.some(s => s.startsWith('_')) || ['404', '500'].includes(filePath)) {
+    return next();
+  }
+
+  const viewsDir = path.join(__dirname, 'app/views');
+  const exists = ['.html', '/index.html'].some(ext => fs.existsSync(path.join(viewsDir, filePath + ext)));
+  if (!exists) {
+    return next();
+  }
+  renderTemplate(filePath, res, next, currentPath, null, pageKey);
 }
-
-// GitHub API endpoints
-app.post('/api/trigger-import', async (req, res) => {
-  try {
-    const { brand, environmentUrl, clientId, clientSecret } = req.body;
-
-    // Validate required fields
-    const missing = [];
-    if (!brand) missing.push('Website brand');
-    if (!environmentUrl) missing.push('Environment URL');
-    if (!clientId) missing.push('Client ID');
-    if (!clientSecret) missing.push('Client Secret');
-
-    if (missing.length) {
-      return res.status(400).json({
-        error: `Missing required field${missing.length > 1 ? 's' : ''}: ${missing.join(', ')}`
-      });
-    }
-
-    // Validate environment URL format
-    if (!environmentUrl.startsWith('https://')) {
-      return res.status(400).json({
-        error: 'Environment URL must start with https://'
-      });
-    }
-
-    const result = await githubService.triggerImport({ brand, environmentUrl, clientId, clientSecret });
-    res.status(202).json({ ok: true, ...result });
-  } catch (err) {
-    console.error('Trigger import error:', err.message);
-    const status = err.message.includes('Invalid brand') ? 400 : 500;
-    res.status(status).json({ error: err.message });
-  }
-});
-
-app.get('/api/find-run', async (req, res) => {
-  try {
-    const { dispatchTime } = req.query;
-
-    if (!dispatchTime) {
-      return res.status(400).json({ error: 'dispatchTime is required' });
-    }
-
-    const run = await githubService.findRunAfterTime(dispatchTime, 'repository_dispatch');
-    res.json({ run });
-  } catch (err) {
-    console.error('Find run error:', err.message);
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.get('/api/import-status', async (req, res) => {
-  try {
-    const { runId } = req.query;
-
-    if (!runId) {
-      return res.status(400).json({ error: 'Run ID is required' });
-    }
-
-    const status = await githubService.getRunStatus(runId);
-    res.json(status);
-  } catch (err) {
-    console.error('Get import status error:', err.message);
-    res.status(500).json({ error: err.message });
-  }
-});
 
 app.use((req, res, next) => {
   res.locals.query = req.query;
@@ -344,13 +275,41 @@ app.use(function(req, res, next) {
   next();
 });
 
+// Old .html links go to the page without the extension, keeping the query string.
+// Leading slashes are collapsed so the redirect can't point to another site
 app.get(/\.html?$/i, function (req, res) {
-  const path = req.path.replace(/\.html?$/, '');
-  res.redirect(path);
+  const target = req.path.replace(/\.html?$/i, '').replace(/^\/+/, '/') || '/';
+  const page = getPageByUrl(target);
+  const queryStart = req.originalUrl.indexOf('?');
+  const query = queryStart === -1 ? '' : req.originalUrl.slice(queryStart);
+  res.redirect(301, (page ? page.url : target) + query);
+});
+
+// Send old URLs of moved pages to their new location
+app.use((req, res, next) => {
+  const redirectTo = getRedirect(req.path);
+  if (redirectTo) {
+    const queryStart = req.originalUrl.indexOf('?');
+    const query = queryStart === -1 ? '' : req.originalUrl.slice(queryStart);
+    const [target, fragment] = redirectTo.split('#');
+    return res.redirect(301, `${target}${query}${fragment ? `#${fragment}` : ''}`);
+  }
+  next();
 });
 
 app.get(/^([^.]+)$/, function (req, res, next) {
   matchRoutes(req, res, next);
+});
+
+// Page not found
+app.use((req, res) => {
+  res.status(404).render('404', { currentPath: req.path });
+});
+
+// Anything that fails while rendering a page
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).render('500', { currentPath: req.path });
 });
 
 app.listen(config.port, () => {

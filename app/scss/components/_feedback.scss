@@ -31,9 +31,9 @@
 }
 
 .dfe-feedback__prompt {
-  background-color: govuk-tint($govuk-brand-colour, 95%);
+  background-color: govuk-colour("blue", $variant: "tint-95");
   color: $govuk-text-colour;
-  border-top: 1px solid govuk-tint($govuk-brand-colour, 80%);
+  border-top: 1px solid govuk-colour("blue", $variant: "tint-80");
   outline: 0;
 }
 
@@ -132,7 +132,7 @@
   }
 
   &:hover {
-    background: govuk-colour("mid-grey");
+    background: govuk-colour("black", $variant: "tint-80");
     color: $govuk-text-colour;
   }
 

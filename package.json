@@ -11,9 +11,9 @@
     "build-hljs": "esbuild app/js-vendor/hljs-bundle.js --bundle --minify --sourcemap --outfile=public/js/hljs-bundle.js --target=es2015 --format=iife",
     "styles": "sass --load-path=node_modules/govuk-frontend/dist/govuk \"app/scss:public/css\" --source-map && postcss public/css/*.css --replace",
     "copy-code-theme": "cpx \"node_modules/highlight.js/styles/github.css\" public/css",
-    "rebrand-images": "cpx \"node_modules/govuk-frontend/dist/govuk/assets/rebrand/**/*.{png,jpg,jpeg,svg,gif,ico}\" public",
+    "govuk-images": "cpx \"node_modules/govuk-frontend/dist/govuk/assets/images/**/*.{png,jpg,jpeg,svg,gif,ico}\" public/images",
     "other-images": "cpx \"app/images/**/*.{png,jpg,jpeg,svg,gif,ico}\" public/images",
-    "build": "npm run clean && npm run copy-vendor-js && npm run build-app-js && npm run build-hljs && npm run styles && npm run copy-code-theme && npm run rebrand-images && npm run other-images",
+    "build": "npm run clean && npm run copy-vendor-js && npm run build-app-js && npm run build-hljs && npm run styles && npm run copy-code-theme && npm run govuk-images && npm run other-images",
     "serve": "node index.mjs",
     "watch:js": "esbuild \"app/js/**/*.js\" --outdir=public/js --bundle=false --minify --sourcemap --target=es2015 --watch",
     "watch:css": "sass --load-path=node_modules/govuk-frontend/dist/govuk \"app/scss:public/css\" --source-map --watch",
@@ -29,18 +29,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@octokit/app": "^16.0.1",
-    "@octokit/rest": "^22.0.0",
     "body-parser": "^1.20.2",
     "cheerio": "^1.0.0-rc.12",
     "compression": "^1.7.4",
     "dotenv": "^16.6.1",
     "express": "^4.18.2",
-    "govuk-frontend": "^5.11.0",
+    "govuk-frontend": "^6.6.0",
     "helmet": "^8.1.0",
     "highlight.js": "^11.11.1",
     "jquery": "^3.7.0",
-    "jsonwebtoken": "^9.0.2",
     "marked": "^4.3.0",
     "nunjucks": "^3.2.4",
     "serve-favicon": "^2.5.0",
@@ -66,7 +63,7 @@
     "postcss-strip-font-face": "^1.0.0",
     "prettier": "^2.8.8",
     "rimraf": "^6.0.1",
-    "sass": "^1.89.2"
+    "sass": "^1.108.2"
   },
   "engines": {
     "node": ">=18"

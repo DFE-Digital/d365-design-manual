@@ -42,7 +42,7 @@
   .dfe-vertical-nav__section-item::before {
     content: "—";
     margin-left: -(govuk-spacing(4));
-    color: govuk-colour("dark-grey");
+    color: govuk-colour("black", $variant: "tint-25");
   }
 
   .dfe-vertical-nav__link {
@@ -51,12 +51,35 @@
   }
 }
 
+// Only show the current page bar on top-level pages. On an open section the bar
+// would run down all its pages, and on nested pages it crosses the dash
+.dfe-vertical-nav__section--nested .dfe-vertical-nav__section-item--current,
+.dfe-vertical-nav__section-item--current:has(> .dfe-vertical-nav__section) {
+  margin-left: 0;
+  padding-left: 0;
+  border-left: 0;
+  background-color: transparent;
+}
+
+// The open section and the current page stay bold at every level of the tree
+.dfe-vertical-nav__section-item--active > .dfe-vertical-nav__link,
+.dfe-vertical-nav__section-item--current > .dfe-vertical-nav__link {
+  font-weight: bold;
+}
+
+// Without the bar, show the current page in black so it stands apart from the
+// open sections above it, which stay blue
+.dfe-vertical-nav__section--nested .dfe-vertical-nav__section-item--current > .dfe-vertical-nav__link,
+.dfe-vertical-nav__section-item--current:has(> .dfe-vertical-nav__section) > .dfe-vertical-nav__link {
+  color: $govuk-text-colour;
+}
+
 .dfe-vertical-nav__theme {
   @include govuk-font-size($size: 19);
   @include govuk-typography-weight-regular;
   margin: 0;
   padding: govuk-spacing(2) govuk-spacing(3) govuk-spacing(2) 0;
-  color: govuk-colour("dark-grey");
+  color: govuk-colour("black", $variant: "tint-25");
 
   &:first-of-type {
     padding-top: 0;
@@ -72,7 +95,6 @@
   border: 0;
   color: $govuk-link-colour;
   background: none;
-  word-break: break-all;
   cursor: pointer;
   align-items: center;
 

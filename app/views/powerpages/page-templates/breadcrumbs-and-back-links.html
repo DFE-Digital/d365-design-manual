@@ -1,0 +1,62 @@
+{% set pageData = pages['powerpages/page-templates/breadcrumbs-and-back-links'] %}
+
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+{% from 'includes/patterns/_back-link.njk' import patternsBackLinkBasicExample, patternsBackLinkEnhancedExample %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block content %}
+
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+
+{{ contentsList([
+  { text: "Default breadcrumbs", href: "#breadcrumbs" },
+  { text: "Replacing breadcrumbs with a back link", href: "#back-link" },
+  { text: "Best practices", href: "#best-practices" },
+  { text: "Further reading", href: "#further-reading" }
+]) }}
+
+<h2 class="govuk-heading-l" id="breadcrumbs">Default breadcrumbs</h2>
+
+<p class="govuk-body">Both <a class="govuk-link" href="{{ pages['powerpages/page-templates/layouts'].url }}">layouts</a> show breadcrumbs by default, using <code>{% raw %}{% include 'DfE/Content/Breadcrumbs' %}{% endraw %}</code>. The breadcrumbs are built from the parent and child structure of your web pages, so you don't need to set them on each page.</p>
+
+<p class="govuk-body">The include is wrapped in a <code>{% raw %}{% block breadcrumbs %}{% endraw %}</code>, so you can replace it in any page template that extends the layout.</p>
+
+<h2 class="govuk-heading-l" id="back-link">Replacing breadcrumbs with a back link</h2>
+
+<p class="govuk-body">In an end-to-end journey, such as a series of question pages, use a back link instead of breadcrumbs.</p>
+
+<h3 class="govuk-heading-m" id="basic-example">Basic example</h3>
+<p class="govuk-body">
+  In a simple case, a back link can replace the breadcrumbs component. Here's how you can set it up:
+</p>
+
+{{ patternsBackLinkBasicExample() }}
+
+<h3 class="govuk-heading-m" id="enhanced-example">Enhanced example</h3>
+<p class="govuk-body">
+  Usually you'll need to include a parameter, such as a record ID, in the back link URL. You can add parameters to the back link dynamically.
+</p>
+
+{{ patternsBackLinkEnhancedExample() }}
+
+<p class="govuk-body">
+  In the enhanced example, the back link dynamically adds the <code>id</code> parameter to the URL. This ensures that users are directed back to the exact record they were previously viewing, preserving context in the journey.
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Without the <code>params.id</code> check, the back link will simply redirect the user to the previous page.</li>
+  <li>When the <code>params.id</code> is present, it is appended as a query parameter to the back link, allowing the back navigation to retain context by including the record's ID.</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="best-practices">Best practices</h2>
+<p class="govuk-body">
+  When implementing back links in a service, ensure they are consistent and provide a clear and intuitive navigation experience for the user. For pages involving records, include the appropriate parameters in the URL to preserve context, and handle missing parameters gracefully with error handling.
+</p>
+
+<h2 class="govuk-heading-l" id="further-reading">Further reading</h2>
+<p class="govuk-body">
+  For more details, refer to the <a href="https://design-system.service.gov.uk/components/breadcrumbs/" target="_blank" class="govuk-link">Breadcrumbs component (opens in a new tab)</a> and the <a href="https://design-system.service.gov.uk/components/back-link/" target="_blank" class="govuk-link">Back link component (opens in a new tab)</a> in the GOV.UK Design System.
+</p>
+
+{% endblock %}

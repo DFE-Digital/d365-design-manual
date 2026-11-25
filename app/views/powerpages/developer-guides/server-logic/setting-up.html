@@ -1,0 +1,249 @@
+{% set pageData = pages['powerpages/developer-guides/server-logic/setting-up'] %}
+
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block content %}
+
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+
+{{ contentsList([
+  { text: "Turn on server logic", href: "#site-settings" },
+  { text: "Create a server logic record", href: "#create-record" },
+  { text: "Write the script", href: "#write-script" },
+  { text: "Keep keys and secrets out of the script", href: "#secrets" },
+  { text: "Call server logic from a page", href: "#call-from-page" },
+  { text: "Call another service from server logic", href: "#call-another-service" },
+  { text: "Deploy server logic to other environments", href: "#deploy" }
+]) }}
+
+<p class="govuk-body">This page explains how to set up server logic on a site built from the base portal. Read <a class="govuk-link" href="{{ pages['powerpages/developer-guides/server-logic/behaviour-and-limitations'].url }}">behaviour and limitations</a> as well: several things that work in a browser crash a server logic script.</p>
+
+<h2 class="govuk-heading-l" id="site-settings">Turn on server logic</h2>
+
+<p class="govuk-body">Server logic is controlled by site settings. Add or check these on your website record.</p>
+
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m">Server logic site settings</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Name</th>
+      <th scope="col" class="govuk-table__header">What it does</th>
+      <th scope="col" class="govuk-table__header">Value to use</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><code>ServerLogic/Enabled</code></th>
+      <td class="govuk-table__cell">Turns server logic on or off for the site.</td>
+      <td class="govuk-table__cell"><code>true</code></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><code>ServerLogic/TimeoutInSeconds</code></th>
+      <td class="govuk-table__cell">How long a script can run before it's stopped. The default is 120 seconds and the maximum is 240.</td>
+      <td class="govuk-table__cell">Leave at the default unless a script needs longer. Keep requests from the browser short, and move long work to a background process.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><code>ServerLogic/MaxMemoryUsageInBytes</code></th>
+      <td class="govuk-table__cell">How much memory each script can use. The default is 10 MB, and only about a third of that is available for your data. Microsoft no longer documents this setting, but it still works.</td>
+      <td class="govuk-table__cell"><code>41943040</code> (40 MB) on any site that handles uploaded files or large requests, such as the <a class="govuk-link" href="{{ pages['powerpages/developer-guides/scan-uploaded-files'].url }}">virus scan</a>.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><code>ServerLogic/AllowedDomains</code></th>
+      <td class="govuk-table__cell">Limits which external domains server logic can call. By default, all domains are allowed.</td>
+      <td class="govuk-table__cell">Optional. If you set it, include every service your scripts call.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-visually-hidden">Warning</span>
+    Type the memory setting's name exactly: <code>ServerLogic/MaxMemoryUsageInBytes</code>. Power Pages ignores any other spelling, such as <code>MaximumMemoryUsageInBytes</code>, without telling you.
+  </strong>
+</div>
+
+<p class="govuk-body">Your tenant's administrators can also block all calls from server logic to external services. If calls from your scripts to another service fail on every request, check with them.</p>
+
+<h2 class="govuk-heading-l" id="create-record">Create a server logic record</h2>
+
+<ol class="govuk-list govuk-list--number">
+  <li>In Power Pages design studio, open your site and go to the <strong>Set up</strong> workspace.</li>
+  <li>Select <strong>Server logic</strong>, then <strong>New server logic</strong>.</li>
+  <li>Enter a name. The name becomes part of the URL: <code>/_api/serverlogics/&lt;name&gt;</code>. Use a short name in PascalCase, such as <code>VirusScan</code>, and don't change it once pages use it.</li>
+  <li>Add a description that says what the script does.</li>
+  <li>Assign the web roles of the users who'll call it.</li>
+  <li>Give the same web roles table permissions on every table the script reads or writes.</li>
+</ol>
+
+<p class="govuk-body">A server logic record has both a <strong>Name</strong> and a <strong>Display name</strong>. The URL uses the Name, exactly as it's saved, including capital letters. Check the record itself rather than trusting a name written in a ticket or comment.</p>
+
+<p class="govuk-body">Both the web role on the record and the table permissions are needed. If either is missing, the script fails.</p>
+
+<h2 class="govuk-heading-l" id="write-script">Write the script</h2>
+
+<p class="govuk-body">A script defines a function for each HTTP method it accepts: <code>get()</code>, <code>post()</code>, <code>put()</code>, <code>patch()</code> or <code>del()</code>. Whatever the function returns is sent back to the browser. Return a JSON string, and include your own status in it, because you can't set the HTTP status code.</p>
+
+<pre><code class="language-javascript">async function post() {
+  try {
+    const body = JSON.parse(Server.Context.Body || "{}");
+    const recordId = Server.Context.QueryParameters["id"];
+
+    // Your logic here
+
+    return JSON.stringify({ status: "success" });
+  } catch (err) {
+    Server.Logger.Error("MyServerLogic failed: " + err.message);
+    return JSON.stringify({ status: "error", message: "Something went wrong" });
+  }
+}</code></pre>
+
+<p class="govuk-body">The script runs on the server, not in a browser or Node.js, so there's no <code>fetch</code>, <code>window</code> or <code>document</code>. Use the <code>Server</code> object instead.</p>
+
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m">What the Server object gives you</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Property</th>
+      <th scope="col" class="govuk-table__header">Use it to</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><code>Server.Context.Body</code></th>
+      <td class="govuk-table__cell">Read the request body, as a string. Parse it yourself with <code>JSON.parse</code>.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><code>Server.Context.QueryParameters</code></th>
+      <td class="govuk-table__cell">Read query string values, for example <code>Server.Context.QueryParameters["id"]</code>.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><code>Server.User</code></th>
+      <td class="govuk-table__cell">Get the signed-in user, for example <code>Server.User.contactid</code>. It's <code>null</code> for anonymous users. Take the user from here, never from the request.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><code>Server.Connector.Dataverse</code></th>
+      <td class="govuk-table__cell">Create, retrieve, update and delete records, and call custom APIs. Table permissions apply.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><code>Server.Connector.HttpClient</code></th>
+      <td class="govuk-table__cell">Call another service with <code>GetAsync</code>, <code>PostAsync</code>, <code>PutAsync</code>, <code>PatchAsync</code> or <code>DeleteAsync</code>. These are asynchronous, so use <code>await</code>.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><code>Server.EnvironmentVariable.get(name)</code></th>
+      <td class="govuk-table__cell">Read an environment variable, such as a service URL or key.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><code>Server.SiteSetting.Get(name)</code></th>
+      <td class="govuk-table__cell">Read a site setting.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header"><code>Server.Logger</code></th>
+      <td class="govuk-table__cell">Write to the server logic logs with <code>Log</code>, <code>Warn</code> or <code>Error</code>. Never log a whole request or file: it uses memory and makes failures more likely.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="govuk-body">Microsoft lists everything available in <a class="govuk-link" href="https://learn.microsoft.com/en-us/power-pages/configure/server-objects" target="_blank">server objects (opens in a new tab)</a>.</p>
+
+<h2 class="govuk-heading-l" id="secrets">Keep keys and secrets out of the script</h2>
+
+<p class="govuk-body">Don't type URLs, keys or other secrets into a script. Scripts are exported with the rest of the site, so anything in them ends up in solution files, portal downloads and source control.</p>
+
+<p class="govuk-body">Store them in environment variables instead, and read them with <code>Server.EnvironmentVariable.get</code>. For keys and other secrets, use a secret environment variable backed by Azure Key Vault. Each environment then has its own values, so you don't need to change the script when you deploy it.</p>
+
+<pre><code class="language-javascript">const SERVICE_URL = Server.EnvironmentVariable.get("dfe_virusscanurl");
+const SERVICE_KEY = Server.EnvironmentVariable.get("dfe_virusscankey");</code></pre>
+
+<p class="govuk-body">Replace <code>dfe_</code> with your solution's publisher prefix.</p>
+
+<h2 class="govuk-heading-l" id="call-from-page">Call server logic from a page</h2>
+
+<p class="govuk-body">Every request to server logic must include the site's anti-forgery (CSRF) token. The <a class="govuk-link" href="{{ pages['powerpages/developer-guides/crm-helper-framework'].url }}">CRM helper framework</a> adds it for you through <code>webapi.safeAjax</code>.</p>
+
+<pre><code class="language-javascript">webapi.safeAjax({
+  type: "POST",
+  url: "/_api/serverlogics/MyServerLogic?id=" + encodeURIComponent(recordId),
+  contentType: "text/plain; charset=utf-8",
+  data: JSON.stringify(payload),
+  success: function (res) {
+    // The envelope, and its data property, can both arrive as strings
+    const envelope = typeof res === "string" ? JSON.parse(res) : res;
+    const result = JSON.parse(envelope.data);
+
+    if (result.status !== "success") {
+      // Show an error
+    }
+  },
+  error: function () {
+    // Show an error
+  }
+});</code></pre>
+
+<h3 class="govuk-heading-m">Send the body as text</h3>
+
+<p class="govuk-body">Send request bodies with <code>contentType: "text/plain; charset=utf-8"</code>, even though they contain JSON. Power Pages rejects JSON bodies over about 1 MB when they're sent as <code>application/json</code>, before your script runs. Sent as text, the same body gets through, and your script reads it in the same way, with <code>JSON.parse(Server.Context.Body)</code>.</p>
+
+<p class="govuk-body">This relies on how Power Pages currently behaves, which Microsoft doesn't document. Small requests work either way, but using text for every request means you won't hit the limit as your data grows.</p>
+
+<h3 class="govuk-heading-m">The response</h3>
+
+<p class="govuk-body">Power Pages wraps whatever your script returns in an envelope. Your return value is in the lowercase <code>data</code> property, as a string.</p>
+
+<pre><code class="language-javascript">// The script ran
+{
+  "requestId": "b0389493-25b2-4975-8352-1f23b242dfa5",
+  "success": true,
+  "data": "{\"status\":\"success\"}",
+  "serverLogicName": "MyServerLogic"
+}
+
+// The script was stopped by the platform
+{
+  "requestId": "83f812f5-f85b-43be-8064-9121c2ce2438",
+  "success": false,
+  "serverLogicName": "MyServerLogic",
+  "error": "Exception occurred while processing this request"
+}</code></pre>
+
+<p class="govuk-body">If <code>success</code> is <code>false</code> with that generic error, your own <code>try</code> and <code>catch</code> didn't run. See <a class="govuk-link" href="{{ pages['powerpages/developer-guides/server-logic/behaviour-and-limitations'].url }}#debugging">how to debug the generic error</a>.</p>
+
+<h2 class="govuk-heading-l" id="call-another-service">Call another service from server logic</h2>
+
+<p class="govuk-body"><code>HttpClient</code> returns an object describing the response. Check <code>IsSuccessStatusCode</code> before you parse <code>Body</code>, because an error response might not be JSON.</p>
+
+<pre><code class="language-javascript">const response = await Server.Connector.HttpClient.PostAsync(
+  SERVICE_URL,
+  JSON.stringify(requestBody),
+  { "x-functions-key": SERVICE_KEY },
+  "application/json"
+);
+
+const parsed = typeof response === "string" ? JSON.parse(response) : response;
+
+if (!parsed.IsSuccessStatusCode) {
+  throw new Error("Service returned " + parsed.StatusCode + ": " + (parsed.ServerErrorMessage || parsed.Body));
+}
+
+const result = JSON.parse(parsed.Body);</code></pre>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Use a plain media type for the last argument, such as <code>"application/json"</code>. <code>HttpClient</code> rejects a media type with parameters, such as <code>"text/plain; charset=utf-8"</code>, with a <code>StatusCode</code> of 0 and "The format of value ... is invalid".</li>
+  <li>If the service sits behind Azure API Management or the department's application gateway, requests are limited to 2,000 KB. See <a class="govuk-link" href="{{ pages['powerpages/developer-guides/server-logic/behaviour-and-limitations'].url }}#size-limits">size and memory limits</a>.</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="deploy">Deploy server logic to other environments</h2>
+
+<p class="govuk-body">Server logic records and site settings are site components, so they move with your site's solution. Before you deploy:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>check the server logic records, their web roles and table permissions are in the solution</li>
+  <li>check the <code>ServerLogic/</code> site settings are in the solution, including <code>ServerLogic/MaxMemoryUsageInBytes</code> if you use it, because a setting that's only on the site can be lost</li>
+  <li>set each environment's values for any environment variables the scripts use</li>
+</ul>
+
+<p class="govuk-body">If you would like any additional advice or guidance with server logic, please contact the Solutions Delivery Team.</p>
+
+{% endblock %}

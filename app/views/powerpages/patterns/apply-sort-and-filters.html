@@ -1,24 +1,13 @@
 {% set pageData = pages['powerpages/patterns/apply-sort-and-filters'] %}
-{% set showTitlePanel = false %}
-{% set showSubNav = true %}
 
 {% from 'includes/components/_codeExample.njk' import codeExample %}
 {% from 'includes/components/_contentsList.njk' import contentsList %}
-{% from 'includes/components/_breadcrumbs.njk' import breadcrumbs %}
 
 {% extends "layouts/_wide-right-left-navigation.html" %}
 
-{% block beforeContent %}
-  {{ breadcrumbs(pageData, pages) }}
-{% endblock %}
-
 {% block content %}
 
-{% if showTitlePanel == false %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-5" id="introduction">{{ pageData.title }}</h1>
-{% else %}
-  <h2 class="govuk-heading-xl govuk-!-margin-bottom-5" id="introduction">{{ pageData.title }}</h2>
-{% endif %}
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5" id="introduction">{{ pageData.title }}</h1>
 
 {{ contentsList([
   { text: "Overview", href: "#overview" },
@@ -28,7 +17,7 @@
   { text: "Date filters", href: "#date-filters" },
   { text: "Rendering the filter summary", href: "#filter-summary" },
   { text: "Complete page example", href: "#complete-example" },
-  { text: "JavaScript for the design manual", href: "#design-manual-js" }
+  { text: "JavaScript in this manual", href: "#design-manual-js" }
 ]) }}
 
 <p class="govuk-body">This pattern explains how to implement server-side filtering and sorting in Power Pages using URL parameters. When users apply filters, the page reloads with the filter values in the URL, which are then used to query Dataverse and display filtered results.</p>
@@ -252,9 +241,9 @@
   { index: 13, language: "django" }
 ) }}
 
-<h2 class="govuk-heading-l" id="design-manual-js">JavaScript for the design manual</h2>
+<h2 class="govuk-heading-l" id="design-manual-js">JavaScript in this manual</h2>
 
-<p class="govuk-body">The filter panel component in this design manual includes JavaScript that demonstrates the filter behaviour. This JavaScript handles:</p>
+<p class="govuk-body">The filter panel component in this manual includes JavaScript that demonstrates the filter behaviour. This JavaScript handles:</p>
 
 <ul class="govuk-list govuk-list--bullet">
   <li>reading URL parameters on page load and pre-selecting form inputs</li>
@@ -265,7 +254,7 @@
 </ul>
 
 <div class="govuk-inset-text">
-  <p class="govuk-body">For Power Pages, you typically won't need this JavaScript as the filtering is handled server-side with Liquid. The JavaScript is provided for demonstration purposes in the design manual and for scenarios where you want to show filter selections before applying.</p>
+  <p class="govuk-body">For Power Pages, you typically won't need this JavaScript as the filtering is handled server-side with Liquid. The JavaScript is provided for demonstration purposes in this manual and for scenarios where you want to show filter selections before applying.</p>
 </div>
 
 <p class="govuk-body">The <a href="{{ pages['powerpages/components/filter-panel'].url }}" class="govuk-link">filter panel component</a> JavaScript automatically provides real-time selection feedback, showing users their selected filters before they click Apply.</p>

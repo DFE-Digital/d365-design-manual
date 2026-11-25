@@ -1,0 +1,293 @@
+{% set pageData = pages['powerpages/developer-guides/server-logic/behaviour-and-limitations'] %}
+
+{% from 'includes/components/_contentsList.njk' import contentsList %}
+
+{% extends "layouts/_wide-right-left-navigation.html" %}
+
+{% block content %}
+
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-5">{{ pageData.title }}</h1>
+
+{{ contentsList([
+  { text: "The generic error", href: "#generic-error" },
+  { text: "JavaScript that crashes a script", href: "#crashes", children: [
+    { text: "Array methods that take a function", href: "#array-methods" },
+    { text: "Functions created inside a loop", href: "#functions-in-loops" },
+    { text: "Blocked keywords and patterns", href: "#blocked-patterns" }
+  ]},
+  { text: "Dataverse calls", href: "#dataverse", children: [
+    { text: "Results are wrapped twice", href: "#double-wrapped" },
+    { text: "Calls run one at a time", href: "#not-async" }
+  ]},
+  { text: "Size and memory limits", href: "#size-limits", children: [
+    { text: "Sending JSON from the browser", href: "#json-limit" },
+    { text: "The memory limit", href: "#memory-limit" },
+    { text: "Calling services behind API Management", href: "#gateway-limit" }
+  ]},
+  { text: "Calling other services", href: "#http-client" },
+  { text: "Records, names and permissions", href: "#records" },
+  { text: "Responses in the browser", href: "#responses" },
+  { text: "How to debug the generic error", href: "#debugging" },
+  { text: "Checklist", href: "#checklist" }
+]) }}
+
+<p class="govuk-body">Server logic looks like ordinary JavaScript, but it isn't a browser and it isn't Node.js. Microsoft's documentation misses a lot of the behaviour on this page. We found it while building DfE services, and we'll keep adding to it.</p>
+
+<p class="govuk-body">If a script is failing now, start with <a class="govuk-link" href="#debugging">how to debug the generic error</a> and the <a class="govuk-link" href="#checklist">checklist</a>.</p>
+
+<h2 class="govuk-heading-l" id="generic-error">The generic error</h2>
+
+<p class="govuk-body">Most problems on this page show up the same way. The browser gets back:</p>
+
+<pre><code class="language-javascript">{
+  "requestId": "83f812f5-f85b-43be-8064-9121c2ce2438",
+  "success": false,
+  "serverLogicName": "MyServerLogic",
+  "error": "Exception occurred while processing this request"
+}</code></pre>
+
+<p class="govuk-body">This means the platform stopped the script. Your own <code>try</code> and <code>catch</code> didn't run, so adding more error handling won't help, and nothing useful is logged. It can mean:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>the script used JavaScript that crashes server logic</li>
+  <li>the script went over its memory limit</li>
+  <li>the request body was too big</li>
+  <li>the server logic record is broken</li>
+</ul>
+
+<p class="govuk-body">A script that returns your own error, with <code>success: true</code> and a message in <code>data</code>, did run: the problem is in your logic or a service it called.</p>
+
+<h2 class="govuk-heading-l" id="crashes">JavaScript that crashes a script</h2>
+
+<h3 class="govuk-heading-m" id="array-methods">Array methods that take a function</h3>
+
+<p class="govuk-body">Don't use an array method that takes a function, such as <code>.map()</code>, <code>.forEach()</code>, <code>.filter()</code>, <code>.some()</code>, <code>.reduce()</code> or <code>.sort()</code> with a comparator. They crash the script with the generic error, even with no Dataverse calls involved. Use a <code>for</code> loop instead.</p>
+
+<pre><code class="language-javascript">// Crashes
+var doubled = [1, 2, 3].map(function (x) { return x * 2; });
+
+// Works
+var doubled = [];
+for (var i = 0; i &lt; numbers.length; i++) {
+  doubled.push(numbers[i] * 2);
+}</code></pre>
+
+<h3 class="govuk-heading-m" id="functions-in-loops">Functions created inside a loop</h3>
+
+<p class="govuk-body">Don't create a function inside a loop. Declare it once, above the loop, and pass it what it needs.</p>
+
+<pre><code class="language-javascript">// Crashes: a new function is created on every pass
+for (var i = 0; i &lt; rows.length; i++) {
+  var row = rows[i];
+  var getValue = function (fieldName) { return (row[fieldName] || "").trim(); };
+  var value = getValue("some_field");
+}
+
+// Works: the function is created once
+function getValue(row, fieldName) { return (row[fieldName] || "").trim(); }
+
+for (var i = 0; i &lt; rows.length; i++) {
+  var value = getValue(rows[i], "some_field");
+}</code></pre>
+
+<p class="govuk-body">Nesting functions inside <code>post()</code> or <code>get()</code> is fine. The problem is only a new function on every pass through a loop.</p>
+
+<div class="govuk-inset-text">
+  <p class="govuk-body">When a script starts failing as it gets bigger, it's tempting to think it's hit a limit on the number of Dataverse calls. We thought that once, and were wrong: the real cause was one of these two patterns. Rule them out first. A script that really is too big for its memory limit is covered in <a class="govuk-link" href="#memory-limit">the memory limit</a>.</p>
+</div>
+
+<h3 class="govuk-heading-m" id="blocked-patterns">Blocked keywords and patterns</h3>
+
+<p class="govuk-body">Power Pages checks scripts when you save them and rejects some keywords and patterns, even in code that would never run. If a script won't save, check it for these:</p>
+
+<pre><code class="language-plaintext">__dirname  __filename  import(  eval(  new Function(
+setTimeout  setInterval  setImmediate
+process.exit  process.kill  child_process  fs.  require(
+constructor.constructor  this.constructor  arguments.callee
+with(  delete  Object.getPrototypeOf  Object.setPrototypeOf
+Proxy(  Reflect.  Symbol.for  __proto__  prototype  debugger</code></pre>
+
+<p class="govuk-body">Because <code>delete</code> is blocked, set a property you no longer need to <code>null</code> instead.</p>
+
+<h2 class="govuk-heading-l" id="dataverse">Dataverse calls</h2>
+
+<h3 class="govuk-heading-m" id="double-wrapped">Results are wrapped twice</h3>
+
+<p class="govuk-body"><code>RetrieveMultipleRecords</code> returns a JSON string. Inside it is an object with a <code>Body</code> property, which is another JSON string containing the records. Parse it twice.</p>
+
+<pre><code class="language-javascript">var raw = Server.Connector.Dataverse.RetrieveMultipleRecords("accounts", "$select=name");
+var wrapper = JSON.parse(raw);         // StatusCode, Body and so on
+var records = JSON.parse(wrapper.Body).value;</code></pre>
+
+<p class="govuk-body">Parse it only once and you'll get an error such as "Cannot read properties of undefined (reading 'length')". Write a small helper so you only get this right once:</p>
+
+<pre><code class="language-javascript">function retrieveValue(entitySetName, odataOptions) {
+  var raw = Server.Connector.Dataverse.RetrieveMultipleRecords(entitySetName, odataOptions);
+  return JSON.parse(JSON.parse(raw).Body).value;
+}</code></pre>
+
+<p class="govuk-body"><code>RetrieveRecord</code>, <code>CreateRecord</code>, <code>UpdateRecord</code> and <code>DeleteRecord</code> return the same kind of wrapper. Check <code>StatusCode</code> or <code>IsSuccessStatusCode</code> before you use <code>Body</code>.</p>
+
+<h3 class="govuk-heading-m" id="not-async">Calls run one at a time</h3>
+
+<p class="govuk-body"><code>Server.Connector.Dataverse</code> calls aren't asynchronous, even though they might look as if they should be. Each one finishes before the next line runs, so <code>await</code> and <code>Promise.all()</code> make no difference to them.</p>
+
+<pre><code class="language-javascript">// These run one after the other, whichever way you write them
+var account = Server.Connector.Dataverse.RetrieveRecord("accounts", accountId);
+var contact = Server.Connector.Dataverse.RetrieveRecord("contacts", contactId);</code></pre>
+
+<p class="govuk-body"><code>Server.Connector.HttpClient</code> calls are asynchronous, and do need <code>await</code>.</p>
+
+<h2 class="govuk-heading-l" id="size-limits">Size and memory limits</h2>
+
+<p class="govuk-body">Large requests hit several separate limits. Each one fails in a different way, which makes them easy to confuse.</p>
+
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m">Limits on large requests</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Limit</th>
+      <th scope="col" class="govuk-table__header">What you see</th>
+      <th scope="col" class="govuk-table__header">What to do</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">JSON from the browser, about 1 MB</th>
+      <td class="govuk-table__cell">A 500 error page from the platform, with <code>RTGE01</code> and a blank message. The script never runs.</td>
+      <td class="govuk-table__cell">Send the body as <code>text/plain</code>.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Script memory, 10 MB by default</th>
+      <td class="govuk-table__cell">The generic error, often within a second. Small requests work, large ones fail, and the same request can work once and fail the next time.</td>
+      <td class="govuk-table__cell">Raise <code>ServerLogic/MaxMemoryUsageInBytes</code>, and hold less in memory.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Department's application gateway, 2,000 KB</th>
+      <td class="govuk-table__cell">A 403 Forbidden HTML page from <code>Microsoft-Azure-Application-Gateway/v2</code>, returned to your script as the service's response.</td>
+      <td class="govuk-table__cell">Send less in each request. This limit can't be raised.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Run time, 120 seconds by default</th>
+      <td class="govuk-table__cell">The generic error after about 2 minutes.</td>
+      <td class="govuk-table__cell">Raise <code>ServerLogic/TimeoutInSeconds</code> (up to 240), or move the work to a background process.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 class="govuk-heading-m" id="json-limit">Sending JSON from the browser</h3>
+
+<p class="govuk-body">Power Pages reads <code>application/json</code> request bodies itself before passing them to your script, and rejects them over about 1 MB. A file sent as base64 reaches that at about 750 KB.</p>
+
+<p class="govuk-body">Send the same body with <code>contentType: "text/plain; charset=utf-8"</code> instead. Power Pages passes text straight through, and your script reads it in the same way, with <code>JSON.parse(Server.Context.Body)</code>. Microsoft doesn't document this, so it relies on how Power Pages behaves now.</p>
+
+<h3 class="govuk-heading-m" id="memory-limit">The memory limit</h3>
+
+<p class="govuk-body">Each script runs with a memory limit, set by the site setting <code>ServerLogic/MaxMemoryUsageInBytes</code>. Microsoft removed the setting from its documentation in November 2025, but it still works. The default is 10 MB, and only about a third of that is available for your data.</p>
+
+<p class="govuk-body">Power Pages checks memory every 100 to 200 milliseconds rather than all the time. A script that goes over the limit but finishes quickly can get away with it. One that goes over and keeps running is stopped with the generic error. So failures can look random: the same request works once and fails the next time.</p>
+
+<p class="govuk-body">What uses memory:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li><strong>Parsed data uses far more memory than text.</strong> Thousands of parsed objects can take several times the size of the JSON they came from.</li>
+  <li><strong>Copies add up.</strong> The request body, the parsed object, a rebuilt object and the text you send on are all held at once.</li>
+  <li><strong>Logging a whole payload</strong> keeps it in memory for longer, which makes a check more likely to catch it.</li>
+</ul>
+
+<p class="govuk-body">To handle large requests:</p>
+
+<ol class="govuk-list govuk-list--number">
+  <li>Set <code>ServerLogic/MaxMemoryUsageInBytes</code> to <code>41943040</code> (40 MB). Type the name exactly: Power Pages ignores other spellings without telling you.</li>
+  <li>Don't parse a large body if you're only passing it on. Check what you need with a string search, or send the values you need to check in the query string, and forward <code>Server.Context.Body</code> as it is.</li>
+  <li>If you must build a large body, build it as a string rather than as objects.</li>
+  <li>Don't log request bodies, files or results.</li>
+</ol>
+
+<pre><code class="language-javascript">// Forwards a large body without parsing it
+var raw = Server.Context.Body || "";
+if (raw.indexOf('"files"') === -1) {
+  throw new Error("Missing files array");
+}
+
+var response = await Server.Connector.HttpClient.PostAsync(SERVICE_URL, raw, headers, "application/json");</code></pre>
+
+<p class="govuk-body">With 40 MB, we've virus scanned a 3.5 MB file (4.7 MB as base64) and validated a 3,000-row CSV file. A script that rebuilt 3,000 rows as objects before sending them on still went over the limit, and worked once it forwarded the text instead.</p>
+
+<p class="govuk-body">The memory limit's behaviour was first measured in <a class="govuk-link" href="https://powerportals.de/en/blog/power-pages-server-logic-memory-limit/" target="_blank">32 MB passes, 4 MB fails: what the Power Pages server logic memory limit actually does (opens in a new tab)</a>. Because the setting is undocumented, ask Microsoft to confirm it's supported before a service depends on it.</p>
+
+<h3 class="govuk-heading-m" id="gateway-limit">Calling services behind API Management</h3>
+
+<p class="govuk-body">DfE APIs published through Azure API Management sit behind the department's application gateway. Its web application firewall rejects request bodies over 2,000 KB with a 403 Forbidden HTML page, before the request reaches API Management. The limit protects every service behind the gateway and can't be raised.</p>
+
+<p class="govuk-body">Design for it from the start if your data will grow. For example, send a reference to a stored file instead of the data itself, or send the data in batches.</p>
+
+<h2 class="govuk-heading-l" id="http-client">Calling other services</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li><strong>Use a plain media type.</strong> The last argument of <code>PostAsync</code>, <code>PutAsync</code> and <code>PatchAsync</code> must be a media type on its own, such as <code>"application/json"</code>. With a parameter, such as <code>"text/plain; charset=utf-8"</code>, the call doesn't throw: it returns <code>StatusCode</code> 0 and "The format of value ... is invalid".</li>
+  <li><strong>Stick to documented media types.</strong> Microsoft documents <code>application/json</code>, <code>text/html</code> and <code>application/x-www-form-urlencoded</code>. <code>"text/plain"</code> also works, but isn't documented. Large bodies sent as <code>application/json</code> from server logic aren't affected by the browser's JSON limit.</li>
+  <li><strong>Check the status before you parse.</strong> Check <code>IsSuccessStatusCode</code> before you parse <code>Body</code>. An error page, such as the gateway's 403, isn't JSON.</li>
+</ul>
+
+<h2 class="govuk-heading-l" id="records">Records, names and permissions</h2>
+
+<h3 class="govuk-heading-m">The URL uses the Name, not the Display name</h3>
+
+<p class="govuk-body">Call <code>/_api/serverlogics/&lt;name&gt;</code> using the record's <strong>Name</strong> exactly as saved, including capital letters. A record with the Display name "Get account" and the Name <code>GetAccount</code> is only found at <code>/_api/serverlogics/GetAccount</code>. Check the record itself: names written in tickets, comments or documentation can drift from what's deployed.</p>
+
+<h3 class="govuk-heading-m">You need two kinds of permission</h3>
+
+<p class="govuk-body">Assign a web role to the server logic record, and give that web role table permissions on every table the script uses. They're set in different places and both are needed. Table permissions are shared, so once a role has them, every script using that role can use them too.</p>
+
+<h3 class="govuk-heading-m">A record can break</h3>
+
+<p class="govuk-body">Occasionally a record fails whatever code it has. If even this fails with the generic error, the record is broken, not your code:</p>
+
+<pre><code class="language-javascript">function post() {
+  return JSON.stringify({ test: "hello" });
+}</code></pre>
+
+<p class="govuk-body">Delete the record and create it again with the same Name, web roles and code.</p>
+
+<h2 class="govuk-heading-l" id="responses">Responses in the browser</h2>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li><strong>Parse the response twice.</strong> Your return value is in the lowercase <code>data</code> property, as a JSON string, and sometimes the whole envelope arrives as a string too. Microsoft's documentation shows <code>Data</code> and <code>Success</code> with capital letters, but the API returns them in lowercase.</li>
+  <li><strong>A 401 about the anti-forgery token.</strong> "The provided anti-forgery token was meant for a different claims-based user than the current user" means the page was loaded before the user signed in again, or has been open a long time. Reloading the page fixes it.</li>
+</ul>
+
+<pre><code class="language-javascript">var envelope = typeof res === "string" ? JSON.parse(res) : res;
+var result = JSON.parse(envelope.data);</code></pre>
+
+<h2 class="govuk-heading-l" id="debugging">How to debug the generic error</h2>
+
+<p class="govuk-body">The generic error gives you nothing to go on, so find the cause by cutting the script down and building it up again.</p>
+
+<ol class="govuk-list govuk-list--number">
+  <li><strong>Check whether size is the problem.</strong> Try the same request with a small file or a few rows. If small requests work and large ones fail, read <a class="govuk-link" href="#size-limits">size and memory limits</a>.</li>
+  <li><strong>Cut the script down to almost nothing.</strong> Read the request and return a small object, with no Dataverse or <code>HttpClient</code> calls. If that still fails, the record is probably broken.</li>
+  <li><strong>Add the rest back one piece at a time.</strong> Watch for array methods that take a function and functions created inside loops, which are easy to miss.</li>
+  <li><strong>Test one thing at a time.</strong> For example, to find out whether reading a large body or sending it on is the problem, test a version that only returns the body's length, then one that sends a large string it builds itself.</li>
+</ol>
+
+<p class="govuk-body">This is slow, but it's quicker than guessing.</p>
+
+<h2 class="govuk-heading-l" id="checklist">Checklist</h2>
+
+<p class="govuk-body">If a script fails with the generic error, check:</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>Does it use <code>.map()</code>, <code>.forEach()</code>, <code>.filter()</code>, <code>.some()</code>, <code>.reduce()</code> or <code>.sort()</code> with a comparator? Use a <code>for</code> loop.</li>
+  <li>Is a function created inside a loop? Move it above the loop.</li>
+  <li>Does it only fail with large requests? Check <code>ServerLogic/MaxMemoryUsageInBytes</code> is set and spelt exactly, and that the script doesn't parse, copy or log large data.</li>
+  <li>Is the browser sending large bodies as <code>application/json</code>? Send them as <code>text/plain</code>.</li>
+  <li>Does a version with no Dataverse or <code>HttpClient</code> calls still fail? Recreate the record.</li>
+  <li>Does the record have a web role, and does that role have table permissions on every table the script uses?</li>
+  <li>Are you parsing Dataverse results, and the response in the browser, twice?</li>
+  <li>Does the URL use the record's Name, exactly as saved?</li>
+</ul>
+
+<p class="govuk-body">If you would like any additional advice or guidance with server logic, please contact the Solutions Delivery Team.</p>
+
+{% endblock %}

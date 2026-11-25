@@ -1,0 +1,86 @@
+{% raw %}
+{% extends 'DfE/Layouts/2ColumnWideLeft' %}
+
+{% block main %}
+  {% unless user %}
+    <script>
+      window.location.href="{{ sitemarkers['DfE/Error/AccessDenied'].url }}"
+    </script>
+  {% endunless %}
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="dfe_evidencedescription">
+      What does your evidence show?
+    </label>
+    <input class="govuk-input" id="dfe_evidencedescription" name="dfe_evidencedescription" type="text">
+  </div>
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="dfe_evidencefile">
+      Upload your evidence
+    </label>
+    <div id="dfe_evidencefile-hint" class="govuk-hint">
+      The file must be a PDF or Word document, and smaller than 3MB
+    </div>
+    <div class="govuk-file-upload-wrapper" data-module="govuk-file-upload">
+      <input class="govuk-file-upload" id="dfe_evidencefile" name="dfe_evidencefile" type="file" aria-describedby="dfe_evidencefile-hint">
+    </div>
+  </div>
+
+  <button type="submit" id="submit-btn" class="govuk-button" data-module="govuk-button">Continue</button>
+
+  <div id="loading-spinner" class="loader govuk-visually-hidden"></div>
+
+  <script type="text/javascript">
+    const recordId = "{{ params.id }}";
+    const entitySetName = "dfe_applications";
+
+    const descriptionInput = {
+      identifier: "dfe_evidencedescription",
+      type: "text",
+      friendlyName: "what your evidence shows",
+      required: true
+    };
+
+    const fileInput = {
+      identifier: "dfe_evidencefile",
+      type: "file",
+      friendlyName: "your evidence",
+      required: true,
+      allowedFileTypes: ["pdf", "docx"],
+      maxFileSize: 3,
+      fileLimit: 1
+    };
+
+    $("#submit-btn").on("click", async function (event) {
+      event.preventDefault();
+
+      DfEPortal.DisableButton("submit-btn");
+      DfEPortal.ShowLoadingSpinner("loading-spinner");
+
+      try {
+        // Checks the file's type, number and size, then virus scans it
+        const isValid = await DfEPortal.ValidateData([descriptionInput, fileInput]);
+        if (!isValid) {
+          DfEPortal.EnableButton("submit-btn");
+          DfEPortal.HideLoadingSpinner("loading-spinner");
+          return;
+        }
+
+        // Save the other answers first. ConstructData leaves file inputs out.
+        const dataObj = await DfEPortal.WebApi.ConstructData([descriptionInput]);
+        await DfEPortal.WebApi.Update(recordId, entitySetName, dataObj);
+
+        // Then upload the file to the record's file column
+        await DfEPortal.WebApi.UploadFile("dfe_evidencefile", entitySetName, recordId);
+
+        window.location.href = "{{ sitemarkers['NEXT_PAGE_SITEMARKER'].url | add_query: 'id', params.id }}";
+      } catch (error) {
+        console.error("Error:", error);
+        DfEPortal.EnableButton("submit-btn");
+        DfEPortal.HideLoadingSpinner("loading-spinner");
+      }
+    });
+  </script>
+{% endblock %}
+{% endraw %}
