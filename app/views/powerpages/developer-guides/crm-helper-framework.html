@@ -492,7 +492,8 @@
     </div>
     <div id="accordion-input-types-content-radio" class="govuk-accordion__section-content">
       <p class="govuk-body govuk-!-font-weight-bold">Radio to boolean field</p>
-      <p class="govuk-body">Use for Yes/No questions that map to a CRM Yes/No (boolean) field. Radio values should be <code>1</code> for Yes and <code>0</code> for No.</p>
+      <p class="govuk-body">Use for radios that map to a CRM Yes/No (boolean) field. Radio values should be <code>1</code> for Yes and <code>0</code> for No.</p>
+      <div class="govuk-inset-text">For a yes or no question the user answers, use a choice column with the DfE yes/no choice and the radio to choice mapping below, so the answer stays blank until the user chooses. See <a class="govuk-link" href="{{ pages['crm/configuration/columns'].url }}#yes-no">yes or no questions</a>.</div>
       <pre><code>{
   identifier: "dfe_agreeterms",
   type: "radio",

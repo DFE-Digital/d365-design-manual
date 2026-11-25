@@ -49,9 +49,9 @@
 
 <p class="govuk-body">For example, the APM CRM has APM Core, and the Breakfast Club service has Breakfast Club Configuration, Customisation and Portal. The core solution and each service use their own publisher and prefix, such as <code>apm_</code> and <code>bc_</code>. See <a class="govuk-link" href="{{ pages['crm/configuration/tables'].url }}#naming">publisher prefixes</a>.</p>
 
-<p class="govuk-body">The core solution holds the components every service in the CRM shares, such as core apps, shared tables like Contact and Case, global choices, shared security roles and reusable web resources. Never duplicate these or change them differently for one service. If a service needs something extra, such as a new column on Contact, add it in that service's solution.</p>
+<p class="govuk-body">The core solution holds the components every service in the CRM shares, such as core apps, shared tables like Case, the CRM&#39;s own columns on Contact, global choices, shared security roles and reusable web resources. Never duplicate these or change them differently for one service. If a service needs something extra, such as a new column on Contact, add it in that service's solution.</p>
 
-<p class="govuk-body">The core solution is installed first and each service's solutions are layered on top. To avoid conflicts between unmanaged solutions, consider developing the core solution in its own Dev environment, and installing it as a managed solution in the services' Dev environment.</p>
+<p class="govuk-body">The <a class="govuk-link" href="{{ pages['crm/architecture/patterns-components'].url }}#dfe-core">DfE Core solution</a> is installed first, then the CRM's core solution, then each service's solutions on top. To avoid conflicts between unmanaged solutions, consider developing the core solution in its own Dev environment, and installing it as a managed solution in the services' Dev environment.</p>
 
 <h2 class="govuk-heading-l" id="contents">What goes in each solution</h2>
 

@@ -455,42 +455,42 @@ const pages = {
   "crm/configuration/model-driven-apps": {
     title: "Model-driven apps",
     url: "/crm/configuration/model-driven-apps/",
-    description: "Guidance on choosing and designing model‑driven apps, including when to reuse existing apps and when to build new ones.",
+    description: "When to use Microsoft's Dynamics 365 apps, when to build a custom app, and how to avoid duplicate apps.",
     template: "crm/configuration/model-driven-apps",
     parent: "crm/configuration"
   },
   "crm/configuration/sitemap": {
     title: "Sitemaps",
     url: "/crm/configuration/sitemap/",
-    description: "How to create clear, well‑structured sitemaps, including grouping tables, organising configuration areas and using custom icons.",
+    description: "How to group tables, keep configuration tables apart, name items and choose icons.",
     template: "crm/configuration/sitemap",
     parent: "crm/configuration"
   },
   "crm/configuration/tables": {
     title: "Tables",
     url: "/crm/configuration/tables/",
-    description: "How to design and name tables in a consistent way, using out‑of‑the‑box options first and creating reusable, aligned structures where needed.",
+    description: "Use Microsoft's tables first, design tables for reuse, and follow the naming and publisher prefix rules.",
     template: "crm/configuration/tables",
     parent: "crm/configuration"
   },
   "crm/configuration/columns": {
     title: "Columns",
     url: "/crm/configuration/columns/",
-    description: "Guidance on creating and managing columns (fields), including naming, columns descriptions, selecting columns types and choosing between choice and lookup columns.",
+    description: "Naming, descriptions, yes or no questions, choices or lookups, and relationships.",
     template: "crm/configuration/columns",
     parent: "crm/configuration"
   },
   "crm/configuration/forms": {
     title: "Forms",
     url: "/crm/configuration/forms/",
-    description: "How to design user‑friendly forms, including using multiple forms per table, applying security role restrictions and structuring layouts effectively.",
+    description: "Forms for different roles, layout, related records, naming and form logic.",
     template: "crm/configuration/forms",
     parent: "crm/configuration"
   },
   "crm/configuration/views": {
     title: "Views",
     url: "/crm/configuration/views/",
-    description: "Guidance on creating consistent and useful views, including when to use public or personal views, standardising columns and using Quick Find and view components.",
+    description: "Public and personal views, columns, sorting, Quick Find and naming.",
     template: "crm/configuration/views",
     parent: "crm/configuration"
   },
@@ -511,7 +511,7 @@ const pages = {
   "crm/customisation/configuration-first": {
     title: "Configuration, low‑code and pro‑code",
     url: "/crm/customisation/configuration-first/",
-    description: "Implementing changes using platform configuration first, using low‑code only where needed and reserving pro‑code for scenarios the platform cannot support.",
+    description: "Use configuration first, then low-code, and pro-code only when nothing else meets the need.",
     template: "crm/customisation/configuration-first",
     parent: "crm/customisation"
   },
@@ -525,21 +525,21 @@ const pages = {
   "crm/customisation/plugins": {
     title: "Plugins",
     url: "/crm/customisation/plugins/",
-    description: "Plugins are for complex automation, advanced logic, or scenarios requiring synchronous or tightly controlled server‑side processing.",
+    description: "When to use a plugin, and the standards for building and deploying one.",
     template: "crm/customisation/plugins",
     parent: "crm/customisation"
   },
   "crm/customisation/power-automate": {
     title: "Power Automate",
     url: "/crm/customisation/power-automate/",
-    description: "Use Power Automate for lightweight automation or simple integration tasks that do not require synchronous execution.",
+    description: "When to use Power Automate, and how to build, connect and deploy flows.",
     template: "crm/customisation/power-automate",
     parent: "crm/customisation"
   },
   "crm/customisation/pro-code": {
     title: "Pro-code coding standards",
     url: "/crm/customisation/pro-code/",
-    description: "Established coding standards and patterns to all pro‑code components to ensure maintainability, reliability and consistency across services.",
+    description: "Coding standards for plugins, scripts and other pro-code components.",
     template: "crm/customisation/pro-code",
     parent: "crm/customisation"
   },
@@ -563,49 +563,49 @@ const pages = {
   "crm/architecture/strategy": {
     title: "CRM strategy",
     url: "/crm/architecture/strategy/",
-    description: "Sets out the guard rails, principles and long-term vision for how DfE will use CRM to create consistent, scalable and maintainable applications across the organisation.",
+    description: "How DfE uses, governs and consolidates its CRM platforms.",
     template: "crm/architecture/strategy",
     parent: "crm/architecture"
   },
   "crm/architecture/product-suite": {
     title: "Dynamics 365 and Power Platform product suite",
     url: "/crm/architecture/product-suite/",
-    description: "An overview of the Dynamics 365 and Power Platform tools, services and capabilities adopted across DfE to deliver CRM solutions.",
+    description: "The Dynamics 365 and Power Platform products DfE uses, and what each is used for.",
     template: "crm/architecture/product-suite",
     parent: "crm/architecture"
   },
   "crm/architecture/design-principles": {
     title: "Design principles",
     url: "/crm/architecture/design-principles/",
-    description: "Guiding principles that ensure solutions align with DfE’s CRM strategy, make use of out‑of‑the‑box capabilities where possible, and promote consistency and re‑use.",
+    description: "The principles every DfE Dynamics 365 solution must follow.",
     template: "crm/architecture/design-principles",
     parent: "crm/architecture"
   },
   "crm/architecture/patterns-components": {
     title: "Patterns and components",
     url: "/crm/architecture/patterns-components/",
-    description: "Reusable architectural patterns and shared components that support standardisation and repeatable delivery across multiple services.",
+    description: "The shared components to use before building your own: the DfE Core solution and GIAS data.",
     template: "crm/architecture/patterns-components",
     parent: "crm/architecture"
   },
   "crm/architecture/integration": {
     title: "Integration patterns",
     url: "/crm/architecture/integration/",
-    description: "Recommended integration patterns for Dynamics 365, outlining how to connect Dynamics 365 with other systems in a secure, scalable and maintainable way using the Power Platform and supported Microsoft technologies.",
+    description: "How to choose an integration pattern and technology, and the standards every integration follows.",
     template: "crm/architecture/integration",
     parent: "crm/architecture"
   },
   "crm/architecture/document-management": {
     title: "SharePoint document storage",
     url: "/crm/architecture/document-management/",
-    description: "Defines the standard approach for storing documents in Dynamics 365 using the out-of-the-box SharePoint integration, including configuration, best practice and security considerations.",
+    description: "Store documents in SharePoint Online through the standard integration, and how to secure them.",
     template: "crm/architecture/document-management",
     parent: "crm/architecture"
   },
   "crm/architecture/email-integration": {
     title: "Email integration",
     url: "/crm/architecture/email-integration/",
-    description: "Dynamics 365 uses server-side synchronisation with Exchange Online as the standard approach for all email integration to ensure a secure, reliable and centrally managed service.",
+    description: "Use server-side synchronisation with Exchange Online for all Dynamics 365 email.",
     template: "crm/architecture/email-integration",
     parent: "crm/architecture"
   },
@@ -631,21 +631,21 @@ const pages = {
   "crm/environments/environment-setup": {
     title: "Environment setup",
     url: "/crm/environments/environment-setup/",
-    description: "Outlines the environment model, maintaining consistency across environments, and provides guidance on the end‑to‑end setup process.",
+    description: "The four standard environments, the rules for each, and how to request a new one.",
     template: "crm/environments/environment-setup",
     parent: "crm/environments"
   },
   "crm/environments/solutions": {
     title: "Solutions",
     url: "/crm/environments/solutions/",
-    description: "How Dynamics 365 solutions are structured, organised and managed to ensure consistent, maintainable development aligned with deployment pipeline standards.",
+    description: "The standard solution model, solution names and what goes in each solution.",
     template: "crm/environments/solutions",
     parent: "crm/environments"
   },
   "crm/environments/deployment-pipelines": {
     title: "Azure DevOps pipelines",
     url: "/crm/environments/deployment-pipelines/",
-    description: "Describes how Azure DevOps pipelines should be configured to deploy Dynamics 365 and Power Pages solutions across all environments.",
+    description: "Deploy everything through the standard Azure DevOps pipelines.",
     template: "crm/environments/deployment-pipelines",
     parent: "crm/environments"
   },
@@ -666,35 +666,35 @@ const pages = {
   "crm/security/business-units-security-roles": {
     title: "How business units work with security roles",
     url: "/crm/security/business-units-security-roles/",
-    description: "Explains how Business Units and Security Roles work together to control what users can see and do.",
+    description: "How business units, security roles and teams combine, with examples from DfE CRMs.",
     template: "crm/security/business-units-security-roles",
     parent: "crm/security"
   },
   "crm/security/business-units": {
     title: "Business units",
     url: "/crm/security/business-units/",
-    description: "Explains how business units structure data access and ownership across the organisation.",
+    description: "Keep business units simple, and only create one when data needs to be kept apart.",
     template: "crm/security/business-units",
     parent: "crm/security"
   },
   "crm/security/security-roles": {
     title: "Security roles",
     url: "/crm/security/security-roles/",
-    description: "Describes how security roles control permissions and define what users can view and do within the system.",
+    description: "Base security roles on what people need to do, and give each the least privilege it needs.",
     template: "crm/security/security-roles",
     parent: "crm/security"
   },
   "crm/security/teams": {
     title: "Teams",
     url: "/crm/security/teams/",
-    description: "Outlines how teams are used to manage shared access, collaboration and ownership of records.",
+    description: "Which type of team to use, and how to use teams for shared access.",
     template: "crm/security/teams",
     parent: "crm/security"
   },
   "crm/security/auditing": {
     title: "Auditing",
     url: "/crm/security/auditing/",
-    description: "Provides an overview of how auditing tracks changes to data, configuration and user activity for governance and compliance.",
+    description: "Which tables and columns to audit, and how to record who viewed sensitive data.",
     template: "crm/security/auditing",
     parent: "crm/security"
   },
@@ -712,14 +712,14 @@ const pages = {
   "crm/other/licensing": {
     title: "Licensing",
     url: "/crm/other/licensing/",
-    description: "Summary of the licensing model used for Dynamics 365, explaining the licence types, how they apply to different user roles and how they support DfE’s CRM services.",
+    description: "Which Dynamics 365 or Power Apps licence users need.",
     template: "crm/other/licensing",
     parent: "crm/other"
   },
   "crm/other/tooling": {
     title: "Standard developer tooling",
     url: "/crm/other/tooling/",
-    description: "Overview of the standard tools and extensions used by developers working with Dynamics 365, ensuring consistent setup, predictable workflows and alignment with DfE development practices.",
+    description: "The standard tools for building and deploying Dynamics 365 solutions.",
     template: "crm/other/tooling",
     parent: "crm/other"
   }

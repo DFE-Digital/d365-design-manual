@@ -25,7 +25,7 @@
 <ul class="govuk-list govuk-list--bullet">
   <li>Give each plugin class one responsibility, and don't combine unrelated logic.</li>
   <li>Register steps only on the messages and tables you need, and use filtering attributes so plugins only run when relevant columns change.</li>
-  <li>Use the pre-operation stage to validate or change the record being saved, and the post-operation stage to create related records or call other services.</li>
+  <li>Use the pre-operation stage to validate or change the record being saved, and the post-operation stage to create related records. Call other services from asynchronous steps, so the user isn&#39;t kept waiting and a slow service can&#39;t time out the save.</li>
   <li>Keep calls to Dataverse inside a plugin to a minimum.</li>
   <li>Write clear, actionable error messages that don't expose sensitive information.</li>
   <li>Keep plugin code in source control with the solution, and update the assembly version with each change.</li>

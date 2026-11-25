@@ -23,6 +23,7 @@
 
 <h2 class="govuk-heading-l" id="configuration">Configuration</h2>
 <ul class="govuk-list govuk-list--bullet">
+  <li>Use SharePoint Online, not on-premises SharePoint.</li>
   <li>Use one parent SharePoint site for each environment, unless there is a strong business reason not to.</li>
   <li>Use the default folder for each record, and let Dynamics 365 create the folders.</li>
   <li>Keep the folder structure shallow.</li>
@@ -37,7 +38,7 @@
   <li>Control access at site or library level, with Microsoft Entra security groups that match your user roles.</li>
   <li>Only give site access to users who are allowed to see the documents in Dynamics 365.</li>
   <li>Only set permissions on individual folders for a small number of records with a genuine confidentiality need. Automate it, and document it for support teams.</li>
-  <li>Keep highly sensitive documents in a separate SharePoint site with sensitivity labels, retention policies and Conditional Access.</li>
+  <li>Keep highly sensitive documents in a separate SharePoint site with sensitivity labels, retention policies and Conditional Access. Link to them from Dynamics 365 rather than storing them against standard records.</li>
 </ul>
 
 <h2 class="govuk-heading-l" id="avoid">What to avoid</h2>
