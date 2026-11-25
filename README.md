@@ -36,8 +36,8 @@ We maintain a consistent process of building and releasing the back end of a Dyn
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/DFE-Digital/d365-design-manual.git
-   cd d365-design-manual
+   git clone https://github.com/DFE-Digital/dynamics-power-pages-manual.git
+   cd dynamics-power-pages-manual
    ```
 
 2. Install dependencies:
@@ -98,7 +98,7 @@ These are optional for local development but required for GitHub integration fea
 ### Project structure
 
 ```
-d365-design-manual/
+dynamics-power-pages-manual/
 ├── index.mjs                  # Express server entry point
 ├── app/
 │   ├── config.js              # Environment and app configuration
